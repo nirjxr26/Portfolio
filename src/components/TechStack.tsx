@@ -14,6 +14,7 @@ const techIcons = [
   { name: "ArgoCD", icon: "/assets/icons/tech/argo.svg", isLarger: true },
   { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
   { name: "GitHub", icon: "/assets/icons/tech/github.svg", isLarger: true },
+  { name: "GitHub Actions", icon: "/assets/icons/tech/github-actions.svg" },
   { name: "Git", icon: "/assets/icons/tech/git.svg" },
   { name: "Linux", icon: "/assets/icons/tech/linux.svg" },
   { name: "Python", icon: "/assets/icons/tech/python.svg" },

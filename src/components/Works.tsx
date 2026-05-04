@@ -65,10 +65,11 @@ const projects: Project[] = [
     techStack: [
       { category: "Frontend", items: ["React 19", "TypeScript", "Zustand", "Socket.io"] },
       { category: "Backend", items: ["Node.js 20", "Express", "Prisma ORM", "AWS SDK v3"] },
-      { category: "Integrations", items: ["GitHub API", "AWS CodeDeploy", "AWS SNS", "EventBridge"] },
+      { category: "Integrations", items: ["GitHub Actions", "GitHub API", "AWS CodeDeploy", "AWS SNS", "EventBridge"] },
       { category: "Database", items: ["PostgreSQL 15"] }
     ],
     titleLogos: [
+      // { src: "/assets/icons/tech/github-actions.svg", alt: "GitHub Actions" },
       { src: "/assets/icons/tech/aws.svg", alt: "AWS CodeDeploy" }
     ]
   },
