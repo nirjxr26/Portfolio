@@ -181,7 +181,7 @@ const Navbar = () => {
                   className={styles.mobileCTA}
                   onClick={handleLetsTalk}
                 >
-                  Lets Talk
+                  Contact
                 </a>
               </motion.li>
             </ul>
