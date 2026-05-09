@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box } from 'lucide-react';
+import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box, FileCode } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import styles from './Works.module.css';
 
@@ -68,9 +68,22 @@ const projects: Project[] = [
       { category: "Integrations", items: ["GitHub Actions", "GitHub API", "AWS CodeDeploy", "AWS SNS", "EventBridge"] },
       { category: "Database", items: ["PostgreSQL 15"] }
     ],
+  },
+  {
+    title: "Code Humanizer",
+    subtitle: "Skill file",
+    description: "Claude Code skill that explains code the way a senior dev would — not like a bot. Paste code, pick a mode, get an explanation that covers what the code actually does, why it was written that way, and what breaks if you touch it.",
+    features: [
+      "/dev mode", "/student mode", "/interview mode", "/smell mode", "/failures mode"
+    ],
+    securityPills: [],
+    links: { github: "https://github.com/nirjxr26/code-humanizer" },
+    icon: <FileCode size={24} />,
+    techStack: [
+      { category: "Modes", items: ["/dev", "/student", "/interview", "/smell", "/failures"] }
+    ],
     titleLogos: [
-      // { src: "/assets/icons/tech/github-actions.svg", alt: "GitHub Actions" },
-      { src: "/assets/icons/tech/aws.svg", alt: "AWS CodeDeploy" }
+      { src: "/assets/icons/tech/claudecolor.svg", alt: "Claude" }
     ]
   },
   {
@@ -154,47 +167,77 @@ const Works = () => {
             {projects.map((project, index) => (
               <div
                 key={project.title}
-                className={styles.projectCard}
+                className={`
+                  ${styles.projectCard} 
+                  ${project.title === 'Code Humanizer' ? styles.humanizerCard : ''}
+                  ${project.title === 'SmartFlow' ? styles.centeredCard : ''}
+                `}
                 data-aos="fade-up"
                 data-aos-delay={(index * 100) + 100}
                 data-aos-duration="600"
               >
                 <div className={styles.cardInfo}>
-                  <div className={styles.titleGroup}>
-                    <div className={styles.titleWithBadge}>
-                      <div className={styles.titleMain}>
-                        <h3 className={styles.projectTitle}>{project.title}</h3>
+                  <div className={`${styles.titleGroup} ${project.title === 'Code Humanizer' ? styles.humanizerHeader : ''}`}>
+                    {project.title === 'Code Humanizer' ? (
+                      <div className={styles.humanizerHeaderLayout}>
+                        <div className={styles.humanizerTitleStack}>
+                          <h3 className={styles.projectTitle}>{project.title}</h3>
+                          <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                        </div>
                       </div>
-                      <div className={styles.rightGroup}>
-                        {project.badge && (
-                          <span className={styles.institutionBadge}>
-                            {project.badge}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                    ) : (
+                      <>
+                        <div className={styles.titleWithBadge}>
+                          <div className={styles.titleMain}>
+                            <h3 className={styles.projectTitle}>{project.title}</h3>
+                          </div>
+                          <div className={styles.rightGroup}>
+                            {project.badge && (
+                              <span className={styles.institutionBadge}>
+                                {project.badge}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                      </>
+                    )}
                   </div>
 
                   <p className={styles.projectDescription}>
                     {project.description}
                   </p>
 
-                  <div className={styles.techTags}>
-                    {allTags(project).map((tag) => (
-                      <span key={tag} className={styles.techTag}>
-                        {tag}
-                      </span>
-                    ))}
-                    <button
-                      onClick={() => setActiveStackProject(project)}
-                      className={styles.moreTags}
-                      aria-label={`View full technology stack for ${project.title}`}
-                      suppressHydrationWarning
-                    >
-                      + View Full Stack
-                    </button>
-                  </div>
+                  {project.title === 'Code Humanizer' && (
+                    <div className={styles.modesSection}>
+                      <span className={styles.modesLabel}>Modes</span>
+                      <div className={styles.techTags}>
+                        {allTags(project).map((tag) => (
+                          <span key={tag} className={styles.techTag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {project.title !== 'Code Humanizer' && (
+                    <div className={styles.techTags}>
+                      {allTags(project).map((tag) => (
+                        <span key={tag} className={styles.techTag}>
+                          {tag}
+                        </span>
+                      ))}
+                      <button
+                        onClick={() => setActiveStackProject(project)}
+                        className={styles.moreTags}
+                        aria-label={`View full technology stack for ${project.title}`}
+                        suppressHydrationWarning
+                      >
+                        + View Full Stack
+                      </button>
+                    </div>
+                  )}
 
                   <div className={styles.cardActions}>
                     {project.links.github && (

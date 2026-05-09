@@ -60,6 +60,40 @@
   box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.1);
 }
 
+.humanizerCard {
+  background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%) !important;
+  border-color: #fef9c3 !important;
+}
+
+.centeredCard {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: calc(50% - 1.25rem);
+}
+
+@media (max-width: 768px) {
+  .centeredCard {
+    max-width: 100%;
+  }
+}
+
+.humanizerHeaderLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.humanizerTitleStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.humanizerTitleStack .projectSubtitle {
+  margin-top: 0 !important;
+}
+
 .blendedLogos {
   position: absolute;
   bottom: -10px;
@@ -118,6 +152,21 @@
   flex-grow: 1;
   position: relative;
   z-index: 1;
+}
+
+.modesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modesLabel {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #a1a1aa;
+  text-transform: capitalize;
+  letter-spacing: 0.01rem;
 }
 
 .titleGroup {
