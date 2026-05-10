@@ -260,7 +260,7 @@
   color: #71717a;
   padding: 0.35rem 0.75rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--line);
+  /* border: 1px solid var(--line); */
 }
 
 .moreTags {
@@ -468,6 +468,8 @@
   .header {
     margin-bottom: 2.5rem;
   }
+
+
 
   .titleWithBadge {
     display: flex;

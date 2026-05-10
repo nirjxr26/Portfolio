@@ -21,7 +21,7 @@ const techIcons = [
   { name: "TypeScript", icon: "/assets/icons/tech/typescript.svg" },
   { name: "JavaScript", icon: "/assets/icons/tech/javascript.svg" },
   { name: "PostgreSQL", icon: "/assets/icons/tech/postgresql.svg" },
-  { name: "SQL", icon: "/assets/icons/tech/mysql_logo.svg", isLarger: true },
+  { name: "SQL", icon: "/assets/icons/tech/mysql_logo.svg", isExtraLarge: true },
   { name: "Go", icon: "/assets/icons/tech/go.svg", isLarger: true },
   { name: "Java", icon: "/assets/icons/tech/java.svg" },
 
@@ -63,7 +63,11 @@ const TechStack = () => {
                 <img
                   src={tech.icon}
                   alt={tech.name}
-                  className={`${styles.iconImg} ${tech.isLarger ? styles.largerIcon : ''}`}
+                  className={`
+                    ${styles.iconImg} 
+                    ${tech.isLarger ? styles.largerIcon : ''} 
+                    ${tech.isExtraLarge ? styles.extraLargeIcon : ''}
+                  `}
                 />
               </motion.div>
             ))}

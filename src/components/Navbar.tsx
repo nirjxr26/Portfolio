@@ -101,10 +101,8 @@ const Navbar = () => {
         animate="visible"
         variants={containerVariants}
       >
-        <motion.div className={styles.logo} variants={itemVariants}>
-          <div className={styles.logoDot} />
-          NG
-        </motion.div>
+        {/* <motion.div className={styles.logo} variants={itemVariants}>
+        </motion.div> */}
 
         {/* Desktop Links */}
         <ul className={styles.navLinks}>

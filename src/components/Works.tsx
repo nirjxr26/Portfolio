@@ -154,7 +154,7 @@ const Works = () => {
   };
 
   const allTags = (project: Project) => {
-    return project.techStack.flatMap(stack => stack.items).slice(0, 8);
+    return project.techStack.flatMap(stack => stack.items).slice(0, 5);
   };
 
   return (
@@ -211,7 +211,7 @@ const Works = () => {
                     {project.description}
                   </p>
 
-                  {project.title === 'Code Humanizer' && (
+                  {project.title === 'Code Humanizer' ? (
                     <div className={styles.modesSection}>
                       <span className={styles.modesLabel}>Modes</span>
                       <div className={styles.techTags}>
@@ -220,25 +220,35 @@ const Works = () => {
                             {tag}
                           </span>
                         ))}
+                        {project.techStack.flatMap(s => s.items).length > 5 && (
+                          <button
+                            onClick={() => setActiveStackProject(project)}
+                            className={styles.moreTags}
+                            aria-label={`View full technology stack for ${project.title}`}
+                            suppressHydrationWarning
+                          >
+                            + View Full Stack
+                          </button>
+                        )}
                       </div>
                     </div>
-                  )}
-
-                  {project.title !== 'Code Humanizer' && (
+                  ) : (
                     <div className={styles.techTags}>
                       {allTags(project).map((tag) => (
                         <span key={tag} className={styles.techTag}>
                           {tag}
                         </span>
                       ))}
-                      <button
-                        onClick={() => setActiveStackProject(project)}
-                        className={styles.moreTags}
-                        aria-label={`View full technology stack for ${project.title}`}
-                        suppressHydrationWarning
-                      >
-                        + View Full Stack
-                      </button>
+                        {project.techStack.flatMap(s => s.items).length > 5 && (
+                          <button
+                            onClick={() => setActiveStackProject(project)}
+                            className={styles.moreTags}
+                            aria-label={`View full technology stack for ${project.title}`}
+                            suppressHydrationWarning
+                          >
+                            + View Full Stack
+                          </button>
+                        )}
                     </div>
                   )}
 

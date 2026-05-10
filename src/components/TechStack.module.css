@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.15rem;
+  padding: 1.16rem;
   transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -84,6 +84,10 @@
 
 .largerIcon {
   transform: scale(1.15);
+}
+
+.extraLargeIcon {
+  transform: scale(1.5);
 }
 
 .iconBox:hover .iconImg {
