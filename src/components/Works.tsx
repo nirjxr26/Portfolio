@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box, FileCode } from 'lucide-react';
+import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box, FileCode, Activity } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import styles from './Works.module.css';
 
@@ -44,12 +44,14 @@ const projects: Project[] = [
       { category: "Backend", items: ["Node.js", "Express.js", "JWT Auth", "Prisma ORM"] },
       { category: "Database", items: ["PostgreSQL"] },
       { category: "Containerization", items: ["Docker", "Kubernetes"] },
-      { category: "CI/CD", items: ["Jenkins"] }
+      { category: "CI/CD", items: ["Jenkins"] },
+      { category: "Monitoring", items: ["Grafana"] }
     ],
     titleLogos: [
       { src: "/assets/icons/tech/docker.svg", alt: "Docker" },
       { src: "/assets/icons/tech/kubernetes.svg", alt: "Kubernetes" },
-      { src: "/assets/icons/tech/jenkins.svg", alt: "Jenkins" }
+      { src: "/assets/icons/tech/jenkins.svg", alt: "Jenkins" },
+      { src: "/assets/icons/tech/grafana.svg", alt: "Grafana" }
     ]
   },
   {
@@ -146,6 +148,7 @@ const Works = () => {
       case 'infrastructure': return <Database size={18} />;
       case 'containerization': return <Box size={18} />;
       case 'ci/cd': return <Rocket size={18} />;
+      case 'monitoring': return <Activity size={18} />;
       default: return <Cog size={18} />;
     }
   };

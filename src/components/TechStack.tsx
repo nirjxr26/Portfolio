@@ -9,7 +9,7 @@ const techIcons = [
   { name: "Docker", icon: "/assets/icons/tech/docker.svg" },
   { name: "Kubernetes", icon: "/assets/icons/tech/kubernetes.svg" },
   { name: "Jenkins", icon: "/assets/icons/tech/jenkins.svg", isLarger: true },
-  { name: "Grafana", icon: "/assets/icons/tech/grafana-svgrepo-com.svg" },
+  { name: "Grafana", icon: "/assets/icons/tech/grafana.svg" },
   { name: "GitLab", icon: "/assets/icons/tech/gitlab.svg" },
   { name: "ArgoCD", icon: "/assets/icons/tech/argo.svg", isLarger: true },
   { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
