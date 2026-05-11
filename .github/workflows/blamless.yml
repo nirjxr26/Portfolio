@@ -1,0 +1,5 @@
+    - name: blamless Retry
+      if: failure()
+      uses: nirjxr26/blamless@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
