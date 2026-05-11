@@ -21,6 +21,7 @@ interface Project {
     github?: string;
     gitlab?: string;
     live?: string;
+    marketplace?: string;
   };
   icon: React.ReactNode;
   techStack: TechStack[];
@@ -74,7 +75,7 @@ const projects: Project[] = [
   {
     title: "Code Humanizer",
     subtitle: "Skill file",
-    description: "Claude Code skill that explains code the way a senior dev would — not like a bot. Paste code, pick a mode, get an explanation that covers what the code actually does, why it was written that way, and what breaks if you touch it.",
+    description: "Most AI code explanations restate what you can already read. This one tells you why it exists, what breaks it, and what the person who wrote it was thinking with modes.",
     features: [
       "/dev mode", "/student mode", "/interview mode", "/smell mode", "/failures mode"
     ],
@@ -86,6 +87,20 @@ const projects: Project[] = [
     ],
     titleLogos: [
       { src: "/assets/icons/tech/claudecolor.svg", alt: "Claude" }
+    ]
+  },
+  {
+    title: "BlamLess",
+    subtitle: "GitHub Action",
+    description: "GitHub Actions fails. Sometimes it's your code. Sometimes it's GitHub. Blameless figures out which — and retries automatically if it's GitHub's fault.",
+    features: [
+      "Auto-Retry Engine", "Failure Categorization", "Infrastructure Health Check", "Workflow Integration"
+    ],
+    securityPills: ["GitHub Actions", "Failure Analysis"],
+    links: { marketplace: "https://github.com/marketplace/actions/blamless" },
+    icon: <Activity size={24} />,
+    techStack: [
+      { category: "Infrastructure", items: ["GitHub Actions", "YML (config)", "TypeScript"] }
     ]
   },
   {
@@ -173,7 +188,7 @@ const Works = () => {
                 className={`
                   ${styles.projectCard} 
                   ${project.title === 'Code Humanizer' ? styles.humanizerCard : ''}
-                  ${project.title === 'SmartFlow' ? styles.centeredCard : ''}
+                  ${project.title === 'BlamLess' ? styles.blamlessCard : ''}
                 `}
                 data-aos="fade-up"
                 data-aos-delay={(index * 100) + 100}
@@ -216,7 +231,7 @@ const Works = () => {
                       <span className={styles.modesLabel}>Modes</span>
                       <div className={styles.techTags}>
                         {allTags(project).map((tag) => (
-                          <span key={tag} className={styles.techTag}>
+                          <span key={tag} className={`${styles.techTag} ${styles.glassTag}`}>
                             {tag}
                           </span>
                         ))}
@@ -235,20 +250,20 @@ const Works = () => {
                   ) : (
                     <div className={styles.techTags}>
                       {allTags(project).map((tag) => (
-                        <span key={tag} className={styles.techTag}>
+                        <span key={tag} className={`${styles.techTag} ${project.title === 'BlamLess' ? styles.glassTag : ''}`}>
                           {tag}
                         </span>
                       ))}
-                        {project.techStack.flatMap(s => s.items).length > 5 && (
-                          <button
-                            onClick={() => setActiveStackProject(project)}
-                            className={styles.moreTags}
-                            aria-label={`View full technology stack for ${project.title}`}
-                            suppressHydrationWarning
-                          >
-                            + View Full Stack
-                          </button>
-                        )}
+                      {project.techStack.flatMap(s => s.items).length > 5 && (
+                        <button
+                          onClick={() => setActiveStackProject(project)}
+                          className={styles.moreTags}
+                          aria-label={`View full technology stack for ${project.title}`}
+                          suppressHydrationWarning
+                        >
+                          + View Full Stack
+                        </button>
+                      )}
                     </div>
                   )}
 
@@ -263,6 +278,18 @@ const Works = () => {
                       >
                         <Github size={16} />
                         <span>Github</span>
+                      </a>
+                    )}
+                    {project.links.marketplace && (
+                      <a
+                        href={project.links.marketplace}
+                        className={styles.previewButton}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${project.title} on GitHub Marketplace`}
+                      >
+                        <Box size={16} />
+                        <span> GitHub Marketplace</span>
                       </a>
                     )}
                     {project.links.gitlab && (
