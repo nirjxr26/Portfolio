@@ -42,7 +42,7 @@
 
 .gistCard {
   background: #ffffff;
-  border-radius: 1.8rem;
+  border-radius: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.06);
   overflow: hidden;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
@@ -52,9 +52,13 @@
   width: 100%;
 }
 
-.gistCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.08);
+@media (hover: hover) {
+  .gistCard:hover {
+    transform: translateY(-5px);
+    box-shadow:
+      0px 2px 4px rgba(0, 0, 0, 0.02),
+      0px 12px 32px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .cardBanner {
@@ -170,7 +174,10 @@
   transition: all 0.3s ease;
 }
 
-.metaRow, .cardTitle, .cardDescription, .cardFooter {
+.metaRow,
+.cardTitle,
+.cardDescription,
+.cardFooter {
   position: relative;
   z-index: 1;
 }

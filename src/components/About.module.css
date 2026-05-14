@@ -141,10 +141,12 @@
   border-radius: 4px;
 }
 
-.downloadBtn:hover {
-  background: var(--ink);
-  color: var(--bg);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .downloadBtn:hover {
+    background: var(--ink);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
 }
 
 .socialRow {
@@ -163,10 +165,12 @@
   will-change: transform, opacity, filter;
 }
 
-.socialLink:hover {
-  opacity: 1;
-  transform: translateY(-5px) scale(1.1);
-  color: var(--accent);
+@media (hover: hover) {
+  .socialLink:hover {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.1);
+    color: var(--accent);
+  }
 }
 
 .socialIcon {
@@ -266,9 +270,11 @@
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.techCard:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 0, 0, 0.1);
+@media (hover: hover) {
+  .techCard:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .techIcon {
