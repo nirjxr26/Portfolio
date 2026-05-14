@@ -44,30 +44,45 @@
 .projectCard {
   background-color: var(--white);
   border-radius: 1rem;
-  border: 1px solid var(--line);
+  /* border: 1px solid var(--line); */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   height: 100%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); */
   position: relative;
   overflow: hidden;
 }
 
-.projectCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.1);
+@media (hover: hover) {
+  .projectCard:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0px 2px 4px rgba(0, 0, 0, 0.02),
+      0px 12px 32px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .humanizerCard {
   background: linear-gradient(135deg, #ffffff 0%, #fffdf0 100%) !important;
-  border-color: #fef9c3 !important;
+  /* border-color: #fef9c3 !important; */
+  /* border: 1px solid var(--line); */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+
 }
+
 
 .blamlessCard {
   background: linear-gradient(135deg, #ffffff 0%, rgba(3, 102, 214, 0.08) 100%) !important;
-  border-color: rgba(3, 102, 214, 0.05) !important;
+  /* border: 1px solid rgba(3, 102, 214, 0.08) !important; */
+  /* border: 1px solid var(--line); */
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+
 }
 
 
@@ -311,10 +326,12 @@
   transition: all 0.3s ease;
 }
 
-.previewButton:hover {
-  background-color: #000;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+@media (hover: hover) {
+  .previewButton:hover {
+    background-color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* Modal Styles */

@@ -56,9 +56,8 @@ const TechStack = () => {
                   damping: 20
                 }}
                 whileHover={{
-                  scale: 1.15,
+                  scale: 1.1,
                 }}
-                title={tech.name}
               >
                 <img
                   src={tech.icon}
@@ -69,6 +68,7 @@ const TechStack = () => {
                     ${tech.isExtraLarge ? styles.extraLargeIcon : ''}
                   `}
                 />
+                <span className={styles.iconName}>{tech.name}</span>
               </motion.div>
             ))}
           </div>
