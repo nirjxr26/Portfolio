@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box, FileCode, Activity } from 'lucide-react';
+import { Github, Shield, Rocket, Lock, Layers, X, Cpu, Globe, Database, Cog, Box, FileCode, Activity, ArrowRight } from 'lucide-react';
 import { useLenis } from 'lenis/react';
 import styles from './Works.module.css';
 
@@ -53,6 +53,27 @@ const projects: Project[] = [
       { src: "/assets/icons/tech/kubernetes.svg", alt: "Kubernetes" },
       { src: "/assets/icons/tech/jenkins.svg", alt: "Jenkins" },
       { src: "/assets/icons/tech/grafana.svg", alt: "Grafana" }
+    ]
+  },
+  {
+    title: "HookDrop",
+    subtitle: "Webhook Receiver & Streamer",
+    description: "HookDrop is a mock webhook receiver written in Go. POST anything to a bucket URL; HookDrop catches, stores, and streams it live. The app is small on purpose — the real project is the CI/CD pipeline, container hardening, and GitOps loop built around it.",
+    features: [
+      "Mock Webhook Receiver", "Live Data Streaming", "Container Hardening", "GitOps Workflow"
+    ],
+    securityPills: ["Container Hardening", "GitOps Loop"],
+    links: { github: "https://github.com/nirjxr26/HookDrop" },
+    icon: <Activity size={24} />,
+    techStack: [
+      { category: "Backend", items: ["Go"] },
+      { category: "Infrastructure", items: ["Docker", "Kubernetes", "ArgoCD", "Trivy"] },
+      { category: "CI/CD", items: ["GitHub Actions"] }
+    ],
+    titleLogos: [
+      { src: "/assets/icons/tech/go.svg", alt: "Go" },
+      { src: "/assets/icons/tech/argo.svg", alt: "ArgoCD" },
+      { src: "/assets/icons/tech/Helm.svg", alt: "Helm" }
     ]
   },
   {
@@ -140,6 +161,7 @@ const projects: Project[] = [
 
 const Works = () => {
   const [activeStackProject, setActiveStackProject] = useState<Project | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const lenis = useLenis();
 
   useEffect(() => {
@@ -182,56 +204,82 @@ const Works = () => {
           </div>
 
           <div className={styles.projectsGrid}>
-            {projects.map((project, index) => (
-              <div
-                key={project.title}
-                className={`
-                  ${styles.projectCard} 
-                  ${project.title === 'Code Humanizer' ? styles.humanizerCard : ''}
-                  ${project.title === 'BlamLess' ? styles.blamlessCard : ''}
-                `}
-                data-aos="fade-up"
-                data-aos-delay={(index * 100) + 100}
-                data-aos-duration="600"
-              >
-                <div className={styles.cardInfo}>
-                  <div className={`${styles.titleGroup} ${project.title === 'Code Humanizer' ? styles.humanizerHeader : ''}`}>
-                    {project.title === 'Code Humanizer' ? (
-                      <div className={styles.humanizerHeaderLayout}>
-                        <div className={styles.humanizerTitleStack}>
-                          <h3 className={styles.projectTitle}>{project.title}</h3>
+            <AnimatePresence mode="popLayout">
+              {(showAll ? projects : projects.slice(0, 4)).map((project, index) => (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  key={project.title}
+                  className={`
+                    ${styles.projectCard} 
+                    ${project.title === 'Code Humanizer' ? styles.humanizerCard : ''}
+                    ${project.title === 'BlamLess' ? styles.blamlessCard : ''}
+                    ${project.title === 'HookDrop' ? styles.hookdropCard : ''}
+                  `}
+                  data-aos={!showAll ? "fade-up" : ""}
+                  data-aos-delay={!showAll ? (index * 100) + 100 : 0}
+                  data-aos-duration="600"
+                >
+                  <div className={styles.cardInfo}>
+                    <div className={`${styles.titleGroup} ${project.title === 'Code Humanizer' ? styles.humanizerHeader : ''}`}>
+                      {project.title === 'Code Humanizer' ? (
+                        <div className={styles.humanizerHeaderLayout}>
+                          <div className={styles.humanizerTitleStack}>
+                            <h3 className={styles.projectTitle}>{project.title}</h3>
+                            <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div className={styles.titleWithBadge}>
+                            <div className={styles.titleMain}>
+                              <h3 className={styles.projectTitle}>{project.title}</h3>
+                            </div>
+                            <div className={styles.rightGroup}>
+                              {project.badge && (
+                                <span className={styles.institutionBadge}>
+                                  {project.badge}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                           <p className={styles.projectSubtitle}>{project.subtitle}</p>
+                        </>
+                      )}
+                    </div>
+
+                    <p className={styles.projectDescription}>
+                      {project.description}
+                    </p>
+
+                    {project.title === 'Code Humanizer' ? (
+                      <div className={styles.modesSection}>
+                        <span className={styles.modesLabel}>Modes</span>
+                        <div className={styles.techTags}>
+                          {allTags(project).map((tag) => (
+                            <span key={tag} className={`${styles.techTag} ${styles.glassTag}`}>
+                              {tag}
+                            </span>
+                          ))}
+                          {project.techStack.flatMap(s => s.items).length > 5 && (
+                            <button
+                              onClick={() => setActiveStackProject(project)}
+                              className={styles.moreTags}
+                              aria-label={`View full technology stack for ${project.title}`}
+                              suppressHydrationWarning
+                            >
+                              + View Full Stack
+                            </button>
+                          )}
                         </div>
                       </div>
                     ) : (
-                      <>
-                        <div className={styles.titleWithBadge}>
-                          <div className={styles.titleMain}>
-                            <h3 className={styles.projectTitle}>{project.title}</h3>
-                          </div>
-                          <div className={styles.rightGroup}>
-                            {project.badge && (
-                              <span className={styles.institutionBadge}>
-                                {project.badge}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <p className={styles.projectSubtitle}>{project.subtitle}</p>
-                      </>
-                    )}
-                  </div>
-
-                  <p className={styles.projectDescription}>
-                    {project.description}
-                  </p>
-
-                  {project.title === 'Code Humanizer' ? (
-                    <div className={styles.modesSection}>
-                      <span className={styles.modesLabel}>Modes</span>
                       <div className={styles.techTags}>
                         {allTags(project).map((tag) => (
-                          <span key={tag} className={`${styles.techTag} ${styles.glassTag}`}>
+                          <span key={tag} className={`${styles.techTag} ${(project.title === 'BlamLess' || project.title === 'HookDrop') ? styles.glassTag : ''}`}>
                             {tag}
                           </span>
                         ))}
@@ -246,87 +294,91 @@ const Works = () => {
                           </button>
                         )}
                       </div>
-                    </div>
-                  ) : (
-                    <div className={styles.techTags}>
-                      {allTags(project).map((tag) => (
-                        <span key={tag} className={`${styles.techTag} ${project.title === 'BlamLess' ? styles.glassTag : ''}`}>
-                          {tag}
-                        </span>
-                      ))}
-                      {project.techStack.flatMap(s => s.items).length > 5 && (
-                        <button
-                          onClick={() => setActiveStackProject(project)}
-                          className={styles.moreTags}
-                          aria-label={`View full technology stack for ${project.title}`}
-                          suppressHydrationWarning
+                    )}
+
+                    <div className={styles.cardActions}>
+                      {project.links.github && (
+                        <a
+                          href={project.links.github}
+                          className={styles.previewButton}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} source code on GitHub`}
                         >
-                          + View Full Stack
-                        </button>
+                          <Github size={16} />
+                          <span>Github</span>
+                        </a>
+                      )}
+                      {project.links.marketplace && (
+                        <a
+                          href={project.links.marketplace}
+                          className={styles.previewButton}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} on GitHub Marketplace`}
+                        >
+                          <Box size={16} />
+                          <span> GitHub Marketplace</span>
+                        </a>
+                      )}
+                      {project.links.gitlab && (
+                        <a
+                          href={project.links.gitlab}
+                          className={styles.previewButton}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} source code on GitLab`}
+                        >
+                          <img src="/assets/icons/tech/gitlab.svg" alt="GitLab" style={{ width: 16, height: 16 }} />
+                          <span>GitLab</span>
+                        </a>
                       )}
                     </div>
-                  )}
-
-                  <div className={styles.cardActions}>
-                    {project.links.github && (
-                      <a
-                        href={project.links.github}
-                        className={styles.previewButton}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.title} source code on GitHub`}
-                      >
-                        <Github size={16} />
-                        <span>Github</span>
-                      </a>
-                    )}
-                    {project.links.marketplace && (
-                      <a
-                        href={project.links.marketplace}
-                        className={styles.previewButton}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.title} on GitHub Marketplace`}
-                      >
-                        <Box size={16} />
-                        <span> GitHub Marketplace</span>
-                      </a>
-                    )}
-                    {project.links.gitlab && (
-                      <a
-                        href={project.links.gitlab}
-                        className={styles.previewButton}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.title} source code on GitLab`}
-                      >
-                        <img src="/assets/icons/tech/gitlab.svg" alt="GitLab" style={{ width: 16, height: 16 }} />
-                        <span>GitLab</span>
-                      </a>
-                    )}
                   </div>
-                </div>
 
-                {project.titleLogos && (
-                  <div className={styles.blendedLogos}>
-                    {project.titleLogos.map((logo) => (
-                      <img
-                        key={logo.alt}
-                        src={logo.src}
-                        alt={logo.alt}
-                        className={`
+                  {project.titleLogos && (
+                    <div className={styles.blendedLogos}>
+                      {project.titleLogos.map((logo) => (
+                        <img
+                          key={logo.alt}
+                          src={logo.src}
+                          alt={logo.alt}
+                          className={`
                           ${styles.blendedLogo} 
-                          ${(logo.alt === 'Docker' || logo.alt === 'GitHub Actions') ? styles.blendedLarge : ''}
+                          ${(logo.alt === 'Docker' || logo.alt === 'GitHub Actions' || logo.alt === 'ArgoCD' || logo.alt === 'Helm' || logo.alt === 'Go') ? styles.blendedLarge : ''}
                           ${logo.alt === 'AWS CodeDeploy' ? styles.blendedAWS : ''}
                           ${logo.alt === 'GitLab' ? styles.blendedGitLab : ''}
+                          ${logo.alt === 'Go' ? styles.blendedGo : ''}
+                          ${logo.alt === 'ArgoCD' ? styles.blendedArgo : ''}
+                          ${logo.alt === 'Helm' ? styles.blendedHelm : ''}
                         `}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
+
+          {projects.length > 4 && (
+            <div className={styles.viewMoreContainer} data-aos="fade-up">
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className={styles.viewMoreButton}
+                suppressHydrationWarning
+              >
+                <span>{showAll ? 'View Less Projects' : 'View More Projects'}</span>
+                <ArrowRight
+                  size={18}
+                  style={{
+                    transform: showAll ? 'rotate(90deg)' : 'none',
+                    transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

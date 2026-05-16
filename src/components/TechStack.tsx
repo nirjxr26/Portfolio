@@ -4,27 +4,46 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './TechStack.module.css';
 
-const techIcons = [
+interface TechIcon {
+  name: string;
+  icon: string;
+  isLarger?: boolean;
+  isExtraLarge?: boolean;
+}
+
+const techIcons: TechIcon[] = [
+  // Cloud & Infrastructure
   { name: "AWS", icon: "/assets/icons/tech/aws_logo.svg" },
+  { name: "Linux", icon: "/assets/icons/tech/linux.svg" },
+  { name: "Bash", icon: "/assets/icons/tech/Bash.svg" },
+  { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
+
+  // Containerization & Orchestration
   { name: "Docker", icon: "/assets/icons/tech/docker.svg" },
   { name: "Kubernetes", icon: "/assets/icons/tech/kubernetes.svg" },
-  { name: "Jenkins", icon: "/assets/icons/tech/jenkins.svg", isLarger: true },
-  { name: "Grafana", icon: "/assets/icons/tech/grafana.svg" },
-  { name: "GitLab", icon: "/assets/icons/tech/gitlab.svg" },
   { name: "ArgoCD", icon: "/assets/icons/tech/argo.svg", isLarger: true },
-  { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
-  { name: "GitHub", icon: "/assets/icons/tech/github.svg", isLarger: true },
+
+  // CI/CD & VCS
+  { name: "Jenkins", icon: "/assets/icons/tech/jenkins.svg", isLarger: true },
   { name: "GitHub Actions", icon: "/assets/icons/tech/github-actions.svg" },
+  { name: "GitHub", icon: "/assets/icons/tech/github.svg", isLarger: true },
+  { name: "GitLab", icon: "/assets/icons/tech/gitlab.svg" },
   { name: "Git", icon: "/assets/icons/tech/git.svg" },
-  { name: "Linux", icon: "/assets/icons/tech/linux.svg" },
+
+  // Monitoring
+  { name: "Grafana", icon: "/assets/icons/tech/grafana.svg" },
+  { name: "Datadog", icon: "/assets/icons/tech/datadog.svg" },
+
+  // Languages
+  { name: "Go", icon: "/assets/icons/tech/go.svg", isLarger: true },
   { name: "Python", icon: "/assets/icons/tech/python.svg" },
   { name: "TypeScript", icon: "/assets/icons/tech/typescript.svg" },
   { name: "JavaScript", icon: "/assets/icons/tech/javascript.svg" },
-  { name: "PostgreSQL", icon: "/assets/icons/tech/postgresql.svg" },
-  { name: "SQL", icon: "/assets/icons/tech/mysql_logo.svg", isExtraLarge: true },
-  { name: "Go", icon: "/assets/icons/tech/go.svg", isLarger: true },
   { name: "Java", icon: "/assets/icons/tech/java.svg" },
 
+  // Databases
+  { name: "PostgreSQL", icon: "/assets/icons/tech/postgresql.svg" },
+  { name: "MySQL", icon: "/assets/icons/tech/MySQL.svg" },
 ];
 
 const TechStack = () => {
