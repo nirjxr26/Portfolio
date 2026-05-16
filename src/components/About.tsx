@@ -8,11 +8,11 @@ import styles from './About.module.css';
 const GithubIcon = ({ size = 20, className }: { size?: number, className?: string }) => (
   <img
     src="/assets/icons/social/github.svg"
-    width={size * 1.4}
-    height={size * 1.4}
+    width={size * 1.7}
+    height={size * 1.7}
     alt="GitHub"
     className={className}
-    style={{ display: 'block', transform: 'scale(1.1)' }}
+    style={{ display: 'block', transform: 'scale(1.2)' }}
   />
 );
 

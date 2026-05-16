@@ -33,11 +33,11 @@ const HashnodeIcon = ({ size = 28, className }: { size?: number, className?: str
 const GithubIcon = ({ size = 28, className }: { size?: number, className?: string }) => (
   <img
     src="/assets/icons/social/github.svg"
-    width={size * 1.6}
-    height={size * 1.6}
+    width={size * 2.2}
+    height={size * 2.2}
     alt="GitHub"
     className={className}
-    style={{ display: 'block', transform: 'scale(1.1)' }}
+    style={{ display: 'block', transform: 'scale(1.25)' }}
   />
 );
 
