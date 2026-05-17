@@ -58,7 +58,7 @@ const projects: Project[] = [
   {
     title: "HookDrop",
     subtitle: "Webhook Receiver & Streamer",
-    description: "HookDrop is a mock webhook receiver written in Go. POST anything to a bucket URL; HookDrop catches, stores, and streams it live. The app is small on purpose — the real project is the CI/CD pipeline, container hardening, and GitOps loop built around it.",
+    description: "HookDrop is a mock webhook receiver written in Go. POST anything to a bucket URL; HookDrop catches, stores, and streams it live. The app is small on purpose — the real project is the CI/CD pipeline, container hardening, and GitOps loop built around it using ECR.",
     features: [
       "Mock Webhook Receiver", "Live Data Streaming", "Container Hardening", "GitOps Workflow"
     ],
@@ -204,7 +204,7 @@ const Works = () => {
           </div>
 
           <div className={styles.projectsGrid}>
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence>
               {(showAll ? projects : projects.slice(0, 4)).map((project, index) => (
                 <motion.div
                   layout
@@ -219,8 +219,8 @@ const Works = () => {
                     ${project.title === 'BlamLess' ? styles.blamlessCard : ''}
                     ${project.title === 'HookDrop' ? styles.hookdropCard : ''}
                   `}
-                  data-aos={!showAll ? "fade-up" : ""}
-                  data-aos-delay={!showAll ? (index * 100) + 100 : 0}
+                  data-aos={index < 4 ? "fade-up" : undefined}
+                  data-aos-delay={index < 4 ? (index * 100) + 100 : undefined}
                   data-aos-duration="600"
                 >
                   <div className={styles.cardInfo}>
@@ -364,11 +364,23 @@ const Works = () => {
           {projects.length > 4 && (
             <div className={styles.viewMoreContainer} data-aos="fade-up">
               <button
-                onClick={() => setShowAll(!showAll)}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.blur(); // Remove focus to prevent browser scroll anchoring
+                  if (showAll) {
+                    if (lenis) {
+                      lenis.scrollTo('#works', { offset: -50, duration: 0.8 });
+                    } else {
+                      document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }
+                  setShowAll(!showAll);
+                }}
                 className={styles.viewMoreButton}
                 suppressHydrationWarning
               >
-                <span>{showAll ? 'View Less Projects' : 'View More Projects'}</span>
+                <span>{showAll ? 'View less projects' : 'View more projects'}</span>
                 <ArrowRight
                   size={18}
                   style={{
