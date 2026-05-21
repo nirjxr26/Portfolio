@@ -32,7 +32,7 @@ const techIcons: TechIcon[] = [
 
   // Monitoring
   { name: "Grafana", icon: "/assets/icons/tech/grafana.svg" },
-  { name: "Datadog", icon: "/assets/icons/tech/datadog.svg" },
+  // { name: "Datadog", icon: "/assets/icons/tech/datadog.svg" },
 
   // Languages
   { name: "Go", icon: "/assets/icons/tech/go.svg", isLarger: true },

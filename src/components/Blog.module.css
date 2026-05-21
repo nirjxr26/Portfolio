@@ -1,7 +1,7 @@
+/* --- BLOG SECTION CONTAINER --- */
 .blogSection {
-  background-color: #ffffff;
-  /* Changed to white to let cards sit on white or light gray */
-  padding: 4rem 0;
+  background-color: #ffffff; /* Clean white background */
+  padding: 6rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -10,15 +10,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 5rem;
+  margin-bottom: 4.5rem;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .sectionHeader {
   font-family: var(--font-accent);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 700;
-  color: var(--ink);
+  color: var(--ink); /* Rich dark charcoal */
   letter-spacing: -0.02em;
   text-transform: capitalize;
   text-align: center;
@@ -27,229 +29,239 @@
 .sectionSubtitle {
   font-family: var(--font-display);
   font-size: 0.95rem;
-  color: #71717a;
-  margin-top: 0.25rem;
+  color: #71717a; /* Clean medium gray */
+  margin-top: 0.5rem;
   text-align: center;
   max-width: 650px;
   line-height: 1.6;
   font-weight: 500;
 }
 
+/* --- GRID LAYOUT (CENTERED TWO COLUMNS) --- */
 .blogGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2.5rem;
   width: 100%;
-}
-
-.blogCard {
-  background-color: #ffffff;
-  border-radius: 1.2rem;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  max-width: 860px; /* Perfectly sized to center 2 cards on desktop */
+  margin: 0 auto;
+  box-sizing: border-box;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-  height: 100%;
-  overflow: hidden;
-}
-
-@media (hover: hover) {
-  .blogCard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.cardHeader {
-  position: relative;
-  padding: 2rem 2rem 0.5rem 2rem;
-  min-height: 110px;
-}
-
-.gradientBlue {
-  background: linear-gradient(135deg, rgba(254, 243, 199, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
-  /* Mimics the yellow-ish gradient in the first card of the image */
-}
-
-.gradientBlue {
-  background: linear-gradient(135deg, #fdf4d7 0%, #fff 100%);
-}
-
-.gradientViolet {
-  background: linear-gradient(135deg, #ede9fe 0%, #fff 100%);
-}
-
-.gradientEmerald {
-  background: linear-gradient(135deg, #fee2e2 0%, #fff 100%);
-}
-
-.gradientGreen {
-  background: linear-gradient(135deg, #dcfce7 0%, #fff 100%);
-}
-
-.gradientDockerJenkins {
-  background: linear-gradient(135deg, #fee2e2 0%, #e0f2fe 60%, #ffffff 100%);
-}
-
-.tagGroup {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1.25rem;
-}
-
-.tag {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #71717a;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.readTime {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #71717a;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.badgeBox {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 1.25rem 1.75rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
-  width: 100%;
-  position: relative;
-  z-index: 2;
-  margin-bottom: -3rem;
-  /* Overlap with the body */
-}
-
-.badgeTitle {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 0.2rem;
-}
-
-.badgeDesc {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #52525b;
-}
-
-.cardBody {
-  padding: 3rem 2rem 2.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 1.20rem;
-  font-weight: 700;
-  line-height: 1.35;
-  color: #111;
-  margin-bottom: 1rem;
-}
-
-.cardDescription {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #52525b;
-}
-
-.cardFooter {
-  margin-top: auto;
-  padding-top: 2rem;
-}
-
-.footerInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.date {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #71717a;
-  opacity: 0.6;
-}
-
-.takeaways {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #71717a;
-  opacity: 0.5;
-}
-
-.readButton {
-  background-color: #111;
-  color: #fff;
-  padding: 0.85rem 1.75rem;
-  border-radius: 1rem;
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
-  transition: all 0.3s ease;
-}
-
-.readButton:hover {
-  background-color: #000;
-  transform: scale(1.02);
-}
-
-@media (max-width: 1024px) {
-  .blogSection {
-    padding: 4rem 0;
-  }
-
-  .blogGrid {
-    grid-template-columns: 1fr;
-  }
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
-
-  .header {
-    margin-bottom: 2.5rem;
-  }
-
-  .blogSection {
-    padding: 3rem 0;
-  }
-
   .blogGrid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    max-width: 410px;
+    gap: 2.5rem;
   }
+}
 
-  .sectionHeader {
-    font-size: 2rem;
-  }
+/* --- INDIVIDUAL BLOG CARD --- */
+.blogCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 270px; /* Highly compact and sleek card height */
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Clean border for white theme */
+  background-color: #fafafa;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
 
+.blogCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08), 
+              0 0 25px rgba(112, 125, 255, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* --- ART WRAPPER & ANIMATED BACKDROPS --- */
+.artWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blogCard:hover .artWrapper {
+  transform: scale(1.02);
+}
+
+@keyframes slowGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Card 1 Backdrop (Docker) */
+.dockerArt {
+  /* background: linear-gradient(135deg, #05070f 0%, #0d1222 100%); */
+  background: #1D1D1F; /* Near-black with subtle depth */
+  background-size: 200% 200%;
+  animation: slowGlow 15s ease infinite;
+}
+
+/* Card 2 Backdrop (Git) */
+.gitArt {
+ 
+    background: #1D1D1F; /* Near-black with subtle depth */
+   background-size: 200% 200%;
+  animation: slowGlow 18s ease infinite;
+}
+
+/* --- DIRECT LOGO ICON --- */
+.logoIcon {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px; /* Perfectly balanced classic icon scale */
+  height: 64px;
+  object-fit: contain;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  opacity: 0.88;
+  display: block;
+  z-index: 2;
+}
+
+.blogCard:hover .logoIcon {
+  transform: translate(-50%, -50%) rotate(-6deg) scale(1.1);
+  opacity: 1;
+}
+
+/* --- MULTI-LOGO GROUP --- */
+.logoGroup {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Cozy space between the 3 icons */
+  z-index: 2;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: max-content;
+}
+
+.blogCard:hover .logoGroup {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.groupIcon {
+  width: 64px; /* Perfectly balanced classic icon scale matching logoIcon */
+  height: 64px;
+  object-fit: contain;
+  opacity: 0.88;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.6s ease,
+              filter 0.4s ease;
+  display: block;
+}
+
+.blogCard:hover .groupIcon {
+  opacity: 1;
+}
+
+/* Stunning physics stagger motion on hover */
+.blogCard:hover .groupIcon:nth-child(1) {
+  transform: rotate(-6deg) scale(1.12);
+}
+
+.blogCard:hover .groupIcon:nth-child(2) {
+  transform: translateY(-5px) scale(1.15);
+}
+
+.blogCard:hover .groupIcon:nth-child(3) {
+  transform: rotate(6deg) scale(1.12);
+}
+
+/* --- MINIMAL CRUNCHY BOTTOM TITLE --- */
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--white); /* Crisp white text to pop on near-black backgrounds */
+  margin: 0;
+  padding: 0 1.75rem 2.25rem 1.75rem; /* Generous padding at bottom */
+  text-align: center;
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); /* Premium text definition overlay */
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.blogCard:hover .cardTitle {
+  transform: translateY(-4px);
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
   .blogCard {
-    border-radius: 1.5rem;
+    height: 230px; /* Ultra-sleek, compact height for smaller mobile screens */
+    border-radius: 20px;
   }
 
-  .badgeTitle {
-    font-size: 1.35rem;
+  .blogCard:hover {
+    transform: none; /* Prevent sticky hover jumps on touch screens */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .logoIcon {
+    width: 50px; /* Scaled down beautifully for mobile screens */
+    height: 50px;
+    top: 38%;
+  }
+
+  .blogCard:hover .logoIcon {
+    transform: translate(-50%, -50%) scale(1.05); /* Clean scaling without sticky rotation on mobile */
+  }
+
+  .logoGroup {
+    top: 38%;
+    gap: 1rem; /* Closer gaps for narrow screen bounds */
+  }
+
+  .blogCard:hover .logoGroup {
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+
+  .groupIcon {
+    width: 50px; /* Cozy smaller icon dimensions matching logoIcon */
+    height: 50px;
+  }
+
+  .blogCard:hover .groupIcon:nth-child(1),
+  .blogCard:hover .groupIcon:nth-child(2),
+  .blogCard:hover .groupIcon:nth-child(3) {
+    transform: none; /* Disable individual float / rotate jumps on mobile touch */
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+    padding: 0 1.25rem 1.75rem 1.25rem; /* Cozy tight padding at bottom */
+  }
+
+  .blogCard:hover .cardTitle {
+    transform: none; /* Prevent text shifting on mobile touch */
   }
 }
