@@ -46,13 +46,14 @@ const projects: Project[] = [
       { category: "Database", items: ["PostgreSQL"] },
       { category: "Containerization", items: ["Docker", "Kubernetes"] },
       { category: "CI/CD", items: ["Jenkins"] },
-      { category: "Monitoring", items: ["Grafana"] }
+      { category: "Monitoring", items: ["Grafana"] },
+      { category: "Infrastructure", items: ["Terraform"] }
     ],
     titleLogos: [
       { src: "/assets/icons/tech/docker.svg", alt: "Docker" },
       { src: "/assets/icons/tech/kubernetes.svg", alt: "Kubernetes" },
-      { src: "/assets/icons/tech/jenkins.svg", alt: "Jenkins" },
-      { src: "/assets/icons/tech/grafana.svg", alt: "Grafana" }
+      { src: "/assets/icons/tech/grafana.svg", alt: "Grafana" },
+      { src: "/assets/icons/tech/HashiCorp Terraform.svg", alt: "Terraform" }
     ]
   },
   {

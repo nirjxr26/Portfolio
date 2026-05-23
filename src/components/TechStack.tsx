@@ -14,6 +14,7 @@ interface TechIcon {
 const techIcons: TechIcon[] = [
   // Cloud & Infrastructure
   { name: "AWS", icon: "/assets/icons/tech/aws_logo.svg" },
+  { name: "Terraform", icon: "/assets/icons/tech/HashiCorp Terraform.svg" },
   { name: "Linux", icon: "/assets/icons/tech/linux.svg" },
   { name: "Bash", icon: "/assets/icons/tech/Bash.svg" },
   { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
@@ -39,7 +40,6 @@ const techIcons: TechIcon[] = [
   { name: "Python", icon: "/assets/icons/tech/python.svg" },
   { name: "TypeScript", icon: "/assets/icons/tech/typescript.svg" },
   { name: "JavaScript", icon: "/assets/icons/tech/javascript.svg" },
-  { name: "Java", icon: "/assets/icons/tech/java.svg" },
 
   // Databases
   { name: "PostgreSQL", icon: "/assets/icons/tech/postgresql.svg" },

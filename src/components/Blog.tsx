@@ -67,8 +67,8 @@ const Blog = () => {
                 className={styles.groupIcon}
               />
               <img
-                src="/assets/icons/tech/jenkins.svg"
-                alt="Jenkins Logo"
+                src="/assets/icons/tech/HashiCorp Terraform.svg"
+                alt="Terraform Logo"
                 className={styles.groupIcon}
               />
             </div>
