@@ -4,46 +4,27 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './TechStack.module.css';
 
-interface TechIcon {
-  name: string;
-  icon: string;
-  isLarger?: boolean;
-  isExtraLarge?: boolean;
-}
-
-const techIcons: TechIcon[] = [
-  // Cloud & Infrastructure
+const techIcons = [
   { name: "AWS", icon: "/assets/icons/tech/aws_logo.svg" },
   { name: "Terraform", icon: "/assets/icons/tech/HashiCorp Terraform.svg" },
   { name: "Linux", icon: "/assets/icons/tech/linux.svg" },
   { name: "Bash", icon: "/assets/icons/tech/Bash.svg" },
   { name: "Nginx", icon: "/assets/icons/tech/nginx.svg" },
-
-  // Containerization & Orchestration
   { name: "Docker", icon: "/assets/icons/tech/docker.svg" },
   { name: "Kubernetes", icon: "/assets/icons/tech/kubernetes.svg" },
-  { name: "ArgoCD", icon: "/assets/icons/tech/argo.svg", isLarger: true },
-
-  // CI/CD & VCS
-  { name: "Jenkins", icon: "/assets/icons/tech/jenkins.svg", isLarger: true },
+  { name: "ArgoCD", icon: "/assets/icons/tech/argo.svg" },
+  { name: "Jenkins", icon: "/assets/icons/tech/jenkins.svg" },
   { name: "GitHub Actions", icon: "/assets/icons/tech/github-actions.svg" },
-  { name: "GitHub", icon: "/assets/icons/tech/github.svg", isLarger: true },
+  { name: "GitHub", icon: "/assets/icons/tech/github.svg" },
   { name: "GitLab", icon: "/assets/icons/tech/gitlab.svg" },
   { name: "Git", icon: "/assets/icons/tech/git.svg" },
-
-  // Monitoring
   { name: "Grafana", icon: "/assets/icons/tech/grafana.svg" },
-  // { name: "Datadog", icon: "/assets/icons/tech/datadog.svg" },
-
-  // Languages
-  { name: "Go", icon: "/assets/icons/tech/go.svg", isLarger: true },
+  { name: "Go", icon: "/assets/icons/tech/go.svg" },
   { name: "Python", icon: "/assets/icons/tech/python.svg" },
   { name: "TypeScript", icon: "/assets/icons/tech/typescript.svg" },
   { name: "JavaScript", icon: "/assets/icons/tech/javascript.svg" },
-
-  // Databases
   { name: "PostgreSQL", icon: "/assets/icons/tech/postgresql.svg" },
-  { name: "MySQL", icon: "/assets/icons/tech/MySQL.svg" },
+  { name: "MySQL", icon: "/assets/icons/tech/MySQL.svg" }
 ];
 
 const TechStack = () => {
@@ -55,41 +36,40 @@ const TechStack = () => {
             Stack
           </h2>
           <p className={styles.headerSubtitle} data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
-            Technologies, frameworks and tools I use to build applications.
+            Technologies, frameworks and tools I use to build and deploy scalable applications.
           </p>
         </div>
-        <div className={styles.centeredContainer}>
-          <div className={styles.iconsContainer}>
-            {techIcons.map((tech, index) => (
-              <motion.div
-                key={index}
-                className={styles.iconBox}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.04,
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 20
-                }}
-                whileHover={{
-                  scale: 1.1,
-                }}
-              >
-                <img
-                  src={tech.icon}
-                  alt={tech.name}
-                  className={`
-                    ${styles.iconImg} 
-                    ${tech.isLarger ? styles.largerIcon : ''} 
-                    ${tech.isExtraLarge ? styles.extraLargeIcon : ''}
-                  `}
-                />
-                <span className={styles.iconName}>{tech.name}</span>
-              </motion.div>
-            ))}
+
+        <div className={styles.gradientWrapper}>
+          <div className={styles.centeredContainer}>
+            <div className={styles.uniformGrid}>
+              {techIcons.map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  className={styles.skillCard}
+                  title={tech.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.02 }}
+                  whileHover={{ 
+                    y: -4, 
+                    scale: 1.04, 
+                    rotate: index % 2 === 0 ? 1.5 : -1.5,
+                    transition: { duration: 0.15, ease: "easeOut" }
+                  }}
+                >
+                  <img 
+                    src={tech.icon} 
+                    alt={tech.name} 
+                    className={`${styles.skillIcon} ${
+                      (tech.name === "GitHub" || tech.name === "Go") ? styles.scaleUp : ""
+                    }`} 
+                  />
+                  <span className={styles.cardTooltip}>{tech.name}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

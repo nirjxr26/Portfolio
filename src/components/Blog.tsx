@@ -7,23 +7,23 @@ import styles from './Blog.module.css';
 const blogPosts = [
   {
     id: 4,
-    tag: "",
-    readTime: "",
-    badgeTitle: "Containerization",
-    badgeDesc: "Docker & K8s",
-    title: "Containerizing AegisMesh",
+    tag: "INFRASTRUCTURE",
+    readTime: "5 MIN READ",
+    badgeTitle: "Zero environment drift",
+    badgeDesc: "When local matches production exactly",
+    title: "I thought Docker was extra work. It wasn't.",
     description: "Containerizing AegisMesh with Docker, Kubernetes, and Jenkins. How a \"few hours\" turned into a week, and what I'd do differently.",
     date: "Apr 2026",
     footer: "3 takeaways",
-    gradientClass: styles.gradientDockerJenkins,
+    gradientClass: styles.gradientWarm,
     articleUrl: "https://blog.nirjar.me/containerized-aegismesh"
   },
   {
     id: 3,
-    tag: "",
-    readTime: "",
-    badgeTitle: "Git Workflow",
-    badgeDesc: "Tracking Changes",
+    tag: "GIT WORKFLOW",
+    readTime: "4 MIN READ",
+    badgeTitle: "Never lose a line",
+    badgeDesc: "How version control saved my sanity",
     title: "How GitHub changed my workflow",
     description: "I put off GitHub longer than made sense. Learning the commands was fine. What got me was figuring out how much work I'd already lost without knowing it.",
     date: "Apr 2026",
@@ -33,10 +33,10 @@ const blogPosts = [
   },
   {
     id: 1,
-    tag: "",
-    readTime: "",
-    badgeTitle: "Blind Spots",
-    badgeDesc: "CI/CD visibility",
+    tag: "OBSERVABILITY",
+    readTime: "6 MIN READ",
+    badgeTitle: "Is it live yet?",
+    badgeDesc: "Connecting commits to production status",
     title: "Building DeployLens Exposed My Deployment Blind Spots",
     description: "I built a CI/CD visibility tool and couldn't answer a basic question: what's actually running in production right now?",
     date: "Apr 2026",
@@ -47,47 +47,6 @@ const blogPosts = [
 ];
 
 const Blog = () => {
-  // Render exactly the first (Docker) and middle (Git) cards
-  const activePosts = blogPosts.filter(post => post.id === 4 || post.id === 3);
-
-  const renderCardArt = (postId: number) => {
-    switch (postId) {
-      case 4: // Containerization (Docker)
-        return (
-          <div className={`${styles.artWrapper} ${styles.dockerArt}`}>
-            <div className={styles.logoGroup}>
-              <img
-                src="/assets/icons/tech/docker.svg"
-                alt="Docker Logo"
-                className={styles.groupIcon}
-              />
-              <img
-                src="/assets/icons/tech/kubernetes.svg"
-                alt="Kubernetes Logo"
-                className={styles.groupIcon}
-              />
-              <img
-                src="/assets/icons/tech/HashiCorp Terraform.svg"
-                alt="Terraform Logo"
-                className={styles.groupIcon}
-              />
-            </div>
-          </div>
-        );
-      case 3: // Git Workflow
-      default:
-        return (
-          <div className={`${styles.artWrapper} ${styles.gitArt}`}>
-            <img
-              src="/assets/icons/tech/git.svg"
-              alt="Git Logo"
-              className={styles.logoIcon}
-            />
-          </div>
-        );
-    }
-  };
-
   return (
     <section id="blog" className={styles.blogSection} data-aos="fade-up">
       <div className="container">
@@ -97,21 +56,49 @@ const Blog = () => {
         </div>
 
         <div className={styles.blogGrid}>
-          {activePosts.map((post, index) => (
-            <a
+          {blogPosts.slice(0, 2).map((post, index) => (
+            <div
               key={post.id}
               className={styles.blogCard}
-              href={post.articleUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               data-aos="fade-up"
-              data-aos-delay={(index * 150) + 100}
-              data-aos-duration="800"
+              data-aos-delay={(index * 100) + 100}
+              data-aos-duration="600"
             >
-              {renderCardArt(post.id)}
+              <div className={`${styles.cardHeader} ${post.gradientClass}`}>
+                <div className={styles.tagGroup}>
+                  <span className={styles.tag}>{post.tag}</span>
+                  <span className={styles.readTime}>{post.readTime}</span>
+                </div>
 
-              <h3 className={styles.cardTitle}>{post.title}</h3>
-            </a>
+                <div className={styles.badgeBox}>
+                  <h4 className={styles.badgeTitle}>{post.badgeTitle}</h4>
+                  <p className={styles.badgeDesc}>{post.badgeDesc}</p>
+                </div>
+              </div>
+
+              <div className={styles.cardBody}>
+                <div className={styles.cardContent}>
+                  <h3 className={styles.cardTitle}>{post.title}</h3>
+                  <p className={styles.cardDescription}>{post.description}</p>
+                </div>
+
+                <div className={styles.cardFooter}>
+                  <div className={styles.footerInfo}>
+                    <span className={styles.date}>{post.date}</span>
+                    <span className={styles.takeaways}>{post.footer}</span>
+                  </div>
+                  <a
+                    className={styles.readButton}
+                    href={post.articleUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Read article: ${post.title}`}
+                  >
+                    Read article
+                  </a>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

@@ -1,186 +1,225 @@
 .techStackSection {
-  padding: 3rem 0 5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg);
+  background-color: var(--bg); /* Keep matching standard background */
+  padding: 6rem 0;
   position: relative;
+  overflow: hidden;
 }
 
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 4rem;
   width: 100%;
-  margin-bottom: 2.5rem;
 }
 
 .headerLabel {
   font-family: var(--font-accent);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.2rem, 4.5vw, 3rem);
   font-weight: 700;
   color: var(--ink);
-  opacity: 1;
   letter-spacing: -0.02em;
   text-transform: capitalize;
-  margin: 0;
   text-align: center;
 }
 
 .headerSubtitle {
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #71717a;
+  margin-top: 0.25rem;
   text-align: center;
   max-width: 600px;
-  margin: 0.5rem auto 0;
+  line-height: 1.6;
   font-weight: 500;
-  line-height: 1.5;
-  opacity: 0.8;
 }
 
 .centeredContainer {
-  max-width: 100%;
-  background: linear-gradient(135deg,
-      #f6efe8 0%,
-      #f1e8f5 30%,
-      #e8edf8 65%,
-      #e6f0f2 100%);
-  padding: 3rem;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.iconsContainer {
+.gradientWrapper {
+  background: linear-gradient(135deg, #f0f9ff 0%, #fdf4ff 50%, #fffbeb 100%); /* Calmer, softer pastel mix */
+  padding: 2.2rem 3.2rem; /* Slightly wider horizontal padding for an expansive, spacious deck */
+  border-radius: 2.4rem; /* Balanced corner curve */
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.015), 0 1px 3px rgba(0, 0, 0, 0.005);
+  width: fit-content; /* Hugs the card deck with high-end precision */
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* --- FLEX-BASED FLUID GLASSMORPHIC GRID LAYOUT --- */
+.uniformGrid {
+  --card-size: 88px;  /* Elegant compact card container */
+  --gap: 12px;         /* Clean gap spacing */
+  --icon-size: 44px;   /* 50% relative proportion */
+
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Centering cards in the grid row */
+  gap: var(--gap);
+  width: 100%;
+  max-width: 1000px; /* Snaps to exactly 10 columns max on desktop, perfect symmetrical 10x2 grid */
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.iconBox {
-  width: 80px;
-  height: 70px;
-  margin: 0.75rem;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: var(--radius-md);
+/* --- SKILL CARD COMPONENT (GLASSMORPHIC) --- */
+.skillCard {
+  background: rgba(255, 255, 255, 0.45); /* Glassmorphic background */
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Crisp glass edge */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01), 0 6px 18px rgba(0, 0, 0, 0.015);
+  border-radius: 0.85rem; /* Smoother corner for smaller cards */
+  width: var(--card-size);
+  height: var(--card-size);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.90rem;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-@media (hover: hover) {
-  .iconBox:hover {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
-  }
+.skillCard:hover {
+  background: rgba(255, 255, 255, 0.6); /* Slightly more solid on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.005);
+  border-color: rgba(255, 255, 255, 0.7);
 }
 
-.iconImg {
-  width: 100%;
-  height: 100%;
+.skillIcon {
+  width: var(--icon-size);
+  height: var(--icon-size);
   object-fit: contain;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.4s ease;
 }
 
-.iconName {
+/* Custom scale booster for icons with high built-in empty margin (GitHub, Go) */
+.scaleUp {
+  transform: scale(1.18);
+}
+
+/* --- PREMIUM CARD TOOLTIPS --- */
+.cardTooltip {
   position: absolute;
-  bottom: 8px;
-  left: 0;
-  width: 100%;
-  text-align: center;
+  bottom: 6px;
   font-family: var(--font-display);
   font-size: 0.6rem;
   font-weight: 700;
-  color: var(--ink);
+  color: #71717a;
+  background: rgba(244, 244, 245, 0.9);
+  padding: 0.12rem 0.35rem;
+  border-radius: 0.3rem;
   opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(2px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
-  letter-spacing: -0.01em;
-  padding: 0 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.01em;
 }
 
-.largerIcon {
-  transform: scale(1.15);
+.skillCard:hover .cardTooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.extraLargeIcon {
-  transform: scale(1.5);
-}
+/* --- RESPONSIVE WEBPAGE MEDIA QUERIES --- */
 
-@media (hover: hover) {
-  .iconBox:hover .iconImg {
-    transform: translateY(-8px) scale(0.85);
+/* Tablets / Medium Laptops / Small Desktops (Snaps to 8 columns) */
+@media (max-width: 1100px) {
+  .gradientWrapper {
+    padding: 1.8rem 2.8rem;
+    border-radius: 2rem;
   }
 
-  .iconBox:hover .largerIcon {
-    transform: translateY(-8px) scale(1.05);
+  .uniformGrid {
+    --card-size: 80px;
+    --gap: 10px;
+    --icon-size: 40px;
+    max-width: 710px; /* Snaps to exactly 8 columns: 8 * 80 + 7 * 10 = 710px */
   }
-
-  .iconBox:hover .extraLargeIcon {
-    transform: translateY(-8px) scale(1.2);
-  }
-
-  .iconBox:hover .iconName {
-    opacity: 1;
-    transform: translateY(0);
+  
+  .skillCard {
+    border-radius: 0.75rem;
   }
 }
 
+/* Small Tablets / Large Mobile (Snaps to 5 columns × 4 rows) */
 @media (max-width: 768px) {
-
   .techStackSection {
-    padding: 2rem 1rem 3rem;
+    padding: 4rem 0;
   }
 
-  .centeredContainer {
-    padding: 2.5rem;
+  .header {
+    margin-bottom: 2.5rem;
   }
 
-  .iconsContainer {
-    gap: 0.75rem;
+  .gradientWrapper {
+    padding: 1.5rem 2.2rem;
+    border-radius: 1.6rem;
   }
 
-  .iconBox {
-    width: calc(33.333% - 0.5rem);
-    height: 64px;
-    margin: 0;
-    padding: 0.75rem 0.90rem;
-    border-radius: var(--radius-sm);
+  .uniformGrid {
+    --card-size: 72px;
+    --gap: 8px;
+    --icon-size: 36px;
+    max-width: 392px; /* Snaps to exactly 5 columns: 5 * 72 + 4 * 8 = 392px */
   }
 
-  @media (max-width: 768px) {
-    .iconBox {
-      width: calc(32.333% - 0.5rem);
-      height: 74px;
-      margin: 0;
-      padding: 1.1rem;
-      border-radius: var(--radius-sm);
-    }
+  .skillCard {
+    border-radius: 0.7rem;
   }
 
-  @media (max-width: 400px) {
-    .iconBox {
-      width: calc(32.333% - 0.5rem);
-      height: 60px;
-      margin: 0;
-      padding: 0.90rem;
-      border-radius: var(--radius-sm);
-    }
+  .cardTooltip {
+    display: none; /* Hide tooltips on touch screens to prevent sticky hovers */
+  }
+}
+
+/* Standard Mobile Devices (Snaps to 3 columns, highly compact and neat) */
+@media (max-width: 480px) {
+  /* Override global container padding for the skills section to maximize screen width */
+  .techStackSection :global(.container) {
+    padding: 0 0.75rem !important; /* Very narrow margins for maximum width */
   }
 
+  .gradientWrapper {
+    padding: 1.2rem 1.6rem;
+    border-radius: 1.4rem;
+  }
+
+  .uniformGrid {
+    --card-size: 76px;  /* Compact card size on mobile */
+    --gap: 10px;        /* Clean gap */
+    --icon-size: 38px;  /* Exactly 50% card size ratio */
+    max-width: 260px;  /* Snaps to exactly 3 columns: 3 * 76 + 2 * 10 = 248px */
+  }
+
+  .skillCard {
+    border-radius: 0.7rem;
+  }
+}
+
+/* Extra Narrow Mobile Screens (Snaps to 3 columns, ultra compact to fit SE screens cleanly) */
+@media (max-width: 360px) {
+  .gradientWrapper {
+    padding: 0.8rem 1rem;
+    border-radius: 1.2rem;
+  }
+
+  .uniformGrid {
+    --card-size: 68px;  /* Sized down card to fit 320px screens cleanly */
+    --gap: 8px;
+    --icon-size: 34px;
+    max-width: 230px;  /* Snaps to exactly 3 columns: 3 * 68 + 2 * 8 = 220px */
+  }
+
+  .skillCard {
+    border-radius: 0.6rem;
+  }
 }
