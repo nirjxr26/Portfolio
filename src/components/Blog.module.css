@@ -38,10 +38,10 @@
 
 .blogGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
   width: 100%;
-  max-width: 860px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 5;
@@ -93,6 +93,10 @@
   background: linear-gradient(180deg, #e0f2fe 0%, rgba(224, 242, 254, 0.1) 100%);
 }
 
+.gradientPurple {
+  background: linear-gradient(180deg, #f3e8ff 0%, rgba(243, 232, 255, 0.1) 100%);
+}
+
 .tagGroup {
   display: flex;
   justify-content: space-between;
@@ -120,11 +124,13 @@
 }
 
 .badgeBox {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 1.2rem 1.75rem;
   border-radius: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.01);
   width: 100%;
   position: relative;
   z-index: 10;
@@ -293,5 +299,37 @@
   .cardDescription {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
+  }
+}
+
+.viewMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  width: 100%;
+}
+
+.viewMoreButton {
+  background: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: var(--white);
+  padding: 0.8rem 2rem;
+  border-radius: 2rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .viewMoreButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   }
 }

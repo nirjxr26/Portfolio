@@ -43,7 +43,7 @@
 
 .gradientWrapper {
   background: linear-gradient(135deg, #f0f9ff 0%, #fdf4ff 50%, #fffbeb 100%); /* Calmer, softer pastel mix */
-  padding: 2.2rem 3.2rem; /* Slightly wider horizontal padding for an expansive, spacious deck */
+  padding: 2.2rem 2.2rem; /* Slightly wider horizontal padding for an expansive, spacious deck */
   border-radius: 2.4rem; /* Balanced corner curve */
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.015), 0 1px 3px rgba(0, 0, 0, 0.005);
@@ -189,7 +189,7 @@
   }
 
   .gradientWrapper {
-    padding: 1.2rem 1.6rem;
+    padding: 2rem 2rem;
     border-radius: 1.4rem;
   }
 
@@ -208,7 +208,7 @@
 /* Extra Narrow Mobile Screens (Snaps to 3 columns, ultra compact to fit SE screens cleanly) */
 @media (max-width: 360px) {
   .gradientWrapper {
-    padding: 0.8rem 1rem;
+    padding: 1rem 1rem;
     border-radius: 1.2rem;
   }
 

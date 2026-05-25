@@ -2,16 +2,30 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import styles from './Blog.module.css';
 
 const blogPosts = [
   {
     id: 4,
+    tag: "DEVSECOPS",
+    readTime: "5 MIN READ",
+    badgeTitle: "872 issues. Day one.",
+    badgeDesc: "What SonarQube found in codebase",
+    title: "The codebase felt fine. SonarQube disagreed.",
+    description: "AegisMesh was growing — more services, more auth logic, more CI/CD. I had no way to tell if the codebase was getting better or just bigger. So I added SonarQube and looked.",
+    date: "May 2026",
+    footer: "4 takeaways",
+    gradientClass: styles.gradientPurple,
+    articleUrl: "https://blog.nirjar.me/sonarqube"
+  },
+  {
+    id: 5,
     tag: "INFRASTRUCTURE",
     readTime: "5 MIN READ",
     badgeTitle: "Zero environment drift",
-    badgeDesc: "When local matches production exactly",
-    title: "I thought Docker was extra work. It wasn't.",
+    badgeDesc: "When local matches production",
+    title: "I avoided Docker for months. That was the mistake.",
     description: "Containerizing AegisMesh with Docker, Kubernetes, and Jenkins. How a \"few hours\" turned into a week, and what I'd do differently.",
     date: "Apr 2026",
     footer: "3 takeaways",
@@ -56,7 +70,7 @@ const Blog = () => {
         </div>
 
         <div className={styles.blogGrid}>
-          {blogPosts.slice(0, 2).map((post, index) => (
+          {blogPosts.slice(0, 3).map((post, index) => (
             <div
               key={post.id}
               className={styles.blogCard}
@@ -100,6 +114,18 @@ const Blog = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className={styles.viewMoreContainer} data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+          <a
+            href="https://blog.nirjar.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.viewMoreButton}
+          >
+            <span>Engineering Notes</span>
+            <ArrowRight size={18} />
+          </a>
         </div>
       </div>
     </section>
