@@ -1,0 +1,597 @@
+.leadershipSection {
+  background-color: var(--bg); 
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5rem;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.sectionHeader {
+  font-family: var(--font-accent);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: #71717a;
+  margin-top: 0.5rem;
+  text-align: center;
+  max-width: 650px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Glow Background Effects */
+.glowBackground {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  filter: blur(140px);
+}
+
+.glowBlue {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 300px;
+  height: 300px;
+  background: rgba(66, 133, 244, 0.15);
+  border-radius: 50%;
+}
+
+.glowRed {
+  position: absolute;
+  top: 20%;
+  right: 20%;
+  width: 300px;
+  height: 300px;
+  background: rgba(234, 67, 53, 0.12);
+  border-radius: 50%;
+}
+
+.glowYellow {
+  position: absolute;
+  bottom: 20%;
+  left: 25%;
+  width: 300px;
+  height: 300px;
+  background: rgba(251, 188, 5, 0.1);
+  border-radius: 50%;
+}
+
+.glowGreen {
+  position: absolute;
+  bottom: 20%;
+  right: 25%;
+  width: 300px;
+  height: 300px;
+  background: rgba(52, 168, 83, 0.1);
+  border-radius: 50%;
+}
+
+/* Premium Card Design */
+.ambassadorCard {
+  background: #F1F6FE; 
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 2.5rem;
+  padding: 3.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02), 0 30px 60px rgba(0, 0, 0, 0.04); */
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 2rem;
+  align-items: stretch; /* Stretch columns to match height */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Interactive Border Glow on Hover */
+.ambassadorCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 2.5rem;
+  padding: 1px;
+  /* background: linear-gradient(
+    135deg, 
+    rgba(66, 133, 244, 0.3) 0%, 
+    rgba(234, 67, 53, 0.1) 30%, 
+    rgba(251, 188, 5, 0.1) 60%, 
+    rgba(52, 168, 83, 0.3) 100%
+  ); */
+  -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.5;
+  transition: opacity 0.6s ease;
+}
+
+@media (hover: hover) {
+  .ambassadorCard:hover {
+    transform: translateY(-5px);
+    /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03), 0 40px 80px rgba(0, 0, 0, 0.08); */
+    /* border-color: rgba(255, 255, 255, 0.8); */
+  }
+
+  .ambassadorCard:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Left Visual Column */
+.visualColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 360px; /* Larger size for desktop */
+  border-radius: 1.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.01);
+  display: flex;
+}
+
+.sketchImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Badge ID Tag styling */
+.idTag {
+  margin-top: 2rem;
+  background: #18181b;
+  color: #ffffff;
+  padding: 0.6rem 1.4rem;
+  border-radius: 99px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: capitalize; /* Enforce capitalization */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: default;
+}
+
+.idDot {
+  width: 6px;
+  height: 6px;
+  background-color: #34a853; /* Active status Green */
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 168, 83, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(52, 168, 83, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(52, 168, 83, 0);
+  }
+}
+
+/* Right Content Column */
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Situate content from the top */
+  text-align: left;
+}
+
+.badge {
+  background: rgba(66, 133, 244, 0.08);
+  color: #4285f4;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 1rem;
+  border-radius: 99px;
+  width: fit-content;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(66, 133, 244, 0.15);
+}
+
+.roleTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.3rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.middleContent {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.programName {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #4b5563;
+  font-weight: 500;
+  margin-bottom: 2rem;
+}
+
+/* Pillars / Impact list */
+.pillarList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.pillarItem {
+  display: block;
+}
+
+.pillarText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pillarTitle {
+  font-family: var(--font-display);
+  font-size: 1.03rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.pillarDesc {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* Call to Action Button */
+.verifyBtn {
+  background: #18181b;
+  color: #ffffff;
+  padding: 0.85rem 2rem;
+  border-radius: 0.8rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: fit-content;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+
+@media (hover: hover) {
+  .verifyBtn:hover {
+    background: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.verifyBtn:active {
+  transform: translateY(0);
+}
+
+.gidWatermark {
+  position: absolute;
+  bottom: -20px;
+  right: -10px;
+  font-family: var(--font-display);
+  font-size: 5.5rem;
+  font-weight: 600;
+  color: var(--ink);
+  opacity: 0.04;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .leadershipSection {
+    padding: 6rem 0;
+  }
+
+  .ambassadorCard {
+    grid-template-columns: 0.95fr 1.05fr; /* Keep premium 2-column profile layout on iPads */
+    gap: 2rem;
+    padding: 3rem 2.5rem;
+    max-width: 960px;
+    border-radius: 2rem;
+    align-items: stretch;
+  }
+
+  .ambassadorCard::before {
+    border-radius: 2rem;
+  }
+
+  .visualColumn {
+    align-items: flex-start; /* Keep photograph left-aligned on iPads */
+  }
+
+  .logoWrapper {
+    max-width: 260px; /* Perfectly scaled visual frame for tablet */
+  }
+
+  .roleTitle {
+    font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  }
+
+  .programName {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .middleContent {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .pillarList {
+    gap: 1.25rem;
+  }
+
+  .pillarTitle {
+    font-size: 0.95rem;
+  }
+
+  .pillarDesc {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .leadershipSection {
+    padding: 5rem 0;
+  }
+
+  .header {
+    margin-bottom: 4rem;
+  }
+
+  .ambassadorCard {
+    grid-template-columns: 1fr; /* Stack vertically on mobile screens under 768px */
+    gap: 2.5rem;
+    padding: 2.5rem 1.75rem;
+    max-width: 520px;
+    border-radius: 1.75rem;
+  }
+
+  .ambassadorCard::before {
+    border-radius: 1.75rem;
+  }
+
+  .visualColumn {
+    order: 1; /* Visual frame on top */
+    align-items: center; /* Center-align sketch on mobile */
+  }
+
+  .contentColumn {
+    order: 2; /* Written content below */
+  }
+
+  .logoWrapper {
+    max-width: 280px;
+  }
+
+  .roleTitle {
+    font-size: 1.85rem;
+    text-align: center;
+  }
+
+  .programName {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .middleContent {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .pillarList {
+    gap: 1.25rem;
+  }
+
+  .pillarTitle {
+    font-size: 0.95rem;
+  }
+
+  .pillarDesc {
+    font-size: 0.85rem;
+  }
+
+  .gidWatermark {
+    bottom: -15px;
+    right: -5px;
+    font-size: 4.5rem;
+    opacity: 0.03;
+  }
+}
+
+@media (max-width: 480px) {
+  .leadershipSection {
+    padding: 3.5rem 0;
+  }
+
+  .ambassadorCard {
+    padding: 2rem 1.25rem;
+    border-radius: 1.5rem;
+  }
+
+  .ambassadorCard::before {
+    border-radius: 1.5rem;
+  }
+
+  .logoWrapper {
+    max-width: 240px;
+  }
+
+  .idTag {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.8rem;
+  }
+
+  .roleTitle {
+    font-size: 1.5rem;
+  }
+
+
+
+  .verifyBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .gidWatermark {
+    bottom: -10px;
+    right: -5px;
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .roleTitle {
+    font-size: 1.38rem;
+  }
+
+  .programName {
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .gidWatermark {
+    bottom: -10px;
+    right: -4px;
+    font-size: 3.2rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .leadershipSection {
+    padding: 3rem 0;
+  }
+
+  .ambassadorCard {
+    padding: 1.5rem 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .ambassadorCard::before {
+    border-radius: 1.25rem;
+  }
+
+  .logoWrapper {
+    max-width: 180px;
+  }
+
+  .roleTitle {
+    font-size: 1.35rem;
+  }
+
+  .programName {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .middleContent {
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillarList {
+    gap: 1rem;
+  }
+
+  .pillarTitle {
+    font-size: 0.85rem;
+  }
+
+  .pillarDesc {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+
+
+  .verifyBtn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .gidWatermark {
+    bottom: -8px;
+    right: -2px;
+    font-size: 2.5rem;
+  }
+}

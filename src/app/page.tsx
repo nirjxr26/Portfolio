@@ -3,6 +3,7 @@ import About from "@/components/About";
 import TechStack from "@/components/TechStack";
 import Works from "@/components/Works";
 import Blog from "@/components/Blog";
+import Leadership from "@/components/Leadership";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       {/* <About /> */}
       <TechStack />
       <Works />
+      <Leadership />
       <Blog />
       <Contact />
     </main>
