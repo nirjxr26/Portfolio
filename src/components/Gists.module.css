@@ -165,7 +165,7 @@
   display: inline-block;
   text-align: center;
   padding: 0.85rem 1.75rem;
-  background: #111;
+  background: var(--ink);
   border-radius: 0.8rem;
   color: #fff;
   font-family: var(--font-display);
@@ -183,7 +183,7 @@
 }
 
 .readButton:hover {
-  background: #000;
+  background: var(--ink);
   transform: scale(1.02);
 }
 

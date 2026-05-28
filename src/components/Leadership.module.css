@@ -216,7 +216,7 @@
 .logText {
   font-family: var(--font-primary);
   font-size: 0.9rem;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--mid);
   font-weight: 400;
 }
@@ -237,9 +237,9 @@
   border: 1px solid #1D1D1F;
   background: #1D1D1F; /* 1d1d1f background! */
   color: #FFFFFF; /* ffffff text color! */
-  padding: 0.6rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   margin-top: 0.5rem;
-  border-radius: 99px;
+  border-radius: .6rem;
   font-family: var(--font-primary);
   font-size: 0.8rem;
   font-weight: 600;
@@ -249,13 +249,18 @@
 }
 
 .verifyIcon {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0;
   color: #FFFFFF; /* ffffff icon color! */
 }
 
 .verifyBtn:hover {
-  background: #000000;
-  border-color: #000000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #1D1D1F;
+  border-color: #1D1D1F;
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .verifyBtn:active {
@@ -351,6 +356,10 @@
 
 @media (max-width: 480px) {
 
+  .actionWrapper {
+      margin-top: 2rem; /* Shaved off vertical space to make card height slightly shorter! */
+  }
+
   .logText{
     font-family: var(--font-display);
   }
@@ -366,5 +375,32 @@
 
   .roleTitle {
     font-size: 2.1rem;
+  }
+
+  .verifyBtn {
+    padding: 0.8rem 1.5rem;
+    border-radius: .6rem;
+    width: 60%;
+  }
+
+  .actionWrapper {
+    justify-content: left
+    ; /* Center the button on mobile */
+  }
+}
+
+
+@media (max-width: 400px) {
+
+  .verifyBtn {
+    padding: 0.8rem 1.5rem;
+    border-radius: .6rem;
+    width: 70%;
+  }
+
+  .actionWrapper {
+    width: 100%;
+    justify-content: left;
+    margin-top: 2rem; 
   }
 }

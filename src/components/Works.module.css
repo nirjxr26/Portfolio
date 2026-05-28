@@ -378,7 +378,7 @@
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  background-color: #111;
+  background-color: var(--ink);
   color: #fff;
   padding: 0.75rem 1.5rem;
   border-radius: 0.6rem;
@@ -391,7 +391,7 @@
 
 @media (hover: hover) {
   .previewButton:hover {
-    background-color: #000;
+    background-color: var(--ink);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }

@@ -219,7 +219,7 @@
 }
 
 .readButton {
-  background-color: #18181b;
+  background-color: var(--ink);
   color: #ffffff;
   padding: 0.8rem 1.75rem;
   border-radius: 0.6rem;
@@ -237,7 +237,7 @@
 
 @media (hover: hover) {
   .readButton:hover {
-    background-color: #000000;
+    background-color: var(--ink);
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   }
