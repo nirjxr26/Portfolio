@@ -1,22 +1,8 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ShieldCheck } from 'lucide-react';
 import styles from './Leadership.module.css';
-
-// Google Developer Ambassador custom sketch visual frame
-const AmbassadorEmblem = () => {
-  return (
-    <div className={styles.logoWrapper}>
-      <img
-        src="/assets/icons/ui/nirjar_sketch.jpg"
-        alt="Nirjar Goswami Sketch"
-        className={styles.sketchImage}
-      />
-    </div>
-  );
-};
 
 const Leadership = () => {
   return (
@@ -28,96 +14,79 @@ const Leadership = () => {
             Leadership & Community
           </h2>
           <p className={styles.sectionSubtitle} data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
-            Helping developers build real things and actually ship them.
+            Helping developers build real things and ship them.
           </p>
         </div>
 
-        {/* Ambient background blur colors */}
-        <div className={styles.glowBackground}>
-          <div className={styles.glowBlue} />
-          <div className={styles.glowRed} />
-          <div className={styles.glowYellow} />
-          <div className={styles.glowGreen} />
-        </div>
-
-        {/* Glassmorphic Ambassador Card */}
+        {/* Mockup-Aligned Premium Card Container */}
         <div 
           className={styles.ambassadorCard}
           data-aos="fade-up"
           data-aos-delay="150"
           data-aos-duration="800"
         >
-          {/* Left Column: Visual branding and ID Tag */}
-          <div className={styles.visualColumn}>
-            <AmbassadorEmblem />
-            
-            {/* <div className={styles.idTag}>
-              <div className={styles.idDot} />
-              <span>Ambassador GID: 8629</span>
-            </div> */}
+          {/* Left Column: Visual branding, Role Title, Badge (Centered) */}
+          <div className={styles.leftColumn}>
+            {/* Large Google G Logo */}
+            <div className={styles.logoWrapper}>
+              <img
+                src="/assets/icons/tech/Google_Favicon_2025.svg"
+                alt="Google Logo"
+                className={styles.googleBigLogo}
+              />
+            </div>
+
+            {/* Name/Role Title */}
+            <h3 className={styles.roleTitle}>
+              Student<br />Ambassador
+            </h3>
+
+            {/* Google Developer Program Badge */}
+            <div className={styles.programBadge}>
+              <span>Google Developer Program</span>
+            </div>
           </div>
 
-          {/* Right Column: Detailed Credentials and Achievements */}
-          <div className={styles.contentColumn}>
-            <h3 className={styles.roleTitle}>
-              Google Student Ambassador
-            </h3>
-            
-            <p className={styles.programName}>
-              Google Developer Groups & Communities
-            </p>
+          {/* Right Column: Three Activity Rows divided by horizontal lines */}
+          <div className={styles.rightColumn}>
+            <div className={styles.activityLog}>
+              {/* Row 1 */}
+              <div className={styles.logRow}>
+                <span className={styles.logLabel}>Gemini Initiative</span>
+                <p className={styles.logText}>
+                  Conducted 5+ peer interviews gathering student feedback on AI tool adoption for Google’s Gemini ambassador initiative.
+                </p>
+              </div>
 
-            <div className={styles.middleContent}>
-              {/* Core Impact Pillars */}
-              <div className={styles.pillarList}>
-                {/* Pillar 1 */}
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarText}>
-                    <h4 className={styles.pillarTitle}>Gemini Ambassador Initiative</h4>
-                    <p className={styles.pillarDesc}>
-                      Conducted 5+ peer interviews gathering student feedback on AI tool adoption for Google’s Gemini ambassador initiative.
-                    </p>
-                  </div>
-                </div>
+              {/* Row 2 */}
+              <div className={styles.logRow}>
+                <span className={styles.logLabel}>Developer Demos</span>
+                <p className={styles.logText}>
+                  Led Gemini demos at CHARUSAT University, covering AI-assisted debugging, documentation workflows, and modern developer tooling.
+                </p>
+              </div>
 
-                {/* Pillar 2 */}
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarText}>
-                    <h4 className={styles.pillarTitle}>Developer Demos</h4>
-                    <p className={styles.pillarDesc}>
-                      Led Gemini demos at CHARUSAT University, covering AI-assisted debugging, docs, and dev workflows.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Pillar 3 */}
-                <div className={styles.pillarItem}>
-                  <div className={styles.pillarText}>
-                    <h4 className={styles.pillarTitle}>Google Study Jams</h4>
-                    <p className={styles.pillarDesc}>
-                      Ran Google Study Jams that got 9+ students their official Cloud skills badges.
-                    </p>
-                  </div>
-                </div>
+              {/* Row 3 */}
+              <div className={styles.logRow}>
+                <span className={styles.logLabel}>Cloud Study Jams</span>
+                <p className={styles.logText}>
+                  Ran Google Study Jams that helped 9+ students earn official Google Cloud skills badges and hands-on cloud experience.
+                </p>
               </div>
             </div>
 
-            {/* Clickable Verification Button */}
-            <a
-              href="https://www.linkedin.com/posts/nirjxr_googleindia-googlestudentambassador-gsa2026-share-7465325984406204416-x-d6/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.verifyBtn}
-            >
-              <ShieldCheck size={18} />
-              <span>Verify Google Profile</span>
-              {/* <ExternalLink size={14} style={{ opacity: 0.8 }} /> */}
-            </a>
-          </div>
-
-          {/* Subtle GID Watermark */}
-          <div className={styles.gidWatermark}>
-            8629
+            {/* Clickable Solid Verify Button with ShieldCheck Icon */}
+            <div className={styles.actionWrapper}>
+              <a
+                href="https://www.linkedin.com/posts/nirjxr_googleindia-googlestudentambassador-gsa2026-share-7465325984406204416-x-d6/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.verifyBtn}
+              >
+                <ShieldCheck size={14} className={styles.verifyIcon} />
+                <span>Verify Google Profile</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
