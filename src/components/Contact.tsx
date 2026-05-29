@@ -17,7 +17,6 @@ import {
   BookOpen
 } from 'lucide-react';
 import styles from './Contact.module.css';
-import PhoneInput from './PhoneInput';
 
 const HashnodeIcon = ({ size = 28, className }: { size?: number, className?: string }) => (
   <img
@@ -147,34 +146,34 @@ const Contact = () => {
             data-aos-delay="300"
             data-aos-duration="600"
           >
-            <div className={styles.formGrid}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Your name</label>
+              <input type="text" name="name" className={styles.input} placeholder="Jane Doe" required suppressHydrationWarning />
+            </div>
+
+            <div className={styles.row}>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Your name<span className={styles.required}>*</span></label>
-                <input type="text" name="name" className={styles.input} placeholder="Jane Doe" required suppressHydrationWarning />
+                <label className={styles.label}>Company</label>
+                <input type="text" name="company" className={styles.input} placeholder="Your company" suppressHydrationWarning />
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Company name</label>
-                <input type="text" name="company" className={styles.input} placeholder="Your company (optional)" suppressHydrationWarning />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Email<span className={styles.required}>*</span></label>
+                <label className={styles.label}>Email</label>
                 <input type="email" name="email" className={styles.input} placeholder="you@gmail.com" required suppressHydrationWarning />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Phone</label>
-                <PhoneInput name="phone" />
               </div>
             </div>
 
             <div className={styles.inputGroup}>
-              <label className={styles.label}>Message<span className={styles.required}>*</span></label>
+              <label className={styles.label}>Phone</label>
+              <input type="text" name="phone" className={styles.input} placeholder="+91 98765 43210" suppressHydrationWarning />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Message</label>
               <textarea
                 className={styles.textarea}
                 name="message"
-                placeholder="How can I help you?"
+                placeholder="Tell me about your project..."
                 required
               />
             </div>
@@ -182,7 +181,7 @@ const Contact = () => {
             <div className={styles.submitContainer}>
               <button type="submit" className={styles.submitBtn} suppressHydrationWarning>
                 Send Message
-                <ArrowRight size={20} />
+                <ArrowRight size={18} />
               </button>
               <span className={styles.privacyText}>No spam. Your details stay private.</span>
             </div>
