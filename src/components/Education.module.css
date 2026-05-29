@@ -1,0 +1,259 @@
+.educationSection {
+  background-color: var(--bg);
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header styling aligned with leadership section */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4rem;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.sectionHeader {
+  font-family: var(--font-accent);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: #71717a;
+  margin-top: 0.25rem;
+  text-align: center;
+  max-width: 650px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Beautiful two-column grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+/* Card Design Container with Top-Left Glow */
+.card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1.6rem;
+  padding: 1.75rem;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden; /* Contains the border-radius masking and ambient glows */
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* Elegant card hover interaction */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+      0px 2px 4px rgba(0, 0, 0, 0.02),
+      0px 12px 32px rgba(0, 0, 0, 0.08);
+  }
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 110px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .logoWrapper {
+  transform: scale(1.03);
+}
+
+.logo {
+  height: 100%;
+  width: auto;
+  max-width: 320px;
+  object-fit: contain;
+  display: block;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.duration {
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  /* margin-top: 0.5rem; */
+  display: block;
+}
+
+.degreeTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+.institutionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #777777;
+  margin-top: 0.5rem;
+  margin-bottom: 0.2.5rem;
+  line-height: 1.4;
+}
+
+.dot {
+  color: #bbbbbb;
+  font-weight: bold;
+}
+
+.divider {
+  width: 100%;
+  height: 0.7px;
+  background: var(--line);
+  margin: 0.75rem 0;
+  opacity: 0.7;
+}
+
+.details {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--mid);
+  flex-grow: 1;
+}
+
+.footerRow {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.gradeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(112, 125, 255, 0.06);
+  /* border: 1px solid rgba(112, 125, 255, 0.12); */
+  border-radius: 99px;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.pursuingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(16, 185, 129, 0.06);
+  /* border: 1px solid rgba(16, 185, 129, 0.12); */
+  border-radius: 99px;
+  padding: 0.4rem 1rem;
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .educationSection {
+    padding: 5rem 0;
+  }
+
+  .grid {
+    gap: 2rem;
+    max-width: 900px;
+  }
+
+  .card {
+    padding: 1.5rem;
+    border-radius: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+    gap: 2rem;
+  }
+
+  .educationSection {
+    padding: 4rem 0;
+  }
+
+  .header {
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .educationSection {
+    padding: 3rem 0;
+  }
+
+  .card {
+    padding: 1.5rem 1.25rem;
+    border-radius: 1.5rem;
+  }
+
+  .logoWrapper {
+    height: 80px;
+    margin-bottom: 1.25rem;
+  }
+
+  .logo {
+    max-width: 220px;
+  }
+
+  .degreeTitle {
+    font-size: 1.25rem;
+  }
+}
+
+.highlightText {
+  color: #444444;
+}

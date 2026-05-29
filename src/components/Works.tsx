@@ -33,7 +33,7 @@ const projects: Project[] = [
   {
     title: "AegisMesh",
     subtitle: "Identity and Access Management",
-    description: "Most teams end up splitting auth, permissions, and audit logs across separate tools. AegisMesh keeps it in one place — MFA, OAuth, session control, RBAC, and audit logs, all from a single admin console. Containerized with Docker, runs on Kubernetes, deploys cleanly across environments.",
+    description: "Multi-tenant IAM platform with a deny-first policy engine, role inheritance, and TOTP/OAuth/JWT auth. Deployed on Kubernetes via GitOps — GitHub Actions builds to ECR, ArgoCD syncs the cluster. SonarQube in CI, Falco for runtime detection, Prometheus and Grafana for observability.",
     features: [
       "Token-Based Auth", "TOTP MFA", "Federated Identity", "Enterprise RBAC"
     ],

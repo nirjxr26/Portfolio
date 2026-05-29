@@ -38,10 +38,10 @@
 
 .blogGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
   position: relative;
   z-index: 5;

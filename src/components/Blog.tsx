@@ -13,7 +13,7 @@ const blogPosts = [
     badgeTitle: "872 issues. Day one.",
     badgeDesc: "What SonarQube found in codebase",
     title: "The codebase felt fine. SonarQube disagreed.",
-    description: "AegisMesh was growing — more services, more auth logic, more CI/CD. I had no way to tell if the codebase was getting better or just bigger. So I added SonarQube and looked.",
+    description: "The codebase was growing — more services and more auth logic. I had no way to tell if the codebase was getting better or just bigger. So I added SonarQube and looked.",
     date: "May 2026",
     footer: "4 takeaways",
     gradientClass: styles.gradientPurple,
@@ -70,7 +70,7 @@ const Blog = () => {
         </div>
 
         <div className={styles.blogGrid}>
-          {blogPosts.slice(0, 3).map((post, index) => (
+          {blogPosts.slice(0, 2).map((post, index) => (
             <div
               key={post.id}
               className={styles.blogCard}
