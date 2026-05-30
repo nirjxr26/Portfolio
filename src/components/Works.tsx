@@ -33,7 +33,7 @@ const projects: Project[] = [
   {
     title: "AegisMesh",
     subtitle: "Identity and Access Management",
-    description: "Multi-tenant IAM platform with a deny-first policy engine, role inheritance, and TOTP/OAuth/JWT auth. Deployed on Kubernetes via GitOps — GitHub Actions builds to ECR, ArgoCD syncs the cluster. SonarQube in CI, Falco for runtime detection, Prometheus and Grafana for observability.",
+    description: "It gives teams Enterprise-grade access control without handing user data to a third party — auth, policy enforcement, MFA, session control, and audit logging in a single self-hosted stack.",
     features: [
       "Token-Based Auth", "TOTP MFA", "Federated Identity", "Enterprise RBAC"
     ],
@@ -59,7 +59,7 @@ const projects: Project[] = [
   {
     title: "HookDrop",
     subtitle: "Webhook Receiver & Streamer",
-    description: "HookDrop is a mock webhook receiver written in Go. POST anything to a bucket URL; HookDrop catches, stores, and streams it live. The app is small on purpose — the real project is the CI/CD pipeline, container hardening, and GitOps loop built around it using ECR.",
+    description: "HookDrop is a mock webhook receiver written in Go. POST anything to a bucket URL; HookDrop catches, stores, and streams it live.The real project is the pipeline around it — ECR, container hardening, GitOps.",
     features: [
       "Mock Webhook Receiver", "Live Data Streaming", "Container Hardening", "GitOps Workflow"
     ],
@@ -80,7 +80,7 @@ const projects: Project[] = [
   {
     title: "DeployLens",
     subtitle: "Deployment Insights",
-    description: "GitHub Actions and AWS CodeDeploy don't talk to each other. A workflow runs, a CodeDeploy execution fires, and whether a specific commit reached production is something you piece together yourself. DeployLens connects both into one timeline — one dashboard, no tab-switching.",
+    description: "GitHub Actions and AWS CodeDeploy don't talk to each other. It ties both into a single timeline, so you can see exactly what a commit did on both sides.",
     features: [
       "SHA Join Engine", "Real-time WebSockets", "CodeDeploy SDK"
     ],

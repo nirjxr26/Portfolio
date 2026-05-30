@@ -81,11 +81,11 @@
   gap: 1.5rem;
   max-width: 620px; /* Snug card proportions */
   margin: 0 auto;
-  background: #FFFFFF;
+  background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 2rem;
   padding: 2.25rem; /* Reduced padding from 3.5rem */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
+  box-shadow: none;
   box-sizing: border-box;
 }
 
@@ -104,9 +104,9 @@
 
 .label {
   font-family: var(--font-display); /* Kept font var-display */
-  font-size: 0.8rem; /* Smaller font */
-  font-weight: 600;
-  color: #1D1D1F;
+  font-size: 0.9rem; /* Smaller font */
+  font-weight: 500;
+  color: #6e6e73;
 }
 
 .input,
@@ -212,7 +212,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 4rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   width: 100%;
 }
 

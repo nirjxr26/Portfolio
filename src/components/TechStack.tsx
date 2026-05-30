@@ -52,12 +52,6 @@ const TechStack = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.02 }}
-                  whileHover={{ 
-                    y: -4, 
-                    scale: 1.04, 
-                    rotate: index % 2 === 0 ? 1.5 : -1.5,
-                    transition: { duration: 0.15, ease: "easeOut" }
-                  }}
                 >
                   <img 
                     src={tech.icon} 

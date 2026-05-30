@@ -160,7 +160,7 @@
   padding: 0.4rem 1.1rem;
   border-radius: 99px;
   color: #4b5563;
-  font-family: var(--font-primary);
+  font-family: var(--font-display);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.01em; /* Lower letter spacing! */
@@ -369,7 +369,7 @@
   }
 
   .ambassadorCard {
-    padding: 2rem 1.25rem;
+    padding: 2rem 1.25rem 1.25rem 1.25rem; /* Restored card padding on mobile stacked layout */
     border-radius: 1.5rem;
   }
 

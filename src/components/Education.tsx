@@ -85,7 +85,7 @@ Advanced studies in information security, cryptography, threat intelligence, and
 
               {/* Institution and Location */}
               <div className={styles.institutionRow}>
-                <span>Charotar University of Science and Technology</span>
+                <span>CHARUSAT</span>
                 <span className={styles.dot}>•</span>
                 <span>Nadiad, Gujarat</span>
               </div>
