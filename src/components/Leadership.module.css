@@ -35,26 +35,37 @@
   font-weight: 500;
 }
 
-/* Premium Card Design Container (Mockup Aligned, with Top-Left Glow) */
+/* Premium Card Design Container - Layout Grid for separated cards */
 .ambassadorCard {
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 2.25rem;
-  padding: 0 3.5rem; /* Removed top/bottom padding to allow vertical separator to touch card edges! */
   max-width: 1100px;
   margin: 0 auto;
   position: relative;
   z-index: 5;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 3.5rem;
-  align-items: stretch; /* Stretched vertically to make vertical separator whole height! */
+  grid-template-columns: 1fr 2fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* Left Column Styling - Detached as its own Premium Card */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centered! */
+  text-align: center;  /* Centered! */
+  justify-content: center; /* Vertically centered inside stretched column */
+  width: 100%;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 2.25rem;
+  padding: 2.25rem 1.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
+  position: relative; /* Allows positioning of the glows */
   overflow: hidden; /* Contains the border-radius masking and ambient glows perfectly */
 }
 
-/* Up-Left Corner Pastel Glow - Premium Pastel Google Yellow (Up) */
-.ambassadorCard::before {
+/* Up-Left Corner Pastel Glow inside Left Column Card - Premium Pastel Google Yellow */
+.leftColumn::before {
   content: '';
   position: absolute;
   top: -100px;
@@ -73,23 +84,6 @@
   filter: blur(40px);
   pointer-events: none;
   z-index: 1; /* Sits behind typography */
-}
-
-/* Left Column Sizing & Centered Alignment, Stretched with vertical divider spanning whole height */
-.leftColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centered! */
-  text-align: center;  /* Centered! */
-  justify-content: center; /* Vertically centered inside stretched column */
-  width: 100%;
-  height: 100%; /* Spans full height of parent card */
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
- /* Vertical divider line whole height (touches top & bottom of card!) */
-  padding-right: 3.5rem; /* Symmetrical spacing */
-  padding-top: 1.75rem;  /* Shaved off vertical space to make card height slightly shorter! */
-  padding-bottom: 1.75rem;
-  position: relative; /* Allows positioning of the bottom-right glow */
 }
 
 /* Left Column Right Bottom Corner Pastel Glow - Premium Pastel Blue (Down) */
@@ -111,7 +105,7 @@
   );
   filter: blur(40px);
   pointer-events: none;
-  z-index: 1; /* Sits behind typography, bleeds beautifully across the vertical divider line */
+  z-index: 1; /* Sits behind typography, bleeds beautifully */
 }
 
 /* Ensure Left Column content elements sit above glows */
@@ -131,7 +125,7 @@
 }
 
 .googleBigLogo {
-  width: 80px;
+  width: 64px;
   height: auto;
   display: block;
 }
@@ -139,12 +133,12 @@
 /* Centered Display Typography on Left (600 Weight) */
 .roleTitle {
   font-family: var(--font-headline);
-  font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
   font-weight: 600; /* Font weight 600 as requested! */
   color: var(--ink);
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  margin: 0.85rem 0 0.6rem 0; /* Compressed top/bottom margin to make card height shorter! */
+  margin: 0.75rem 0 0.65rem 0; /* Compressed top/bottom margin to make card height shorter! */
   text-align: center; /* Centered! */
 }
 
@@ -167,18 +161,23 @@
   text-transform: none; /* Non uppercase badge! */
 }
 
-/* Right Column Styling - Left padding removed as grid gap handles the separator gap */
+/* Right Column Styling - Detached as its own Premium Card */
 .rightColumn {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-left: 0;
-  padding-top: 1.75rem;  /* Shaved off vertical space to make card height slightly shorter! */
-  padding-bottom: 1.75rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 2.25rem;
+  padding: 2.25rem 2.5rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
   justify-content: center; /* Vertically center right side elements for perfect balance */
   position: relative;
-  z-index: 2; /* Layered on top of bleeding pastel glows */
+  z-index: 2;
+  overflow: hidden;
 }
+
+
 
 /* Activity Log Presentation */
 .activityLog {
@@ -191,8 +190,8 @@
   flex-direction: column;
   gap: 0.35rem;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 0.95rem; /* Shaved off vertical space to make card height slightly shorter! */
-  margin-bottom: 0.95rem; /* Shaved off vertical space to make card height slightly shorter! */
+  padding-bottom: 0.6rem; /* Shaved off vertical space to make card height slightly shorter! */
+  margin-bottom: 0.6rem; /* Shaved off vertical space to make card height slightly shorter! */
 }
 
 /* Remove bottom line on the 3rd point */
@@ -225,7 +224,7 @@
 .actionWrapper {
   display: flex;
   justify-content: flex-start;
-  margin-top: 0.95rem; /* Shaved off vertical space to make card height slightly shorter! */
+  margin-top: 0.6rem; /* Shaved off vertical space to make card height slightly shorter! */
 }
 
 /* Verify Google Profile Button (1d1d1f background, ffffff check icon and text) */
@@ -238,7 +237,7 @@
   background: #1D1D1F; /* 1d1d1f background! */
   color: #FFFFFF; /* ffffff text color! */
   padding: 0.75rem 1.5rem;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
   border-radius: .6rem;
   font-family: var(--font-primary);
   font-size: 0.8rem;
@@ -277,21 +276,17 @@
   }
 
   .ambassadorCard {
-    padding: 0 2.5rem;
-    gap: 2.5rem;
+    gap: 2rem;
     max-width: 900px;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.8fr;
   }
 
   .leftColumn {
-    padding-right: 2.5rem;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding: 2.5rem 1.25rem;
   }
 
   .rightColumn {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding: 2.5rem;
   }
 }
 
@@ -301,47 +296,35 @@
   }
 
   .header {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 
   .ambassadorCard {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding: 2rem 1.75rem; /* Restored card padding on mobile stacked layout */
-    border-radius: 1.75rem;
-    align-items: stretch;
-  }
-
-  /* Adjust glow positions for vertical stack */
-  .ambassadorCard::before {
-    width: 200px;
-    height: 200px;
-    top: -50px;
-    left: -50px;
-  }
-
-  .leftColumn::after {
-    display: none; /* Hide left column bottom-right glow on mobile stack to keep simple */
+    gap: 1.75rem;
   }
 
   .leftColumn {
-    border-right: none; /* Stack vertically on mobile, remove divider */
-    padding-right: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .googleBigLogo {
-    width: 70px;
-  }
-
-  .roleTitle {
-    margin: 1rem 0 0.75rem 0;
+    padding: 3rem 1.5rem;
+    border-radius: 1.75rem;
   }
 
   .rightColumn {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 2.5rem 1.75rem;
+    border-radius: 1.75rem;
+  }
+
+  .googleBigLogo {
+    width: 58px;
+  }
+
+  .roleTitle {
+    margin: 0.85rem 0 0.65rem 0;
+  }
+
+  .rightColumn {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
   }
 
   .logRow {
@@ -357,7 +340,7 @@
 @media (max-width: 480px) {
 
   .actionWrapper {
-      margin-top: 2rem; /* Shaved off vertical space to make card height slightly shorter! */
+      margin-top: 1.5rem;
   }
 
   .logText{
@@ -368,8 +351,13 @@
     padding: 3rem 0;
   }
 
-  .ambassadorCard {
-    padding: 2rem 1.25rem 1.25rem 1.25rem; /* Restored card padding on mobile stacked layout */
+  .leftColumn {
+    padding: 2.5rem 1.25rem;
+    border-radius: 1.5rem;
+  }
+
+  .rightColumn {
+    padding: 1.8rem;
     border-radius: 1.5rem;
   }
 
@@ -380,12 +368,11 @@
   .verifyBtn {
     padding: 0.8rem 1.5rem;
     border-radius: .6rem;
-    width: 60%;
+    width: 100%;
   }
 
   .actionWrapper {
-    justify-content: left
-    ; /* Center the button on mobile */
+    justify-content: left;
   }
 }
 
@@ -395,7 +382,7 @@
   .verifyBtn {
     padding: 0.8rem 1.5rem;
     border-radius: .6rem;
-    width: 70%;
+    width: 100%;
   }
 
   .actionWrapper {
