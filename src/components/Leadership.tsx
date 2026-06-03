@@ -11,7 +11,7 @@ const Leadership = () => {
         {/* Header Block */}
         <div className={styles.header}>
           <h2 className={styles.sectionHeader} data-aos="fade-up" data-aos-duration="600">
-            Leadership & Community
+            Community
           </h2>
           <p className={styles.sectionSubtitle} data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
             Helping developers build real things and ship them.

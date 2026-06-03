@@ -107,8 +107,8 @@
 .duration {
   font-family: var(--font-primary);
   font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--accent);
+  font-weight: 700;
+  color: #777777;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   /* margin-top: 0.5rem; */
@@ -122,6 +122,7 @@
   color: var(--ink);
   line-height: 1.25;
   margin-bottom: 0.5rem;
+  padding-right: 3.5rem; /* Ensure space for the top-right corner icon */
 }
 .institutionRow {
   display: flex;
@@ -160,7 +161,8 @@
 
 .footerRow {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 1.5rem;
   position: relative;
   z-index: 2;
@@ -170,28 +172,89 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(112, 125, 255, 0.06);
-  /* border: 1px solid rgba(112, 125, 255, 0.12); */
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 99px;
   padding: 0.4rem 1rem;
   font-family: var(--font-primary);
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--ink);
 }
 
 .pursuingBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  background: rgba(16, 185, 129, 0.06);
-  /* border: 1px solid rgba(16, 185, 129, 0.12); */
+  background: #000000;
   border-radius: 99px;
-  padding: 0.4rem 1rem;
+  padding: 0.7rem 1.45rem;
   font-family: var(--font-primary);
   font-size: 0.75rem;
   font-weight: 600;
-  color: #10b981;
+  color: #FFFFFF;
+}
+
+/* Decorative top-right corner effect */
+.cornerEffect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cornerBg {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle at top right, rgba(112, 125, 255, 0.12) 0%, rgba(112, 125, 255, 0.02) 70%);
+  border-radius: 50%;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cornerBg {
+  transform: scale(1.15);
+  background: radial-gradient(circle at top right, rgba(112, 125, 255, 0.22) 0%, rgba(112, 125, 255, 0.04) 70%);
+}
+
+.cornerIconWrapper {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #FFFFFF;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(112, 125, 255, 0.08);
+  z-index: 2;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
+}
+
+.card:hover .cornerIconWrapper {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 
+    0 8px 24px rgba(112, 125, 255, 0.12), 
+    0 2px 6px rgba(0, 0, 0, 0.04);
+  border-color: rgba(112, 125, 255, 0.2);
+}
+
+.cornerIcon {
+  color: var(--accent);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .cornerIcon {
+  transform: rotate(5deg);
 }
 
 /* ==========================================================================
@@ -251,6 +314,14 @@
 
   .degreeTitle {
     font-size: 1.25rem;
+    padding-right: 2.75rem; /* Compact padding for small screens */
+  }
+
+  .cornerIconWrapper {
+    top: 1rem;
+    right: 1rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 

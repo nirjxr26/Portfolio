@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Award, GraduationCap } from 'lucide-react';
+import { Award, GraduationCap, BookOpen } from 'lucide-react';
 import styles from './Education.module.css';
 
 const Education = () => {
@@ -27,17 +27,20 @@ const Education = () => {
             data-aos-delay="150"
             data-aos-duration="800"
           >
+            {/* Corner Decorative Effect */}
+            <div className={styles.cornerEffect}>
+              <div className={styles.cornerBg}></div>
+              <div className={styles.cornerIconWrapper}>
+                <BookOpen className={styles.cornerIcon} size={20} />
+              </div>
+            </div>
+
             <div className={styles.content}>
 
               {/* Degree Title */}
               <h3 className={styles.degreeTitle}>
                 Master of Science<br /><span className={styles.highlightText}>(Cyber Security)</span>
               </h3>
-
-              {/* Course Duration */}
-              <span className={styles.duration}>
-                2026 – 2028
-              </span>
 
               {/* Institution and Location */}
               <div className={styles.institutionRow}>
@@ -58,9 +61,11 @@ Advanced studies in information security, cryptography, threat intelligence, and
             {/* Pursuing Status Badge */}
             <div className={styles.footerRow}>
               <div className={styles.pursuingBadge}>
-                <GraduationCap size={14} />
                 <span>Pursuing</span>
               </div>
+              <span className={styles.duration}>
+                2026 – 2028
+              </span>
             </div>
           </div>
 
@@ -71,17 +76,20 @@ Advanced studies in information security, cryptography, threat intelligence, and
             data-aos-delay="250"
             data-aos-duration="800"
           >
+            {/* Corner Decorative Effect */}
+            <div className={styles.cornerEffect}>
+              <div className={styles.cornerBg}></div>
+              <div className={styles.cornerIconWrapper}>
+                <GraduationCap className={styles.cornerIcon} size={20} />
+              </div>
+            </div>
+
             <div className={styles.content}>
 
               {/* Degree Title */}
               <h3 className={styles.degreeTitle}>
                 Bachelor of<br /><span className={styles.highlightText}>Computer Applications</span>
               </h3>
-
-              {/* Course Duration */}
-              <span className={styles.duration}>
-                2023 – 2026
-              </span>
 
               {/* Institution and Location */}
               <div className={styles.institutionRow}>
@@ -102,9 +110,11 @@ Advanced studies in information security, cryptography, threat intelligence, and
             {/* GPA Badge */}
             <div className={styles.footerRow}>
               <div className={styles.gradeBadge}>
-                <Award size={14} />
                 <span>CGPA: 8.9 / 10</span>
               </div>
+              <span className={styles.duration}>
+                2023 – 2026
+              </span>
             </div>
           </div>
         </div>

@@ -48,7 +48,7 @@ const Navbar = () => {
     { name: 'Home', path: '#hero' },
     { name: 'Stack', path: '#tech-stack' },
     { name: 'Works', path: '#works' },
-    { name: 'Leadership', path: '#leadership' },
+    { name: 'Community', path: '#leadership' },
     { name: 'Education', path: '#education' },
     { name: 'Blogs', path: '#blog' }
   ];
