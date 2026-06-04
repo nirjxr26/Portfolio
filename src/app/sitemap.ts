@@ -15,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: 'https://blog.nirjar.me/github-actions-migration',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
       url: 'https://blog.nirjar.me/how-github-changed-my-workflow',
       lastModified: new Date(),
       changeFrequency: 'monthly',

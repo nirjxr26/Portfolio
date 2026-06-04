@@ -43,11 +43,15 @@
   z-index: 5;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 2.5rem;
   align-items: stretch;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1.4rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
 }
 
-/* Left Column Styling - Detached as its own Premium Card */
+/* Left Column Styling - Connected inside unified Premium Card */
 .leftColumn {
   display: flex;
   flex-direction: column;
@@ -55,65 +59,17 @@
   text-align: center;  /* Centered! */
   justify-content: center; /* Vertically centered inside stretched column */
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 2.25rem;
   padding: 2.25rem 1.5rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
-  position: relative; /* Allows positioning of the glows */
-  overflow: hidden; /* Contains the border-radius masking and ambient glows perfectly */
+  position: relative; /* Allows positioning of elements */
+  background: #1D1D1F; /* Soft black background color */
 }
 
-/* Up-Left Corner Pastel Glow inside Left Column Card - Premium Pastel Google Yellow */
-.leftColumn::before {
-  content: '';
-  position: absolute;
-  top: -100px;
-  left: -100px;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at bottom right,
-    rgba(255, 215, 110, 0.18) 0%,   /* Premium pastel Google yellow */
-    rgba(255, 228, 160, 0.12) 35%,  /* Soft champagne yellow */
-    rgba(255, 240, 210, 0.08) 65%,  /* Creamy warm fade */
-    rgba(170, 210, 255, 0.05) 88%,  /* Tiny Google blue balance */
-    transparent 100%
-  );
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: 1; /* Sits behind typography */
-}
-
-/* Left Column Right Bottom Corner Pastel Glow - Premium Pastel Blue (Down) */
-.leftColumn::after {
-  content: '';
-  position: absolute;
-  bottom: -100px;
-  right: -100px;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at bottom right,
-    rgba(120, 170, 255, 0.18) 0%,   /* Premium pastel blue */
-    rgba(170, 210, 255, 0.12) 38%,  /* Soft icy blue */
-    rgba(200, 230, 255, 0.08) 65%,  /* Airy cloud blue */
-    rgba(230, 240, 255, 0.05) 85%,  /* Ultra soft fade */
-    transparent 100%
-  );
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: 1; /* Sits behind typography, bleeds beautifully */
-}
-
-/* Ensure Left Column content elements sit above glows */
+/* Ensure Left Column content elements sit above background */
 .logoWrapper,
 .roleTitle,
 .programBadge {
   position: relative;
-  z-index: 2; /* Layered perfectly on top of pastel glows */
+  z-index: 2;
 }
 
 .logoWrapper {
@@ -135,9 +91,9 @@
   font-family: var(--font-headline);
   font-size: clamp(1.65rem, 2.8vw, 2.15rem);
   font-weight: 600; /* Font weight 600 as requested! */
-  color: var(--ink);
+  color: #F5F5F7; /* Softer off-white font color */
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   margin: 0.75rem 0 0.65rem 0; /* Compressed top/bottom margin to make card height shorter! */
   text-align: center; /* Centered! */
 }
@@ -147,34 +103,41 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.5); /* Glassmorphic background! */
+  background: rgba(255, 255, 255, 0.08); /* Dark glassmorphic background for black bg */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
   padding: 0.4rem 1.1rem;
   border-radius: 99px;
-  color: #4b5563;
+  color: #e4e4e7; /* Light gray text for readability on black background */
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 0.80rem;
   font-weight: 600;
   letter-spacing: 0.01em; /* Lower letter spacing! */
   text-transform: none; /* Non uppercase badge! */
 }
 
-/* Right Column Styling - Detached as its own Premium Card */
+/* Right Column Summary Title */
+.rightTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.015em;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Right Column Styling - Connected inside unified Premium Card */
 .rightColumn {
   display: flex;
   flex-direction: column;
   width: 100%;
-  background: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 2.25rem;
   padding: 2.25rem 2.5rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01), 0 20px 40px rgba(0, 0, 0, 0.02);
   justify-content: center; /* Vertically center right side elements for perfect balance */
   position: relative;
   z-index: 2;
-  overflow: hidden;
 }
 
 
@@ -276,7 +239,6 @@
   }
 
   .ambassadorCard {
-    gap: 2rem;
     max-width: 900px;
     grid-template-columns: 1fr 1.8fr;
   }
@@ -301,17 +263,15 @@
 
   .ambassadorCard {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    border-radius: 1.75rem;
   }
 
   .leftColumn {
     padding: 3rem 1.5rem;
-    border-radius: 1.75rem;
   }
 
   .rightColumn {
     padding: 2.5rem 1.75rem;
-    border-radius: 1.75rem;
   }
 
   .googleBigLogo {
@@ -351,14 +311,16 @@
     padding: 3rem 0;
   }
 
+  .ambassadorCard {
+    border-radius: 1.5rem;
+  }
+
   .leftColumn {
     padding: 2.5rem 1.25rem;
-    border-radius: 1.5rem;
   }
 
   .rightColumn {
     padding: 1.8rem;
-    border-radius: 1.5rem;
   }
 
   .roleTitle {

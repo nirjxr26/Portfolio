@@ -27,14 +27,6 @@ const Education = () => {
             data-aos-delay="150"
             data-aos-duration="800"
           >
-            {/* Corner Decorative Effect */}
-            <div className={styles.cornerEffect}>
-              <div className={styles.cornerBg}></div>
-              <div className={styles.cornerIconWrapper}>
-                <BookOpen className={styles.cornerIcon} size={20} />
-              </div>
-            </div>
-
             <div className={styles.content}>
 
               {/* Degree Title */}
@@ -76,14 +68,6 @@ Advanced studies in information security, cryptography, threat intelligence, and
             data-aos-delay="250"
             data-aos-duration="800"
           >
-            {/* Corner Decorative Effect */}
-            <div className={styles.cornerEffect}>
-              <div className={styles.cornerBg}></div>
-              <div className={styles.cornerIconWrapper}>
-                <GraduationCap className={styles.cornerIcon} size={20} />
-              </div>
-            </div>
-
             <div className={styles.content}>
 
               {/* Degree Title */}

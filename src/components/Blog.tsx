@@ -7,12 +7,25 @@ import styles from './Blog.module.css';
 
 const blogPosts = [
   {
+    id: 7,
+    tag: "AI & SYSTEMS",
+    readTime: "6 MIN READ",
+    badgeTitle: "Beyond code.",
+    badgeDesc: "The hidden complexity behind Windows",
+    title: "Why AI can't just rewrite Windows",
+    description: "AI can generate apps. Windows is different. Decades of quirks, compatibility requirements, and interactions nobody has fully mapped — not one engineer, not a model.",
+    date: "Jun 2026",
+    footer: "7 takeways",
+    gradientClass: styles.gradientMicrosoft,
+    articleUrl: "https://blog.nirjar.me/why-ai-cant-just-rewrite-windows"
+  },
+  {
     id: 4,
     tag: "DEVSECOPS",
     readTime: "5 MIN READ",
     badgeTitle: "872 issues. Day one.",
     badgeDesc: "What SonarQube found in codebase",
-    title: "The codebase felt fine. SonarQube disagreed.",
+    title: "SonarQube had notes.",
     description: "The codebase was growing — more services and more auth logic. I had no way to tell if the codebase was getting better or just bigger. So I added SonarQube and looked.",
     date: "May 2026",
     footer: "4 takeaways",
