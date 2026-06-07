@@ -61,7 +61,8 @@
   width: 100%;
   padding: 2.25rem 1.5rem;
   position: relative; /* Allows positioning of elements */
-  background: #1D1D1F; /* Soft black background color */
+  background: #F1F6FE; /* Light pastel blue background color */
+  border-right: 1px solid rgba(0, 0, 0, 0.04); /* Subtle right border for desktop */
 }
 
 /* Ensure Left Column content elements sit above background */
@@ -91,7 +92,7 @@
   font-family: var(--font-headline);
   font-size: clamp(1.65rem, 2.8vw, 2.15rem);
   font-weight: 600; /* Font weight 600 as requested! */
-  color: #F5F5F7; /* Softer off-white font color */
+  color: var(--ink); /* Dark ink color for readability on light background */
   line-height: 1.15;
   letter-spacing: 0.01em;
   margin: 0.75rem 0 0.65rem 0; /* Compressed top/bottom margin to make card height shorter! */
@@ -103,12 +104,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.08); /* Dark glassmorphic background for black bg */
+  background: rgba(255, 255, 255, 0.6); /* Soft light glassmorphism */
+  border: 1px solid rgba(25, 103, 210, 0.15); /* Light blue border */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 0.4rem 1.1rem;
   border-radius: 99px;
-  color: #e4e4e7; /* Light gray text for readability on black background */
+  color: #1967D2; /* Google blue for brand alignment */
   font-family: var(--font-display);
   font-size: 0.80rem;
   font-weight: 600;
@@ -268,6 +270,8 @@
 
   .leftColumn {
     padding: 3rem 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   }
 
   .rightColumn {

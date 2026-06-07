@@ -17,7 +17,7 @@ const blogPosts = [
     date: "Jun 2026",
     footer: "7 takeways",
     gradientClass: styles.gradientMicrosoft,
-    articleUrl: "https://blog.nirjar.me/why-ai-cant-just-rewrite-windows"
+    articleUrl: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
   },
   {
     id: 4,
