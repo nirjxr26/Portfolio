@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: "nirjar",
     template: "%s | Nirjar Goswami"
   },
-  description: "Into software, cloud, developer operations and security.",
+  description: "I build infrastructure that ships fast and stays up.",
   keywords: [
     "Nirjar Goswami",
     "Nirjar",
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://nirjar.me",
     title: "Nirjar Goswami | Cloud & DevOps Engineer",
-    description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
-    siteName: "Nirjar Goswami Portfolio",
+    description: "I build infrastructure that ships fast and stays up.",
+    siteName: "Nirjar Goswami",
     images: [
       {
         url: "/og-image.png",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Nirjar Goswami | Cloud & DevOps Engineer",
-    description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
+    description: "I build infrastructure that ships fast and stays up.",
     creator: "@nirjxrgoswami",
     images: ["/og-image.png"]
   },
