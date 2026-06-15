@@ -809,7 +809,115 @@ export default function Home() {
                 key={idx}
                 className="py-4 md:py-6 flex flex-col"
               >
-                {article.poster && (
+                {article.title === "Why AI can't just rewrite windows." ? (
+                  <a
+                    href={article.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] border border-foreground/5 select-none group/poster cursor-pointer"
+                  >
+                    {/* Background Circles */}
+                    <div className="absolute top-[-30%] right-[-15%] w-[80%] aspect-square rounded-full border border-foreground/[0.04] pointer-events-none" />
+                    <div className="absolute bottom-[-35%] left-[-15%] w-[50%] aspect-square rounded-full border border-foreground/[0.04] pointer-events-none" />
+
+                    <div className="relative z-10 flex flex-col justify-between flex-grow">
+                      {/* Top Title */}
+                      <div className="p-4 sm:p-5 md:p-6 xl:p-8 pb-0 sm:pb-0 md:pb-0 xl:pb-0">
+                        <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-foreground leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
+                          Why AI can&apos;t <span className="text-secondary italic lowercase font-serif px-1 translate-y-[0.02em] inline-block">just</span> <br /> rewrite windows.
+                        </h3>
+                      </div>
+
+                      {/* Bottom Stats Grid */}
+                      <div className="border-t border-foreground/[0.08] grid grid-cols-3">
+                        {/* Stat 1 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
+                            50M
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            lines of code
+                          </div>
+                        </div>
+                        {/* Stat 2 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
+                            41 yrs
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            of decisions
+                          </div>
+                        </div>
+                        {/* Stat 3 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
+                            330+
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            years to rewrite
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ) : article.title === "Sonarqube had notes." ? (
+                  <a
+                    href={article.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] border border-foreground/5 select-none group/poster cursor-pointer"
+                  >
+                    {/* Background Grid Lines */}
+                    <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-[0.015]">
+                      <div className="border-r border-foreground h-full" />
+                      <div className="border-r border-foreground h-full" />
+                      <div className="border-r border-foreground h-full" />
+                      <div className="border-r border-foreground h-full" />
+                      <div className="border-r border-foreground h-full" />
+                      <div className="h-full" />
+                    </div>
+
+                    <div className="relative z-10 flex flex-col justify-between flex-grow">
+                      {/* Top Title */}
+                      <div className="p-4 sm:p-5 md:p-6 xl:p-8 pb-0 sm:pb-0 md:pb-0 xl:pb-0">
+                        <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-foreground leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
+                          <span className="text-[#F97316]">872</span> Issues. 30 Days. <br /> SonarQube <span className="text-secondary italic lowercase font-serif px-1 translate-y-[0.02em] inline-block">analysis.</span>
+                        </h3>
+                      </div>
+
+                      {/* Stats Grid */}
+                      <div className="border-t border-foreground/[0.08] grid grid-cols-3">
+                        {/* Stat 1 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#FF5A60] leading-none mb-1 md:mb-2">
+                            872
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            day 1 issues
+                          </div>
+                        </div>
+                        {/* Stat 2 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#10B981] leading-none mb-1 md:mb-2">
+                            65
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            day 30 issues
+                          </div>
+                        </div>
+                        {/* Stat 3 */}
+                        <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#FBBF24] leading-none mb-1 md:mb-2">
+                            0.0%
+                          </div>
+                          <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
+                            hotspots left
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ) : article.poster && (
                   <a
                     href={article.link}
                     target="_blank"
@@ -823,20 +931,24 @@ export default function Home() {
                     />
                   </a>
                 )}
-                <h4 className="text-lg sm:text-[22px] font-md text-foregrond mb-1 font-sans tracking-tight">
-                  <a
-                    href={article.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-secondary transition-colors cursor-pointer"
-                  >
-                    {article.title}
-                  </a>
-                </h4>
-                {article.lead && (
-                  <p className="text-sm font-medium text-secondary mb-4 italic">
-                    {article.lead}
-                  </p>
+                {article.title !== "Why AI can't just rewrite windows." && article.title !== "Sonarqube had notes." && (
+                  <>
+                    <h4 className="text-lg sm:text-[22px] font-md text-foregrond mb-1 font-sans tracking-tight">
+                      <a
+                        href={article.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-secondary transition-colors cursor-pointer"
+                      >
+                        {article.title}
+                      </a>
+                    </h4>
+                    {article.lead && (
+                      <p className="text-sm font-medium text-secondary mb-4 italic">
+                        {article.lead}
+                      </p>
+                    )}
+                  </>
                 )}
               </div>
             ))}
