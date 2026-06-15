@@ -832,7 +832,7 @@ export default function Home() {
                       <div className="border-t border-foreground/[0.08] grid grid-cols-3">
                         {/* Stat 1 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
                             50M
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
@@ -841,16 +841,16 @@ export default function Home() {
                         </div>
                         {/* Stat 2 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
-                            41 yrs
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
+                            41
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                            of decisions
+                            yrs of decisions
                           </div>
                         </div>
                         {/* Stat 3 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-foreground leading-none mb-1 md:mb-2">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
                             330+
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
@@ -881,7 +881,7 @@ export default function Home() {
                       {/* Top Title */}
                       <div className="p-4 sm:p-5 md:p-6 xl:p-8 pb-0 sm:pb-0 md:pb-0 xl:pb-0">
                         <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-foreground leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
-                          <span className="text-[#F97316]">872</span> Issues. 30 Days. <br /> SonarQube <span className="text-secondary italic lowercase font-serif px-1 translate-y-[0.02em] inline-block">analysis.</span>
+                          <span className="text-[#F97316]">872</span> Issues. 30 Days. <br /><span className="text-secondary italic font-serif px-1 translate-y-[0.02em] inline-block">SonarQube</span> analysis.
                         </h3>
                       </div>
 
@@ -889,7 +889,7 @@ export default function Home() {
                       <div className="border-t border-foreground/[0.08] grid grid-cols-3">
                         {/* Stat 1 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#FF5A60] leading-none mb-1 md:mb-2">
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#FF5A60] leading-none mb-1 md:mb-2 tracking-tighter">
                             872
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
@@ -898,8 +898,8 @@ export default function Home() {
                         </div>
                         {/* Stat 2 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#10B981] leading-none mb-1 md:mb-2">
-                            65
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#10B981] leading-none mb-1 md:mb-2 tracking-tighter">
+                            56
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
                             day 30 issues
@@ -907,8 +907,8 @@ export default function Home() {
                         </div>
                         {/* Stat 3 */}
                         <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
-                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-medium text-[#FBBF24] leading-none mb-1 md:mb-2">
-                            0.0%
+                          <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#FBBF24] leading-none mb-1 md:mb-2 tracking-tighter">
+                            0
                           </div>
                           <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
                             hotspots left
@@ -1025,10 +1025,6 @@ export default function Home() {
           <h2 className="text-[22vw] md:text-[14vw] font-normal text-secondary uppercase tracking-[-0.06em] md:tracking-[-0.08em] text-center select-none leading-[0.85] font-sans">
             NIRJAR
           </h2>
-        </div>
-        <div className="border-t border-foreground/5 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-secondary font-sans font-light">
-          <span>&copy; 2026 Nirjar Goswami</span>
-          <div />
         </div>
       </footer>
     </div>
