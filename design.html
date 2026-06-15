@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git Workflow Visualization</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #1a2333;
+      --card-bg: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-brand: #1d4ed8;
+      --line-color: rgba(255, 255, 255, 0.22);
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #182232;
+      background-image: radial-gradient(circle at 100% 50%, #0c3ab5 0%, #152238 65%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Outer Canvas matching Paper.design viewport */
+    .canvas {
+      position: relative;
+      width: 1000px;
+      height: 750px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Connection Lines container */
+    .lines-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Circular Icon Nodes */
+    .icon-node {
+      position: absolute;
+      width: 68px;
+      height: 68px;
+      background-color: var(--card-bg);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: var(--shadow-lg), 0 4px 20px rgba(0, 0, 0, 0.15);
+      z-index: 10;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .icon-node:hover {
+      transform: scale(1.05);
+    }
+
+    .icon-node svg, .icon-node img {
+      width: 38px;
+      height: 38px;
+    }
+
+    /* VS Code node position */
+    .vscode-node {
+      top: 60px;
+      left: 156px;
+    }
+
+    /* Docker node position */
+    .docker-node {
+      bottom: 232px;
+      left: 358px;
+    }
+
+    /* Card Styling */
+    .card {
+      position: absolute;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg), 0 10px 30px rgba(0, 0, 0, 0.15);
+      z-index: 10;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .card-header svg {
+      color: #475569;
+    }
+
+    .repo-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #1e293b;
+      margin-bottom: 20px;
+    }
+
+    .repo-line svg {
+      color: #0f172a;
+    }
+
+    .repo-divider {
+      color: #cbd5e1;
+      margin: 0 2px;
+    }
+
+    .repo-branch {
+      color: var(--text-brand);
+      font-weight: 600;
+    }
+
+    /* Card Details Footer */
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .author-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .commit-message {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    .commit-hash {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Cards Positioning */
+    .commit-push-card {
+      top: 400px;
+      left: 70px;
+      width: 252px;
+      height: 180px;
+    }
+
+    .checkout-card {
+      top: 400px;
+      left: 600px;
+      width: 336px;
+      height: 190px;
+    }
+
+    /* Overlapping Avatars (bottom-left) */
+    .avatar-stack {
+      position: absolute;
+      bottom: 80px;
+      left: 68px;
+      display: flex;
+      z-index: 10;
+    }
+
+    .stack-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      margin-right: -15px;
+      object-fit: cover;
+      box-shadow: var(--shadow-md);
+      transition: transform 0.2s ease-in-out, z-index 0s;
+    }
+
+    .stack-avatar:hover {
+      transform: scale(1.1) translateY(-5px);
+      z-index: 100;
+    }
+
+    /* Inline SVG for lightning bolt */
+    .lightning-icon {
+      fill: #475569;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="canvas">
+    
+    <!-- SVG Connection Lines -->
+    <svg class="lines-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Shadow effect on connecting lines to give depth -->
+        <filter id="line-shadow" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3" flood-color="#000000"/>
+        </filter>
+      </defs>
+
+      <g filter="url(#line-shadow)">
+        <!-- Top left entry path to VS Code -->
+        <path d="M -50 100 H 120 C 145 100, 165 94, 190 94" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- VS Code to Checkout convergence path -->
+        <path d="M 190 94 H 450 C 510 94, 510 495, 600 495" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- Upper-middle horizontal path merging into convergence -->
+        <path d="M -50 250 H 120 C 145 250, 165 94, 190 94" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- Middle horizontal path directly to Checkout -->
+        <path d="M -50 320 H 450 C 510 320, 510 495, 600 495" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- Commit Push card straight connection path to Checkout -->
+        <path d="M 322 495 H 600" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-dasharray="1 1" />
+        <path d="M 322 495 H 600" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2.5" />
+
+        <!-- Docker to Checkout path -->
+        <path d="M 392 682 C 450 682, 450 495, 600 495" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+
+        <!-- Avatars horizontal segment to bottom bend -->
+        <path d="M 230 892 H 350 C 390 892, 390 1000, 390 1000" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- Checkout to bottom exit path via avatars convergence -->
+        <path d="M 600 495 C 510 495, 510 892, 350 892 H 230" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+        
+        <!-- Vertical branch near bottom -->
+        <path d="M 352 892 V 1000" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="2.5" stroke-linecap="round" />
+      </g>
+    </svg>
+
+    <!-- VS Code Icon Node -->
+    <div class="icon-node vscode-node" style="top: 60px; left: 156px;">
+      <svg viewBox="0 0 128 128">
+        <path fill="#007acc" d="M117.8 28.5L88.9 3.2c-2.3-2-5.9-1.9-8.1.3L45.4 39.9l-22.3-17c-2.3-1.8-5.6-1.5-7.6.7L1.9 40c-2.5 2.8-2.5 7.1 0 9.9l17 14.1-17 14.1c-2.5 2.8-2.5 7.1 0 9.9l13.6 16.4c2 2.2 5.3 2.5 7.6.7l22.3-17 35.4 36.4c2.2 2.2 5.8 2.3 8.1.3l28.9-25.3c2.5-2.2 3.8-5.4 3.8-8.7V37.2c0-3.3-1.4-6.5-3.8-8.7zm-27.1 63.8l-30-22.8 30-22.8v45.6z" />
+      </svg>
+    </div>
+
+    <!-- Docker Icon Node -->
+    <div class="icon-node docker-node">
+      <svg viewBox="0 0 24 24" fill="#0db7ed">
+        <path d="M13.983 11.078h2.119c.102 0 .186-.083.186-.185V9.006a.185.185 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118c.103 0 .185-.083.185-.186V3.574a.186.186 0 0 0-.185-.185h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118c.103 0 .185-.083.185-.186V6.29a.185.185 0 0 0-.185-.185h-2.118a.185.185 0 0 0-.185.185v1.887c0 .102.082.186.185.186m-2.93 2.715h2.119c.102 0 .185-.083.185-.185V9.006a.185.185 0 0 0-.185-.186h-2.119a.186.186 0 0 0-.186.186v1.888c0 .102.084.185.186.185m-2.955 0h2.119c.102 0 .185-.083.185-.185V9.006a.185.185 0 0 0-.185-.186H5.144a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m-2.93 0h2.119c.103 0 .186-.083.186-.185V9.006a.185.185 0 0 0-.186-.186H2.214a.185.185 0 0 0-.185.186v1.888c0 .102.082.185.185.185m2.93-2.716h2.119c.102 0 .185-.083.185-.186V6.29a.185.185 0 0 0-.185-.185H5.144a.185.185 0 0 0-.185.185v1.887c0 .102.083.186.185.186m-2.93 5.43h2.119c.103 0 .186-.083.186-.185v-1.887a.186.186 0 0 0-.186-.186H2.214a.186.186 0 0 0-.185.186v1.888c0 .102.082.185.185.185m-2.22 2.715h2.119c.103 0 .186-.083.186-.185v-1.888a.186.186 0 0 0-.186-.186H.014a.187.187 0 0 0-.185.186v1.888c0 .102.082.185.185.185m15.352 2.223c.532 0 1.054-.024 1.57-.07 1.25-.114 2.508-.397 3.654-.97a.262.262 0 0 0 .137-.356c-.302-.638-1.116-1.288-2.613-1.636-1.503-.348-3.05-.09-4.34.737-.584.373-1.127.794-1.69 1.186v.441c.563.438 1.196.668 1.882.668m-1.561-3.66c.24 0 .443-.09.608-.273a.885.885 0 0 0 .253-.615c0-.246-.08-.453-.244-.619a.82.82 0 0 0-.617-.25c-.244 0-.453.084-.62.25a.822.822 0 0 0-.25.62c0 .242.084.446.25.614.168.17.376.253.62.253m-9.664-3.414c-.066.012-.136.027-.205.048-.363.111-.532.327-.506.647.037.452.41 1.026.83 1.28 1.348.814 2.85 1.139 4.385 1.139.387 0 .77-.024 1.144-.066 3.125-.353 5.485-1.956 7.022-4.789a7.618 7.618 0 0 0 .903-3.61c.012-.185.006-.37-.015-.55a.187.187 0 0 0-.198-.168h-3.32a.186.186 0 0 0-.186.186v.566c-.006.945-.37 1.833-1.026 2.52a4.437 4.437 0 0 1-3.21 1.417h-.08a4.432 4.432 0 0 1-3.265-1.428 4.453 4.453 0 0 1-1.02-2.51v-.565a.186.186 0 0 0-.187-.186H6.18a.188.188 0 0 0-.186.186v.05c-.015.422.012.85.084 1.272z"/>
+      </svg>
+    </div>
+
+    <!-- Card 1: Commit Push -->
+    <div class="card commit-push-card">
+      <div class="card-header">
+        <svg class="lightning-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+          <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        Commit Push
+      </div>
+      <div class="repo-line">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+        </svg>
+        <span>pirate-ship<span class="repo-divider">/</span><span class="repo-branch">main</span></span>
+      </div>
+      <div class="author-info">
+        <img class="author-avatar" src="https://github.com/olu-440.png" alt="olu-440 avatar" onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=olu-440'">
+        <span>olu-440</span>
+      </div>
+    </div>
+
+    <!-- Card 2: Checkout -->
+    <div class="card checkout-card">
+      <div class="card-header">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        Checkout
+      </div>
+      <div class="repo-line">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+        </svg>
+        <span>code-source-repo<span class="repo-divider">/</span><span class="repo-branch">main</span></span>
+      </div>
+      <div class="commit-message">
+        <span class="commit-hash">9afl3gf</span>
+        <span>Fixed bug in script</span>
+      </div>
+    </div>
+
+    <!-- Avatars stack -->
+    <div class="avatar-stack">
+      <img class="stack-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="avatar 1">
+      <img class="stack-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="avatar 2">
+      <img class="stack-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="avatar 3">
+    </div>
+
+  </div>
+
+</body>
+</html>

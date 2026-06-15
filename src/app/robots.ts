@@ -1,12 +1,14 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = "https://nirjar.me";
+
   return {
     rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '/private/',
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/_next/", "/static/"],
     },
-    sitemap: 'https://nirjar.me/sitemap.xml',
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

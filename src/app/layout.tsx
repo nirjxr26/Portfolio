@@ -1,91 +1,68 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, Plus_Jakarta_Sans, Figtree, Poppins } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
-const inter = Inter({
-  variable: "--font-primary",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const display = Figtree({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  variable: "--font-intro",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const outfit = Outfit({
-  variable: "--font-headline",
-  subsets: ["latin"],
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-accent",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Nirjar Goswami | Associate Cloud Engineer",
-  description: "Portfolio of Nirjar Goswami, an Associate Cloud Engineer specializing in software development, cloud architecture, and security engineering.",
+  metadataBase: new URL("https://nirjar.me"),
+  title: {
+    default: "Nirjar Goswami | Cloud & DevOps Engineer",
+    template: "%s | Nirjar Goswami"
+  },
+  description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
   keywords: [
     "Nirjar Goswami",
+    "Nirjar",
+    "Goswami",
+    "DevOps",
     "Cloud Engineer",
-    "Software Developer",
-    "Associate Cloud Engineer",
+    "Infrastructure as Code",
+    "Terraform",
+    "Kubernetes",
+    "AWS",
     "Security Engineering",
-    "Portfolio",
-    "Ahmedabad",
-    "AegisMesh",
-    "DeployLens",
-    "VaultLock",
-    "CI/CD",
-    "IAM",
-    "RBAC",
-    "Git Workflow",
-    "GitHub",
-    "Cloud Infrastructure",
-    "API Security",
-    "Identity Access Management",
-    "Engineering Blog"
+    "CI/CD Pipelines",
+    "Ahmedabad DevOps",
+    "Gujarat"
   ],
-  authors: [{ name: "Nirjar Goswami" }],
+  authors: [{ name: "Nirjar Goswami", url: "https://nirjar.me" }],
   creator: "Nirjar Goswami",
   publisher: "Nirjar Goswami",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL("https://nirjar.me"), // Replace with actual domain if different
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Nirjar Goswami | Associate Cloud Engineer",
-    description: "Portfolio of Nirjar Goswami, an Associate Cloud Engineer specializing in software development, cloud architecture, and security engineering.",
+    type: "website",
+    locale: "en_US",
     url: "https://nirjar.me",
+    title: "Nirjar Goswami | Cloud & DevOps Engineer",
+    description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
     siteName: "Nirjar Goswami Portfolio",
     images: [
       {
-        url: "/og-image.png", // User needs to provide this image or I can generate a placeholder
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Nirjar Goswami Portfolio",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
+        alt: "Nirjar Goswami | Cloud & DevOps Engineer"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nirjar Goswami | Associate Cloud Engineer",
-    description: "Portfolio of Nirjar Goswami, an Associate Cloud Engineer specializing in software development, cloud architecture, and security engineering.",
+    title: "Nirjar Goswami | Cloud & DevOps Engineer",
+    description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
     creator: "@nirjxrgoswami",
-    images: ["/og-image.png"],
+    images: ["/og-image.png"]
   },
   robots: {
     index: true,
@@ -95,78 +72,27 @@ export const metadata: Metadata = {
       follow: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+      "max-snippet": -1
+    }
+  }
 };
-
-export const viewport = {
-  themeColor: "#ffffff",
-};
-
-import Navbar from "@/components/Navbar";
-import LenisProvider from "@/components/LenisProvider";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Nirjar Goswami",
-    url: "https://nirjar.me",
-    jobTitle: "Associate Cloud Engineer",
-    description: "Nirjar Goswami is an Associate Cloud Engineer based in Ahmedabad, specializing in cloud infrastructure, IAM security, and full-stack development.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Ahmedabad",
-      addressRegion: "Gujarat",
-      addressCountry: "India",
-    },
-    workLocation: {
-      "@type": "ContactPoint",
-      "areaServed": "Global",
-      "availableLanguage": ["English", "Hindi", "Gujarati"]
-    },
-    sameAs: [
-      "https://github.com/nirjxr26/",
-      "https://www.linkedin.com/in/nirjarbharthi-goswami-b593633a7",
-      "https://x.com/nirjxrgoswami",
-      "https://www.instagram.com/nirjar_goswami/",
-      "https://nirjar.hashnode.dev/"
-    ],
-    knowsAbout: [
-      "Cloud Architecture",
-      "Identity and Access Management (IAM)",
-      "Security Engineering",
-      "CI/CD Pipelines",
-      "Docker & Kubernetes",
-      "API Security",
-      "Vault & Password Management",
-      "Git Workflow",
-      "Node.js & React Development"
-    ],
-  };
-
   return (
-    <html lang="en" className={`${inter.variable} ${display.variable} ${outfit.variable} ${plusJakartaSans.variable} ${poppins.variable}`} suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
-      <body suppressHydrationWarning>
-        <LenisProvider>
-          <Navbar />
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      style={{ backgroundColor: "var(--background)" }}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
+        <SmoothScroll>
           {children}
-          <SpeedInsights />
-          <Analytics />
-        </LenisProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
