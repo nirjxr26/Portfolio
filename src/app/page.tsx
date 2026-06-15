@@ -524,7 +524,7 @@ export default function Home() {
         <div className="relative z-10 pt-4 pb-4">
 
           {/* Title */}
-          <h1 className="text-3xl min-[380px]:text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-normal tracking-tight leading-[0.9] mb-8 font-sans max-w-6xl">
+          <h1 className="text-[34px] min-[400px]:text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-normal tracking-tight leading-[0.9] mb-8 font-sans max-w-6xl">
             <TextReveal
               as="span"
               className="block text-foreground"

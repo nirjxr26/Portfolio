@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <rect width="256" height="256" rx="60" fill="#1C1C1E"/>
+  <!-- Eye outline -->
+  <path d="M 40 128 C 80 66, 176 66, 216 128 C 176 190, 80 190, 40 128 Z" stroke="#60a5fa" stroke-width="8" stroke-linejoin="round" fill="none"/>
+  <!-- Iris circle -->
+  <circle cx="128" cy="128" r="36" stroke="#60a5fa" stroke-width="6" fill="none"/>
+  <!-- Pulse line -->
+  <path d="M 104 128 H 114 L 121 106 L 128 150 L 135 114 L 142 128 H 152" stroke="#60a5fa" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

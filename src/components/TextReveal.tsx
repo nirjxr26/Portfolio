@@ -110,10 +110,10 @@ export default function TextReveal({
           return (
             <span
               key={idx}
-              className="inline-block overflow-hidden mr-[0.22em] py-[0.005em] leading-[1.04]"
+              className="inline-block overflow-hidden mr-[0.22em] pt-[0.1em] pb-[0.15em] -mt-[0.1em] -mb-[0.15em] leading-[1.1]"
             >
               <span
-                className={`reveal-word-inner inline-block opacity-0 ${
+                className={`reveal-word-inner inline-block opacity-0 will-change-transform ${
                   isHighlighted ? highlightClass : isMuted ? "text-secondary" : "text-foreground"
                 }`}
                 style={{ transform: "translateY(110%)" }}

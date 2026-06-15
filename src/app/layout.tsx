@@ -15,8 +15,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nirjar.me"),
+  icons: {
+    icon: [
+      { url: "/icons/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/icons/favicon.svg",
+    apple: "/icons/favicon.svg",
+  },
   title: {
-    default: "Nirjar Goswami | Cloud & DevOps Engineer",
+    default: "nirjar",
     template: "%s | Nirjar Goswami"
   },
   description: "Cloud and DevOps Engineer specializing in building secure, resilient infrastructure. Expert in Terraform, Kubernetes, AWS, and automation pipelines.",
