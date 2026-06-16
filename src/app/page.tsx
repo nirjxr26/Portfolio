@@ -8,6 +8,10 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import ImageReveal from "@/components/ImageReveal";
 import { useLenis } from "lenis/react";
+import PRStatusCard from "@/components/PRStatusCard";
+import ObservabilityCard from "@/components/ObservabilityCard";
+import CloudInfraCard from "@/components/CloudInfraCard";
+import SecurityCard from "@/components/SecurityCard";
 
 // Technology SVG Icons (imported from src/icons/tech)
 import awsIcon from "@/icons/tech/aws.svg";
@@ -185,41 +189,22 @@ export default function Home() {
     {
       title: "Cloud Infrastructure",
       desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
-      skills: [
-        { name: "AWS", icon: awsIcon },
-        { name: "Terraform", icon: terraformIcon },
-        { name: "k3s", icon: k3sIcon }
-      ]
+      card: <CloudInfraCard />
     },
     {
       title: "Developer Operations",
       desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
-      skills: [
-        { name: "GitHub Actions", icon: githubActionsIcon },
-        { name: "Docker", icon: dockerIcon },
-        { name: "Kubernetes", icon: kubernetesIcon },
-        { name: "ArgoCD", icon: argoIcon }
-      ]
+      card: <PRStatusCard />
     },
     {
       title: "Security Engineering",
       desc: "Security in the pipeline, not bolted on afterward. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
-      skills: [
-        { name: "Trivy", icon: trivyIcon },
-        { name: "Falco", icon: falcoIcon },
-        { name: "CrowdSec", icon: crowdsecIcon },
-        { name: "SonarQube Cloud", icon: sonarIcon }
-      ]
+      card: <SecurityCard />
     },
     {
       title: "Observability & MLOps",
       desc: "Metrics, logs, traces, and alerts that tell you what's actually wrong — not just that something is. Distributed systems that you can see into.",
-      skills: [
-        { name: "Prometheus", icon: prometheusIcon },
-        { name: "Grafana", icon: grafanaIcon },
-        { name: "Datadog", icon: datadogIcon },
-        { name: "MLflow", icon: mlflowIcon }
-      ]
+      card: <ObservabilityCard />
     }
   ];
 
@@ -292,7 +277,7 @@ export default function Home() {
           y: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
           opacity: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
         }}
-        className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-8 lg:px-24 xl:px-32 transition-colors duration-500 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 transition-colors duration-500 ${isScrolled
           ? "py-3 bg-background/95 backdrop-blur-md"
           : "py-6 bg-gradient-to-b from-background/80 to-transparent backdrop-blur-[4px]"
           }`}
@@ -461,7 +446,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="flex flex-col px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-40 pb-4 md:pt-35 md:pb-6">
+      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-40 pb-4 md:pt-35 md:pb-6">
 
         {/* Content Area */}
         <div className="relative z-10 pt-4 pb-4">
@@ -497,7 +482,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-12 md:py-24 px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="services" className="pt-12 pb-6 md:pt-24 md:pb-6 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
@@ -518,34 +503,38 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        {/* Capabilities Grid */}
+        {/* Capabilities alternating list */}
         <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-          <div className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 relative z-10">
-              {services.map((service, idx) => (
-                <motion.div
+          <div className="flex flex-col relative z-10">
+            {services.map((service, idx) => {
+              return (
+                <div
                   key={idx}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className={`py-8 md:py-10 border-b border-foreground/5 last:border-b-0 md:last:border-b-0 ${idx % 2 === 0 ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5" : "md:pl-12 lg:pl-16"
-                    } ${idx === 2 ? "md:border-b-0" : ""
-                    }`}
+                  className="flex flex-col lg:flex-row-reverse items-center justify-between gap-4 lg:gap-12 w-full py-12 md:py-18 border-b border-foreground/5 last:border-b-0"
                 >
-                  <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-2 md:mb-4 font-sans tracking-tight">
-                    {service.title}
-                  </h4>
-                  <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal max-w-lg">
-                    {service.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+                  {/* Card Container */}
+                  <div className="w-full lg:max-w-[55%] flex justify-center items-center">
+                    {service.card}
+                  </div>
+
+                  {/* Text Container */}
+                  <div className="w-full lg:max-w-[38%] flex flex-col justify-center text-left items-start">
+                    <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mt-6 lg:mt-0 mb-2 md:mb-4 font-sans tracking-tight">
+                      {service.title}
+                    </h4>
+                    <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal">
+                      {service.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </ScrollReveal>
       </section>
 
       {/* Selected Work Section */}
-      <section id="work" className="py-12 md:py-24 px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="work" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
@@ -611,7 +600,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setShowAllWorks(!showAllWorks)}
-              className="btn-outlined px-6 py-2 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer"
             >
               {showAllWorks ? "View less" : "View more works"}
               {showAllWorks ? <X className="w-4 h-4" /> : <ArrowUpRight className="w-4 h-4" />}
@@ -624,7 +613,7 @@ export default function Home() {
       <section id="skills" className="py-12 md:py-24 border-t border-foreground/5">
         {/* Header */}
         <ScrollReveal delay={0.1}>
-          <div className="px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto mb-4 md:mb-6">
+          <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto mb-4 md:mb-6">
             <TextReveal
               as="h3"
               className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans mb-0"
@@ -682,7 +671,7 @@ export default function Home() {
       </section>
 
       <section id="track-record" className="w-full bg--background py-12 md:py-28 border-t border-foreground/5">
-        <div className="px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+        <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.1}>
             <div className="mb-4 md:mb-6">
               <TextReveal
@@ -696,7 +685,7 @@ export default function Home() {
           <ScrollReveal delay={0.25} duration={1.2} distance={50}>
             <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
               <span className="text-foreground">6</span> projects shipped, all still running.{" "}
-              <span className="text-foreground">98.9%</span> uptime.{" "}
+              <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
               Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
               <br /> <br />
               <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
@@ -724,7 +713,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="approach" className="py-12 md:py-24 px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="approach" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
@@ -754,7 +743,7 @@ export default function Home() {
 
 
       {/* Engineering Notes Section */}
-      <section id="insights" className="py-12 md:py-24 px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="insights" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
@@ -944,7 +933,7 @@ export default function Home() {
               href="https://blog.nirjar.me/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outlined px-6 py-2 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer"
             >
               View more notes <ArrowUpRight className="w-4 h-4" />
             </motion.a>
@@ -952,7 +941,7 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <section id="contact" className="py-12 md:py-24 px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="contact" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:items-end">
           <ScrollReveal delay={0.1} duration={1.0}>
             <div>
@@ -1009,7 +998,7 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
-      <footer className="w-full px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-16 pb-12 border-t border-foreground/5">
+      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-16 pb-12 border-t border-foreground/5">
         <div className="w-full overflow-hidden mb-8">
           <h2 className="text-[22vw] md:text-[14vw] font-normal text-secondary uppercase tracking-[-0.06em] md:tracking-[-0.08em] text-center select-none leading-[0.85] font-sans">
             NIRJAR
