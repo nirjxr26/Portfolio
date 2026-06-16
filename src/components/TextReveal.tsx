@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { animate, stagger } from "animejs";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 interface TextRevealProps {
   text: string;
@@ -24,7 +24,8 @@ export default function TextReveal({
   highlightClass = "text-blue-500",
   muted = false,
 }: TextRevealProps) {
-  const containerRef = useRef<HTMLSpanElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-10% 0px" });
   const words = text.split(" ").filter(Boolean);
 
   let mutedIndex = -1;
@@ -66,60 +67,70 @@ export default function TextReveal({
     return indices;
   }, [text, highlightText]);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const Component = as === "h1"
+    ? motion.h1
+    : as === "h2"
+    ? motion.h2
+    : as === "h3"
+    ? motion.h3
+    : as === "p"
+    ? motion.p
+    : as === "span"
+    ? motion.span
+    : motion.div;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animate(container.querySelectorAll(".reveal-word-inner"), {
-              translateY: ["110%", "0%"],
-              opacity: [0, 1],
-              duration: 750,
-              delay: stagger(25, { start: delay * 1000 }),
-              ease: "outCubic",
-            });
-            observer.unobserve(entry.target);
-          }
-        });
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.02,
+        delayChildren: delay,
       },
-      { rootMargin: "-10% 0px" }
-    );
+    },
+  };
 
-    observer.observe(container);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [delay, text]); // Re-observe if text changes
-
-  const Component = as;
+  const wordVariants = {
+    hidden: {
+      y: "110%",
+      opacity: 0,
+    },
+    visible: {
+      y: "0%",
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1] as const, // easeOutExpo
+      },
+    },
+  };
 
   return (
-    <Component className={`${className} overflow-hidden py-1`}>
-      <span
-        ref={containerRef}
-        className="inline-flex flex-wrap w-full"
-      >
+    <Component
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ref={containerRef as React.Ref<any>}
+      className={`${className} overflow-hidden py-1`}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
+      <span className="inline-flex flex-wrap w-full">
         {words.map((word, idx) => {
           const isMuted = muted || (mutedIndex !== -1 && idx >= mutedIndex);
           const isHighlighted = highlightIndices.has(idx);
-          
+
           return (
             <span
               key={idx}
               className="inline-block overflow-hidden mr-[0.22em] pt-[0.1em] pb-[0.15em] -mt-[0.1em] -mb-[0.15em] leading-[1.1]"
             >
-              <span
-                className={`reveal-word-inner inline-block opacity-0 will-change-transform ${
+              <motion.span
+                variants={wordVariants}
+                className={`inline-block will-change-transform ${
                   isHighlighted ? highlightClass : isMuted ? "text-secondary" : "text-foreground"
                 }`}
-                style={{ transform: "translateY(110%)" }}
               >
                 {word}
-              </span>
+              </motion.span>
             </span>
           );
         })}
