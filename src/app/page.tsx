@@ -8,28 +8,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import ImageReveal from "@/components/ImageReveal";
 import { useLenis } from "lenis/react";
-import PRStatusCard from "@/components/PRStatusCard";
-import ObservabilityCard from "@/components/ObservabilityCard";
-import CloudInfraCard from "@/components/CloudInfraCard";
-import SecurityCard from "@/components/SecurityCard";
 
-// Technology SVG Icons (imported from src/icons/tech)
-import awsIcon from "@/icons/tech/aws.svg";
-import terraformIcon from "@/icons/tech/HashiCorp Terraform.svg";
-import dockerIcon from "@/icons/tech/docker.svg";
-import kubernetesIcon from "@/icons/tech/kubernetes.svg";
-import argoIcon from "@/icons/tech/argo.svg";
-import datadogIcon from "@/icons/tech/datadog-svgrepo-com.svg";
-import grafanaIcon from "@/icons/tech/grafana.svg";
-import githubActionsIcon from "@/icons/tech/github-actions.svg";
-import k3sIcon from "@/icons/tech/kubernetes.svg";
-
-import falcoIcon from "@/icons/tech/falco.svg";
-import crowdsecIcon from "@/icons/tech/crowdsec.svg";
-import trivyIcon from "@/icons/tech/trivy.webp";
-import sonarIcon from "@/icons/tech/sonar.svg";
-import mlflowIcon from "@/icons/tech/mlflow.svg";
-import prometheusIcon from "@/icons/tech/prometheus.svg";
 import windowsPoster from "@/icons/blogs/image.png";
 import sonarPoster from "@/icons/blogs/image copy.png";
 
@@ -188,23 +167,19 @@ export default function Home() {
   const services = [
     {
       title: "Cloud Infrastructure",
-      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
-      card: <CloudInfraCard />
+      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
     },
     {
       title: "Developer Operations",
-      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
-      card: <PRStatusCard />
+      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
     },
     {
       title: "Security Engineering",
-      desc: "Security in the pipeline, not bolted on afterward. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
-      card: <SecurityCard />
+      desc: "Security in the pipeline, not bolted on afterward. Static analysis, container scanning, runtime detection — issues caught before they ship, not after."
     },
     {
       title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's actually wrong — not just that something is. Distributed systems that you can see into.",
-      card: <ObservabilityCard />
+      desc: "Metrics, logs, traces, and alerts that tell you what's actually wrong — not just that something is. Distributed systems that you can see into."
     }
   ];
 
@@ -482,7 +457,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="pt-12 pb-6 md:pt-24 md:pb-6 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="services" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
@@ -503,32 +478,26 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        {/* Capabilities alternating list */}
+        {/* Capabilities Grid */}
         <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-          <div className="flex flex-col relative z-10">
-            {services.map((service, idx) => {
-              return (
+          <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 relative z-10">
+              {services.map((service, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-col lg:flex-row-reverse items-center justify-between gap-4 lg:gap-12 w-full py-12 md:py-18 border-b border-foreground/5 last:border-b-0"
+                  className={`py-8 md:py-10 border-b border-foreground/5 last:border-b-0 md:last:border-b-0 ${idx % 2 === 0 ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5" : "md:pl-12 lg:pl-16"
+                    } ${idx === 2 ? "md:border-b-0" : ""
+                    }`}
                 >
-                  {/* Card Container */}
-                  <div className="w-full lg:max-w-[55%] flex justify-center items-center">
-                    {service.card}
-                  </div>
-
-                  {/* Text Container */}
-                  <div className="w-full lg:max-w-[38%] flex flex-col justify-center text-left items-start">
-                    <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mt-6 lg:mt-0 mb-2 md:mb-4 font-sans tracking-tight">
-                      {service.title}
-                    </h4>
-                    <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal">
-                      {service.desc}
-                    </p>
-                  </div>
+                  <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-2 md:mb-4 font-sans tracking-tight">
+                    {service.title}
+                  </h4>
+                  <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal max-w-lg">
+                    {service.desc}
+                  </p>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -559,7 +528,6 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
-                    whileHover={{ y: -6 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     className={`py-8 md:py-10 border-b border-foreground/5 flex flex-col justify-between min-h-[240px] last:border-b-0 md:last:border-b-0 ${isLeftColumn ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5" : "md:pl-12 lg:pl-16"
                       } ${isLastRowMd ? "md:border-b-0" : ""
