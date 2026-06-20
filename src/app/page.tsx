@@ -203,6 +203,7 @@ export default function Home() {
     { name: "Prometheus", id: "prometheus" },
     { name: "Grafana", id: "grafana" },
     { name: "Datadog", id: "datadog" },
+    { name: "Redis", id: "redis" },
     { name: "MLflow", id: "mlflow" },
     { name: "Go Lang", id: "go" },
     { name: "Python", id: "py" },
@@ -237,6 +238,9 @@ export default function Home() {
     }
     if (skillId === "mlflow") {
       return "/icons/mlflow.svg";
+    }
+    if (skillId === "redis") {
+      return "/icons/redis-logo-svgrepo-com.svg";
     }
     return `https://skillicons.dev/icons?i=${skillId}&theme=${theme === "light" ? "light" : "dark"}`;
   };
@@ -485,9 +489,13 @@ export default function Home() {
               {services.map((service, idx) => (
                 <div
                   key={idx}
-                  className={`py-8 md:py-10 border-b border-foreground/5 last:border-b-0 md:last:border-b-0 ${idx % 2 === 0 ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5" : "md:pl-12 lg:pl-16"
-                    } ${idx === 2 ? "md:border-b-0" : ""
-                    }`}
+                  className={`border-b border-foreground/5 last:border-b-0 md:last:border-b-0 
+                    ${idx === 0 ? "pt-6 md:pt-12 pb-6 md:pb-16" : ""}
+                    ${idx === 1 ? "pt-8 md:pt-12 pb-6 md:pb-16" : ""}
+                    ${idx >= 2 ? "pt-8 md:pt-16 pb-6 md:pb-16" : ""}
+                    ${idx % 2 === 0 ? "md:pr-16 lg:pr-24 md:border-r border-foreground/5" : "md:pl-16 lg:pl-24"}
+                    ${idx === 2 ? "md:border-b-0" : ""}
+                  `}
                 >
                   <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-2 md:mb-4 font-sans tracking-tight">
                     {service.title}
