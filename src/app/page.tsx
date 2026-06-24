@@ -166,7 +166,7 @@ export default function Home() {
 
   const services = [
     {
-      title: "Cloud Infrastructure",
+      title: "Cloud Architecture",
       desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
     },
     {
@@ -174,12 +174,12 @@ export default function Home() {
       desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
     },
     {
-      title: "Security Engineering",
-      desc: "Security in the pipeline, not bolted on afterward. Static analysis, container scanning, runtime detection — issues caught before they ship, not after."
+      title: "Pipeline Security",
+      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after."
     },
     {
       title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's actually wrong — not just that something is. Distributed systems that you can see into."
+      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches."
     }
   ];
 

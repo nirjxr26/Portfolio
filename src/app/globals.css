@@ -112,12 +112,14 @@ body {
   display: flex;
   width: max-content;
   animation: marquee 25s linear infinite;
-  gap: 0.5rem; /* Mobile: 8px */
+  gap: 0.5rem;
+  /* Mobile: 8px */
 }
 
 @media (min-width: 768px) {
   .animate-marquee {
-    gap: 2rem; /* Desktop: 32px */
+    gap: 2rem;
+    /* Desktop: 32px */
   }
 }
 
@@ -129,7 +131,10 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
