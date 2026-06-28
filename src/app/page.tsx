@@ -167,35 +167,19 @@ export default function Home() {
   const services = [
     {
       title: "Cloud Architecture",
-      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
-      image: "/illustrations/stamping-white.png",
-      paddingClass: "md:p-4 lg:p-0",
-      mobileFullWidth: false,
-      imageClassName: ""
+      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
     },
     {
       title: "Developer Operations",
-      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
-      image: "/illustrations/developer-operations.png",
-      paddingClass: "",
-      mobileFullWidth: true,
-      imageClassName: "scale-[1.15] md:scale-[1.2] origin-center"
+      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
     },
     {
       title: "Pipeline Security",
-      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
-      image: "/illustrations/pipeline-security.png",
-      paddingClass: "",
-      mobileFullWidth: false,
-      imageClassName: ""
+      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after."
     },
     {
       title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches.",
-      image: "/illustrations/observability-mlops.png",
-      paddingClass: "",
-      mobileFullWidth: false,
-      imageClassName: ""
+      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches."
     }
   ];
 
@@ -506,28 +490,13 @@ export default function Home() {
                 <div
                   key={idx}
                   className={`border-b border-foreground/5 last:border-b-0 md:last:border-b-0 
-                    ${idx === 0 ? "pt-6 md:pt-12 pb-12 md:pb-16" : ""}
-                    ${idx === 1 ? "pt-12 md:pt-12 pb-12 md:pb-16" : ""}
-                    ${idx >= 2 ? "pt-12 md:pt-16 pb-12 md:pb-16" : ""}
-                    ${idx % 2 === 0 ? "md:pr-8 lg:pr-20 xl:pr-24 md:border-r border-foreground/5" : "md:pl-8 lg:pl-20 xl:pl-24"}
+                    ${idx === 0 ? "pt-6 md:pt-12 pb-6 md:pb-16" : ""}
+                    ${idx === 1 ? "pt-8 md:pt-12 pb-6 md:pb-16" : ""}
+                    ${idx >= 2 ? "pt-8 md:pt-16 pb-6 md:pb-16" : ""}
+                    ${idx % 2 === 0 ? "md:pr-16 lg:pr-24 md:border-r border-foreground/5" : "md:pl-16 lg:pl-24"}
                     ${idx === 2 ? "md:border-b-0" : ""}
-                    group/card cursor-pointer
                   `}
                 >
-                  {service.image && (
-                    <div className={`mb-12 md:mb-14 lg:mb-16 h-36 md:h-44 lg:h-52 flex items-center justify-center relative ${
-                      service.mobileFullWidth ? "-mx-4 w-[calc(100%+32px)] md:mx-0 md:w-full" : "w-full"
-                    } ${service.paddingClass || ""}`}>
-                      <ImageReveal
-                        src={service.image}
-                        alt={service.title}
-                        aspectRatio="w-full h-full"
-                        objectFit="object-contain"
-                        imageClassName={service.imageClassName}
-                        className="w-full h-full"
-                      />
-                    </div>
-                  )}
                   <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-2 md:mb-4 font-sans tracking-tight">
                     {service.title}
                   </h4>
@@ -679,63 +648,43 @@ export default function Home() {
 
       <section id="track-record" className="border-t border-foreground/5 w-full bg--background py-12 md:py-28">
         <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Column - Text */}
-            <div className="lg:col-span-7 order-2 lg:order-1">
-              <ScrollReveal delay={0.1}>
-                <div className="mb-4 md:mb-6">
-                  <TextReveal
-                    as="h3"
-                    className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
-                    text="Systems built to stand."
-                  />
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-                <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
-                  <span className="text-foreground">6</span> projects shipped, all still running.{" "}
-                  <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
-                  Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
-                  <br /> <br />
-                  <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
-                    <span className="text-foreground">Terraform</span> from scratch — no ClickOps, no drift, no config that only exists because someone clicked through the console once and never wrote it down.{" "}
-                    <span className="text-foreground">Security gates</span> in the pipeline, not a ticket filed after the deploy.{" "}
-                    Costs are predictable because the <span className="text-foreground"> infra is code</span>, not memory.
-                  </p>
-                  <br />
-                  <a
-                    href="https://www.linkedin.com/posts/nirjxr_googlestudentambassador-gsa2026-teamgemini-share-7465741996729491456-hVqR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    Google Student Ambassador. <ArrowUpRight className="w-4 h-4" />
-                  </a>
-                </div>
-                <br />
-
-                <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
-                  If you need infrastructure that scales with your business — <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="underline underline-offset-4 text-secondary hover:text-foreground transition-colors cursor-pointer">let&apos;s talk</a>.
-                </p>
-              </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="mb-4 md:mb-6">
+              <TextReveal
+                as="h3"
+                className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+                text="Systems built to stand."
+              />
             </div>
+          </ScrollReveal>
 
-            {/* Right Column - Image */}
-            <div className="lg:col-span-5 w-full flex justify-center order-1 lg:order-2">
-              <ScrollReveal delay={0.3} duration={1.2} distance={50}>
-                <div className="w-full max-w-md lg:max-w-none">
-                  <ImageReveal
-                    src="/illustrations/standard-white.png"
-                    alt="Systems built to stand"
-                    aspectRatio="aspect-[4/3] sm:aspect-[16/10] lg:aspect-square"
-                    objectFit="object-contain"
-                    className="w-full"
-                  />
-                </div>
-              </ScrollReveal>
+          <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+            <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
+              <span className="text-foreground">6</span> projects shipped, all still running.{" "}
+              <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
+              Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
+              <br /> <br />
+              <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
+                <span className="text-foreground">Terraform</span> from scratch — no ClickOps, no drift, no config that only exists because someone clicked through the console once and never wrote it down.{" "}
+                <span className="text-foreground">Security gates</span> in the pipeline, not a ticket filed after the deploy.{" "}
+                Costs are predictable because the <span className="text-foreground"> infra is code</span>, not memory.
+              </p>
+              <br />
+              <a
+                href="https://www.linkedin.com/posts/nirjxr_googlestudentambassador-gsa2026-teamgemini-share-7465741996729491456-hVqR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
+              >
+                Google Student Ambassador. <ArrowUpRight className="w-4 h-4" />
+              </a>
             </div>
-          </div>
+            <br />
+
+            <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
+              If you need infrastructure that scales with your business — <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="underline underline-offset-4 text-secondary hover:text-foreground transition-colors cursor-pointer">let&apos;s talk</a>.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 
