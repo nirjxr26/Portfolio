@@ -169,25 +169,33 @@ export default function Home() {
       title: "Cloud Architecture",
       desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
       image: "/illustrations/stamping-white.png",
-      paddingClass: "md:p-4 lg:p-0"
+      paddingClass: "md:p-4 lg:p-0",
+      mobileFullWidth: false,
+      imageClassName: ""
     },
     {
       title: "Developer Operations",
       desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
       image: "/illustrations/developer-operations.png",
-      paddingClass: ""
+      paddingClass: "",
+      mobileFullWidth: true,
+      imageClassName: "scale-[1.15] md:scale-[1.2] origin-center"
     },
     {
       title: "Pipeline Security",
       desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
       image: "/illustrations/pipeline-security.png",
-      paddingClass: ""
+      paddingClass: "",
+      mobileFullWidth: false,
+      imageClassName: ""
     },
     {
       title: "Observability & MLOps",
       desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches.",
       image: "/illustrations/observability-mlops.png",
-      paddingClass: ""
+      paddingClass: "",
+      mobileFullWidth: false,
+      imageClassName: ""
     }
   ];
 
@@ -507,12 +515,15 @@ export default function Home() {
                   `}
                 >
                   {service.image && (
-                    <div className={`mb-12 md:mb-14 lg:mb-16 w-full h-36 md:h-44 lg:h-52 flex items-center justify-center relative ${service.paddingClass || ""}`}>
+                    <div className={`mb-12 md:mb-14 lg:mb-16 h-36 md:h-44 lg:h-52 flex items-center justify-center relative ${
+                      service.mobileFullWidth ? "-mx-4 w-[calc(100%+32px)] md:mx-0 md:w-full" : "w-full"
+                    } ${service.paddingClass || ""}`}>
                       <ImageReveal
                         src={service.image}
                         alt={service.title}
                         aspectRatio="w-full h-full"
                         objectFit="object-contain"
+                        imageClassName={service.imageClassName}
                         className="w-full h-full"
                       />
                     </div>

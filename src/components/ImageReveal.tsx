@@ -10,6 +10,7 @@ interface ImageRevealProps {
   aspectRatio?: string;
   overlayColor?: string;
   objectFit?: "object-cover" | "object-contain";
+  imageClassName?: string;
 }
 
 export default function ImageReveal({
@@ -19,6 +20,7 @@ export default function ImageReveal({
   aspectRatio = "aspect-[16/9]",
   overlayColor = "bg-background",
   objectFit = "object-cover",
+  imageClassName = "",
 }: ImageRevealProps) {
   return (
     <div className={`relative overflow-hidden rounded-xl ${aspectRatio} ${className}`}>
@@ -35,18 +37,20 @@ export default function ImageReveal({
         className={`absolute inset-0 z-10 pointer-events-none ${overlayColor}`}
       />
       {/* Image with subtle zoom reveal */}
-      <motion.img
-        initial={{ scale: 1.15 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true, margin: "-10% 0px" }}
-        transition={{
-          duration: 1.0,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        src={src}
-        alt={alt}
-        className={`w-full h-full ${objectFit}`}
-      />
+      <div className={`w-full h-full ${imageClassName}`}>
+        <motion.img
+          initial={{ scale: 1.15 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{
+            duration: 1.0,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          src={src}
+          alt={alt}
+          className={`w-full h-full ${objectFit}`}
+        />
+      </div>
     </div>
   );
 }
