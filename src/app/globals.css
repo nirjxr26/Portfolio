@@ -40,6 +40,7 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* Custom Outlined Button styles resembling the reference mockup */
