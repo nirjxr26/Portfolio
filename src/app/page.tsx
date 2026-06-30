@@ -2,15 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, X, Menu, Sun, Moon } from "lucide-react";
+import { ArrowUpRight, X, Menu } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
-import ImageReveal from "@/components/ImageReveal";
 import { useLenis } from "lenis/react";
-
-import windowsPoster from "@/icons/blogs/image.png";
-import sonarPoster from "@/icons/blogs/image copy.png";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +17,6 @@ export default function Home() {
 
   const [showAllWorks, setShowAllWorks] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -33,7 +28,7 @@ export default function Home() {
       lenis.scrollTo(targetId, {
         offset: 0,
         duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // nice easeOutExpo
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
       const targetElement = document.getElementById(targetId.replace("#", ""));
@@ -71,18 +66,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
-    if (savedTheme) {
-      setTimeout(() => setTheme(savedTheme), 0);
-      if (savedTheme === "light") {
-        document.documentElement.classList.add("light");
-      } else {
-        document.documentElement.classList.remove("light");
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (mobileMenuOpen) {
       if (lenis) lenis.stop();
       document.body.style.overflow = "hidden";
@@ -98,19 +81,6 @@ export default function Home() {
       document.documentElement.style.overflow = "";
     };
   }, [mobileMenuOpen, lenis]);
-
-  // const toggleTheme = () => {
-  //   const nextTheme = theme === "dark" ? "light" : "dark";
-  //   setTheme(nextTheme);
-  //   localStorage.setItem("theme", nextTheme);
-  //   if (nextTheme === "light") {
-  //     document.documentElement.classList.add("light");
-  //   } else {
-  //     document.documentElement.classList.remove("light");
-  //   }
-  // };
-
-
 
   const projects = [
     {
@@ -211,39 +181,21 @@ export default function Home() {
     { name: "Next.js", id: "nextjs" }
   ];
 
-  const getSkillIconSrc = (skillId: string) => {
-    if (skillId === "argocd") {
-      return "/icons/argocd.svg";
-    }
-    if (skillId === "helm") {
-      return "/icons/helm.svg";
-    }
-    if (skillId === "ansible") {
-      return "/icons/ansible.svg";
-    }
-    if (skillId === "datadog") {
-      return "/icons/datadog.svg";
-    }
-    if (skillId === "sonarqubecloud") {
-      return "/icons/sonarqubecloud.svg";
-    }
-    if (skillId === "trivy") {
-      return "/icons/trivy.svg";
-    }
-    if (skillId === "falco") {
-      return "/icons/falco.svg";
-    }
-    if (skillId === "crowdsec") {
-      return "/icons/crowdsec.svg";
-    }
-    if (skillId === "mlflow") {
-      return "/icons/mlflow.svg";
-    }
-    if (skillId === "redis") {
-      return "/icons/redis-logo-svgrepo-com.svg";
-    }
-    return `https://skillicons.dev/icons?i=${skillId}&theme=${theme === "light" ? "light" : "dark"}`;
+  const localIcons: Record<string, string> = {
+    argocd: "/icons/argocd.svg",
+    helm: "/icons/helm.svg",
+    ansible: "/icons/ansible.svg",
+    datadog: "/icons/datadog.svg",
+    sonarqubecloud: "/icons/sonarqubecloud.svg",
+    trivy: "/icons/trivy.svg",
+    falco: "/icons/falco.svg",
+    crowdsec: "/icons/crowdsec.svg",
+    mlflow: "/icons/mlflow.svg",
+    redis: "/icons/redis-logo-svgrepo-com.svg",
   };
+
+  const getSkillIconSrc = (skillId: string) =>
+    localIcons[skillId] || `https://skillicons.dev/icons?i=${skillId}&theme=dark`;
 
   return (
     <div ref={containerRef} className="w-full min-h-screen relative overflow-hidden bg-background text-foreground selection:bg-foreground/10 selection:text-foreground">
@@ -484,28 +436,24 @@ export default function Home() {
 
         {/* Capabilities Grid */}
         <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-          <div className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 relative z-10">
-              {services.map((service, idx) => (
-                <div
-                  key={idx}
-                  className={`border-b border-foreground/5 last:border-b-0 md:last:border-b-0 
-                    ${idx === 0 ? "pt-6 md:pt-12 pb-6 md:pb-16" : ""}
-                    ${idx === 1 ? "pt-8 md:pt-12 pb-6 md:pb-16" : ""}
-                    ${idx >= 2 ? "pt-8 md:pt-16 pb-6 md:pb-16" : ""}
-                    ${idx % 2 === 0 ? "md:pr-16 lg:pr-24 md:border-r border-foreground/5" : "md:pl-16 lg:pl-24"}
-                    ${idx === 2 ? "md:border-b-0" : ""}
-                  `}
-                >
-                  <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-2 md:mb-4 font-sans tracking-tight">
-                    {service.title}
-                  </h4>
-                  <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal max-w-lg">
-                    {service.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {services.map((service, idx) => (
+              <div
+                key={idx}
+                className={`py-8 md:py-12 border-b border-foreground/5 last:border-b-0 ${
+                  idx % 2 === 0
+                    ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5"
+                    : "md:pl-12 lg:pl-16"
+                } ${idx >= 2 ? "md:border-b-0" : ""}`}
+              >
+                <h4 className="text-xl md:text-2xl lg:text-[30px] font-normal text-foreground mb-3 md:mb-4 font-sans tracking-tight">
+                  {service.title}
+                </h4>
+                <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal max-w-lg">
+                  {service.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </ScrollReveal>
       </section>
@@ -523,10 +471,9 @@ export default function Home() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-          <div className="grid grid-cols-1 md:grid-cols-2 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2">
             <AnimatePresence initial={false}>
               {(showAllWorks ? projects : projects.slice(0, 4)).map((proj, idx) => {
-                const isLeftColumn = idx % 2 === 0;
                 const totalVisible = showAllWorks ? projects.length : 4;
                 const isLastRowMd = idx >= totalVisible - (totalVisible % 2 === 0 ? 2 : 1);
                 return (
@@ -537,9 +484,11 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className={`py-8 md:py-10 border-b border-foreground/5 flex flex-col justify-between min-h-[240px] last:border-b-0 md:last:border-b-0 ${isLeftColumn ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5" : "md:pl-12 lg:pl-16"
-                      } ${isLastRowMd ? "md:border-b-0" : ""
-                      }`}
+                    className={`py-8 md:py-10 border-b border-foreground/5 flex flex-col justify-between min-h-[240px] last:border-b-0 md:last:border-b-0 ${
+                      idx % 2 === 0
+                        ? "md:pr-12 lg:pr-16 md:border-r border-foreground/5"
+                        : "md:pl-12 lg:pl-16"
+                    } ${isLastRowMd ? "md:border-b-0" : ""}`}
                   >
                     <div>
                       <h4 className="text-xl md:text-2xl lg:text-[30px] font-md text-foreground mb-1 font-sans tracking-tight">
@@ -737,16 +686,12 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10">
               {[
                 {
-                  lead: "",
                   title: "Why AI can't just rewrite windows.",
                   link: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows",
-                  poster: windowsPoster
                 },
                 {
-                  lead: "",
                   title: "Sonarqube had notes.",
                   link: "https://blog.nirjar.me/sonarqube",
-                  poster: sonarPoster
                 }
               ].map((article, idx) => (
                 <div
@@ -861,40 +806,7 @@ export default function Home() {
                         </div>
                       </div>
                     </a>
-                  ) : article.poster && (
-                    <a
-                      href={article.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full mb-2 md:mb-4 group/poster cursor-pointer overflow-hidden rounded-xl"
-                    >
-                      <ImageReveal
-                        src={article.poster.src}
-                        alt={article.title}
-                        aspectRatio="aspect-[16/9]"
-                        className="transition-transform duration-500 group-hover/poster:scale-105"
-                      />
-                    </a>
-                  )}
-                  {article.title !== "Why AI can't just rewrite windows." && article.title !== "Sonarqube had notes." && (
-                    <>
-                      <h4 className="text-lg sm:text-[22px] font-md text-foreground mb-1 font-sans tracking-tight">
-                        <a
-                          href={article.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-secondary transition-colors cursor-pointer"
-                        >
-                          {article.title}
-                        </a>
-                      </h4>
-                      {article.lead && (
-                        <p className="text-sm font-medium text-secondary mb-4 italic">
-                          {article.lead}
-                        </p>
-                      )}
-                    </>
-                  )}
+                  ) : null}
                 </div>
               ))}
             </div>

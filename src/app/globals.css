@@ -1,11 +1,8 @@
 @import url('https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* --background: #161615; */
   --background: #0D0D0F;
-
   --foreground: #E3E6DF;
   --secondary: #92948F;
   --border-color: rgba(227, 230, 223, 0.12);
@@ -30,9 +27,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-secondary: var(--secondary);
-  --font-sans: 'Switzer', var(--font-geist-sans), sans-serif;
+  --font-sans: 'Switzer', sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
-  --font-cursive: 'Pinyon Script', cursive;
   --font-serif: var(--font-instrument-serif), serif;
 }
 
@@ -40,9 +36,9 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Custom Outlined Button styles resembling the reference mockup */
 .btn-outlined {
   border: 1px solid var(--border-color);
   color: var(--secondary);
@@ -55,7 +51,6 @@ body {
   background-color: var(--btn-hover-bg);
 }
 
-/* Custom Link Underline Animation */
 .link-underline {
   position: relative;
   display: inline-block;
@@ -79,7 +74,6 @@ body {
   transform-origin: bottom left;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -97,15 +91,9 @@ body {
   background: var(--scrollbar-thumb-hover);
 }
 
-/* Infinite Horizontal Marquee Styles */
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
@@ -113,13 +101,11 @@ body {
   width: max-content;
   animation: marquee 25s linear infinite;
   gap: 0.5rem;
-  /* Mobile: 8px */
 }
 
 @media (min-width: 768px) {
   .animate-marquee {
     gap: 2rem;
-    /* Desktop: 32px */
   }
 }
 
@@ -127,14 +113,11 @@ body {
   animation-play-state: paused;
 }
 
-/* Hide scrollbar utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
 .no-scrollbar {
   -ms-overflow-style: none;
-  /* IE and Edge */
   scrollbar-width: none;
-  /* Firefox */
 }
