@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, Menu } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
+import ImageReveal from "@/components/ImageReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import { useLenis } from "lenis/react";
@@ -605,9 +606,7 @@ export default function Home() {
 
       <section id="track-record" className="border-t border-foreground/5 w-full bg--background py-12 md:py-28">
         <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Column - Text */}
-            <div className="lg:col-span-7 order-2 lg:order-1">
+          <div className="max-w-4xl">
               <ScrollReveal delay={0.1}>
                 <div className="mb-4 md:mb-6">
                   <TextReveal
@@ -645,22 +644,6 @@ export default function Home() {
                   If you need infrastructure that scales with your business — <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="underline underline-offset-4 text-secondary hover:text-foreground transition-colors cursor-pointer">let&apos;s talk</a>.
                 </p>
               </ScrollReveal>
-            </div>
-
-            {/* Right Column - Image */}
-            <div className="lg:col-span-5 w-full flex justify-center order-1 lg:order-2">
-              <ScrollReveal delay={0.3} duration={1.2} distance={50}>
-                <div className="w-full max-w-md lg:max-w-none">
-                  <ImageReveal
-                    src="/illustrations/standard-white.png"
-                    alt="Systems built to stand"
-                    aspectRatio="aspect-[4/3] sm:aspect-[16/10] lg:aspect-square"
-                    objectFit="object-contain"
-                    className="w-full"
-                  />
-                </div>
-              </ScrollReveal>
-            </div>
           </div>
         </div>
       </section>
