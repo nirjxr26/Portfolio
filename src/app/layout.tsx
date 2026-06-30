@@ -98,9 +98,6 @@ export default function RootLayout({
       style={{ backgroundColor: "var(--background)" }}
       suppressHydrationWarning
     >
-      <head>
-        <link href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
-      </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
         <SmoothScroll>
           {children}

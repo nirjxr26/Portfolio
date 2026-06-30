@@ -137,19 +137,27 @@ export default function Home() {
   const services = [
     {
       title: "Cloud Architecture",
-      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
+      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
+      image: "/illustrations/stamping-white.png",
+      paddingClass: "md:p-4 lg:p-0"
     },
     {
       title: "Developer Operations",
-      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
+      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
+      image: "/illustrations/developer-operations.png",
+      paddingClass: ""
     },
     {
       title: "Pipeline Security",
-      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after."
+      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
+      image: "/illustrations/pipeline-security.png",
+      paddingClass: ""
     },
     {
       title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches."
+      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches.",
+      image: "/illustrations/observability-mlops.png",
+      paddingClass: ""
     }
   ];
 
@@ -413,7 +421,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="services" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
@@ -459,7 +467,7 @@ export default function Home() {
       </section>
 
       {/* Selected Work Section */}
-      <section id="work" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="work" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
@@ -535,7 +543,7 @@ export default function Home() {
       </section>
 
       {/* Skillset Section */}
-      <section id="skills" className="py-12 md:py-24 border-t border-foreground/5">
+      <section id="skills" className="border-t border-foreground/5 py-12 md:py-24">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto mb-4 md:mb-6">
@@ -595,50 +603,70 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <section id="track-record" className="w-full bg--background py-12 md:py-28 border-t border-foreground/5">
+      <section id="track-record" className="border-t border-foreground/5 w-full bg--background py-12 md:py-28">
         <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
-          <ScrollReveal delay={0.1}>
-            <div className="mb-4 md:mb-6">
-              <TextReveal
-                as="h3"
-                className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
-                text="Systems built to stand."
-              />
-            </div>
-          </ScrollReveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Column - Text */}
+            <div className="lg:col-span-7 order-2 lg:order-1">
+              <ScrollReveal delay={0.1}>
+                <div className="mb-4 md:mb-6">
+                  <TextReveal
+                    as="h3"
+                    className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+                    text="Systems built to stand."
+                  />
+                </div>
+              </ScrollReveal>
 
-          <ScrollReveal delay={0.25} duration={1.2} distance={50}>
-            <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
-              <span className="text-foreground">6</span> projects shipped, all still running.{" "}
-              <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
-              Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
-              <br /> <br />
-              <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
-                <span className="text-foreground">Terraform</span> from scratch — no ClickOps, no drift, no config that only exists because someone clicked through the console once and never wrote it down.{" "}
-                <span className="text-foreground">Security gates</span> in the pipeline, not a ticket filed after the deploy.{" "}
-                Costs are predictable because the <span className="text-foreground"> infra is code</span>, not memory.
-              </p>
-              <br />
-              <a
-                href="https://www.linkedin.com/posts/nirjxr_googlestudentambassador-gsa2026-teamgemini-share-7465741996729491456-hVqR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
-              >
-                Google Student Ambassador. <ArrowUpRight className="w-4 h-4" />
-              </a>
-            </div>
-            <br />
+              <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+                <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
+                  <span className="text-foreground">6</span> projects shipped, all still running.{" "}
+                  <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
+                  Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
+                  <br /> <br />
+                  <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
+                    <span className="text-foreground">Terraform</span> from scratch — no ClickOps, no drift, no config that only exists because someone clicked through the console once and never wrote it down.{" "}
+                    <span className="text-foreground">Security gates</span> in the pipeline, not a ticket filed after the deploy.{" "}
+                    Costs are predictable because the <span className="text-foreground"> infra is code</span>, not memory.
+                  </p>
+                  <br />
+                  <a
+                    href="https://www.linkedin.com/posts/nirjxr_googlestudentambassador-gsa2026-teamgemini-share-7465741996729491456-hVqR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    Google Student Ambassador. <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
+                <br />
 
-            <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl text-secondary">
-              If you need infrastructure that scales with your business — <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="underline underline-offset-4 text-secondary hover:text-foreground transition-colors cursor-pointer">let&apos;s talk</a>.
-            </p>
-          </ScrollReveal>
+                <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
+                  If you need infrastructure that scales with your business — <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="underline underline-offset-4 text-secondary hover:text-foreground transition-colors cursor-pointer">let&apos;s talk</a>.
+                </p>
+              </ScrollReveal>
+            </div>
+
+            {/* Right Column - Image */}
+            <div className="lg:col-span-5 w-full flex justify-center order-1 lg:order-2">
+              <ScrollReveal delay={0.3} duration={1.2} distance={50}>
+                <div className="w-full max-w-md lg:max-w-none">
+                  <ImageReveal
+                    src="/illustrations/standard-white.png"
+                    alt="Systems built to stand"
+                    aspectRatio="aspect-[4/3] sm:aspect-[16/10] lg:aspect-square"
+                    objectFit="object-contain"
+                    className="w-full"
+                  />
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="approach" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="approach" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
@@ -668,7 +696,7 @@ export default function Home() {
 
 
       {/* Engineering Notes Section */}
-      <section id="insights" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="insights" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
@@ -829,7 +857,7 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <section id="contact" className="py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto border-t border-foreground/5">
+      <section id="contact" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:items-end">
           <ScrollReveal delay={0.1} duration={1.0}>
             <div>
@@ -886,7 +914,7 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
-      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-16 pb-12 border-t border-foreground/5">
+      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-16 pb-12">
         <div className="w-full overflow-hidden mb-8">
           <h2 className="text-[22vw] md:text-[14vw] font-normal text-secondary uppercase tracking-[-0.06em] md:tracking-[-0.08em] text-center select-none leading-[0.85] font-sans">
             NIRJAR

@@ -9,6 +9,7 @@ interface ImageRevealProps {
   className?: string;
   aspectRatio?: string;
   overlayColor?: string;
+  objectFit?: "object-cover" | "object-contain";
 }
 
 export default function ImageReveal({
@@ -17,6 +18,7 @@ export default function ImageReveal({
   className = "",
   aspectRatio = "aspect-[16/9]",
   overlayColor = "bg-background",
+  objectFit = "object-cover",
 }: ImageRevealProps) {
   return (
     <div className={`relative overflow-hidden rounded-xl ${aspectRatio} ${className}`}>
@@ -43,7 +45,7 @@ export default function ImageReveal({
         }}
         src={src}
         alt={alt}
-        className="w-full h-full object-cover"
+        className={`w-full h-full ${objectFit}`}
       />
     </div>
   );
