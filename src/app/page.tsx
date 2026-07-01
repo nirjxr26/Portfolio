@@ -384,7 +384,7 @@ export default function Home() {
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             {/* Title */}
             <StaggerItem>
-              <h1 className="text-[36px] sm:text-[48px] md:text-[60px] lg:text-[76px] font-normal tracking-tight leading-[1.05] mb-8 font-sans max-w-6xl max-[400px]:text-[34px]">
+              <h1 className="text-[38px] sm:text-[48px] md:text-[60px] lg:text-[76px] font-normal tracking-normal leading-[1.05] mb-8 font-sans max-w-6xl max-[400px]:text-[32px]">
                 <TextReveal
                   as="span"
                   className="block text-foreground"
@@ -403,7 +403,7 @@ export default function Home() {
 
             {/* Subtitle */}
             <StaggerItem>
-              <p className="text-xl md:text-[20px] text-secondary max-w-2xl leading-relaxed mb-8 font-normal font-sans tracking-[-0.01em]">
+              <p className="text-lg md:text-[20px] text-secondary max-w-2xl leading-relaxed mb-8 font-normal font-sans tracking-[-0.01em]">
                 Nirjar Goswami. Cloud and DevOps Engineer. I help teams build and operate infrastructure so they ship faster without 2am pages.
               </p>
             </StaggerItem>
