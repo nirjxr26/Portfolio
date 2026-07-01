@@ -2,17 +2,17 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, X, Menu } from "lucide-react";
+import { ArrowUpRight, X, Menu, Sun, Moon } from "lucide-react";
 import TextReveal from "@/components/TextReveal";
 import ImageReveal from "@/components/ImageReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
-import { useLenis } from "lenis/react";
+import { useTheme } from "@/components/ThemeProvider";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const lenis = useLenis();
+  const { theme, toggleTheme, mounted } = useTheme();
 
   // States for services modal or dropdown
 
@@ -25,17 +25,9 @@ export default function Home() {
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    if (lenis) {
-      lenis.scrollTo(targetId, {
-        offset: 0,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-    } else {
-      const targetElement = document.getElementById(targetId.replace("#", ""));
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "smooth" });
-      }
+    const targetElement = document.getElementById(targetId.replace("#", ""));
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -68,20 +60,17 @@ export default function Home() {
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      if (lenis) lenis.stop();
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     } else {
-      if (lenis) lenis.start();
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     }
     return () => {
-      if (lenis) lenis.start();
       document.body.style.overflow = "";
       document.documentElement.style.overflow = "";
     };
-  }, [mobileMenuOpen, lenis]);
+  }, [mobileMenuOpen]);
 
   const projects = [
     {
@@ -150,7 +139,7 @@ export default function Home() {
     },
     {
       title: "Pipeline Security",
-      desc: "Caught before it ships, not after. Static analysis, container scanning, runtime detection — issues caught before they ship, not after.",
+      desc: "Problems get caught in the pipeline, not in a postmortem. Static analysis, container scanning, and runtime detection run before code ships, not after something breaks in production.",
       image: "/illustrations/pipeline-security.png",
       paddingClass: ""
     },
@@ -217,7 +206,7 @@ export default function Home() {
           y: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
           opacity: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
         }}
-        className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 transition-colors duration-500 ${isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 ${isScrolled
           ? "py-3 bg-background/95 backdrop-blur-md"
           : "py-6 bg-gradient-to-b from-background/80 to-transparent backdrop-blur-[4px]"
           }`}
@@ -227,7 +216,7 @@ export default function Home() {
           <div />
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8 text-[13px] font-medium tracking-wide">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8 text-[13px] font-normal tracking-wide">
             <a href="#services" onClick={(e) => handleScrollTo(e, "#services")} className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
               What I do
             </a>
@@ -249,13 +238,15 @@ export default function Home() {
             <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
               Contact
             </a>
-            {/* <button
-              onClick={toggleTheme}
-              className="p-1.5 text-secondary hover:text-foreground transition-colors cursor-pointer flex items-center ml-2"
-              aria-label="Toggle Theme"
-            >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button> */}
+            {mounted && (
+              <button
+                onClick={toggleTheme}
+                className="p-1.5 text-secondary hover:text-foreground transition-colors cursor-pointer flex items-center ml-2"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+            )}
           </nav>
 
           {/* Mobile Controls */}
@@ -386,14 +377,14 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Hero Section */}
-      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-40 pb-4 md:pt-35 md:pb-6">
+      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto pt-40 pb-10 md:pt-35 md:pb-16">
 
         {/* Content Area */}
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             {/* Title */}
             <StaggerItem>
-              <h1 className="text-[34px] min-[400px]:text-4xl sm:text-5xl md:text-6xl lg:text-[76px] font-normal tracking-tight leading-[0.9] mb-8 font-sans max-w-6xl">
+              <h1 className="text-[36px] sm:text-[48px] md:text-[60px] lg:text-[76px] font-normal tracking-tight leading-[1.05] mb-8 font-sans max-w-6xl max-[400px]:text-[34px]">
                 <TextReveal
                   as="span"
                   className="block text-foreground"
@@ -402,7 +393,7 @@ export default function Home() {
                 />
                 <TextReveal
                   as="span"
-                  className="block text-secondary mt-[-0.15em] sm:mt-[-0.18em] lg:mt-[-0.22em]"
+                  className="block text-secondary -mt-1 sm:-mt-1.5"
                   text="meant to be forgotten."
                   delay={0.15}
                   muted
@@ -412,7 +403,7 @@ export default function Home() {
 
             {/* Subtitle */}
             <StaggerItem>
-              <p className="text-lg md:text-[20px] text-secondary max-w-2xl leading-relaxed mb-8 font-normal font-sans tracking-[-0.01em]">
+              <p className="text-xl md:text-[20px] text-secondary max-w-2xl leading-relaxed mb-8 font-normal font-sans tracking-[-0.01em]">
                 Nirjar Goswami. Cloud and DevOps Engineer. I help teams build and operate infrastructure so they ship faster without 2am pages.
               </p>
             </StaggerItem>
@@ -422,21 +413,21 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section id="services" className="border-t border-foreground/5 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
               as="h3"
-              className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans mb-0"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans mb-1 lg:mb-0"
               text="What I do."
             />
             <TextReveal
               as="p"
-              className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal leading-[1.3] tracking-tight max-w-4xl text-secondary -mt-2"
+              className="text-xl sm:text-2xl md:text-2xl lg:text-[32px] font-normal leading-[1.3] tracking-tight max-w-4xl text-secondary"
               text="Good infrastructure is invisible. here's how."
               highlightText="invisible"
-              highlightClass="text-blue-500 dark:text-blue-400"
+              highlightClass="text-accent"
               delay={0.15}
               muted
             />
@@ -444,7 +435,7 @@ export default function Home() {
         </ScrollReveal>
 
         {/* Capabilities Grid */}
-        <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+        <ScrollReveal delay={0.25}>
           <div className="grid grid-cols-1 md:grid-cols-2">
             {services.map((service, idx) => (
               <div
@@ -468,18 +459,18 @@ export default function Home() {
       </section>
 
       {/* Selected Work Section */}
-      <section id="work" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section id="work" className="border-t border-foreground/5 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
               as="h3"
-              className="text-[30px] md:text-[36px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1]"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1]"
               text="Recent Work."
             />
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+        <ScrollReveal delay={0.25}>
           <div className="grid grid-cols-1 md:grid-cols-2">
             <AnimatePresence initial={false}>
               {(showAllWorks ? projects : projects.slice(0, 4)).map((proj, idx) => {
@@ -528,7 +519,7 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.35} duration={1.2} distance={40}>
+        <ScrollReveal delay={0.35}>
           <div className="flex justify-center mt-12">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -544,21 +535,21 @@ export default function Home() {
       </section>
 
       {/* Skillset Section */}
-      <section id="skills" className="border-t border-foreground/5 py-12 md:py-24">
+      <section id="skills" className="border-t border-foreground/5 py-8 md:py-16">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto mb-4 md:mb-6">
             <TextReveal
               as="h3"
-              className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans mb-0"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans mb-1 lg:mb-0"
               text="The stack."
             />
             <TextReveal
               as="p"
-              className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal leading-[1.3] tracking-tight max-w-4xl text-secondary -mt-2"
+              className="text-xl sm:text-2xl md:text-2xl lg:text-[32px] font-normal leading-[1.3] tracking-tight max-w-4xl text-secondary"
               text="Technologies behind the work."
               highlightText="Technologies"
-              highlightClass="text-blue-500 dark:text-blue-400"
+              highlightClass="text-accent"
               delay={0.15}
               muted
             />
@@ -566,7 +557,7 @@ export default function Home() {
         </ScrollReveal>
 
         {/* Marquee Wrapper */}
-        <ScrollReveal delay={0.25} duration={1.2} distance={40}>
+        <ScrollReveal delay={0.25}>
           <div className="relative w-full overflow-hidden py-4">
             {/* Gradient overlays on the left and right for smooth fading edges */}
             <div className="absolute inset-y-0 left-0 w-16 md:w-28 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
@@ -611,32 +602,21 @@ export default function Home() {
                 <div className="mb-4 md:mb-6">
                   <TextReveal
                     as="h3"
-                    className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+                    className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
                     text="Systems built to stand."
                   />
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+              <ScrollReveal delay={0.25}>
                 <div className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
                   <span className="text-foreground">6</span> projects shipped, all still running.{" "}
                   <span className="text-foreground"><span className="text-secondary">Actively </span>maintained <span className="text-secondary">with </span>98.9% uptime. </span>{" "}
-                  Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention, ever.
+                  Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention.
                   <br /> <br />
                   <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
-                    <span className="text-foreground">Terraform</span> from scratch — no ClickOps, no drift, no config that only exists because someone clicked through the console once and never wrote it down.{" "}
-                    <span className="text-foreground">Security gates</span> in the pipeline, not a ticket filed after the deploy.{" "}
-                    Costs are predictable because the <span className="text-foreground"> infra is code</span>, not memory.
+                    <span className="text-foreground">Terraform</span> from scratch. <span className="text-foreground">Security gates</span> live in the pipeline, not a ticket filed after the deploy. <span className="text-foreground">Cost </span> are predictable because the infra is code, not memory.{" "}
                   </p>
-                  <br />
-                  <a
-                    href="https://www.linkedin.com/posts/nirjxr_googlestudentambassador-gsa2026-teamgemini-share-7465741996729491456-hVqR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAGOK1LUBycBiOJtYGid75GOM2SOr-NxkL58"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    Google Student Ambassador. <ArrowUpRight className="w-4 h-4" />
-                  </a>
                 </div>
                 <br />
 
@@ -649,18 +629,18 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="approach" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section id="approach" className="border-t border-foreground/5 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
               as="h3"
-              className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
               text="Approach."
             />
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+        <ScrollReveal delay={0.25}>
           <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] max-w-4xl">
             <span className="text-secondary"> <span className="text-foreground">I&apos;m early in my career,</span> but the projects are real, the pipelines run in production, and the <span className="text-foreground">decisions</span> were mine.  </span>
             <br /> <br />
@@ -679,20 +659,20 @@ export default function Home() {
 
 
       {/* Engineering Notes Section */}
-      <section id="insights" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section id="insights" className="border-t border-foreground/5 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         {/* Header */}
         <ScrollReveal delay={0.1}>
           <div className="mb-4 md:mb-6">
             <TextReveal
               as="h3"
-              className="text-[30px] md:text-[36px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
               text="Engineering notes."
             />
           </div>
         </ScrollReveal>
 
         {/* Articles Grid */}
-        <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+        <ScrollReveal delay={0.25}>
           <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative z-10">
               {[
@@ -714,7 +694,7 @@ export default function Home() {
                       href={article.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] border border-foreground/5 select-none group/poster cursor-pointer"
+                      className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] select-none group/poster cursor-pointer text-[#d4d4d8]"
                     >
                       {/* Background Circles */}
                       <div className="absolute top-[-30%] right-[-15%] w-[80%] aspect-square rounded-full border border-foreground/[0.04] pointer-events-none" />
@@ -723,41 +703,12 @@ export default function Home() {
                       <div className="relative z-10 flex flex-col justify-between flex-grow">
                         {/* Top Title */}
                         <div className="p-4 sm:p-5 md:p-6 xl:p-8 pb-0 sm:pb-0 md:pb-0 xl:pb-0">
-                          <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-foreground leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
-                            Why AI can&apos;t <span className="text-secondary italic lowercase font-serif px-1 translate-y-[0.02em] inline-block">just</span> <br /> rewrite windows.
+                          <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-[#d4d4d8] leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
+                            Why AI can&apos;t <span className="text-[#6b6b70] italic lowercase font-serif px-1 translate-y-[0.02em] inline-block">just</span> <br /> rewrite windows.
                           </h3>
                         </div>
 
-                        {/* Bottom Stats Grid */}
-                        <div className="border-t border-foreground/[0.08] grid grid-cols-3">
-                          {/* Stat 1 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
-                              50M
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              lines of code
-                            </div>
-                          </div>
-                          {/* Stat 2 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
-                              41
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              yrs of decisions
-                            </div>
-                          </div>
-                          {/* Stat 3 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-foreground leading-none mb-1 md:mb-2 tracking-tighter">
-                              330+
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              years to rewrite
-                            </div>
-                          </div>
-                        </div>
+
                       </div>
                     </a>
                   ) : article.title === "Sonarqube had notes." ? (
@@ -765,7 +716,7 @@ export default function Home() {
                       href={article.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] border border-foreground/5 select-none group/poster cursor-pointer"
+                      className="relative flex flex-col justify-between w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[240px] lg:min-h-[260px] xl:min-h-0 overflow-hidden rounded-xl mb-2 md:mb-4 bg-[#121216] select-none group/poster cursor-pointer text-[#d4d4d8]"
                     >
                       {/* Background Grid Lines */}
                       <div className="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-[0.015]">
@@ -780,41 +731,12 @@ export default function Home() {
                       <div className="relative z-10 flex flex-col justify-between flex-grow">
                         {/* Top Title */}
                         <div className="p-4 sm:p-5 md:p-6 xl:p-8 pb-0 sm:pb-0 md:pb-0 xl:pb-0">
-                          <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-foreground leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
-                            <span className="text-[#F97316]">872</span> Issues. 30 Days. <br /><span className="text-secondary italic font-serif px-1 translate-y-[0.02em] inline-block">SonarQube</span> analysis.
+                          <h3 className="text-[27px] sm:text-3xl md:text-[34px] lg:text-[38px] xl:text-[46px] font-normal text-[#d4d4d8] leading-[1.45] md:leading-[1.3] tracking-wide md:tracking-normal font-serif max-w-xl">
+                            <span className="text-[#F97316]">872</span> Issues. 30 Days. <br /><span className="text-[#6b6b70] italic font-serif px-1 translate-y-[0.02em] inline-block">SonarQube</span> analysis.
                           </h3>
                         </div>
 
-                        {/* Stats Grid */}
-                        <div className="border-t border-foreground/[0.08] grid grid-cols-3">
-                          {/* Stat 1 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-4 sm:pl-5 md:pl-6 xl:pl-8 pr-3 sm:pr-4 md:pr-5 xl:pr-6">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#FF5A60] leading-none mb-1 md:mb-2 tracking-tighter">
-                              872
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              day 1 issues
-                            </div>
-                          </div>
-                          {/* Stat 2 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-3 sm:pr-4 md:pr-5 xl:pr-6 border-l border-foreground/[0.08]">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#10B981] leading-none mb-1 md:mb-2 tracking-tighter">
-                              56
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              day 30 issues
-                            </div>
-                          </div>
-                          {/* Stat 3 */}
-                          <div className="py-3 sm:py-3 md:py-4 xl:py-5 pl-3 sm:pl-4 md:pl-5 xl:pl-6 pr-4 sm:pr-5 md:pr-6 xl:pr-8 border-l border-foreground/[0.08]">
-                            <div className="text-xl sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] font-mono font-normal text-[#FBBF24] leading-none mb-1 md:mb-2 tracking-tighter">
-                              0
-                            </div>
-                            <div className="text-[10px] sm:text-[10px] md:text-xs text-secondary leading-tight font-light font-sans">
-                              hotspots left
-                            </div>
-                          </div>
-                        </div>
+
                       </div>
                     </a>
                   ) : null}
@@ -824,7 +746,7 @@ export default function Home() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.35} duration={1.2} distance={40}>
+        <ScrollReveal delay={0.35}>
           <div className="flex justify-center mt-16">
             <motion.a
               whileHover={{ scale: 1.05 }}
@@ -840,12 +762,12 @@ export default function Home() {
         </ScrollReveal>
       </section>
 
-      <section id="contact" className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section id="contact" className="border-t border-foreground/5 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:items-end">
-          <ScrollReveal delay={0.1} duration={1.0}>
+          <ScrollReveal delay={0.1}>
             <div>
               {/* <h2 className="text-xs text-secondary uppercase tracking-widest mb-3">Get in Touch</h2> */}
-              <h3 className="text-[30px] md:text-[36px] lg:text-[48px] font-normal text-foreground tracking-tight leading-none mb-6">
+              <h3 className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-none mb-6">
                 <TextReveal
                   as="span"
                   className="block text-foreground"
@@ -864,7 +786,7 @@ export default function Home() {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.25} duration={1.2} distance={50}>
+          <ScrollReveal delay={0.25}>
             <div className="flex flex-col space-y-8 md:items-end w-full md:text-right">
               <div className="flex flex-col space-y-3 md:items-end">
                 <a

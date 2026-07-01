@@ -1,33 +1,41 @@
-@import url('https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #0D0D0F;
-  --foreground: #E3E6DF;
-  --secondary: #92948F;
-  --border-color: rgba(227, 230, 223, 0.12);
-  --border-hover: rgba(227, 230, 223, 0.4);
-  --btn-hover-bg: rgba(15, 15, 14, 0.02);
-  --scrollbar-thumb: #2b2b2a;
-  --scrollbar-thumb-hover: #40403f;
+  --background: #000000;
+  --foreground: #d4d4d8;
+  --secondary: #6b6b70;
+  --accent: #2997ff;
+  --accent-hover: #4aabff;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
+  --btn-hover-bg: rgba(255, 255, 255, 0.03);
+  --scrollbar-thumb: #272727;
+  --scrollbar-thumb-hover: #3a3a3a;
 }
 
 :root.light {
-  --background: #F5F5F7;
-  --foreground: #161615;
-  --secondary: #555552;
-  --border-color: rgba(22, 22, 21, 0.12);
-  --border-hover: rgba(22, 22, 21, 0.4);
-  --btn-hover-bg: rgba(22, 22, 21, 0.02);
-  --scrollbar-thumb: #D1D1D6;
-  --scrollbar-thumb-hover: #B0B0B5;
+  --background: #ffffff;
+  --foreground: #000000;
+  --secondary: #6e6e73;
+  --accent: #0066cc;
+  --accent-hover: #0071e3;
+  --border-color: rgba(29, 29, 31, 0.08);
+  --border-hover: rgba(29, 29, 31, 0.16);
+  --btn-hover-bg: rgba(0, 0, 0, 0.02);
+  --scrollbar-thumb: #d2d2d7;
+  --scrollbar-thumb-hover: #a1a1a6;
+}
+
+:root.light body {
+  font-weight: 500;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-secondary: var(--secondary);
-  --font-sans: 'Switzer', sans-serif;
+  --color-accent: var(--accent);
+  --font-sans: 'Switzer', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
   --font-serif: var(--font-instrument-serif), serif;
 }
@@ -36,7 +44,7 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Switzer', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .btn-outlined {
@@ -49,6 +57,28 @@ body {
   border-color: var(--border-hover);
   color: var(--foreground);
   background-color: var(--btn-hover-bg);
+}
+
+.btn-apple {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 11px 22px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-apple:hover {
+  background-color: var(--accent-hover);
+}
+
+.btn-apple:active {
+  transform: scale(0.95);
 }
 
 .link-underline {
@@ -74,22 +104,10 @@ body {
   transform-origin: bottom left;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
 
 @keyframes marquee {
   0% { transform: translateX(0%); }
@@ -99,25 +117,17 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 25s linear infinite;
+  animation: marquee 30s linear infinite;
   gap: 0.5rem;
-}
-
-@media (min-width: 768px) {
-  .animate-marquee {
-    gap: 2rem;
-  }
 }
 
 .marquee-container:hover .animate-marquee {
   animation-play-state: paused;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+@media (min-width: 768px) {
+  .animate-marquee { gap: 2rem; }
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

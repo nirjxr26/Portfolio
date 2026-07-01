@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -103,11 +103,14 @@ export default function RootLayout({
           href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"
         />
+        <script dangerouslySetInnerHTML={{
+          __html: `(function(){var t=localStorage.getItem("theme");if(t==="light"||(!t&&window.matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")})()`
+        }} />
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
-        <SmoothScroll>
+        <ThemeProvider>
           {children}
-        </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
