@@ -384,7 +384,7 @@ export default function Home() {
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             {/* Title */}
             <StaggerItem>
-              <h1 className="text-[38px] sm:text-[48px] md:text-[60px] lg:text-[76px] font-normal tracking-normal leading-[1.05] mb-8 font-sans max-w-6xl max-[400px]:text-[32px]">
+              <h1 className="text-[38px] sm:text-[48px] md:text-[60px] lg:text-[76px] font-normal tracking-normal leading-[1.05] mb-8 font-sans max-w-6xl max-[420px]:text-[36px] max-[400px]:text-[32px]">
                 <TextReveal
                   as="span"
                   className="block text-foreground"
