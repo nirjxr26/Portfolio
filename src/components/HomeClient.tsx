@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, Menu, Sun, Moon } from "lucide-react";
+import Link from "next/link";
 import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
@@ -67,7 +68,7 @@ export default function HomeClient() {
 
   const projects = [
     {
-      title: "AegisMesh",
+      title: "Bastion",
       category: "Identity & Access Management",
       year: "2025 - 2026",
       description: "It gives teams enterprise-grade access control without handing user data to a third party — auth, policy enforcement, MFA, session control, and audit logging in a single self-hosted stack.",
@@ -499,14 +500,24 @@ export default function HomeClient() {
                       </p>
                     </div>
                     <div className="flex items-end justify-between w-full pt-8">
-                      <a
-                        href={proj.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:text-foreground transition-colors cursor-pointer w-fit"
-                      >
-                        Explore Case <ArrowUpRight className="w-4 h-4" />
-                      </a>
+                      <div className="flex items-center gap-4">
+                        {/* {proj.title === "Bastion" && (
+                          <Link
+                            href="/works/bastion"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent transition-colors cursor-pointer w-fit"
+                          >
+                            Read Case <ArrowUpRight className="w-4 h-4" />
+                          </Link>
+                        )} */}
+                        <a
+                          href={proj.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary hover:text-foreground transition-colors cursor-pointer w-fit"
+                        >
+                          Explore Case <ArrowUpRight className="w-4 h-4" />
+                        </a>
+                      </div>
                       <span className="text-xs text-secondary font-mono leading-none">{proj.year}</span>
                     </div>
                   </motion.div>
@@ -607,7 +618,7 @@ export default function HomeClient() {
                   Deploys in <span className="text-foreground">~2 minutes</span> — pushed, tested, live with <span className="text-foreground">zero</span> manual intervention.
                   <br /> <br />
                   <p className="text-base sm:text-lg md:text-xl lg:text-[20px] font-normal leading-[1.5] text-secondary">
-                    <span className="text-foreground">Terraform</span> from scratch. <span className="text-foreground">Security gates</span> live in the pipeline, not a ticket filed after the deploy. <span className="text-foreground">Cost </span> are predictable because the infra is code, not memory.{" "}
+                    <span className="text-foreground">Terraform</span> from scratch. <span className="text-foreground">Security gates</span> live in the pipeline, not a ticket filed after the deploy. <span className="text-foreground">Costs </span> are predictable because the infra is code, not memory.{" "}
                   </p>
                 </div>
                 <br />
@@ -755,7 +766,7 @@ export default function HomeClient() {
                 />
               </h3>
               <p className="text-secondary font-light leading-relaxed text-sm md:text-base max-w-sm">
-                Currently open to new projects and roles. If something&apos;s broken, needs to be built, or you want a second opinion — my inbox is short.
+                Currently open to new projects and roles. If something&apos;s broken, needs to be built, or you want a second opinion — my inbox is open.
               </p>
             </div>
           </ScrollReveal>
