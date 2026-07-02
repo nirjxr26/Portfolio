@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "nirjar",
     template: "%s | Nirjar Goswami"
   },
-  description: "I build infrastructure that ships fast and stays up.",
+  description: "I build infrastructure that ships fast and stays up. Cloud and DevOps engineer specializing in Kubernetes, Terraform, CI/CD, and security.",
   keywords: [
     "Nirjar Goswami",
     "Nirjar",
@@ -91,6 +91,48 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://nirjar.me/#person",
+        "name": "Nirjar Goswami",
+        "givenName": "Nirjar",
+        "familyName": "Goswami",
+        "jobTitle": "Cloud & DevOps Engineer",
+        "url": "https://nirjar.me",
+        "sameAs": [
+          "https://github.com/nirjxr26",
+          "https://linkedin.com/in/nirjxr",
+          "https://x.com/nirjxrgoswami",
+          "https://blog.nirjar.me"
+        ],
+        "email": "nirjargoswami2626@gmail.com",
+        "knowsAbout": [
+          "Cloud Architecture",
+          "DevOps",
+          "Kubernetes",
+          "Terraform",
+          "CI/CD",
+          "AWS",
+          "Docker",
+          "Linux",
+          "Infrastructure as Code",
+          "Pipeline Security"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://nirjar.me/#website",
+        "url": "https://nirjar.me",
+        "name": "Nirjar Goswami",
+        "description": "I build infrastructure that ships fast and stays up.",
+        "publisher": { "@id": "https://nirjar.me/#person" }
+      }
+    ]
+  };
+
   return (
     <html
       lang="en"
@@ -99,9 +141,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link
           href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <script dangerouslySetInnerHTML={{
           __html: `(function(){var t=localStorage.getItem("theme");if(t==="light"||(!t&&window.matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")})()`
