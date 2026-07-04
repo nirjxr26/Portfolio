@@ -216,6 +216,9 @@ export default function HomeClient() {
             <a href="#work" onClick={(e) => handleScrollTo(e, "#work")} className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
               Recent Work
             </a>
+            <Link href="/works/bastion" className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
+              Bastion
+            </Link>
             <a href="#skills" onClick={(e) => handleScrollTo(e, "#skills")} className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
               The stack
             </a>
@@ -278,6 +281,13 @@ export default function HomeClient() {
               >
                 Recent Work
               </a>
+              <Link
+                href="/works/bastion"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-foreground hover:text-secondary transition-colors"
+              >
+                Bastion
+              </Link>
               <a
                 href="#skills"
                 onClick={(e) => {

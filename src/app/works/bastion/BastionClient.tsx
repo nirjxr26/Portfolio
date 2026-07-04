@@ -427,12 +427,12 @@ export default function BastionClient() {
           <div className="w-full max-w-2xl mx-auto text-center">
             <TextReveal
               as="h3"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-5 sm:mb-12"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-5 sm:mb-8"
               text="Get started with Bastion."
             />
 
             {/* The Installer Widget */}
-            <div className="relative z-30 max-w-sm sm:max-w-md mx-auto mb-4 sm:mb-5 px-4 sm:px-0">
+            <div className="relative z-30 max-w-sm sm:max-w-md mx-auto mb-4 sm:mb-6 px-4 sm:px-0">
               <div className="flex items-center justify-between gap-2.5 bg-[#11131C] border border-white/[0.06] rounded-full p-1 pl-4 pr-1.5 shadow-2xl w-full">
                 {/* Command Display */}
                 <div className="flex-1 min-w-0 font-mono text-[9.5px] min-[380px]:text-[11px] sm:text-xs text-white/90 overflow-x-auto whitespace-nowrap scrollbar-none flex items-center select-all py-1.5">
@@ -459,7 +459,7 @@ export default function BastionClient() {
             {/* Subtext link */}
             <p className="text-sm text-secondary font-sans">
               <a
-                href="https://github.com/nirjxr26/Bastion"
+                href="https://github.com/nirjxr26/Bastion "
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors font-medium cursor-pointer"
@@ -472,12 +472,12 @@ export default function BastionClient() {
       </section>
 
       {/* Features */}
-      <section className="border-t border-foreground/5 py-12 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section className="border-t border-foreground/5 py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1} className="mb-6 md:mb-8">
           <TextReveal
             as="h3"
             className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
-            text="What it does."
+            text="What It does."
           />
         </ScrollReveal>
 
@@ -501,7 +501,7 @@ export default function BastionClient() {
               return (
                 <div
                   key={idx}
-                  className={`py-5 md:py-12 border-foreground/8 ${gridClasses[idx]}`}
+                  className={`py-8 md:py-12 border-foreground/8 ${gridClasses[idx]}`}
                 >
                   <h4 className="text-lg md:text-xl lg:text-[22px] font-normal text-foreground mb-3 font-sans tracking-tight">
                     {feature.title}
@@ -519,15 +519,15 @@ export default function BastionClient() {
 
 
       {/* How it ships */}
-      <section className="border-t border-foreground/5 py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
+      <section className="border-t border-foreground/5 pt-8 md:pt-12 pb-20 md:pb-28 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.15}>
           <TextReveal
             as="h3"
-            className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-5 sm:mb-6 text-center"
+            className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-2 sm:mb-3 text-center"
             text="How it ships."
           />
-          <div className="max-w-3xl mx-auto text-center mb-10 md:mb-16">
-            <p className="text-lg sm:text-xl md:text-2xl text-secondary leading-relaxed font-sans text-center">
+          <div className="max-w-3xl mb-16 md:mb-20 mx-auto text-center">
+            <p className="text-lg md:text-xl text-secondary leading-relaxed font-sans">
               Deployments are boring on purpose. Every release gets checked, rolled out in stages, and confirmed working — before it reaches everyone.
             </p>
           </div>
@@ -543,7 +543,7 @@ export default function BastionClient() {
                   Continuous Integration
                 </h4>
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-sans">
-                  Every change proves itself before it ships. Bastion runs automated quality gates across every service—including linting, unit tests, security checks, and reproducible builds—before producing a signed, hardened container image.
+                  Every change proves itself before it ships. Bastion runs linting, unit tests, security checks, and reproducible builds across every service before producing a signed, hardened container image.
                 </p>
               </div>
               <div className="flex-1 flex justify-center lg:justify-end w-full">
@@ -570,7 +570,7 @@ export default function BastionClient() {
                   Continuous Deployment / GitOps
                 </h4>
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-sans">
-                  Once a change lands on main, Bastion resolves the new image SHA and patches it into the Kustomize overlays. A bot commits to a bot/overlay-update-* branch, opens a PR, and auto-merges it. ArgoCD watches main and reconciles the live cluster to match.
+                  Once a change lands on main, Bastion resolves the new image SHA and patches it into the Kustomize overlays. A bot opens the PR and auto-merges it. ArgoCD watches main and reconciles the cluster to match.
                 </p>
               </div>
               <div className="flex-1 flex justify-center lg:justify-end w-full">
@@ -597,7 +597,7 @@ export default function BastionClient() {
                   Rollout
                 </h4>
                 <p className="text-base md:text-lg text-secondary leading-relaxed font-sans">
-                  Database migrations run before new code serves traffic, so every deployment starts on a schema it can actually use. Before a rollout finishes, Bastion checks real application behavior, not just whether a health check returns 200.
+                  Migrations run before new code serves traffic, so every deployment starts on a schema it can use. Before a rollout finishes, Bastion checks real application behavior, not just a health check response.
                 </p>
               </div>
               <div className="flex-1 flex justify-center lg:justify-end w-full">
@@ -618,8 +618,6 @@ export default function BastionClient() {
             </div>
           </div>
         </ScrollReveal>
-
-
       </section>
 
 
@@ -629,15 +627,61 @@ export default function BastionClient() {
       {/* Zero Trust */}
       <section className="border-t border-foreground/5 py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-24 xl:px-32 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
-          <TextReveal
-            as="h3"
-            className="text-2xl sm:text-3xl md:text-[40px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-8"
-            text="Zero trust, enforced automatically."
-          />
-          <div className="max-w-4xl">
-            <p className="text-base md:text-lg text-secondary leading-relaxed">
-              Bastion assumes no service is trusted by default. Connections need explicit authorization, workloads run with least privilege, and deployments get validated before they reach production. This isn&apos;t a policy someone has to remember to follow — it&apos;s how the platform is built.
-            </p>
+          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+            <TextReveal
+              as="h3"
+              className="text-3xl sm:text-4xl md:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center"
+              text="Zero trust, enforced automatically."
+            />
+          </div>
+        </ScrollReveal>
+
+        {/* Zero Trust Cards */}
+        <ScrollReveal delay={0.25}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-3">
+            {[
+              {
+                subtitle: "Nothing connects without permission.",
+                description: "Every request is checked against network policy and access rules before it's allowed through — deny by default, allow only what's explicitly permitted.",
+                svg: "/icons/auth.svg",
+              },
+              {
+                subtitle: "Only the access it needs.",
+                description: "Workloads get scoped to exactly what their job requires, nothing more. Permissions are granted one at a time, not assumed by default.",
+                svg: "/icons/lp.svg",
+              },
+              {
+                subtitle: "Nothing ships until it proves itself.",
+                description: "Every release runs through the same gates before it goes anywhere near production: tests, checks, and a live smoke test.",
+                svg: "/icons/dep.svg",
+              },
+            ].map((card, index) => (
+              <div
+                key={index}
+                className="flex flex-col bg-[#0b0b0d] rounded-2xl p-4 sm:p-5"
+              >
+                <div className="flex-grow flex flex-col justify-start">
+                  <div className="pb-6">
+                    <p className="leading-relaxed font-sans">
+                      <span className="block text-lg font-medium text-foreground mb-1.5">
+                        {card.subtitle}
+                      </span>
+                      <span className="text-sm text-secondary leading-relaxed block">
+                        {card.description}
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="w-full flex-grow overflow-hidden flex items-end justify-center p-0 mt-4 relative min-h-[220px]">
+                    <img
+                      src={card.svg}
+                      alt={card.subtitle}
+                      className="w-full h-full object-contain object-bottom select-none pointer-events-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </ScrollReveal>
       </section>
@@ -688,7 +732,7 @@ export default function BastionClient() {
         <ScrollReveal delay={0.1}>
           <TextReveal
             as="h3"
-            className="text-2xl sm:text-3xl md:text-[40px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-8"
+            className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-6"
             text="Your data, your infrastructure."
           />
           <div className="max-w-3xl">
