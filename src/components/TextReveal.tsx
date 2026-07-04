@@ -43,9 +43,11 @@ export default function TextReveal({
 
   const Tag = as;
 
+  const isCentered = className.includes("text-center");
+
   return (
     <Tag className={`${className}`}>
-      <span className="inline-flex flex-wrap w-full">
+      <span className={`inline-flex flex-wrap w-full ${isCentered ? "justify-center" : ""}`}>
         {words.map((word, idx) => {
           const isHighlighted = highlightIndices.has(idx);
           return (
