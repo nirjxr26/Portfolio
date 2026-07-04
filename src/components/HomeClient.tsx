@@ -231,15 +231,6 @@ export default function HomeClient() {
             <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="text-secondary hover:text-foreground transition-colors duration-300 link-underline">
               Contact
             </a>
-            {mounted && (
-              <button
-                onClick={toggleTheme}
-                className="p-1.5 text-secondary hover:text-foreground transition-colors cursor-pointer flex items-center ml-2"
-                aria-label="Toggle Theme"
-              >
-                {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-            )}
           </nav>
 
           {/* Mobile Controls */}
@@ -337,18 +328,6 @@ export default function HomeClient() {
               >
                 Contact
               </a>
-              {mounted && (
-                <button
-                  onClick={() => {
-                    toggleTheme();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-foreground hover:text-secondary transition-colors cursor-pointer"
-                  aria-label="Toggle Theme"
-                >
-                  {theme === "dark" ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-                </button>
-              )}
             </nav>
 
             <div className="border-t border-foreground/5 pt-8 flex flex-col space-y-8">
@@ -501,14 +480,14 @@ export default function HomeClient() {
                     </div>
                     <div className="flex items-end justify-between w-full pt-8">
                       <div className="flex items-center gap-4">
-                        {/* {proj.title === "Bastion" && (
+                        {proj.title === "Bastion" && (
                           <Link
                             href="/works/bastion"
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-accent transition-colors cursor-pointer w-fit"
+                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent/80 transition-colors cursor-pointer w-fit"
                           >
-                            Read Case <ArrowUpRight className="w-4 h-4" />
+                            Read Case <ArrowUpRight className="w-4 h-4 text-accent" />
                           </Link>
-                        )} */}
+                        )}
                         <a
                           href={proj.link}
                           target="_blank"
