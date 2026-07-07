@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #d4d4d8;
-  --secondary: #6b6b70;
-  --accent: #2997ff;
-  --accent-hover: #4aabff;
+  --background: rgba(19, 17, 11);
+  --foreground: #D4D4D8;
+  --secondary: #6B6B70;
+  --accent: #F54E00;
+  --accent-hover: #E04500;
   --border-color: rgba(255, 255, 255, 0.08);
   --border-hover: rgba(255, 255, 255, 0.15);
   --btn-hover-bg: rgba(255, 255, 255, 0.03);
@@ -14,11 +14,11 @@
 }
 
 :root.light {
-  --background: #ffffff;
-  --foreground: #000000;
-  --secondary: #6e6e73;
-  --accent: #0066cc;
-  --accent-hover: #0071e3;
+  --background: rgba(19, 17, 11, 0.8);
+  --foreground: #D4D4D8;
+  --secondary: #6B6B70;
+  --accent: #F54E00;
+  --accent-hover: #E04500;
   --border-color: rgba(29, 29, 31, 0.08);
   --border-hover: rgba(29, 29, 31, 0.16);
   --btn-hover-bg: rgba(0, 0, 0, 0.02);
@@ -35,16 +35,17 @@
   --color-foreground: var(--foreground);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
-  --font-sans: 'Switzer', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
   --font-serif: var(--font-instrument-serif), serif;
+  --font-geist: var(--font-geist-sans), sans-serif;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  font-family: 'Switzer', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .btn-outlined {
@@ -104,14 +105,31 @@ body {
   transform-origin: bottom left;
 }
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
 
 @keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .animate-marquee {
@@ -126,8 +144,169 @@ body {
 }
 
 @media (min-width: 768px) {
-  .animate-marquee { gap: 2rem; }
+  .animate-marquee {
+    gap: 2rem;
+  }
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 1420px),
+(max-height: 840px) {
+  .responsive-mockup-wrapper {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
+
+.mockup-section-layout-ci,
+.mockup-section-layout-cd,
+.mockup-section-layout-boot {
+  padding: 17.5px !important;
+  height: auto !important;
+  gap: 40px !important;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: flex-start !important;
+}
+
+.mockup-box-ci,
+.mockup-box-cd,
+.mockup-box-boot {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.mockup-box-ci img,
+.mockup-box-cd img,
+.mockup-box-boot img {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.mockup-parent-wrapper {
+  width: 100% !important;
+}
+
+@media (min-width: 1200px) and (min-height: 814px) {
+
+  .mockup-section-layout-ci,
+  .mockup-section-layout-cd,
+  .mockup-section-layout-boot {
+    max-width: none !important;
+    align-items: center !important;
+  }
+
+  .mockup-section-layout-ci,
+  .mockup-section-layout-boot {
+    flex-direction: row !important;
+    height: 715px !important;
+    padding: 17.5px !important;
+    gap: 32px !important;
+    justify-content: flex-start !important;
+  }
+
+  .mockup-section-layout-cd {
+    flex-direction: row-reverse !important;
+    height: 715px !important;
+    padding: 17.5px !important;
+    gap: 24px !important;
+    justify-content: flex-end !important;
+  }
+
+  .mockup-box-ci,
+  .mockup-box-cd {
+    width: 840px !important;
+    height: 680px !important;
+    max-width: 840px !important;
+  }
+
+  .mockup-box-boot {
+    width: 840px !important;
+    height: 650px !important;
+    max-width: 840px !important;
+  }
+
+  .mockup-box-ci img,
+  .mockup-box-cd img,
+  .mockup-box-boot img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .mockup-parent-wrapper {
+    width: auto !important;
+  }
+}
+
+@media (min-width: 1300px) and (min-height: 814px) {
+
+  .mockup-section-layout-ci,
+  .mockup-section-layout-cd,
+  .mockup-section-layout-boot {
+    max-width: 1280px !important;
+    padding: 25px !important;
+  }
+
+  .mockup-section-layout-ci,
+  .mockup-section-layout-cd {
+    height: 730px !important;
+  }
+
+  .mockup-section-layout-boot {
+    height: 700px !important;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .mockup-box-ci,
+  .mockup-box-cd,
+  .mockup-box-boot {
+    height: auto !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .mockup-box-ci img,
+  .mockup-box-cd img,
+  .mockup-box-boot img {
+    width: 680px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+}
+
+.zero-trust-cards-container {
+  display: flex;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 24px !important;
+}
+
+@media (min-width: 1026px) and (min-height: 814px) {
+  .zero-trust-cards-container {
+    flex-direction: row !important;
+    align-items: stretch !important;
+    gap: 17.5px !important;
+  }
+}
+
+@media (min-width: 1026px) and (max-width: 1350px) {
+  .zero-trust-section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
