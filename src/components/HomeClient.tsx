@@ -338,7 +338,7 @@ export default function HomeClient() {
             </StaggerItem>
 
             <StaggerItem>
-              <p className="text-lg md:text-[20px] text-secondary max-w-2xl leading-relaxed mb-8 font-normal font-sans tracking-[-0.01em]">
+              <p className="text-lg md:text-[20px] text-secondary max-w-2xl leading-[1.25] mb-8 font-normal font-sans tracking-[-0.01em]">
                 Nirjar Goswami, a Cloud and DevOps engineer who helps teams build infrastructure that ships faster and doesn't page anyone at 2am.
               </p>
             </StaggerItem>
@@ -374,12 +374,12 @@ export default function HomeClient() {
             {services.map((service, idx) => (
               <div
                 key={idx}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                className="pt-4 pb-4 px-5 md:p-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
               >
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-3 md:mb-4 font-sans tracking-tight">
+                <h4 className="text-[15px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-tight">
                   {service.title}
                 </h4>
-                <p className="text-secondary text-base sm:text-lg leading-relaxed font-normal max-w-lg">
+                <p className="text-secondary text-[15px] md:text-[16px] leading-relaxed font-normal max-w-lg">
                   {service.desc}
                 </p>
               </div>
@@ -412,10 +412,10 @@ export default function HomeClient() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    className="pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-between items-start min-h-[240px] rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                    className="p-4 px-5 md:p-5 flex flex-col justify-between items-start min-h-[240px] rounded-[8px] bg-[#17150E] border border-white/[0.04]"
                   >
                     <div>
-                      <h4 className="text-lg md:text-xl lg:text-[24px] font-md text-foreground mb-1 font-sans tracking-tight">
+                      <h4 className="text-lg md:text-xl lg:text-[24px] font-md text-foreground mb-0 font-sans tracking-tight">
                         {proj.title}
                       </h4>
                       <span className="text-xs text-secondary capitalize tracking-[0.03em] mb-4 block font-medium">
@@ -501,12 +501,12 @@ export default function HomeClient() {
                     rel="noopener noreferrer"
                     className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
                   >
-                    <div className="bg-[#13110B] rounded-[8px] w-[92%] h-[85%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
-                      <img
-                        src="/icons/windowssvg.svg"
-                        alt="Why AI cant just rewrite windows ?"
-                        className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
-                      />
+                    <img
+                      src="/icons/windowssvg.svg"
+                      alt="Why AI cant just rewrite windows ?"
+                      className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
+                    />
+                    <div className="bg-[#13110B] rounded-[8px] w-[85%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
                       <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
                         <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
                           Why AI cant just <br />rewrite windows ?
@@ -522,12 +522,12 @@ export default function HomeClient() {
                     rel="noopener noreferrer"
                     className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
                   >
-                    <div className="bg-[#13110B] rounded-[8px] w-[92%] h-[85%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
-                      <img
-                        src="/icons/sonarqubenote.svg"
-                        alt="872 Issues. 30 Days. SonarQube analysis."
-                        className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
-                      />
+                    <img
+                      src="/icons/sonarqubenote.svg"
+                      alt="872 Issues. 30 Days. SonarQube analysis."
+                      className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
+                    />
+                    <div className="bg-[#13110B] rounded-[8px] w-[85%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
                       <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
                         <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
                           872 Issues. 30 Days. <br />SonarQube analysis.
@@ -562,7 +562,7 @@ export default function HomeClient() {
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.1}>
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.35] text-foreground">
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.2] text-foreground">
                 I&apos;ve built cloud infrastructure, deployment pipelines, and security systems that prevent problems before they happen. Now I want to build it somewhere it actually matters.
               </p>
             </div>
@@ -570,41 +570,55 @@ export default function HomeClient() {
         </div>
       </section>
 
-      <section id="contact" className="pt-12 pb-6 md:pt-16 md:pb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+      <section id="contact" className="py-10 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
-          <div className="flex flex-col space-y-5 items-start w-full">
-            <div className="flex flex-col space-y-1.5">
-              <a
-                href="mailto:nirjargoswami2626@gmail.com"
-                className="text-lg min-[360px]:text-xl sm:text-xl md:text-lg lg:text-2xl font-light text-foreground w-fit cursor-default"
-              >
-                nirjargoswami2626@gmail.com
-              </a>
+          <div className="max-w-lg mx-auto text-center flex flex-col items-center">
+            <a
+              href="mailto:nirjargoswami2626@gmail.com"
+              className="text-xl sm:text-2xl md:text-[28px] font-normal text-foreground hover:text-accent transition-colors mb-1"
+            >
+              nirjargoswami2626@gmail.com
+            </a>
 
-              <a
-                href="tel:+918799142626"
-                className="text-base sm:text-lg md:text-lg lg:text-xl font-light text-foreground w-fit cursor-default"
-              >
-                +91 87991 42626
-              </a>
+            <a
+              href="tel:+918799142626"
+              className="text-base sm:text-lg text-secondary hover:text-foreground transition-colors mb-0.5"
+            >
+              +91 87991 42626
+            </a>
 
-              <div className="text-sm text-secondary font-light">
-                Ahmedabad, Gujarat
-              </div>
-            </div>
+            <p className="text-sm text-secondary/50 mb-5">
+              Ahmedabad, Gujarat
+            </p>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-secondary pt-2">
-              <a href="https://github.com/nirjxr26" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
-              <a href="https://linkedin.com/in/nirjxr" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
-              <a href="https://x.com/nirjxrgoswami" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Twitter</a>
-              <a href="https://blog.nirjar.me/" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Blogs</a>
-              <a href="/nirjar_resume.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Resume</a>
+            <div className="flex items-center gap-0.5">
+              {[
+                { label: "GitHub", href: "https://github.com/nirjxr26" },
+                { label: "LinkedIn", href: "https://linkedin.com/in/nirjxr" },
+                { label: "Twitter", href: "https://x.com/nirjxrgoswami" },
+                { label: "Blogs", href: "https://blog.nirjar.me/" },
+                { label: "Resume", href: "/nirjar_resume.pdf" },
+              ].map((link, i) => (
+                <React.Fragment key={link.label}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-secondary/60 hover:text-foreground transition-colors px-2 py-1"
+                  >
+                    {link.label}
+                  </a>
+                  {i < 4 && (
+                    <span className="text-secondary/20 text-sm select-none">/</span>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </ScrollReveal>
       </section>
 
-      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-6 pb-12 text-left border-t border-white/[0.04]">
+      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-6 pb-12 text-center border-t border-white/[0.04]">
         <p className="text-xs text-secondary font-light">
           © {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
         </p>
