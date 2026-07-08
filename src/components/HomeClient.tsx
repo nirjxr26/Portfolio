@@ -174,7 +174,7 @@ export default function HomeClient() {
           <div className="flex items-center">
             <Link href="/" className="transition-opacity hover:opacity-80 block">
               <img
-                src="/icons/nirjxr.svg"
+                src="/icons/logo.svg"
                 alt="nirjxr logo"
                 className="h-12 w-auto block"
               />
@@ -350,7 +350,7 @@ export default function HomeClient() {
       <section className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto mb-8 md:mb-16">
         <ScrollReveal delay={0.2}>
           <img
-            src="/icons/mainsvg.svg"
+            src="/icons/hero.svg"
             alt="Main system illustration"
             className="w-full h-auto object-contain block rounded-[8px]"
           />
@@ -502,7 +502,7 @@ export default function HomeClient() {
                     className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
                   >
                     <img
-                      src="/icons/windowssvg.svg"
+                      src="/icons/win.svg"
                       alt="Why AI cant just rewrite windows ?"
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
                     />
@@ -523,7 +523,7 @@ export default function HomeClient() {
                     className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
                   >
                     <img
-                      src="/icons/sonarqubenote.svg"
+                      src="/icons/sq.svg"
                       alt="872 Issues. 30 Days. SonarQube analysis."
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
                     />
