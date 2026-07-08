@@ -338,7 +338,7 @@ export default function HomeClient() {
             </StaggerItem>
 
             <StaggerItem>
-              <p className="text-lg md:text-[20px] text-secondary max-w-2xl leading-[1.25] mb-8 font-normal font-sans tracking-[-0.01em]">
+              <p className="text-[15px] md:text-[20px] text-secondary max-w-2xl  mb-8 font-normal font-sans tracking-[-0.01em]">
                 Nirjar Goswami, a Cloud and DevOps engineer who helps teams build infrastructure that ships faster and doesn't page anyone at 2am.
               </p>
             </StaggerItem>
@@ -363,7 +363,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h3"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
               text="What I do."
             />
           </div>
@@ -376,7 +376,7 @@ export default function HomeClient() {
                 key={idx}
                 className="pt-4 pb-4 px-5 md:p-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
               >
-                <h4 className="text-[15px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-tight">
+                <h4 className="text-[18px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-tight">
                   {service.title}
                 </h4>
                 <p className="text-secondary text-[15px] md:text-[16px] leading-relaxed font-normal max-w-lg">
@@ -394,7 +394,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h3"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1]"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1]"
               text="Recent Work."
             />
           </div>
@@ -421,12 +421,12 @@ export default function HomeClient() {
                       <span className="text-xs text-secondary capitalize tracking-[0.03em] mb-4 block font-medium">
                         {proj.category}
                       </span>
-                      <p className="text-secondary text-sm sm:text-base leading-relaxed font-normal max-w-lg mb-6">
+                      <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal max-w-lg mb-6">
                         {proj.description}
                       </p>
                     </div>
                     <div className="flex items-end justify-between w-full pt-8">
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2 max-[400px]:flex-col max-[400px]:items-start">
                         {proj.title === "Bastion" && (
                           <Link
                             href="/works/bastion"
@@ -474,7 +474,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h3"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
               text="Articles."
             />
           </div>
@@ -483,60 +483,20 @@ export default function HomeClient() {
         <ScrollReveal delay={0.25}>
           <div className="relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 relative z-10">
-              {[
-                {
-                  title: "Why AI can't just rewrite windows.",
-                  link: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows",
-                },
-                {
-                  title: "Sonarqube had notes.",
-                  link: "https://blog.nirjar.me/sonarqube",
-                }
-              ].map((article, idx) => {
-                return article.title === "Why AI can't just rewrite windows." ? (
-                  <a
-                    key={idx}
-                    href={article.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
-                  >
-                    <img
-                      src="/icons/win.svg"
-                      alt="Why AI cant just rewrite windows ?"
-                      className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
-                    />
-                    <div className="bg-[#13110B] rounded-[8px] w-[75%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
-                      <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
-                        <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
-                          Why AI cant just <br />rewrite windows ?
-                        </h4>
-                      </div>
-                    </div>
-                  </a>
-                ) : article.title === "Sonarqube had notes." ? (
-                  <a
-                    key={idx}
-                    href={article.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative flex items-center justify-center w-full aspect-auto xl:aspect-[16/9] min-h-[220px] md:min-h-[350px] lg:min-h-[400px] xl:min-h-0 overflow-hidden rounded-[8px] bg-[#17150E] cursor-pointer"
-                  >
-                    <img
-                      src="/icons/sq.svg"
-                      alt="872 Issues. 30 Days. SonarQube analysis."
-                      className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
-                    />
-                    <div className="bg-[#13110B] rounded-[8px] w-[75%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
-                      <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
-                        <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
-                          872 Issues. 30 Days. <br />SonarQube analysis.
-                        </h4>
-                      </div>
-                    </div>
-                  </a>
-                ) : null;
-              })}
+              <a href="https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
+                <img
+                  src="/icons/a1.svg"
+                  alt=""
+                  className="w-full h-auto object-contain block"
+                />
+              </a>
+              <a href="https://blog.nirjar.me/sonarqube" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
+                <img
+                  src="/icons/a-2.svg"
+                  alt=""
+                  className="w-full h-auto object-contain block"
+                />
+              </a>
             </div>
           </div>
         </ScrollReveal>
