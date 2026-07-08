@@ -471,7 +471,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#4A443B] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
                   <img
-                    src="/icons/1sr.svg"
+                    src="/icons/ci.svg"
                     alt="Security architecture diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -499,7 +499,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252118] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
                   <img
-                    src="/icons/2nd.svg"
+                    src="/icons/cd.svg"
                     alt="GitOps deployment diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -527,7 +527,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#26241E] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
                   <img
-                    src="/icons/3rd.svg"
+                    src="/icons/boot.svg"
                     alt="Boot sequence order diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -556,17 +556,17 @@ export default function BastionClient() {
               {
                 subtitle: "Nothing connects without permission.",
                 description: "Every request is checked against policy first — deny by default.",
-                svg: "/icons/z1.svg",
+                svg: "/icons/zt-auth.svg",
               },
               {
                 subtitle: "Only the access it needs.",
                 description: "Workloads get scoped to what their job requires — nothing assumed.",
-                svg: "/icons/z2.svg",
+                svg: "/icons/zt-lock.svg",
               },
               {
                 subtitle: "Trust is never permanent.",
                 description: "Sessions are re-verified continuously across every device.",
-                svg: "/icons/z3.svg",
+                svg: "/icons/zt-dep.svg",
               },
             ].map((card, index) => (
               <div
