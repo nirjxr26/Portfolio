@@ -76,6 +76,13 @@ export default function HomeClient() {
       link: "https://github.com/nirjxr26/Bastion"
     },
     {
+      title: "Kost",
+      category: "Kubernetes Cost Intelligence",
+      year: "2026",
+      description: "Finds over-provisioned workloads and hands you the fix command. Waste detection, right-sizing, and Slack alerts, all from one pod. No dashboard to check, no database, no bill.",
+      link: "https://github.com/nirjxr26/Kost"
+    },
+    {
       title: "HookDrop",
       category: "Webhook Receiver & Streamer",
       year: "2025",
@@ -172,13 +179,6 @@ export default function HomeClient() {
       >
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
           <div className="flex items-center">
-            <Link href="/" className="transition-opacity hover:opacity-80 block">
-              <img
-                src="/icons/logo.svg"
-                alt="nirjxr logo"
-                className="h-12 w-auto block"
-              />
-            </Link>
           </div>
 
           {/* Navigation Links */}
@@ -506,7 +506,7 @@ export default function HomeClient() {
                       alt="Why AI cant just rewrite windows ?"
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
                     />
-                    <div className="bg-[#13110B] rounded-[8px] w-[85%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
+                    <div className="bg-[#13110B] rounded-[8px] w-[75%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
                       <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
                         <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
                           Why AI cant just <br />rewrite windows ?
@@ -527,7 +527,7 @@ export default function HomeClient() {
                       alt="872 Issues. 30 Days. SonarQube analysis."
                       className="absolute inset-0 w-full h-full object-cover pointer-events-none rounded-[8px]"
                     />
-                    <div className="bg-[#13110B] rounded-[8px] w-[85%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
+                    <div className="bg-[#13110B] rounded-[8px] w-[75%] h-[80%] overflow-hidden relative z-10 flex flex-col justify-start items-start">
                       <div className="relative z-30 pt-4 pb-6 px-5 md:pt-5 md:pb-8 md:px-7 flex flex-col justify-start items-start w-full h-full">
                         <h4 className="text-xl sm:text-2xl md:text-[28px] lg:text-[32px] font-normal text-foreground font-sans tracking-normal leading-snug text-left">
                           872 Issues. 30 Days. <br />SonarQube analysis.
