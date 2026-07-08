@@ -2,10 +2,26 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu, ChevronRight, Shield, Key, Eye, Server, Users, FileText, KeyRound, Scale, Smartphone, MonitorSmartphone, History, Check, Copy } from "lucide-react";
+import { X, Menu, ChevronRight, Shield, Key, Eye, Server, Users, FileText, KeyRound, Scale, Smartphone, MonitorSmartphone, History, Check, Copy, Mail, Phone, MapPin, Globe } from "lucide-react";
 import Link from "next/link";
 import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
+
+const GithubIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  <img src="https://skillicons.dev/icons?i=github" alt="GitHub" className="w-5 h-5 object-contain" {...props} />
+);
+
+const LinkedinIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  <img src="https://skillicons.dev/icons?i=linkedin" alt="LinkedIn" className="w-5 h-5 object-contain" {...props} />
+);
+
+const TwitterIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  <img src="https://skillicons.dev/icons?i=twitter" alt="Twitter" className="w-5 h-5 object-contain" {...props} />
+);
+
+const BlogsIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  <img src="https://skillicons.dev/icons?i=devto" alt="Blogs" className="w-5 h-5 object-contain" {...props} />
+);
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 
 const features = [
@@ -453,12 +469,12 @@ export default function BastionClient() {
 
         <div className="flex flex-col gap-6 md:gap-8">
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-6 md:p-6 flex flex-col items-start gap-8 overflow-hidden">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
                 <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Integration
                 </h4>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-relaxed max-w-2xl font-sans">
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Every change proves itself before it ships — linting, unit tests, security scans, and reproducible builds, producing a signed, hardened image only if all of it passes.
                 </p>
                 <a
@@ -469,7 +485,7 @@ export default function BastionClient() {
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#4A443B] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#4A443B] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/ci.svg"
                     alt="Security architecture diagram"
@@ -481,12 +497,12 @@ export default function BastionClient() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.3}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-6 md:p-8 flex flex-col items-start gap-8 overflow-hidden">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
                 <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Deployment / GitOps
                 </h4>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-relaxed max-w-2xl font-sans">
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Merging to main resolves the new image SHA, patches it into the Kustomize overlays, and auto-merges via bot PR. ArgoCD reconciles the cluster to match — no manual apply.
                 </p>
                 <a
@@ -497,7 +513,7 @@ export default function BastionClient() {
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252118] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252118] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/cd.svg"
                     alt="GitOps deployment diagram"
@@ -509,13 +525,13 @@ export default function BastionClient() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.35}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-6 md:p-8 flex flex-col items-start gap-8 overflow-hidden">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
                 <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Boot sequence
                 </h4>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-relaxed max-w-2xl font-sans">
-                  Init containers enforce order: DB check, then prisma-migrate, then backend, frontend, and security-engine pods — so nothing boots against a database that isn't ready.
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                  Init containers enforce order: DB check, then prisma-migrate, then backend, frontend, and security-engine pods — so nothing boots against a database that isn&apos;t ready.
                 </p>
                 <a
                   href="#"
@@ -525,10 +541,116 @@ export default function BastionClient() {
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#26241E] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#26241E] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+                  <img
+                    src="/icons/boot-mobile.svg"
+                    alt="Boot sequence order diagram"
+                    className="block sm:hidden w-[180%] max-w-none h-auto object-contain relative select-none pointer-events-none"
+                  />
                   <img
                     src="/icons/boot.svg"
                     alt="Boot sequence order diagram"
+                    className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain relative select-none pointer-events-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+      {/* The Model That Watches Itself */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
+        <ScrollReveal delay={0.1}>
+          <div className="mb-[25px]">
+            <TextReveal
+              as="h3"
+              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              text="The model that watches itself"
+            />
+          </div>
+        </ScrollReveal>
+
+        <div className="flex flex-col gap-6 md:gap-8">
+          {/* Card 1 */}
+          <ScrollReveal delay={0.25}>
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
+              <div className="w-full text-left flex flex-col justify-start items-start">
+                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  Risk Evaluation
+                </h4>
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                  An Isolation Forest model scores every request on login history, action, and timing. High risk or rate-limit triggers step-up — password or MFA — before access is granted.
+                </p>
+                <a
+                  href="#"
+                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                >
+                  Learn more <span className="text-lg leading-none">→</span>
+                </a>
+              </div>
+              <div className="w-full flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#221F18] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                  <img
+                    src="/icons/m-1.svg"
+                    alt="Risk Evaluation diagram"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Card 2 */}
+          <ScrollReveal delay={0.3}>
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
+              <div className="w-full text-left flex flex-col justify-start items-start">
+                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  Model Retraining
+                </h4>
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                  The model retrains daily using recent activity through a Kubernetes CronJob and hot-swaps updates without restarting the service.
+                </p>
+                <a
+                  href="#"
+                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                >
+                  Learn more <span className="text-lg leading-none">→</span>
+                </a>
+              </div>
+              <div className="w-full flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1D1B16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                  <img
+                    src="/icons/m-2.svg"
+                    alt="Model Retraining diagram"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Card 3 */}
+          <ScrollReveal delay={0.35}>
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
+              <div className="w-full text-left flex flex-col justify-start items-start">
+                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  Resilient Fallback
+                </h4>
+                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                  Authentication defaults to neutral/low and keeps running. Account lock, rate limits, session checks, and IP blocking stay active independently.
+                </p>
+                <a
+                  href="#"
+                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                >
+                  Learn more <span className="text-lg leading-none">→</span>
+                </a>
+              </div>
+              <div className="w-full flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1F1C16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                  <img
+                    src="/icons/m-3.svg"
+                    alt="Resilient Fallback diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -537,6 +659,7 @@ export default function BastionClient() {
           </ScrollReveal>
         </div>
       </section>
+
       {/* Zero Trust */}
       <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
@@ -592,30 +715,6 @@ export default function BastionClient() {
           </div>
         </ScrollReveal>
       </section>
-
-      {/* The Model That Watches Itself
-      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-        <ScrollReveal delay={0.1}>
-          <TextReveal
-            as="h3"
-            className="text-2xl sm:text-3xl md:text-[40px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-8"
-            text="The model that watches itself."
-          />
-          <div className="max-w-4xl">
-            <p className="text-base md:text-lg text-[#6B6B70] leading-relaxed mb-6">
-              Every authentication request is evaluated in real time using signals like IP reputation, login history, time of day, and behavioral patterns. Elevated risk automatically triggers step-up verification before access is granted.
-            </p>
-            <p className="text-base md:text-lg text-[#6B6B70] leading-relaxed">
-              The detection model continuously improves. It retrains on recent activity, validates itself, and deploys new versions automatically—without interrupting authentication.
-            </p>
-            <br></br>
-            <p className="text-base md:text-lg text-[#6B6B70] leading-relaxed">
-              Even if the risk engine becomes unavailable, authentication continues. it falls back to a simpler rule set, so real users can still get in without leaving the door wide open.
-            </p>
-          </div>
-        </ScrollReveal>
-      </section>
-      */}
 
       {/* Full Trace
       <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
@@ -677,56 +776,7 @@ export default function BastionClient() {
         </ScrollReveal>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-10 md:py-14 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-        <ScrollReveal delay={0.1}>
-          <div className="max-w-lg mx-auto text-center flex flex-col items-center">
-            <a
-              href="mailto:nirjargoswami2626@gmail.com"
-              className="text-lg sm:text-2xl md:text-[28px] font-normal text-foreground hover:text-accent transition-colors mb-1"
-            >
-              nirjargoswami2626@gmail.com
-            </a>
-
-            <a
-              href="tel:+918799142626"
-              className="text-sm sm:text-lg text-secondary hover:text-foreground transition-colors mb-0.5"
-            >
-              +91 87991 42626
-            </a>
-
-            <p className="text-xs sm:text-sm text-secondary/50 mb-5">
-              Ahmedabad, Gujarat
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center gap-x-0 gap-y-1">
-              {[
-                { label: "GitHub", href: "https://github.com/nirjxr26" },
-                { label: "LinkedIn", href: "https://linkedin.com/in/nirjxr" },
-                { label: "Twitter", href: "https://x.com/nirjxrgoswami" },
-                { label: "Blogs", href: "https://blog.nirjar.me/" },
-                { label: "Resume", href: "/nirjar_resume.pdf" },
-              ].map((link, i) => (
-                <React.Fragment key={link.label}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs sm:text-sm text-secondary/60 hover:text-foreground transition-colors px-2 sm:px-2 py-1"
-                  >
-                    {link.label}
-                  </a>
-                  {i < 4 && (
-                    <span className="text-secondary/20 text-xs sm:text-sm select-none">/</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto py-6 text-center border-t border-white/[0.04]">
+      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto py-8 border-t border-white/[0.04] text-center">
         <p className="text-xs text-[#6B6B70] font-light">
           © {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
         </p>
