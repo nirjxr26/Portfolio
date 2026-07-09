@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { WebVitals } from "@/components/WebVitals";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     apple: "/icons/favicon.svg",
   },
   title: {
-    default: "nirjar",
+    default: "Nirjar Goswami | Cloud & DevOps Engineer",
     template: "%s | Nirjar Goswami"
   },
   description: "I build infrastructure that ships fast and stays up. Cloud and DevOps engineer specializing in Kubernetes, Terraform, CI/CD, and security.",
@@ -59,7 +60,7 @@ export const metadata: Metadata = {
     siteName: "Nirjar Goswami",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Nirjar Goswami | Cloud & DevOps Engineer"
@@ -71,7 +72,7 @@ export const metadata: Metadata = {
     title: "Nirjar Goswami | Cloud & DevOps Engineer",
     description: "I build infrastructure that ships fast and stays up.",
     creator: "@nirjxrgoswami",
-    images: ["/og-image.png"]
+    images: ["/og-image.webp"]
   },
   robots: {
     index: true,
@@ -148,6 +149,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet"
         />
+        <link rel="preload" href="/icons/hero.svg" as="image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -158,6 +160,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
         <ThemeProvider>
+          <WebVitals />
           {children}
         </ThemeProvider>
       </body>
