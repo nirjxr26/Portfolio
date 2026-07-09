@@ -1,67 +1,60 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Menu, ChevronRight, Shield, Key, Eye, Server, Users, FileText, KeyRound, Scale, Smartphone, MonitorSmartphone, History, Check, Copy, Mail, Phone, MapPin, Globe } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
-
-const GithubIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img src="https://skillicons.dev/icons?i=github" alt="GitHub" className="w-5 h-5 object-contain" {...props} />
-);
-
-const LinkedinIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img src="https://skillicons.dev/icons?i=linkedin" alt="LinkedIn" className="w-5 h-5 object-contain" {...props} />
-);
-
-const TwitterIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img src="https://skillicons.dev/icons?i=twitter" alt="Twitter" className="w-5 h-5 object-contain" {...props} />
-);
-
-const BlogsIcon = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  <img src="https://skillicons.dev/icons?i=devto" alt="Blogs" className="w-5 h-5 object-contain" {...props} />
-);
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
+import * as Icons from "@/components/Icons";
 
 const features = [
   {
-    icon: KeyRound,
     title: "Identity & Access",
     desc: "JWT access and refresh tokens with secure cookie handling. Google and GitHub OAuth with org-lvl policy enforcement — admins can mandate a single identity provider org-wide."
   },
   {
-    icon: Scale,
     title: "Access Rules",
     desc: "Dynamic RBAC across users, roles, groups, and policies — explicit DENY always wins. Simulate a policy or check per-user effective permissions before it ships."
   },
   {
-    icon: MonitorSmartphone,
     title: "Stay Verified",
     desc: "TOTP with backup codes and step-up reauth on sensitive actions. Live session viewer with per-session or bulk revocation."
   },
   {
-    icon: History,
     title: "Every Action, Logged",
     desc: "Centralized audit logs — filterable, exportable, streamed, with security alerts. Runs on your infrastructure, no third-party dependency."
   }
 ];
 
 export default function BastionClient() {
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nirjar.me" },
+      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me" },
+      { "@type": "ListItem", "position": 3, "name": "Bastion", "item": "https://nirjar.me/works/bastion" }
+    ]
+  };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const lastScrollY = useRef(0);
-
+  const scrollDirection = useRef<"up" | "down">("up");
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
       setIsScrolled(currentScrollY > 50);
-      if (currentScrollY > 50 && currentScrollY > lastScrollY.current) {
+      if (Math.abs(delta) < 10) { lastScrollY.current = currentScrollY; return; }
+      const goingDown = delta > 0;
+      if (goingDown && currentScrollY > 50 && scrollDirection.current !== "down") {
         setShowHeader(false);
-      } else {
+        scrollDirection.current = "down";
+      } else if (!goingDown && scrollDirection.current !== "up") {
         setShowHeader(true);
+        scrollDirection.current = "up";
       }
       lastScrollY.current = currentScrollY;
     };
@@ -84,16 +77,10 @@ export default function BastionClient() {
   }, [mobileMenuOpen]);
 
   return (
-    <div className="w-full min-h-screen relative overflow-hidden bg-background text-foreground selection:bg-foreground/10 selection:text-foreground">
-      {/* Navigation Header */}
-      <motion.header
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: showHeader ? 0 : -100, opacity: 1 }}
-        transition={{
-          y: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-          opacity: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-        }}
-        className={`fixed top-0 left-0 right-0 z-50 ${isScrolled
+    <main className="w-full min-h-screen relative overflow-hidden bg-background text-foreground selection:bg-foreground/10 selection:text-foreground">
+
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${showHeader ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"} ${isScrolled
           ? "py-3 bg-background/95 backdrop-blur-md"
           : "py-6 bg-gradient-to-b from-background/80 to-transparent backdrop-blur-[4px]"
           }`}
@@ -101,7 +88,7 @@ export default function BastionClient() {
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
           <nav className="flex items-center gap-2 text-xs sm:text-sm text-[#6B6B70] font-mono">
             <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <ChevronRight className="w-3 h-3 text-[#6B6B70]/60" />
+            <Icons.ChevronRight className="w-3 h-3 text-[#6B6B70]/60" />
             <span className="text-foreground font-medium font-sans">Bastion</span>
           </nav>
           <div className="flex items-center space-x-4">
@@ -110,43 +97,36 @@ export default function BastionClient() {
               className="p-2 text-[#6B6B70] hover:text-foreground transition-colors cursor-pointer md:hidden"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <Icons.X className="w-6 h-6" /> : <Icons.Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </motion.header>
+      </header>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 bg-background/98 backdrop-blur-md pt-28 px-6 pb-12 flex flex-col justify-between md:hidden"
-          >
-            <nav className="flex flex-col space-y-6 text-2xl font-light tracking-wide">
-              <Link href="/" className="text-foreground hover:text-[#6B6B70] transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Home
-              </Link>
-              <Link href="/works/bastion" className="text-foreground hover:text-[#6B6B70] transition-colors" onClick={() => setMobileMenuOpen(false)}>
-                Bastion
-              </Link>
-            </nav>
-            <div className="border-t border-foreground/5 pt-8 flex flex-col space-y-8">
-              <div className="text-xs text-[#6B6B70] font-light">
-                Ahmedabad, Gujarat
-              </div>
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#6B6B70]">
-                <a href="https://github.com/nirjxr26" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
-                <a href="https://linkedin.com/in/nirjxr" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
-                <a href="https://x.com/nirjxrgoswami" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Twitter</a>
-              </div>
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-background/98 backdrop-blur-md pt-28 px-6 pb-12 flex flex-col justify-between md:hidden transition-all duration-300"
+          style={{ opacity: mobileMenuOpen ? 1 : 0, transform: mobileMenuOpen ? "translateY(0)" : "translateY(-20px)" }}
+        >
+          <nav className="flex flex-col space-y-6 text-2xl font-light tracking-wide">
+            <Link href="/" className="text-foreground hover:text-[#6B6B70] transition-colors" onClick={() => setMobileMenuOpen(false)}>
+              Home
+            </Link>
+            <Link href="/works/bastion" className="text-foreground hover:text-[#6B6B70] transition-colors" onClick={() => setMobileMenuOpen(false)}>
+              Bastion
+            </Link>
+          </nav>
+          <div className="border-t border-foreground/5 pt-8 flex flex-col space-y-8">
+            <div className="text-xs text-[#6B6B70] font-light">
+              Ahmedabad, Gujarat, India
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#6B6B70]">
+              <a href="https://github.com/nirjxr26" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+              <a href="https://linkedin.com/in/nirjxr" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
+              <a href="https://x.com/nirjxrgoswami" target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">Twitter</a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hero */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-32 md:pt-40 pb-[45px]">
@@ -155,30 +135,21 @@ export default function BastionClient() {
             <div className="flex flex-col items-start text-left">
 
               <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-tight leading-[1.05] font-sans max-w-5xl">
-                <TextReveal
-                  as="span"
-                  className="block text-foreground text-left"
-                  text="Bastion"
-                  delay={0}
-                />
+                Bastion
               </h1>
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
-                className="xl:text-[18px] lg:text-[20px] xl:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance"
-              >
+              <p className="xl:text-[18px] lg:text-[20px] xl:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
                 Self-hosted access control — auth, MFA, sessions, and audit logs, with zero third-party access to your data.
-              </motion.p>
+              </p>
             </div>
           </StaggerItem>
 
         </StaggerContainer>
       </section>
 
-
-
-      {/* IAM Dashboard Mockup */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />      {/* IAM Dashboard Mockup */}
       <section className="w-full overflow-hidden pt-0 pb-10 sm:pb-16 md:pb-20 bg-background relative z-0">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.15}>
@@ -211,9 +182,9 @@ export default function BastionClient() {
                       <p className="hidden md:block text-[9px] uppercase tracking-widest text-white/20 px-3 mb-1 mt-4">Access</p>
                       <div className="flex md:flex-col gap-1">
                         {[
-                          { icon: <Users className="w-3.5 h-3.5" />, label: 'Users' },
-                          { icon: <Shield className="w-3.5 h-3.5" />, label: 'Policies' },
-                          { icon: <Key className="w-3.5 h-3.5" />, label: 'MFA' },
+                          { icon: <Icons.Users className="w-3.5 h-3.5" />, label: 'Users' },
+                          { icon: <Icons.Shield className="w-3.5 h-3.5" />, label: 'Policies' },
+                          { icon: <Icons.Key className="w-3.5 h-3.5" />, label: 'MFA' },
                         ].map((item) => (
                           <div key={item.label} className="flex items-center gap-2 px-3 py-2 rounded-md text-xs whitespace-nowrap transition-all text-white/40 hover:text-white/70 hover:bg-white/[0.04]">
                             {item.icon}
@@ -225,8 +196,8 @@ export default function BastionClient() {
                       <p className="hidden md:block text-[9px] uppercase tracking-widest text-white/20 px-3 mb-1 mt-4">Monitoring</p>
                       <div className="flex md:flex-col gap-1">
                         {[
-                          { icon: <Eye className="w-3.5 h-3.5" />, label: 'Sessions' },
-                          { icon: <FileText className="w-3.5 h-3.5" />, label: 'Audit Log' },
+                          { icon: <Icons.Eye className="w-3.5 h-3.5" />, label: 'Sessions' },
+                          { icon: <Icons.FileText className="w-3.5 h-3.5" />, label: 'Audit Log' },
                         ].map((item) => (
                           <div key={item.label} className="flex items-center gap-2 px-3 py-2 rounded-md text-xs whitespace-nowrap transition-all text-white/40 hover:text-white/70 hover:bg-white/[0.04]">
                             {item.icon}
@@ -238,7 +209,7 @@ export default function BastionClient() {
                       <p className="hidden md:block text-[9px] uppercase tracking-widest text-white/20 px-3 mb-1 mt-4">System</p>
                       <div className="flex md:flex-col gap-1">
                         {[
-                          { icon: <Server className="w-3.5 h-3.5" />, label: 'Providers' },
+                          { icon: <Icons.Server className="w-3.5 h-3.5" />, label: 'Providers' },
                           { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5 shrink-0"><circle cx="12" cy="12" r="3" /><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>, label: 'Settings' },
                         ].map((item) => (
                           <div key={item.label} className="flex items-center gap-2 px-3 py-2 rounded-md text-xs whitespace-nowrap transition-all text-white/40 hover:text-white/70 hover:bg-white/[0.04]">
@@ -428,7 +399,7 @@ export default function BastionClient() {
         <ScrollReveal delay={0.1}>
           <div className="mb-[25px]">
             <TextReveal
-              as="h3"
+              as="h2"
               className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
               text="What It does."
             />
@@ -443,9 +414,9 @@ export default function BastionClient() {
                   key={idx}
                   className="p-5 md:p-5 lg:p-6 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
                 >
-                  <h4 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-normal">
+                  <h3 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-normal">
                     {feature.title}
-                  </h4>
+                  </h3>
                   <p className="text-[#6B6B70] text-[14px] md:text-[16px] leading-relaxed font-normal max-w-lg">
                     {feature.desc}
                   </p>
@@ -460,7 +431,7 @@ export default function BastionClient() {
         <ScrollReveal delay={0.1}>
           <div className="mb-[25px]">
             <TextReveal
-              as="h3"
+              as="h2"
               className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
               text="The new way to control access."
             />
@@ -471,14 +442,16 @@ export default function BastionClient() {
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Integration
-                </h4>
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Every change proves itself before it ships — linting, unit tests, security scans, and reproducible builds, producing a signed, hardened image only if all of it passes.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
@@ -499,14 +472,16 @@ export default function BastionClient() {
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Deployment / GitOps
-                </h4>
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Merging to main resolves the new image SHA, patches it into the Kustomize overlays, and auto-merges via bot PR. ArgoCD reconciles the cluster to match — no manual apply.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
@@ -527,14 +502,16 @@ export default function BastionClient() {
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Boot sequence
-                </h4>
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Init containers enforce order: DB check, then prisma-migrate, then backend, frontend, and security-engine pods — so nothing boots against a database that isn&apos;t ready.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
@@ -563,9 +540,9 @@ export default function BastionClient() {
         <ScrollReveal delay={0.1}>
           <div className="mb-[25px]">
             <TextReveal
-              as="h3"
+              as="h2"
               className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
-              text="The model that watches itself"
+              text="Model that watches itself."
             />
           </div>
         </ScrollReveal>
@@ -575,24 +552,26 @@ export default function BastionClient() {
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
-                  Risk Evaluation
-                </h4>
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  Model Retraining
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  An Isolation Forest model scores every request on login history, action, and timing. High risk or rate-limit triggers step-up — password or MFA — before access is granted.
+                  The model retrains daily using recent activity through a Kubernetes CronJob and hot-swaps updates without restarting the service.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#221F18] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1D1B16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/m-1.svg"
-                    alt="Risk Evaluation diagram"
+                    alt="Model Retraining diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -604,24 +583,26 @@ export default function BastionClient() {
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
-                  Model Retraining
-                </h4>
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  Risk Evaluation
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  The model retrains daily using recent activity through a Kubernetes CronJob and hot-swaps updates without restarting the service.
+                  An Isolation Forest model scores every request on login history, action, and timing. High risk or rate-limit triggers step-up — password or MFA — before access is granted.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1D1B16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#221F18] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/m-2.svg"
-                    alt="Model Retraining diagram"
+                    alt="Risk Evaluation diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -633,14 +614,16 @@ export default function BastionClient() {
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Resilient Fallback
-                </h4>
+                </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
                   Authentication defaults to neutral/low and keeps running. Account lock, rate limits, session checks, and IP blocking stay active independently.
                 </p>
                 <a
-                  href="#"
+                  href="https://github.com/nirjxr26/Bastion#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
@@ -665,7 +648,7 @@ export default function BastionClient() {
         <ScrollReveal delay={0.1}>
           <div className="text-center max-w-3xl mx-auto pb-[25px]">
             <TextReveal
-              as="h3"
+              as="h2"
               className="text-[26px] sm:text-4xl md:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center"
               text="Zero trust, enforced automatically."
             />
@@ -697,9 +680,9 @@ export default function BastionClient() {
                 className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
-                  <h4 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
+                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
                     {card.subtitle}
-                  </h4>
+                  </h3>
                   <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
                     {card.description}
                   </p>
@@ -716,46 +699,12 @@ export default function BastionClient() {
         </ScrollReveal>
       </section>
 
-      {/* Full Trace
-      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-        <ScrollReveal delay={0.1}>
-          <TextReveal
-            as="h3"
-            className="text-2xl sm:text-3xl md:text-[40px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-8"
-            text="One trace, three languages."
-          />
-          <div className="max-w-4xl">
-            <p className="text-base md:text-lg text-[#6B6B70] leading-relaxed">
-              A single login touches three different services, written in three different languages. Bastion traces the request end to end, so you can see exactly where latency or a bad decision happened—instead of forcing you to correlate logs across multiple systems.
-            </p>
-          </div>
-        </ScrollReveal>
-      </section>
-      */}
-
-      {/* Why self-hosted
-      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
-        <ScrollReveal delay={0.1}>
-          <TextReveal
-            as="h3"
-            className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans mb-6"
-            text="Your data, your infrastructure."
-          />
-          <div className="max-w-3xl">
-            <p className="text-base md:text-lg text-[#6B6B70] leading-relaxed max-w-2xl">
-              Every external identity provider is one more trust boundary you don&apos;t control. Bastion keeps authentication inside your own infrastructure, so user data, audit logs, and credentials stay yours.
-            </p>
-          </div>
-        </ScrollReveal>
-      </section>
-      */}
-
       {/* Get Bastion Section */}
       <section className="w-full py-10 md:py-16 bg-[#17150E] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
           <div className="w-full max-w-2xl mx-auto text-center">
             <TextReveal
-              as="h3"
+              as="h2"
               className="text-[40px] sm:text-[44px] md:text-[50px] lg:text-[58px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-0"
               text="Try Bastion now."
             />
@@ -776,11 +725,44 @@ export default function BastionClient() {
         </ScrollReveal>
       </section>
 
-      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto py-8 border-t border-white/[0.04] text-center">
-        <p className="text-xs text-[#6B6B70] font-light">
-          © {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
-        </p>
+      {/* Footer */}
+      <footer className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto py-6 border-t border-white/[0.04]">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p className="text-xs text-secondary font-light md:text-left text-center">
+            © {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
+          </p>
+          <div className="flex items-center justify-center md:justify-end gap-3 flex-wrap">
+            <div className="bg-[#17150E] rounded-full px-5 py-2.5 flex items-center gap-5">
+              <a href="mailto:nirjargoswami2626@gmail.com" aria-label="Email" className="text-secondary/60 hover:text-foreground transition-colors">
+                <Icons.Mail className="w-4 h-4" />
+              </a>
+              <a href="tel:+918799142626" aria-label="Phone" className="text-secondary/60 hover:text-foreground transition-colors">
+                <Icons.Phone className="w-4 h-4" />
+              </a>
+              <span aria-label="Ahmedabad, Gujarat, India" className="text-secondary/60 cursor-pointer">
+                <Icons.MapPin className="w-4 h-4" />
+              </span>
+              <span className="text-secondary/20 select-none">|</span>
+              <a href="https://github.com/nirjxr26" target="_blank" rel="noreferrer" aria-label="GitHub" className="text-secondary/60 hover:text-foreground transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </a>
+              <a href="https://linkedin.com/in/nirjxr" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-secondary/60 hover:text-foreground transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="https://x.com/nirjxrgoswami" target="_blank" rel="noreferrer" aria-label="Twitter" className="text-secondary/60 hover:text-foreground transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://blog.nirjar.me/" target="_blank" rel="noreferrer" aria-label="Blog" className="text-secondary/60 hover:text-foreground transition-colors">
+                <Icons.FileText className="w-4 h-4" />
+              </a>
+            </div>
+            <a href="/nirjar_resume.pdf" target="_blank" rel="noreferrer" className="bg-white rounded-full px-4 py-2 text-xs text-[#0C0A05] font-medium hover:bg-white/90 transition-colors">
+              Resume
+            </a>
+          </div>
+        </div>
       </footer>
-    </div>
+
+    </main>
   );
 }
