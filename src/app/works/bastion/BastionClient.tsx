@@ -460,7 +460,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#4A443B] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/ci.svg"
+                    src="/icons/bastion/ci.svg"
                     alt="Security architecture diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -490,7 +490,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252118] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/cd.svg"
+                    src="/icons/bastion/cd.svg"
                     alt="GitOps deployment diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -520,12 +520,12 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#26241E] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/boot-mobile.svg"
+                    src="/icons/bastion/boot-mobile.svg"
                     alt="Boot sequence order diagram"
                     className="block sm:hidden w-[180%] max-w-none h-auto object-contain relative select-none pointer-events-none"
                   />
                   <img
-                    src="/icons/boot.svg"
+                    src="/icons/bastion/boot.svg"
                     alt="Boot sequence order diagram"
                     className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain relative select-none pointer-events-none"
                   />
@@ -570,7 +570,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1D1B16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/m-1.svg"
+                    src="/icons/bastion/m-1.svg"
                     alt="Model Retraining diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -601,7 +601,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#221F18] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/m-2.svg"
+                    src="/icons/bastion/m-2.svg"
                     alt="Risk Evaluation diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -632,7 +632,7 @@ export default function BastionClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1F1C16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/m-3.svg"
+                    src="/icons/bastion/m-3.svg"
                     alt="Resilient Fallback diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
@@ -662,17 +662,17 @@ export default function BastionClient() {
               {
                 subtitle: "Nothing connects without permission.",
                 description: "Every request is checked against policy first — deny by default.",
-                svg: "/icons/zt-auth.svg",
+                svg: "/icons/bastion/zt-auth.svg",
               },
               {
                 subtitle: "Only the access it needs.",
                 description: "Workloads get scoped to what their job requires — nothing assumed.",
-                svg: "/icons/zt-lock.svg",
+                svg: "/icons/bastion/zt-lock.svg",
               },
               {
                 subtitle: "Trust is never permanent.",
                 description: "Sessions are re-verified continuously across every device.",
-                svg: "/icons/zt-dep.svg",
+                svg: "/icons/bastion/zt-dep.svg",
               },
             ].map((card, index) => (
               <div

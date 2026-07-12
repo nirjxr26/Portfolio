@@ -196,12 +196,20 @@ export default function HomeClient() {
                       Bastion <Icons.ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-all" />
                     </div>
                   </Link>
+                  <Link
+                    href="/works/kost"
+                    className="px-3 py-2 text-foreground hover:bg-white/[0.04] transition-all duration-200 block rounded-[6px] group/item"
+                  >
+                    <div className="font-sans font-medium text-[12px] tracking-wide text-foreground group-hover/item:text-accent transition-colors flex items-center gap-1">
+                      Kost <Icons.ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-all" />
+                    </div>
+                  </Link>
                 </div>
               )}
             </div>
 
             <a href="#insights" onClick={(e) => handleScrollTo(e, "#insights")} className="text-secondary hover:text-foreground transition-colors duration-300">
-              Notes
+              Articles
             </a>
             <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="text-secondary hover:text-foreground transition-colors duration-300">
               Contact
@@ -245,6 +253,13 @@ export default function HomeClient() {
             >
               Bastion <Icons.ArrowUpRight className="w-3 h-3" />
             </Link>
+            <Link
+              href="/works/kost"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5"
+            >
+              Kost <Icons.ArrowUpRight className="w-3 h-3" />
+            </Link>
 
             <a
               href="#insights"
@@ -254,7 +269,7 @@ export default function HomeClient() {
               }}
               className="text-foreground hover:text-secondary transition-colors"
             >
-              Notes
+              Articles
             </a>
             <a
               href="#contact"
@@ -323,7 +338,7 @@ export default function HomeClient() {
       <section className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto mb-8 md:mb-16">
         <ScrollReveal delay={0.2}>
           <img
-            src="/icons/hero.svg"
+            src="/icons/home/hero.svg"
             alt="Cloud infrastructure diagram showing system architecture"
             className="w-full h-auto object-contain block rounded-[8px]"
           />
@@ -455,14 +470,14 @@ export default function HomeClient() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 relative z-10">
               <a href="https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
                 <img
-                  src="/icons/a1.svg"
+                  src="/icons/home/a1.svg"
                   alt="Why AI can't rewrite Windows article thumbnail"
                   className="w-full h-auto object-contain block"
                 />
               </a>
               <a href="https://blog.nirjar.me/sonarqube" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
                 <img
-                  src="/icons/a-2.svg"
+                  src="/icons/home/a-2.svg"
                   alt="SonarQube article thumbnail"
                   className="w-full h-auto object-contain block"
                 />

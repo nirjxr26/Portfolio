@@ -1,0 +1,27 @@
+<svg width="378" height="378" viewBox="0 0 378 378" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="378" height="378" rx="6" fill="#2F2B25"/>
+<mask id="r2" fill="white">
+<path d="M33.75 43C33.75 38.0294 37.7794 34 42.75 34H378V61.7627H33.75V43Z"/>
+</mask>
+<path d="M33.75 43C33.75 38.0294 37.7794 34 42.75 34H378V61.7627H33.75V43Z" fill="#1B1913"/>
+<path d="M33.75 34H378H33.75M378 62.7627H33.75V60.7627H378V62.7627ZM378 60.7627M33.75 61.7627V34V61.7627M33.75 61.7627M378 34V61.7627V34" fill="white" fill-opacity="0.06" mask="url(#r2)"/>
+<circle cx="41.75" cy="47.3813" r="5" fill="#EDECEC" fill-opacity="0.2"/>
+<circle cx="57.75" cy="47.3813" r="5" fill="#EDECEC" fill-opacity="0.2"/>
+<circle cx="73.75" cy="47.3813" r="5" fill="#EDECEC" fill-opacity="0.2"/>
+<path d="M34 62H378V372C378 375.314 375.314 378 372 378H34V62Z" fill="#14120B"/>
+<text font-family="monospace" font-size="12" fill="#D4D4D8">
+  <tspan x="36" y="86" fill="#85E89D">securityContext</tspan><tspan fill="#D4D4D8">:</tspan>
+  <tspan x="54" y="110" fill="#B392F0">runAsNonRoot</tspan><tspan fill="#D4D4D8">: </tspan><tspan fill="#3FB950">true</tspan>
+  <tspan x="54" y="132" fill="#B392F0">runAsUser</tspan><tspan fill="#D4D4D8">: </tspan><tspan fill="#3FB950">65534</tspan>
+  <tspan x="54" y="154" fill="#B392F0">readOnlyRootFilesystem</tspan><tspan fill="#D4D4D8">: </tspan><tspan fill="#3FB950">true</tspan>
+  <tspan x="54" y="176" fill="#B392F0">allowPrivilegeEscalation</tspan><tspan fill="#D4D4D8">: </tspan><tspan fill="#3FB950">false</tspan>
+  <tspan x="54" y="198" fill="#B392F0">capabilities</tspan><tspan fill="#D4D4D8">:</tspan>
+  <tspan x="70" y="220" fill="#B392F0">drop</tspan><tspan fill="#D4D4D8">: [</tspan><tspan fill="#F97583">"ALL"</tspan><tspan fill="#D4D4D8">]</tspan>
+</text>
+<rect x="36" y="258" width="306" height="1" fill="#6B6B70" fill-opacity="0.2"/>
+<text font-family="monospace" font-size="12" fill="#D4D4D8">
+  <tspan x="36" y="286" fill="#3FB950">✓</tspan><tspan fill="#D4D4D8">  No root. No path to root.</tspan>
+  <tspan x="36" y="308" fill="#3FB950">✓</tspan><tspan fill="#D4D4D8">  Read-only filesystem.</tspan>
+  <tspan x="36" y="330" fill="#3FB950">✓</tspan><tspan fill="#D4D4D8">  All capabilities dropped.</tspan>
+</text>
+</svg>
