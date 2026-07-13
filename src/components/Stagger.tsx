@@ -1,4 +1,6 @@
-import React, { ReactNode } from "react";
+import { createContext, useContext, Children, type ReactNode } from "react";
+
+const StaggerContext = createContext({ delay: 0, staggerStep: 0.1, index: 0 });
 
 interface StaggerContainerProps {
   children: ReactNode;
@@ -8,9 +10,17 @@ interface StaggerContainerProps {
 }
 
 export function StaggerContainer({
-  children, className = "",
+  children, delay = 0, staggerStep = 0.1, className = "",
 }: StaggerContainerProps) {
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={className}>
+      {Children.map(children, (child, i) => (
+        <StaggerContext.Provider value={{ delay, staggerStep, index: i }} key={i}>
+          {child}
+        </StaggerContext.Provider>
+      ))}
+    </div>
+  );
 }
 
 interface StaggerItemProps {
@@ -19,5 +29,13 @@ interface StaggerItemProps {
 }
 
 export function StaggerItem({ children, className = "" }: StaggerItemProps) {
-  return <div className={className}>{children}</div>;
+  const { delay, staggerStep, index } = useContext(StaggerContext);
+  return (
+    <div
+      className={className}
+      style={{ transitionDelay: `${delay + index * staggerStep}s` }}
+    >
+      {children}
+    </div>
+  );
 }
