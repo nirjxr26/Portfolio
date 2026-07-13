@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { WebVitals } from "@/components/WebVitals";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -14,6 +15,11 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   style: ["normal", "italic"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -137,31 +143,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${geistMono.variable} ${instrumentSerif.variable} ${inter.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
+        <meta name="theme-color" content="#000000" />
         <link rel="preload" href="/icons/home/hero.svg" as="image" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <script dangerouslySetInnerHTML={{
-          __html: `(function(){var t=localStorage.getItem("theme");if(t==="light"||(!t&&window.matchMedia("(prefers-color-scheme: light)").matches))document.documentElement.classList.add("light")})()`
+          __html: `document.documentElement.classList.remove("light")`
         }} />
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
         <ThemeProvider>
           <WebVitals />
-          {children}
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>

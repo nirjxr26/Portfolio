@@ -10,6 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 DESIGN.md 
+report.md
 .agents/
 
 # testing

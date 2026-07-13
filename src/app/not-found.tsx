@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MAILTO } from "@/lib/email";
 
 export default function NotFound() {
   return (
@@ -20,7 +21,7 @@ export default function NotFound() {
           Back to homepage
         </Link>
         <a
-          href="mailto:nirjargoswami2626@gmail.com"
+          href={MAILTO}
           className="text-xs text-secondary hover:text-foreground transition-colors tracking-wide"
         >
           Report issue
