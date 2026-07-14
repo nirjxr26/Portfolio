@@ -25,7 +25,7 @@ export default function KostClient() {
       desc: "Spots pods that request more CPU or memory than they actually use, and shows exactly what it's costing you every month.",
       img: "/icons/kost/k-1.svg",
       alt: "terminal output showing flagged workloads with waste amounts",
-      bg: "bg-[#252118]",
+      bg: "bg-[var(--surface-warm-2)]",
       wide: true
     },
     {
@@ -33,7 +33,7 @@ export default function KostClient() {
       desc: "Every finding comes with a ready kubectl set resources command — copy, paste, apply, no digging through YAML to figure out the fix.",
       img: "/icons/kost/k-2.svg",
       alt: "CLI output showing JSON findings with fix commands",
-      bg: "bg-[#201E18]",
+      bg: "bg-[var(--surface-warm-7)]",
       wide: true,
       compact: true
     },
@@ -56,7 +56,7 @@ export default function KostClient() {
       desc: "Wire up a webhook and waste notifications land straight in your team channel. Push over pull — you don't go check a dashboard, the alert comes to you.",
       img: "/icons/kost/k-3-new.svg",
       alt: "Slack message showing a waste alert",
-      bg: "bg-[#23201C]",
+      bg: "bg-[var(--surface-warm-8)]",
       short: true
     }
   ];
@@ -256,7 +256,7 @@ export default function KostClient() {
           <div className="w-full max-w-2xl mx-auto text-center">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[44px] md:text-[50px] lg:text-[58px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-0"
+              className="text-[40px] sm:text-[44px] md:text-[50px] lg:text-[58px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-0"
               text="Try Kost now."
             />
 
@@ -265,7 +265,7 @@ export default function KostClient() {
                 href="https://github.com/nirjxr26/Kost"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-[#EDECEC] hover:bg-[#EDECEC]/90 text-[#0C0A05] sm:text-[12px] md:text-[18px] font-semibold px-8 py-3 rounded-full transition-all duration-200 shadow-lg cursor-pointer font-sans"
+                className="btn-cta"
               >
                 View on GitHub
               </a>
