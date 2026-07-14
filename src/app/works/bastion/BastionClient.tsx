@@ -373,7 +373,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#4A443B] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-1)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/ci.svg"
                     alt="Security architecture diagram"
@@ -403,7 +403,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252118] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-2)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/cd.svg"
                     alt="GitOps deployment diagram"
@@ -433,7 +433,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#26241E] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-3)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/boot-mobile.svg"
                     alt="Boot sequence order diagram"
@@ -483,7 +483,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1D1B16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-4)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-1.svg"
                     alt="Model Retraining diagram"
@@ -514,7 +514,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#221F18] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-2.svg"
                     alt="Risk Evaluation diagram"
@@ -545,7 +545,7 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#1F1C16] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-3.svg"
                     alt="Resilient Fallback diagram"
@@ -631,7 +631,7 @@ const features = [
                 href="https://github.com/nirjxr26/Bastion"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-[#EDECEC] hover:bg-[#EDECEC]/90 text-[#0C0A05] sm:text-[12px] md:text-[18px] font-semibold px-8 py-3 rounded-full transition-all duration-200 shadow-lg cursor-pointer font-sans"
+                className="btn-cta"
               >
                 View on GitHub
               </a>

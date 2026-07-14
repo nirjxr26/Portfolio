@@ -105,6 +105,14 @@ export default function Navbar({ variant, title }: NavbarProps) {
                       Kost <Icons.ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-all" />
                     </div>
                   </Link>
+                  <Link
+                    href="/works/hookdrop"
+                    className="px-3 py-2 text-foreground hover:bg-white/[0.04] block rounded-[6px] group/item"
+                  >
+                    <div className="font-sans font-medium text-[12px] tracking-wide text-foreground group-hover/item:text-accent transition-colors flex items-center gap-1">
+                      HookDrop <Icons.ArrowUpRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-all" />
+                    </div>
+                  </Link>
                 </div>
               )}
             </div>
@@ -148,6 +156,9 @@ export default function Navbar({ variant, title }: NavbarProps) {
               <Link href="/works/kost" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
                 Kost <Icons.ArrowUpRight className="w-3 h-3" />
               </Link>
+              <Link href="/works/hookdrop" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
+                HookDrop <Icons.ArrowUpRight className="w-3 h-3" />
+              </Link>
               <a href="#insights" onClick={(e) => { setMobileMenuOpen(false); handleScrollTo(e, "#insights"); }} className="text-foreground hover:text-secondary transition-colors">Articles</a>
               <a href="#contact" onClick={(e) => { setMobileMenuOpen(false); handleScrollTo(e, "#contact"); }} className="text-foreground hover:text-secondary transition-colors">Contact</a>
             </nav>
@@ -159,6 +170,9 @@ export default function Navbar({ variant, title }: NavbarProps) {
               </Link>
               <Link href="/works/kost" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
                 Kost <Icons.ArrowUpRight className="w-3 h-3" />
+              </Link>
+              <Link href="/works/hookdrop" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
+                HookDrop <Icons.ArrowUpRight className="w-3 h-3" />
               </Link>
               <Link href="/#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-secondary transition-colors">Contact</Link>
             </nav>

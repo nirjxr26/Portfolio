@@ -36,7 +36,8 @@ export default function HomeClient() {
       category: "Webhook Receiver & Streamer",
       year: "2025",
       description: "HookDrop is a mock webhook receiver in Go — POST to a bucket URL, it catches, stores, and streams it live. The real work is the pipeline around it: ECR, hardening, GitOps.",
-      link: "https://github.com/nirjxr26/HookDrop"
+      link: "https://github.com/nirjxr26/HookDrop",
+      projectLink: "/works/hookdrop"
     },
     {
       title: "DeployLens",
