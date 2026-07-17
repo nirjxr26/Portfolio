@@ -36,6 +36,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/icons/home/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-cache" },
+        ],
+      },
+      {
         source: "/icons/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
