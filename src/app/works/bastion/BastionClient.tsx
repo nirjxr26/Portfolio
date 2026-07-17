@@ -487,7 +487,7 @@ const features = [
                   <img
                     src="/icons/bastion/m-1.svg"
                     alt="Model Retraining diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -514,11 +514,11 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] lg:min-h-[360px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-2.svg"
                     alt="Risk Evaluation diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -545,11 +545,11 @@ const features = [
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] lg:min-h-[360px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-3.svg"
                     alt="Resilient Fallback diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -615,27 +615,28 @@ const features = [
       </section>
 
       {/* Get Bastion Section */}
-      <section className="w-full py-10 md:py-16 bg-[#17150E] flex flex-col items-center">
+      <section className="w-full py-12 md:py-20 bg-[#17150E] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
-          <div className="w-full max-w-2xl mx-auto text-center">
+          <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal
               as="h2"
-              className="text-[40px] sm:text-[44px] md:text-[50px] lg:text-[58px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-0"
+              className="text-[28px] sm:text-[32px] md:text-[36px] font-normal text-foreground tracking-tight leading-[1.15] font-sans text-center mb-3"
               text="Try Bastion now."
             />
 
+            <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
+            The project's open and ready for contributors — dig into the code or open an issue anytime.
+            </p>
 
-            {/* Subtext link */}
-            <div className="mt-4 mb-4">
-              <a
-                href="https://github.com/nirjxr26/Bastion"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-cta"
-              >
-                View on GitHub
-              </a>
-            </div>
+            <a
+              href="https://github.com/nirjxr26/Bastion"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-cta"
+            >
+              View on GitHub
+            </a>
+
           </div>
         </ScrollReveal>
       </section>

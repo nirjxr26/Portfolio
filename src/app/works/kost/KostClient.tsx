@@ -251,25 +251,27 @@ export default function KostClient() {
 
 
       {/* CTA */}
-      <section className="w-full py-10 md:py-16 bg-[#17150E] flex flex-col items-center">
+      <section className="w-full py-12 md:py-20 bg-[#17150E] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
-          <div className="w-full max-w-2xl mx-auto text-center">
+          <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal
               as="h2"
-              className="text-[40px] sm:text-[44px] md:text-[50px] lg:text-[58px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center mb-0"
+              className="text-[28px] sm:text-[32px] md:text-[36px] font-normal text-foreground tracking-tight leading-[1.15] font-sans text-center mb-3"
               text="Try Kost now."
             />
 
-            <div className="mt-4 mb-4">
-              <a
-                href="https://github.com/nirjxr26/Kost"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-cta"
-              >
-                View on GitHub
-              </a>
-            </div>
+            <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
+            The project's open and ready for contributors — dig into the code or open an issue anytime.
+            </p>
+
+            <a
+              href="https://github.com/nirjxr26/Kost"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-cta"
+            >
+              View on GitHub
+            </a>
 
           </div>
         </ScrollReveal>

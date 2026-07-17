@@ -115,7 +115,7 @@ export default function HomeClient() {
     >
       <Navbar variant="home" />
 
-      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-40 pb-10 md:pt-35 md:pb-16">
+      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-40 pb-4 md:pt-35 md:pb-8">
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
@@ -213,7 +213,7 @@ export default function HomeClient() {
                       {proj.projectLink ? (
                         <Link
                           href={proj.projectLink}
-                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent/80 transition-colors cursor-pointer w-fit"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent/80 transition-colors cursor-pointer w-fit"
                         >
                           Learn more <Icons.ArrowUpRight className="w-4 h-4 text-accent" />
                         </Link>
@@ -240,7 +240,7 @@ export default function HomeClient() {
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAllWorks(!showAllWorks)}
-              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
             >
               {showAllWorks ? "View less" : "View more works"}
               {showAllWorks ? <Icons.X className="w-4 h-4" /> : <Icons.ArrowUpRight className="w-4 h-4" />}
@@ -261,23 +261,49 @@ export default function HomeClient() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <div className="relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 relative z-10">
-              <a href="https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
-                <img
-                  src="/icons/home/a1.svg"
-                  alt="Why AI can't rewrite Windows article thumbnail"
-                  className="w-full h-auto object-contain block"
-                />
-              </a>
-              <a href="https://blog.nirjar.me/sonarqube" target="_blank" rel="noopener noreferrer" className="rounded-[8px] bg-[#17150E] border border-white/[0.04] overflow-hidden block">
-                <img
-                  src="/icons/home/a-2.svg"
-                  alt="SonarQube article thumbnail"
-                  className="w-full h-auto object-contain block"
-                />
-              </a>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a
+              href="https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
+            >
+              <div>
+                <p className="text-secondary text-[14px] font-normal mb-1">Jun 4, 2026 · Generative AI</p>
+                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
+                  Why AI can't just rewrite Windows
+                </h4>
+              </div>
+              <span className="text-secondary text-[12px] mt-4">Nirjar · 4 min read</span>
+            </a>
+            <a
+              href="https://blog.nirjar.me/sonarqube"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
+            >
+              <div>
+                <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
+                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
+                  SonarQube analysis.
+                </h4>
+              </div>
+              <span className="text-secondary text-[12px] mt-4">Nirjar · 5 min read</span>
+            </a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
+            >
+              <div>
+                <p className="text-secondary text-[14px] font-normal mb-1">April 16, 2026 · GitHub Actions</p>
+                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
+                  How GitHub changed my workflow.
+                </h4>
+              </div>
+              <span className="text-secondary text-[12px] mt-4">Nirjar · 3 min read</span>
+            </a>
           </div>
         </ScrollReveal>
 
@@ -287,7 +313,7 @@ export default function HomeClient() {
               href="https://blog.nirjar.me/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
             >
               View more<Icons.ArrowUpRight className="w-4 h-4" />
             </a>
