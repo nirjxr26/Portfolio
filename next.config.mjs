@@ -1,6 +1,13 @@
-import type { NextConfig } from "next";
+const isDev = process.argv.indexOf("dev") !== -1;
+const isBuild = process.argv.indexOf("build") !== -1;
+if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
+  process.env.VELITE_STARTED = "1";
+  const { build } = await import("velite");
+  await build({ watch: isDev, clean: !isDev });
+}
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   async headers() {
     return [
       {
@@ -31,33 +38,23 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/icons/hookdrop/:path*",
-        headers: [
-          { key: "Cache-Control", value: "no-cache" },
-        ],
+        headers: [{ key: "Cache-Control", value: "no-cache" }],
       },
       {
         source: "/icons/home/:path*",
-        headers: [
-          { key: "Cache-Control", value: "no-cache" },
-        ],
+        headers: [{ key: "Cache-Control", value: "no-cache" }],
       },
       {
         source: "/icons/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
       {
         source: "/illustrations/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
       },
       {
         source: "/og-image.webp",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=86400" },
-        ],
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400" }],
       },
     ];
   },

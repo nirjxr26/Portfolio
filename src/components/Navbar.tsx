@@ -116,6 +116,9 @@ export default function Navbar({ variant, title }: NavbarProps) {
                 </div>
               )}
             </div>
+            <Link href="/notes" className="text-secondary hover:text-foreground transition-colors duration-300">
+              Notes
+            </Link>
             {variant === "home" && (
               <a href="#insights" onClick={(e) => handleScrollTo(e, "#insights")} className="text-secondary hover:text-foreground transition-colors duration-300">
                 Articles
@@ -159,6 +162,7 @@ export default function Navbar({ variant, title }: NavbarProps) {
               <Link href="/works/hookdrop" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
                 HookDrop <Icons.ArrowUpRight className="w-3 h-3" />
               </Link>
+              <Link href="/notes" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-secondary transition-colors">Notes</Link>
               <a href="#insights" onClick={(e) => { setMobileMenuOpen(false); handleScrollTo(e, "#insights"); }} className="text-foreground hover:text-secondary transition-colors">Articles</a>
               <a href="#contact" onClick={(e) => { setMobileMenuOpen(false); handleScrollTo(e, "#contact"); }} className="text-foreground hover:text-secondary transition-colors">Contact</a>
             </nav>
@@ -174,6 +178,7 @@ export default function Navbar({ variant, title }: NavbarProps) {
               <Link href="/works/hookdrop" onClick={() => setMobileMenuOpen(false)} className="text-sm text-secondary hover:text-foreground transition-colors ml-4 flex items-center gap-1.5">
                 HookDrop <Icons.ArrowUpRight className="w-3 h-3" />
               </Link>
+              <Link href="/notes" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-secondary transition-colors">Notes</Link>
               <Link href="/#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground hover:text-secondary transition-colors">Contact</Link>
             </nav>
           )}

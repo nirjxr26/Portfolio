@@ -280,15 +280,22 @@ export default function HomeClient() {
               href="https://blog.nirjar.me/sonarqube"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
+              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-0 flex flex-col"
             >
-              <div>
-                <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
-                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
-                  SonarQube analysis.
-                </h4>
+              <img
+                src="/icons/home/a-2.svg"
+                alt=""
+                className="w-full rounded-t-[10px]"
+              />
+              <div className="p-5 flex flex-col justify-between gap-4 min-h-[130px]">
+                <div>
+                  <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
+                  <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
+                    SonarQube analysis.
+                  </h4>
+                </div>
+                <span className="text-secondary text-[12px]">Nirjar · 5 min read</span>
               </div>
-              <span className="text-secondary text-[12px] mt-4">Nirjar · 5 min read</span>
             </a>
             <a
               href="#"
