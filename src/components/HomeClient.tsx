@@ -273,6 +273,10 @@ export default function HomeClient() {
                 <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
                   Why AI can't just rewrite Windows
                 </h4>
+                <p className="text-secondary text-[14px] mt-3 leading-relaxed">
+                  I asked an LLM to explain why "just rewrite it in Rust" isn't a real plan for a
+                  30-year-old OS. Turns out the answer is more interesting than the meme.
+                </p>
               </div>
               <span className="text-secondary text-[12px] mt-4">Nirjar · 4 min read</span>
             </a>
@@ -280,25 +284,22 @@ export default function HomeClient() {
               href="https://blog.nirjar.me/sonarqube"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-0 flex flex-col"
+              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
             >
-              <img
-                src="/icons/home/a-2.svg"
-                alt=""
-                className="w-full rounded-t-[10px]"
-              />
-              <div className="p-5 flex flex-col justify-between gap-4 min-h-[130px]">
-                <div>
-                  <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
-                  <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
-                    SonarQube analysis.
-                  </h4>
-                </div>
-                <span className="text-secondary text-[12px]">Nirjar · 5 min read</span>
+              <div>
+                <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
+                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
+                  SonarQube analysis.
+                </h4>
+                <p className="text-secondary text-[14px] mt-3 leading-relaxed">
+                  Ran Bastion through SonarQube properly for the first time — 38k lines, zero
+                  security issues, and one duplication number I'm still a little proud of.
+                </p>
               </div>
+              <span className="text-secondary text-[12px]">Nirjar · 5 min read</span>
             </a>
             <a
-              href="#"
+              href="https://blog.nirjar.me/how-github-changed-my-workflow"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
@@ -308,6 +309,10 @@ export default function HomeClient() {
                 <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
                   How GitHub changed my workflow.
                 </h4>
+                <p className="text-secondary text-[14px] mt-3 leading-relaxed">
+                  Three months of leaning on Actions for everything instead of doing it by hand.
+                  Some of it stuck. Some of it I quietly reverted.
+                </p>
               </div>
               <span className="text-secondary text-[12px] mt-4">Nirjar · 3 min read</span>
             </a>
