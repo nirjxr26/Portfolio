@@ -355,8 +355,8 @@ const features = [
 
         <div className="flex flex-col gap-6 md:gap-8">
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-8 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Integration
                 </h3>
@@ -372,12 +372,12 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-1)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-1)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/ci.svg"
                     alt="Security architecture diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -385,8 +385,8 @@ const features = [
           </ScrollReveal>
 
           <ScrollReveal delay={0.3}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Deployment / GitOps
                 </h3>
@@ -402,12 +402,12 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-2)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-2)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/cd.svg"
                     alt="GitOps deployment diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -415,8 +415,8 @@ const features = [
           </ScrollReveal>
 
           <ScrollReveal delay={0.35}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Boot sequence
                 </h3>
@@ -432,8 +432,8 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-3)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-3)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
                     src="/icons/bastion/boot-mobile.svg"
                     alt="Boot sequence order diagram"
@@ -442,7 +442,7 @@ const features = [
                   <img
                     src="/icons/bastion/boot.svg"
                     alt="Boot sequence order diagram"
-                    className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] h-auto sm:h-auto sm:max-h-full object-contain relative select-none pointer-events-none"
+                    className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -465,8 +465,8 @@ const features = [
         <div className="flex flex-col gap-6 md:gap-8">
           {/* Card 1 */}
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Model Retraining
                 </h3>
@@ -482,12 +482,12 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-warm-4)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-4)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-1.svg"
                     alt="Model Retraining diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -496,8 +496,8 @@ const features = [
 
           {/* Card 2 */}
           <ScrollReveal delay={0.3}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Risk Evaluation
                 </h3>
@@ -513,12 +513,12 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] lg:min-h-[360px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-2.svg"
                     alt="Risk Evaluation diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -527,8 +527,8 @@ const features = [
 
           {/* Card 3 */}
           <ScrollReveal delay={0.35}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-              <div className="w-full text-left flex flex-col justify-start items-start">
+            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+              <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Resilient Fallback
                 </h3>
@@ -544,12 +544,12 @@ const features = [
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
               </div>
-              <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] lg:min-h-[360px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative shadow-inner">
+              <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
                     src="/icons/bastion/m-3.svg"
                     alt="Resilient Fallback diagram"
-                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>

@@ -103,6 +103,25 @@ export default function HomeClient() {
     }
   ];
 
+  const articles = [
+    {
+      title: "Why AI can't just rewrite Windows",
+      category: "Generative AI",
+      date: "Jun 4, 2026",
+      readTime: "4 min read",
+      desc: "50 million lines. 41 years of decisions. Why 'just use AI' doesn't work at that scale.",
+      link: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
+    },
+    {
+      title: "SonarQube analysis.",
+      category: "Observability",
+      date: "May 25, 2026",
+      readTime: "5 min read",
+      desc: "872 hidden issues, one scan, 30 days to fix what I couldn't see before.",
+      link: "https://blog.nirjar.me/sonarqube"
+    }
+  ];
+
   return (
     <main
       ref={containerRef}
@@ -261,49 +280,30 @@ export default function HomeClient() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <a
-              href="https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
-            >
-              <div>
-                <p className="text-secondary text-[14px] font-normal mb-1">Jun 4, 2026 · Generative AI</p>
-                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
-                  Why AI can't just rewrite Windows
-                </h4>
-              </div>
-              <span className="text-secondary text-[12px] mt-4">Nirjar · 4 min read</span>
-            </a>
-            <a
-              href="https://blog.nirjar.me/sonarqube"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
-            >
-              <div>
-                <p className="text-secondary text-[14px] font-normal mb-1">25 May, 2026 · Observability</p>
-                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
-                  SonarQube analysis.
-                </h4>
-              </div>
-              <span className="text-secondary text-[12px] mt-4">Nirjar · 5 min read</span>
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-[10px] bg-[#17150E] border border-white/[0.06] p-5 flex flex-col justify-between min-h-[200px]"
-            >
-              <div>
-                <p className="text-secondary text-[14px] font-normal mb-1">April 16, 2026 · GitHub Actions</p>
-                <h4 className="text-[18px] md:text-[23px] font-medium text-foreground font-sans tracking-tight leading-snug">
-                  How GitHub changed my workflow.
-                </h4>
-              </div>
-              <span className="text-secondary text-[12px] mt-4">Nirjar · 3 min read</span>
-            </a>
+          <div className="grid grid-cols-1 min-[1025px]:grid-cols-2 gap-4">
+            {articles.map((art) => (
+              <a
+                key={art.title}
+                href={art.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="relative rounded-[12px] bg-[#17150E] border border-white/[0.04] p-6 flex flex-col justify-between min-h-[200px]"
+              >
+                <div>
+                  <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-tight leading-snug mb-2">
+                    {art.title}
+                  </h4>
+                  <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
+                    {art.desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-6 border-t border-white/[0.05] flex items-center justify-between text-xs text-secondary/70 font-sans">
+                  <span>{art.date}</span>
+                  <span className="text-foreground/90 font-medium">{art.category}</span>
+                </div>
+              </a>
+            ))}
           </div>
         </ScrollReveal>
 
