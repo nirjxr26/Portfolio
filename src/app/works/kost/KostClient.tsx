@@ -26,7 +26,10 @@ export default function KostClient() {
       img: "/icons/kost/k-1.svg",
       alt: "terminal output showing flagged workloads with waste amounts",
       bg: "bg-[var(--surface-warm-2)]",
-      wide: true
+      wide: true,
+      mainCardClass: "min-[1025px]:p-8",
+      desktopContainerClass: "min-[1025px]:min-h-[520px] min-[1025px]:h-[520px] min-[1025px]:p-8",
+      desktopImgClass: "min-[1025px]:max-h-[460px] min-[1025px]:w-full min-[1025px]:max-w-full min-[1025px]:scale-105"
     },
     {
       title: "The fix, ready",
@@ -35,29 +38,20 @@ export default function KostClient() {
       alt: "CLI output showing JSON findings with fix commands",
       bg: "bg-[var(--surface-warm-7)]",
       wide: true,
-      compact: true
+      compact: true,
+      desktopContainerClass: "min-[1025px]:min-h-[440px] min-[1025px]:h-[440px]",
+      desktopImgClass: "min-[1025px]:max-h-[340px] min-[1025px]:w-[82%]"
     },
-    // {
-    //   title: "Built-In HTML Dashboard",
-    //   desc: "Dark-themed dashboard served from the pod on port 8080. Shows monthly waste total, per-workload breakdown with requested vs actual CPU/memory, fix commands, and a rolling history of the last 200 reports.",
-    //   img: "",
-    //   alt: "screenshot of dashboard with waste cards and findings table",
-    //   bg: "bg-[#4A443B]"
-    // },
-    // {
-    //   title: "Prometheus Metrics",
-    //   desc: "Exposes kost_over_provisioned_count and kost_waste_dollars gauges on /metrics. Plug it into Grafana, Prometheus, or whatever you already run.",
-    //   img: "",
-    //   alt: "metrics endpoint output showing gauge values",
-    //   bg: "bg-[#4A443B]"
-    // },
     {
       title: "Slack Alerts",
       desc: "Wire up a webhook and waste notifications land straight in your team channel. Push over pull — you don't go check a dashboard, the alert comes to you.",
       img: "/icons/kost/k-3-new.svg",
       alt: "Slack message showing a waste alert",
       bg: "bg-[var(--surface-warm-8)]",
-      short: true
+      short: true,
+      mainCardClass: "min-[1025px]:p-6",
+      desktopContainerClass: "min-[1025px]:min-h-[400px] min-[1025px]:h-[400px]",
+      desktopImgClass: "min-[1025px]:max-h-[340px] min-[1025px]:w-[80%] min-[1025px]:scale-120"
     }
   ];
 
@@ -102,8 +96,8 @@ export default function KostClient() {
         <div className="flex flex-col gap-6 md:gap-8">
           {features.map((feature, idx) => (
             <ScrollReveal key={feature.title} delay={0.15 + idx * 0.05}>
-              <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-6 overflow-hidden">
-                <div className="w-full text-left flex flex-col justify-start items-start">
+              <div className={`w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
+                <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                   <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                     {feature.title}
                   </h3>
@@ -119,10 +113,10 @@ export default function KostClient() {
                     Learn more <span className="text-lg leading-none">→</span>
                   </a>
                 </div>
-                <div className="w-full flex justify-center items-center self-stretch">
-                  <div className={`w-full ${feature.short ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:h-[620px]" : feature.compact ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[520px]" : "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px]"} ${feature.bg} rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative`}>
+                <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
+                  <div className={`w-full ${feature.short ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:h-[620px]" : feature.compact ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[520px]" : "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[620px]"} ${feature.desktopContainerClass || "min-[1025px]:min-h-[500px] min-[1025px]:h-[500px]"} ${feature.bg} rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative`}>
                   {feature.img ? (
-                    <img src={feature.img} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[180%] max-w-none h-full sm:h-auto sm:max-w-full lg:max-w-full lg:w-5/6 lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] lg:max-w-[800px]"} h-full sm:h-auto` : "w-full max-w-[900px] h-auto max-h-full"} object-contain block relative select-none pointer-events-none`} />
+                    <img src={feature.img} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[180%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
                   ) : (
                     <span className="text-[#6B6B70] text-xs sm:text-sm font-mono text-center">
                       [{feature.alt}]
