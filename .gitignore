@@ -12,6 +12,7 @@
 DESIGN.md 
 report.md
 .agents/
+codebase-memory-mcp/
 
 # testing
 /coverage
