@@ -287,7 +287,7 @@ export default function HomeClient() {
                 href={art.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-[12px] bg-[#17150E] border border-white/[0.04] p-6 flex flex-col justify-between min-h-[200px]"
+                className="relative rounded-[12px] bg-[#17150E] border border-white/[0.04] p-4 px-5 md:p-5 flex flex-col justify-between min-h-[200px]"
               >
                 <div>
                   <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-tight leading-snug mb-2">
