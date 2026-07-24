@@ -255,7 +255,7 @@ export default function KostClient() {
             />
 
             <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
-            The project's open and ready for contributors — dig into the code or open an issue anytime.
+            The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
             </p>
 
             <a

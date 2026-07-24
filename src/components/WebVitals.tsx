@@ -45,6 +45,11 @@ function logMetric(name: string, value: number, rating: string) {
 
 const needed = new Set(["LCP", "FCP", "CLS", "INP", "TTFB"]);
 const collected: Record<string, { value: number; rating: string }> = {};
+type WebVitalMetric = {
+  name?: string;
+  value?: number;
+  rating?: string;
+};
 
 function logSummary() {
   const allGood = Object.values(collected).every((m) => m.rating === "good");
@@ -80,9 +85,9 @@ export function WebVitals() {
   const reported = useRef(false);
 
   useReportWebVitals(
-    useCallback((metric: any) => {
+    useCallback((metric: WebVitalMetric) => {
       const { name, value, rating } = metric;
-      if (!name || value === undefined || !rating) return;
+      if (!name || typeof value !== "number" || !rating) return;
 
       logMetric(name, value, rating);
       collected[name] = { value, rating };
