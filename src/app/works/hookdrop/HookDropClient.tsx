@@ -201,7 +201,7 @@ export default function HookDropClient() {
                   <img
                     src="/icons/hookdrop/cicd.svg"
                     alt="CI/CD pipeline diagram"
-                    className="w-[280%] sm:w-[130%] max-w-none h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
+                    className="w-[280%] sm:w-[130%] md:w-full lg:w-[115%] xl:w-full max-w-none md:max-w-full h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function HookDropClient() {
             />
 
             <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
-            The project's open and ready for contributors — dig into the code or open an issue anytime.
+            The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
             </p>
             <a
               href="https://github.com/nirjxr26/HookDrop"
