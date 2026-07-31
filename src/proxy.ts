@@ -27,15 +27,19 @@ export function proxy(request: NextRequest) {
 
   const nonce = crypto.randomUUID().replaceAll("-", "");
 
-  // sha256 hashes of the two inline scripts rendered in src/app/layout.tsx:
-  // - application/ld+json (schema.org graph)
-  // - document.documentElement.classList.remove("light")
+  // sha256 hashes of the five inline scripts rendered outside the nonce:
+  // - application/ld+json (schema.org graph) in src/app/layout.tsx
+  // - document.documentElement.classList.remove("light") in src/app/layout.tsx
+  // - application/ld+json breadcrumbs in works/{bastion,hookdrop,kost}/...Client.tsx
   // If their content changes, recompute the hashes or CSP will block them.
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
     "'sha256-X4xW7arPKv8Fh38P/yz4qzmNCzk+aSFkmnXTICtVywQ='",
     "'sha256-S60uYo2p2s6naeaxsYttb6zaXQ+Zo39ZVPOHcMRjowo='",
+    "'sha256-Qvda3G/OZ++W606q9TtuHY796ZT9m76YBja5lSasVI8='",
+    "'sha256-wwpqCiegWybWeYCHzVErJoZlTfeOEkXOgpIFiR/D4p8='",
+    "'sha256-bSxH7N/x9BdtZ96Qn3/X4th0iZBC0e/faO/lutgxllE='",
     ...(process.env.NODE_ENV === "development" ? ["'unsafe-eval'"] : []),
   ].join(" ");
 
