@@ -46,3 +46,5 @@ next-env.d.ts
 
 # dev server logs
 dev-server*.log
+
+src/lib/icon-versions.generated.ts

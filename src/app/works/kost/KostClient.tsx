@@ -5,6 +5,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { iconUrl } from "@/lib/iconUrl";
 
 export default function KostClient() {
 
@@ -118,7 +119,7 @@ export default function KostClient() {
                 <div className={`w-full min-[1025px]:w-[65%] ${feature.imgWrapperClass || ""} min-[1025px]:shrink-0 flex justify-center items-center self-stretch`}>
                   <div className={`w-full ${feature.short ? "min-h-[340px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:h-[620px]" : feature.compact ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[520px]" : "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[620px]"} ${feature.desktopContainerClass || "min-[1025px]:min-h-[500px] min-[1025px]:h-[500px]"} ${feature.bg} rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative`}>
                   {feature.img ? (
-                    <img src={feature.img} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[220%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
+                    <img src={iconUrl(feature.img)} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[220%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
                   ) : (
                     <span className="text-[#6B6B70] text-xs sm:text-sm font-mono text-center">
                       [{feature.alt}]
@@ -175,7 +176,7 @@ export default function KostClient() {
                     {card.description}
                   </p>
                   <img
-                    src={card.svg}
+                    src={iconUrl(card.svg)}
                     alt={card.subtitle}
                     loading="lazy"
                     className="w-full h-auto mx-auto block mt-auto select-none pointer-events-none rounded-[6px] overflow-hidden"
@@ -232,7 +233,7 @@ export default function KostClient() {
                     {card.description}
                   </p>
                   <img
-                    src={card.svg}
+                    src={iconUrl(card.svg)}
                     alt={card.subtitle}
                     className="w-full h-auto mx-auto block mt-auto select-none pointer-events-none rounded-[6px] overflow-hidden"
                     loading="lazy"

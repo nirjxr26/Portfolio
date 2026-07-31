@@ -5,6 +5,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { iconUrl } from "@/lib/iconUrl";
 
 export default function HookDropClient() {
 
@@ -198,7 +199,7 @@ export default function HookDropClient() {
               <div className="w-full flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-stage-alt)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/hookdrop/cicd.svg"
+                    src={iconUrl("/icons/hookdrop/cicd.svg")}
                     alt="CI/CD pipeline diagram"
                     className="w-[280%] sm:w-[130%] md:w-full lg:w-[115%] xl:w-full max-w-none md:max-w-full h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
