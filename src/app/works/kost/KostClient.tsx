@@ -38,8 +38,11 @@ export default function KostClient() {
       bg: "bg-[var(--surface-warm-7)]",
       wide: true,
       compact: true,
-      desktopContainerClass: "min-[1025px]:min-h-[440px] min-[1025px]:h-[440px]",
-      desktopImgClass: "min-[1025px]:max-h-[340px] min-[1025px]:w-[82%]"
+      desktopContainerClass: "min-[1025px]:min-h-[300px] min-[1025px]:h-[300px]",
+      desktopImgClass: "min-[1025px]:max-h-[300px] min-[1025px]:w-[65%]",
+      imgWrapperClass: "min-[1025px]:!w-[55%]",
+      textWrapperClass: "min-[1025px]:!w-[45%]",
+      cardJustifyClass: "min-[1025px]:justify-end"
     },
     {
       title: "Slack Alerts",
@@ -95,8 +98,8 @@ export default function KostClient() {
         <div className="flex flex-col gap-6 md:gap-8">
           {features.map((feature, idx) => (
             <ScrollReveal key={feature.title} delay={0.15 + idx * 0.05}>
-              <div className={`w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
-                <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
+              <div className={`w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center ${feature.cardJustifyClass || "justify-between"} gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
+                <div className={`w-full min-[1025px]:w-[32%] ${feature.textWrapperClass || ""} min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start`}>
                   <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                     {feature.title}
                   </h3>
@@ -112,10 +115,10 @@ export default function KostClient() {
                     Learn more <span className="text-lg leading-none">→</span>
                   </a>
                 </div>
-                <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
-                  <div className={`w-full ${feature.short ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:h-[620px]" : feature.compact ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[520px]" : "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[620px]"} ${feature.desktopContainerClass || "min-[1025px]:min-h-[500px] min-[1025px]:h-[500px]"} ${feature.bg} rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative`}>
+                <div className={`w-full min-[1025px]:w-[65%] ${feature.imgWrapperClass || ""} min-[1025px]:shrink-0 flex justify-center items-center self-stretch`}>
+                  <div className={`w-full ${feature.short ? "min-h-[340px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:h-[620px]" : feature.compact ? "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[520px]" : "min-h-[320px] sm:min-h-[480px] md:min-h-[560px] max-[1024px]:lg:min-h-[620px]"} ${feature.desktopContainerClass || "min-[1025px]:min-h-[500px] min-[1025px]:h-[500px]"} ${feature.bg} rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative`}>
                   {feature.img ? (
-                    <img src={feature.img} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[180%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
+                    <img src={feature.img} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[220%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
                   ) : (
                     <span className="text-[#6B6B70] text-xs sm:text-sm font-mono text-center">
                       [{feature.alt}]

@@ -128,11 +128,11 @@ export default function HomeClient() {
     >
       <Navbar variant="home" />
 
-      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-40 pb-4 md:pt-35 md:pb-8">
+      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-28 pb-4 md:pt-35 md:pb-8">
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
-              <h1 className="text-[38px] sm:text-[44px] md:text-[52px] lg:text-[64px] font-normal tracking-tight leading-[1.05] mb-8 font-sans max-w-6xl max-[420px]:text-[36px] max-[400px]:text-[32px]">
+              <h1 className="text-[38px] sm:text-[44px] md:text-[52px] lg:text-[64px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl max-[420px]:text-[36px] max-[400px]:text-[32px]">
                 <span className="block text-foreground text-nowrap">
                   Building systems
                 </span>
@@ -183,7 +183,7 @@ export default function HomeClient() {
           <img
             src="/icons/home/hero.svg"
             alt="Cloud infrastructure diagram showing system architecture"
-            className="w-full h-auto object-contain block rounded-[8px]"
+            className="w-[200%] max-w-none ml-auto -mr-4 sm:ml-0 sm:mr-0 sm:w-full sm:max-w-full h-auto object-contain block rounded-[8px]"
           />
         </ScrollReveal>
       </section>
@@ -319,7 +319,7 @@ export default function HomeClient() {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-white/[0.05] flex items-center justify-between text-xs text-secondary/70 font-sans">
+                <div className="pt-2 mt-3 flex items-center justify-between text-xs text-secondary/70 font-sans">
                   <span>{art.date}</span>
                   <span className="text-foreground/90 font-medium">{art.category}</span>
                 </div>

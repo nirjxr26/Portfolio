@@ -91,7 +91,7 @@ body {
   color: var(--cta-text);
   border-radius: 9999px;
   padding: 11px 18px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1;
   gap: 8px;
@@ -108,7 +108,7 @@ body {
 @media (min-width: 640px) {
   .hero-action-btn {
     padding: 14px 28px;
-    font-size: 14px;
+    font-size: 17px;
   }
 }
 
@@ -118,7 +118,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 9999px;
   padding: 11px 18px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1;
   gap: 8px;
@@ -134,7 +134,7 @@ body {
 @media (min-width: 640px) {
   .hero-action-btn-outlined {
     padding: 14px 28px;
-    font-size: 14px;
+    font-size: 17px;
   }
 }
 
