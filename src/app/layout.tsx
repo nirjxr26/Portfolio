@@ -5,6 +5,11 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { WebVitals } from "@/components/WebVitals";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
+// Pages must render per request so the proxy-applied nonce can be injected
+// into Next's own inline scripts; statically prerendered HTML would be
+// served without a nonce and get blocked by the strict CSP.
+export const dynamic = "force-dynamic";
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -149,13 +154,16 @@ export default function RootLayout({
       <head>
         <meta name="theme-color" content="#000000" />
         <link rel="preload" href="/icons/home/hero.svg" as="image" />
+        {/* Inline scripts below are allowed via CSP sha256 hashes in src/proxy.ts — keep them in sync. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script dangerouslySetInnerHTML={{
-          __html: `document.documentElement.classList.remove("light")`
-        }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.remove("light")`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
         <ThemeProvider>

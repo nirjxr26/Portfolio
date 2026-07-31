@@ -16,6 +16,9 @@ const eslintConfig = defineConfig([
     },
     rules: {
       "design-system/no-hardcoded-colors": "error",
+      // All <img> usages are static SVG diagrams that next/image would pass through
+      // unoptimized, so the rule provides no benefit here.
+      "@next/next/no-img-element": "off",
     },
   },
   // Override default ignores of eslint-config-next.
@@ -25,6 +28,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Untracked tooling, not part of this project:
+    "codebase-memory-mcp/**",
   ]),
 ]);
 

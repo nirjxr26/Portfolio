@@ -2,7 +2,6 @@
 
 import { Component, type ReactNode } from "react";
 import { MAILTO } from "@/lib/email";
-import Link from "next/link";
 
 interface Props {
   children: ReactNode;

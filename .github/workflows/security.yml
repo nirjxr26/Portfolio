@@ -1,0 +1,39 @@
+name: Security & Build Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Runtime dependency audit
+        run: npm audit --omit=dev --audit-level=critical
+      - name: Lint
+        run: npm run lint
+      - name: Production build
+        run: npm run build
+
+  weekly-audit:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Full dependency audit
+        run: npm audit --audit-level=high
