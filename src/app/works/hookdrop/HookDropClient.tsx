@@ -49,10 +49,10 @@ export default function HookDropClient() {
       <section className="w-full overflow-hidden pt-0 pb-10 sm:pb-16 md:pb-20 bg-background relative z-0">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.15}>
-            <div className="w-full bg-[#201E18] rounded-[8px] flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative shadow-2xl">
+            <div className="w-full bg-[var(--surface-chrome)] rounded-[8px] flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative shadow-2xl">
               <div className="w-[160%] sm:w-full rounded-[8px] overflow-hidden shadow-2xl shrink-0 relative">
                 {/* Window chrome */}
-                <div className="flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-2 bg-[#14120B] border-b border-white/5">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-2 bg-[var(--surface-mockup)] border-b border-white/5">
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
@@ -60,7 +60,7 @@ export default function HookDropClient() {
                 </div>
 
                 {/* Dashboard layout */}
-                <div className="bg-[#14120B] p-3 sm:p-4 md:p-5 text-white/90" style={{ fontFamily: "'Inter', 'Switzer', system-ui, sans-serif" }}>
+                <div className="bg-[var(--surface-mockup)] p-3 sm:p-4 md:p-5 text-white/90">
                   {/* Header */}
                   <div className="flex items-center justify-between mb-3 md:mb-4">
                     <div>
@@ -79,7 +79,7 @@ export default function HookDropClient() {
                       { label: 'Avg Latency', value: '24ms', change: '-3ms', positive: true, hideMobile: true },
                       { label: 'Buckets Live', value: '4', change: '+1', positive: true, hideMobile: true },
                     ].map((stat) => (
-                      <div key={stat.label} className={`bg-[#1B1913] rounded-xl p-3${stat.hideMobile ? ' hidden lg:block' : ''}`}>
+                      <div key={stat.label} className={`bg-[var(--surface-mockup-raised)] rounded-xl p-3${stat.hideMobile ? ' hidden lg:block' : ''}`}>
                         <p className="text-[11px] text-white/40 mb-0.5">{stat.label}</p>
                         <p className="text-base md:text-lg font-semibold text-white/95">{stat.value}</p>
                         {stat.change && (
@@ -92,7 +92,7 @@ export default function HookDropClient() {
                   </div>
 
                   {/* Recent events table */}
-                  <div className="bg-[#1B1913] rounded-xl p-3 md:p-4 mb-3 md:mb-4 w-[calc(100vw-30px)] sm:w-full overflow-x-auto">
+                  <div className="bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 mb-3 md:mb-4 w-[calc(100vw-30px)] sm:w-full overflow-x-auto">
                     <div className="flex items-center justify-between mb-2 md:mb-3">
                       <h3 className="text-xs md:text-sm font-semibold text-white/90">Recent Events</h3>
                       <button className="text-[11px] text-[#2563EB] hover:text-[#3b82f6] transition-colors cursor-pointer">View All →</button>
@@ -179,7 +179,7 @@ export default function HookDropClient() {
 
         <div className="flex flex-col gap-6 md:gap-8">
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Nothing Ships Unverified.
@@ -197,7 +197,7 @@ export default function HookDropClient() {
                 </a>
               </div>
               <div className="w-full flex justify-center items-center self-stretch">
-                <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[#252219] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
+                <div className="w-full min-h-[420px] sm:min-h-[480px] md:min-h-[560px] lg:min-h-[620px] bg-[var(--surface-stage-alt)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 overflow-hidden relative">
                   <img
                     src="/icons/hookdrop/cicd.svg"
                     alt="CI/CD pipeline diagram"
@@ -212,7 +212,7 @@ export default function HookDropClient() {
       </section>
 
       {/* CTA */}
-      <section className="w-full py-12 md:py-20 bg-[#17150E] flex flex-col items-center">
+      <section className="w-full py-12 md:py-20 bg-[var(--surface-card)] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
           <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal

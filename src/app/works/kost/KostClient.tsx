@@ -96,7 +96,7 @@ export default function KostClient() {
         <div className="flex flex-col gap-6 md:gap-8">
           {features.map((feature, idx) => (
             <ScrollReveal key={feature.title} delay={0.15 + idx * 0.05}>
-              <div className={`w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
+              <div className={`w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
                 <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                   <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                     {feature.title}
@@ -163,7 +163,7 @@ export default function KostClient() {
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
                   <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
@@ -220,7 +220,7 @@ export default function KostClient() {
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
                   <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
@@ -245,7 +245,7 @@ export default function KostClient() {
 
 
       {/* CTA */}
-      <section className="w-full py-12 md:py-20 bg-[#17150E] flex flex-col items-center">
+      <section className="w-full py-12 md:py-20 bg-[var(--surface-card)] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
           <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal

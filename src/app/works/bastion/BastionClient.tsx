@@ -52,7 +52,7 @@ const features = [
               <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-tight leading-[1.05] font-sans max-w-5xl">
                 Bastion
               </h1>
-              <p className="xl:text-[18px] lg:text-[20px] xl:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
+              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
                 Self-hosted access control — auth, MFA, sessions, and audit logs, with zero third-party access to your data.
               </p>
             </div>
@@ -68,10 +68,10 @@ const features = [
       <section className="w-full overflow-hidden pt-0 pb-10 sm:pb-16 md:pb-20 bg-background relative z-0">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.15}>
-            <div className="w-full bg-[#201E18] rounded-[8px] flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative shadow-2xl">
+            <div className="w-full bg-[var(--surface-chrome)] rounded-[8px] flex items-center justify-start sm:justify-center pl-6 pr-0 py-6 sm:p-6 md:p-10 overflow-hidden relative shadow-2xl">
               <div className="w-[160%] sm:w-full rounded-[8px] overflow-hidden shadow-2xl shrink-0 relative">
                 {/* Window chrome */}
-                <div className="flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-2 bg-[#14120B] border-b border-white/5">
+                <div className="flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-2 bg-[var(--surface-mockup)] border-b border-white/5">
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
                   <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#EDECEC]/20" />
@@ -80,7 +80,7 @@ const features = [
                 {/* Dashboard layout */}
                 <div className="flex flex-col md:flex-row min-h-[250px] sm:min-h-[320px] md:min-h-[380px] lg:min-h-[440px]">
                   {/* Sidebar — horizontal scroll on mobile, vertical on md+ */}
-                  <aside className="hidden md:block md:w-52 lg:w-60 bg-[#14120B] overflow-x-auto border-b md:border-b-0 md:border-r border-[#E5E7EB]/6 no-scrollbar">
+                  <aside className="hidden md:block md:w-52 lg:w-60 bg-[var(--surface-mockup)] overflow-x-auto border-b md:border-b-0 md:border-r border-[#E5E7EB]/6 no-scrollbar">
                     <div className="flex md:flex-col gap-1 p-3 md:p-4 pb-4 md:pb-6 min-w-max md:min-w-0">
                       <div className="hidden md:block mb-6 px-2">
                         <span className="text-base font-bold text-white/90 tracking-tight">Bastion</span>
@@ -137,7 +137,7 @@ const features = [
                   </aside>
 
                   {/* Main content */}
-                  <main className="flex-1 bg-[#14120B] p-3 sm:p-4 md:p-5 overflow-y-auto text-white/90" style={{ fontFamily: "'Inter', 'Switzer', system-ui, sans-serif" }}>
+                  <main className="flex-1 bg-[var(--surface-mockup)] p-3 sm:p-4 md:p-5 overflow-y-auto text-white/90">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div>
@@ -145,7 +145,7 @@ const features = [
                         <p className="text-[11px] md:text-xs text-white/40 mt-0.5">Overview of your identity infrastructure</p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-white/40 bg-[#1B1913] px-2.5 py-1.5 rounded-lg">
+                        <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-white/40 bg-[var(--surface-mockup-raised)] px-2.5 py-1.5 rounded-lg">
                           <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                           All systems operational
                         </div>
@@ -163,7 +163,7 @@ const features = [
                         { label: 'Policies Enforced', value: '24', change: '+2', positive: true },
                         { label: 'Events (24h)', value: '8,392', change: '+18%', positive: true },
                       ].map((stat) => (
-                        <div key={stat.label} className="bg-[#1B1913] rounded-xl p-3">
+                        <div key={stat.label} className="bg-[var(--surface-mockup-raised)] rounded-xl p-3">
                           <p className="text-[11px] text-white/40 mb-0.5">{stat.label}</p>
                           <p className="text-base md:text-lg font-semibold text-white/95">{stat.value}</p>
                           <span className={`text-[11px] font-medium ${stat.positive ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -176,7 +176,7 @@ const features = [
                     {/* Two column layout */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
                       {/* Auth Methods Pie */}
-                      <div className="bg-[#1B1913] rounded-xl p-3 md:p-4 flex flex-col">
+                      <div className="bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex flex-col">
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Auth Methods</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Details</span>
@@ -224,7 +224,7 @@ const features = [
                       </div>
 
                       {/* Active sessions */}
-                      <div className="hidden lg:flex bg-[#1B1913] rounded-xl p-3 md:p-4 flex-col">
+                      <div className="hidden lg:flex bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex-col">
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Active Sessions</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Manage</span>
@@ -248,7 +248,7 @@ const features = [
                       </div>
 
                       {/* Access Decisions bar chart */}
-                      <div className="bg-[#1B1913] rounded-xl p-3 md:p-4 flex flex-col">
+                      <div className="bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex flex-col">
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Access Decisions (24h)</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Details</span>
@@ -276,7 +276,7 @@ const features = [
                       </div>
 
                       {/* MFA status */}
-                      <div className="hidden lg:flex bg-[#1B1913] rounded-xl p-3 md:p-4 flex-col">
+                      <div className="hidden lg:flex bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex-col">
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">MFA Enrollment</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Configure</span>
@@ -327,7 +327,7 @@ const features = [
               return (
                 <div
                   key={idx}
-                  className="p-5 md:p-5 lg:p-6 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                  className="p-5 md:p-5 lg:p-6 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <h3 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-normal">
                     {feature.title}
@@ -355,7 +355,7 @@ const features = [
 
         <div className="flex flex-col gap-6 md:gap-8">
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-8 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-8 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Integration
@@ -385,7 +385,7 @@ const features = [
           </ScrollReveal>
 
           <ScrollReveal delay={0.3}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Continuous Deployment / GitOps
@@ -415,7 +415,7 @@ const features = [
           </ScrollReveal>
 
           <ScrollReveal delay={0.35}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Boot sequence
@@ -465,7 +465,7 @@ const features = [
         <div className="flex flex-col gap-6 md:gap-8">
           {/* Card 1 */}
           <ScrollReveal delay={0.25}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Model Retraining
@@ -496,7 +496,7 @@ const features = [
 
           {/* Card 2 */}
           <ScrollReveal delay={0.3}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Risk Evaluation
@@ -527,7 +527,7 @@ const features = [
 
           {/* Card 3 */}
           <ScrollReveal delay={0.35}>
-            <div className="w-full bg-[#17150E] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
+            <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
                 <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
                   Resilient Fallback
@@ -566,6 +566,8 @@ const features = [
               as="h2"
               className="text-[26px] sm:text-4xl md:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center"
               text="Zero trust, enforced automatically."
+              breakAt={2}
+              breakClassName="sm:hidden"
             />
           </div>
         </ScrollReveal>
@@ -592,7 +594,7 @@ const features = [
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
                   <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
@@ -615,7 +617,7 @@ const features = [
       </section>
 
       {/* Get Bastion Section */}
-      <section className="w-full py-12 md:py-20 bg-[#17150E] flex flex-col items-center">
+      <section className="w-full py-12 md:py-20 bg-[var(--surface-card)] flex flex-col items-center">
         <ScrollReveal delay={0.15}>
           <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal

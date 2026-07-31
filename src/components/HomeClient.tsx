@@ -161,15 +161,24 @@ export default function HomeClient() {
                   href="/nirjar_resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-cta"
+                  className="hero-action-btn"
                 >
                   View Resume
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 shrink-0">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" x2="12" y1="15" y2="3" />
+                  </svg>
                 </a>
                 <a
-                  href="#contact"
-                  className="btn-outlined px-5 py-2 rounded-full text-xs font-medium tracking-wide inline-flex items-center gap-2 cursor-pointer"
+                  href="#work"
+                  className="hero-action-btn-outlined"
                 >
-                  Contact
+                  View Works
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 shrink-0">
+                    <path d="M12 5v14" />
+                    <path d="m19 12-7 7-7-7" />
+                  </svg>
                 </a>
               </div>
             </StaggerItem>
@@ -192,7 +201,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-sans"
               text="What I do."
             />
           </div>
@@ -203,7 +212,7 @@ export default function HomeClient() {
             {services.map((service, idx) => (
               <div
                 key={idx}
-                className="pt-4 pb-4 px-5 md:p-5 flex flex-col rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                className="pt-4 pb-4 px-5 md:p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <h4 className="text-[18px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-tight">
                   {service.title}
@@ -230,14 +239,14 @@ export default function HomeClient() {
 
         <ScrollReveal delay={0.25}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {(showAllWorks ? projects : projects.slice(0, 4)).map((proj, idx) => {
+            {(showAllWorks ? projects : projects.slice(0, 4)).map((proj) => {
               return (
                 <div
                   key={proj.title}
-                  className="p-4 px-5 md:p-5 flex flex-col justify-between items-start min-h-[240px] rounded-[8px] bg-[#17150E] border border-white/[0.04]"
+                  className="h-full min-h-[240px] p-5 md:p-6 flex flex-col justify-between items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
-                    <h4 className="text-lg md:text-xl lg:text-[24px] font-md text-foreground mb-0 font-sans tracking-tight">
+                    <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-tight">
                       {proj.title}
                     </h4>
                     <span className="text-xs text-secondary capitalize tracking-[0.03em] mb-4 block font-medium">
@@ -293,7 +302,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-sans"
               text="Articles."
             />
           </div>
@@ -307,7 +316,7 @@ export default function HomeClient() {
                 href={art.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-[12px] bg-[#17150E] border border-white/[0.04] p-4 px-5 md:p-5 flex flex-col justify-between min-h-[200px]"
+                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-4 px-5 md:p-5 flex flex-col justify-between min-h-[200px]"
               >
                 <div>
                   <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-tight leading-snug mb-2">
@@ -341,7 +350,7 @@ export default function HomeClient() {
         </ScrollReveal>
       </section>
 
-      <section id="contact" className="w-full bg-[#17150E] py-16 md:py-24">
+      <section id="contact" className="w-full bg-[var(--surface-card)] py-16 md:py-24">
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.1}>
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
