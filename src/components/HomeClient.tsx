@@ -9,6 +9,7 @@ import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import * as Icons from "@/components/Icons";
+import { iconUrl } from "@/lib/iconUrl";
 
 export default function HomeClient() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -181,7 +182,7 @@ export default function HomeClient() {
       <section className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto mb-8 md:mb-16">
         <ScrollReveal delay={0.2}>
           <img
-            src="/icons/home/hero.svg"
+            src={iconUrl("/icons/home/hero.svg")}
             alt="Cloud infrastructure diagram showing system architecture"
             className="w-[200%] max-w-none ml-auto -mr-4 sm:ml-0 sm:mr-0 sm:w-full sm:max-w-full h-auto object-contain block rounded-[8px]"
           />

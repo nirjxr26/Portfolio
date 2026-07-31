@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { WebVitals } from "@/components/WebVitals";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { iconUrl } from "@/lib/iconUrl";
 
 // Pages must render per request so the proxy-applied nonce can be injected
 // into Next's own inline scripts; statically prerendered HTML would be
@@ -31,10 +32,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://nirjar.me"),
   icons: {
     icon: [
-      { url: "/icons/favicon.svg", type: "image/svg+xml" },
+      { url: iconUrl("/icons/favicon.svg"), type: "image/svg+xml" },
     ],
-    shortcut: "/icons/favicon.svg",
-    apple: "/icons/favicon.svg",
+    shortcut: iconUrl("/icons/favicon.svg"),
+    apple: iconUrl("/icons/favicon.svg"),
   },
   title: {
     default: "Nirjar Goswami | Cloud & DevOps Engineer",
@@ -153,7 +154,7 @@ export default function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#000000" />
-        <link rel="preload" href="/icons/home/hero.svg" as="image" />
+        <link rel="preload" href={iconUrl("/icons/home/hero.svg")} as="image" />
         {/* Inline scripts below are allowed via CSP sha256 hashes in src/proxy.ts — keep them in sync. */}
         <script
           type="application/ld+json"

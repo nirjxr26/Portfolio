@@ -6,6 +6,7 @@ import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import * as Icons from "@/components/Icons";
+import { iconUrl } from "@/lib/iconUrl";
 
 export default function BastionClient() {
 
@@ -375,7 +376,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-1)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/bastion/ci.svg"
+                    src={iconUrl("/icons/bastion/ci.svg")}
                     alt="Security architecture diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -405,7 +406,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-2)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/bastion/cd.svg"
+                    src={iconUrl("/icons/bastion/cd.svg")}
                     alt="GitOps deployment diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -435,12 +436,12 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-3)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative">
                   <img
-                    src="/icons/bastion/boot-mobile.svg"
+                    src={iconUrl("/icons/bastion/boot-mobile.svg")}
                     alt="Boot sequence order diagram"
                     className="block sm:hidden w-[180%] max-w-none h-auto object-contain relative select-none pointer-events-none"
                   />
                   <img
-                    src="/icons/bastion/boot.svg"
+                    src={iconUrl("/icons/bastion/boot.svg")}
                     alt="Boot sequence order diagram"
                     className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain relative select-none pointer-events-none"
                   />
@@ -485,7 +486,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-4)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/bastion/m-1.svg"
+                    src={iconUrl("/icons/bastion/m-1.svg")}
                     alt="Model Retraining diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -516,7 +517,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/bastion/m-2.svg"
+                    src={iconUrl("/icons/bastion/m-2.svg")}
                     alt="Risk Evaluation diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -547,7 +548,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src="/icons/bastion/m-3.svg"
+                    src={iconUrl("/icons/bastion/m-3.svg")}
                     alt="Resilient Fallback diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -579,17 +580,17 @@ const features = [
               {
                 subtitle: "Nothing connects without permission.",
                 description: "Every request is checked against policy first — deny by default.",
-                svg: "/icons/bastion/zt-auth.svg",
+                svg: iconUrl("/icons/bastion/zt-auth.svg"),
               },
               {
                 subtitle: "Only the access it needs.",
                 description: "Workloads get scoped to what their job requires — nothing assumed.",
-                svg: "/icons/bastion/zt-lock.svg",
+                svg: iconUrl("/icons/bastion/zt-lock.svg"),
               },
               {
                 subtitle: "Trust is never permanent.",
                 description: "Sessions are re-verified continuously across every device.",
-                svg: "/icons/bastion/zt-dep.svg",
+                svg: iconUrl("/icons/bastion/zt-dep.svg"),
               },
             ].map((card, index) => (
               <div
