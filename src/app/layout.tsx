@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -93,11 +94,12 @@ export const metadata: Metadata = {
   }
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") ?? "";
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -151,11 +153,15 @@ export default function RootLayout({
         <link rel="preload" href="/icons/home/hero.svg" as="image" />
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <script dangerouslySetInnerHTML={{
-          __html: `document.documentElement.classList.remove("light")`
-        }} />
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.remove("light")`,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-foreground/10 selection:text-foreground" suppressHydrationWarning>
         <ThemeProvider>
