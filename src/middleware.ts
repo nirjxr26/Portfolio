@@ -17,6 +17,14 @@ export function middleware(request: NextRequest) {
     });
   }
 
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/icons/") || pathname.startsWith("/illustrations/")) {
+    return NextResponse.next({
+      headers: { "Content-Security-Policy": "sandbox" },
+    });
+  }
+
   const nonce = crypto.randomUUID().replaceAll("-", "");
 
   const csp = [

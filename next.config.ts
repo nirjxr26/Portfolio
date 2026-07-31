@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: "/icons/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
         source: "/icons/hookdrop/:path*",
         headers: [
           { key: "Cache-Control", value: "no-cache" },
@@ -28,17 +34,9 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/icons/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-          { key: "Content-Security-Policy", value: "sandbox" },
-        ],
-      },
-      {
         source: "/illustrations/:path*",
         headers: [
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-          { key: "Content-Security-Policy", value: "sandbox" },
         ],
       },
       {
