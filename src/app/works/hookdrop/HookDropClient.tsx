@@ -5,7 +5,6 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import * as Icons from "@/components/Icons";
 
 export default function HookDropClient() {
 

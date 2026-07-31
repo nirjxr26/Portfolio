@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { WebVitals } from "@/components/WebVitals";
 import ErrorBoundary from "@/components/ErrorBoundary";
+
+// Pages must render per request so the proxy-applied nonce can be injected
+// into Next's own inline scripts; statically prerendered HTML would be
+// served without a nonce and get blocked by the strict CSP.
+export const dynamic = "force-dynamic";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -94,12 +98,11 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const nonce = (await headers()).get("x-nonce") ?? "";
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -151,13 +154,12 @@ export default async function RootLayout({
       <head>
         <meta name="theme-color" content="#000000" />
         <link rel="preload" href="/icons/home/hero.svg" as="image" />
+        {/* Inline scripts below are allowed via CSP sha256 hashes in src/proxy.ts — keep them in sync. */}
         <script
           type="application/ld+json"
-          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <script
-          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: `document.documentElement.classList.remove("light")`,
           }}

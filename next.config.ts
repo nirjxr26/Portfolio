@@ -34,12 +34,6 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/illustrations/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
-      {
         source: "/og-image.webp",
         headers: [
           { key: "Cache-Control", value: "public, max-age=86400" },

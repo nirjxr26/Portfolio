@@ -85,27 +85,19 @@ export default function HomeClient() {
   const services = [
     {
       title: "Cloud Architecture",
-      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time.",
-      image: "/illustrations/stamping-white.webp",
-      paddingClass: "md:p-4 lg:p-0"
+      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
     },
     {
       title: "Developer Operations",
-      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event.",
-      image: "/illustrations/developer-operations.webp",
-      paddingClass: ""
+      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
     },
     {
       title: "Pipeline Security",
-      desc: "Problems get caught in the pipeline, not in a postmortem. Static analysis, container scanning, and runtime detection run before code ships, not after something breaks.",
-      image: "/illustrations/pipeline-security.webp",
-      paddingClass: ""
+      desc: "Problems get caught in the pipeline, not in a postmortem. Static analysis, container scanning, and runtime detection run before code ships, not after something breaks."
     },
     {
       title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches.",
-      image: "/illustrations/observability-mlops.webp",
-      paddingClass: ""
+      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches."
     }
   ];
 
