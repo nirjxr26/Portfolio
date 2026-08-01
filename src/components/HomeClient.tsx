@@ -9,7 +9,6 @@ import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import * as Icons from "@/components/Icons";
-import { iconUrl } from "@/lib/iconUrl";
 
 export default function HomeClient() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -129,7 +128,7 @@ export default function HomeClient() {
     >
       <Navbar variant="home" />
 
-      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-28 pb-4 md:pt-35 md:pb-8">
+      <section className="flex flex-col px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto pt-36 pb-4 md:pt-35 md:pb-8">
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
@@ -177,16 +176,6 @@ export default function HomeClient() {
             </StaggerItem>
           </StaggerContainer>
         </div>
-      </section>
-
-      <section className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto mb-8 md:mb-16">
-        <ScrollReveal delay={0.2}>
-          <img
-            src={iconUrl("/icons/home/hero.svg")}
-            alt="Cloud infrastructure diagram showing system architecture"
-            className="w-[200%] max-w-none ml-auto -mr-4 sm:ml-0 sm:mr-0 sm:w-full sm:max-w-full h-auto object-contain block rounded-[8px]"
-          />
-        </ScrollReveal>
       </section>
 
       <section id="services" className="py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">

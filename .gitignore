@@ -13,6 +13,8 @@ DESIGN.md
 report.md
 .agents/
 codebase-memory-mcp/
+.opencode/
+WEBSITE ANALYSIS/
 
 # testing
 /coverage
@@ -46,5 +48,13 @@ next-env.d.ts
 
 # dev server logs
 dev-server*.log
+
+# local-only files (not needed on GitHub)
+/dev.bat
+/skills-lock.json
+/SVG-MOCKUP-SYSTEM.md
+/src/app/nirjar_favicon.png
+/src/app/website_icon.png
+/public/icons/home/hero.svg
 
 src/lib/icon-versions.generated.ts
