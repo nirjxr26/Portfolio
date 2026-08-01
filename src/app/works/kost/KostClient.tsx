@@ -23,7 +23,7 @@ export default function KostClient() {
     {
       title: "Over-Provisioning",
       desc: "Spots pods that request more CPU or memory than they actually use, and shows exactly what it's costing you every month.",
-      img: "/icons/kost/k-1.svg",
+      img: "/icons/kost/waste.svg",
       alt: "terminal output showing flagged workloads with waste amounts",
       bg: "bg-[var(--surface-warm-2)]",
       wide: true,
@@ -34,7 +34,7 @@ export default function KostClient() {
     {
       title: "The fix, ready",
       desc: "Every finding comes with a ready kubectl set resources command — copy, paste, apply, no digging through YAML to figure out the fix.",
-      img: "/icons/kost/k-2.svg",
+      img: "/icons/kost/fix.svg",
       alt: "CLI output showing JSON findings with fix commands",
       bg: "bg-[var(--surface-warm-7)]",
       wide: true,
@@ -48,7 +48,7 @@ export default function KostClient() {
     {
       title: "Slack Alerts",
       desc: "Wire up a webhook and waste notifications land straight in your team channel. Push over pull — you don't go check a dashboard, the alert comes to you.",
-      img: "/icons/kost/k-3-new.svg",
+      img: "/icons/kost/slack.svg",
       alt: "Slack message showing a waste alert",
       bg: "bg-[var(--surface-warm-8)]",
       short: true,
@@ -151,17 +151,17 @@ export default function KostClient() {
               {
                 subtitle: "Every pod, actual usage.",
                 description: "Live CPU and memory from the Metrics API — not what was requested.",
-                svg: "/icons/kost/kh-1.svg",
+                svg: "/icons/kost/usage.svg",
               },
               {
                 subtitle: "Only flags what's wasted.",
                 description: "Compares requests against real usage — nothing gets flagged without clearing both thresholds.",
-                svg: "/icons/kost/kh-2.svg",
+                svg: "/icons/kost/threshold.svg",
               },
               {
                 subtitle: "One finding, four destinations.",
                 description: "Same JSON, sent to stdout, Prometheus, the dashboard, and Slack.",
-                svg: "/icons/kost/kh-3.svg",
+                svg: "/icons/kost/fanout.svg",
               },
             ].map((card, index) => (
               <div
@@ -208,17 +208,17 @@ export default function KostClient() {
               {
                 subtitle: "Nothing leaves your cluster.",
                 description: "Zero third-party API calls. Slack webhook is the only outbound, and it's optional.",
-                svg: "/icons/kost/kd-1.svg",
+                svg: "/icons/kost/airgap.svg",
               },
               {
                 subtitle: "Runs as non-root.",
                 description: "runAsNonRoot: true, UID 65534. No path to root inside the pod.",
-                svg: "/icons/kost/kd-2.svg",
+                svg: "/icons/kost/nonroot.svg",
               },
               {
                 subtitle: "Read-only by design.",
                 description: "ClusterRole grants only get/list/watch — pods, nodes, PVCs, Metrics API. No write, no exec, no secrets.",
-                svg: "/icons/kost/kd-3.svg",
+                svg: "/icons/kost/readonly.svg",
               },
             ].map((card, index) => (
               <div

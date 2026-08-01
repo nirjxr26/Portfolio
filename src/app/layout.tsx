@@ -154,7 +154,6 @@ export default function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#000000" />
-        <link rel="preload" href={iconUrl("/icons/home/hero.svg")} as="image" />
         {/* Inline scripts below are allowed via CSP sha256 hashes in src/proxy.ts — keep them in sync. */}
         <script
           type="application/ld+json"

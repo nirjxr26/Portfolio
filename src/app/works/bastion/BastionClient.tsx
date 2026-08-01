@@ -486,7 +486,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[320px] sm:min-h-[480px] md:min-h-[560px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-4)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src={iconUrl("/icons/bastion/m-1.svg")}
+                    src={iconUrl("/icons/bastion/retrain.svg")}
                     alt="Model Retraining diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -517,7 +517,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-5)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src={iconUrl("/icons/bastion/m-2.svg")}
+                    src={iconUrl("/icons/bastion/risk.svg")}
                     alt="Risk Evaluation diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
@@ -548,7 +548,7 @@ const features = [
               <div className="w-full min-[1025px]:w-[65%] min-[1025px]:shrink-0 flex justify-center items-center self-stretch">
                 <div className="w-full min-h-[200px] sm:min-h-[260px] md:min-h-[300px] min-[1025px]:min-h-[500px] min-[1025px]:h-[500px] bg-[var(--surface-warm-6)] rounded-[8px] self-stretch flex items-center justify-start sm:justify-center p-6 sm:p-6 md:p-8 min-[1025px]:p-8 overflow-hidden relative shadow-inner">
                   <img
-                    src={iconUrl("/icons/bastion/m-3.svg")}
+                    src={iconUrl("/icons/bastion/fallback.svg")}
                     alt="Resilient Fallback diagram"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
