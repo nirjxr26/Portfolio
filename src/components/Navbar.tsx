@@ -69,7 +69,7 @@ export default function Navbar({ variant, title }: NavbarProps) {
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
           {variant === "project" && title ? (
             <nav className="flex items-center gap-2 text-xs sm:text-sm text-secondary font-mono">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+              <Link href="/" className="hover:text-foreground transition-colors font-sans">Home</Link>
               <Icons.ChevronRight className="w-3 h-3 text-secondary/60" />
               <span className="text-foreground font-medium font-sans">{title}</span>
             </nav>
@@ -81,7 +81,7 @@ export default function Navbar({ variant, title }: NavbarProps) {
               onMouseEnter={() => setIsWorksDropdownOpen(true)}
               onMouseLeave={() => setIsWorksDropdownOpen(false)}
             >
-              <span className="text-secondary hover:text-foreground transition-colors duration-300 block cursor-default">
+              <span className="text-secondary hover:text-foreground transition-colors font-sans block cursor-default">
                 Works
               </span>
               {isWorksDropdownOpen && (
@@ -117,16 +117,16 @@ export default function Navbar({ variant, title }: NavbarProps) {
               )}
             </div>
             {variant === "home" && (
-              <a href="#insights" onClick={(e) => handleScrollTo(e, "#insights")} className="text-secondary hover:text-foreground transition-colors duration-300">
+              <a href="#insights" onClick={(e) => handleScrollTo(e, "#insights")} className="text-secondary hover:text-foreground transition-colors font-sans">
                 Articles
               </a>
             )}
             {variant === "home" ? (
-              <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="text-secondary hover:text-foreground transition-colors duration-300">
+              <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} className="text-foreground hover:text-foreground transition-colors font-sans">
                 Contact
               </a>
             ) : (
-              <Link href="/#contact" className="text-secondary hover:text-foreground transition-colors duration-300">
+              <Link href="/#contact" className="text-secondary hover:text-foreground transition-colors font-sans">
                 Contact
               </Link>
             )}

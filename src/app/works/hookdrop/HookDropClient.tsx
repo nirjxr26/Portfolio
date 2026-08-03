@@ -181,7 +181,7 @@ export default function HookDropClient() {
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Nothing Ships Unverified.
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
