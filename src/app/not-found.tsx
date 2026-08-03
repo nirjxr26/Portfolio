@@ -16,7 +16,7 @@ export default function NotFound() {
       <div className="flex flex-wrap items-center gap-4 mt-10">
         <Link
           href="/"
-          className="btn-outlined px-5 py-2 rounded-full text-xs font-medium tracking-wide inline-flex items-center gap-2 cursor-pointer no-underline"
+          className="btn-outlined px-5 py-2 rounded-full text-xs font-medium tracking-normal inline-flex items-center gap-2 cursor-pointer no-underline"
         >
           Back to homepage
         </Link>

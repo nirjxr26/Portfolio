@@ -132,11 +132,11 @@ export default function HomeClient() {
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
-              <h1 className="text-[38px] sm:text-[44px] md:text-[52px] lg:text-[64px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl max-[420px]:text-[36px] max-[400px]:text-[32px]">
-                <span className="block text-foreground text-nowrap">
+              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl">
+                <span className="block text-foreground">
                   Building systems
                 </span>
-                <span className="block text-secondary -mt-1.5 sm:-mt-1.2 text-nowrap">
+                <span className="block text-secondary">
                   meant to be forgotten.
                 </span>
               </h1>
@@ -183,7 +183,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
               text="What I do."
             />
           </div>
@@ -194,9 +194,9 @@ export default function HomeClient() {
             {services.map((service, idx) => (
               <div
                 key={idx}
-                className="pt-4 pb-4 px-5 md:p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="p-5 md:p-[22px] flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
-                <h4 className="text-[18px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-tight">
+                <h4 className="text-[18px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-[-0.01em]">
                   {service.title}
                 </h4>
                 <p className="text-secondary text-[15px] md:text-[16px] leading-relaxed font-normal max-w-lg">
@@ -213,7 +213,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1]"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1]"
               text="Recent Work."
             />
           </div>
@@ -225,10 +225,10 @@ export default function HomeClient() {
               return (
                 <div
                   key={proj.title}
-                  className="h-full min-h-[240px] p-5 md:p-6 flex flex-col justify-between items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                  className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col justify-between items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
-                    <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-tight">
+                    <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                       {proj.title}
                     </h4>
                     <span className="text-xs text-secondary capitalize tracking-[0.03em] mb-4 block font-medium">
@@ -270,7 +270,7 @@ export default function HomeClient() {
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAllWorks(!showAllWorks)}
-              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-normal flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
             >
               {showAllWorks ? "View less" : "View more works"}
               {showAllWorks ? <Icons.X className="w-4 h-4" /> : <Icons.ArrowUpRight className="w-4 h-4" />}
@@ -284,7 +284,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
               text="Articles."
             />
           </div>
@@ -298,10 +298,10 @@ export default function HomeClient() {
                 href={art.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-4 px-5 md:p-5 flex flex-col justify-between min-h-[200px]"
+                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px]"
               >
                 <div>
-                  <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-tight leading-snug mb-2">
+                  <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-[-0.01em] leading-snug mb-2">
                     {art.title}
                   </h4>
                   <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
@@ -324,7 +324,7 @@ export default function HomeClient() {
               href="https://blog.nirjar.me/"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
+              className="btn-outlined px-6 py-1.5 rounded-full text-xs font-medium tracking-normal flex items-center gap-2 cursor-pointer active:scale-95 hover:scale-105 transition-transform text-[#F54E00]/90"
             >
               View more<Icons.ArrowUpRight className="w-4 h-4" />
             </a>

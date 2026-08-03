@@ -179,7 +179,7 @@ const features = [
                       {/* Auth Methods Pie */}
                       <div className="bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex flex-col">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Auth Methods</h3>
+                          <h3 className="text-[11px] font-medium text-white/40 tracking-widest uppercase">Auth Methods</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Details</span>
                         </div>
                         <div className="flex items-center gap-3 md:gap-5 flex-1">
@@ -227,7 +227,7 @@ const features = [
                       {/* Active sessions */}
                       <div className="hidden lg:flex bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex-col">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Active Sessions</h3>
+                          <h3 className="text-[11px] font-medium text-white/40 tracking-widest uppercase">Active Sessions</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Manage</span>
                         </div>
                         <div className="space-y-2 flex-1 flex flex-col justify-center">
@@ -251,7 +251,7 @@ const features = [
                       {/* Access Decisions bar chart */}
                       <div className="bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex flex-col">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">Access Decisions (24h)</h3>
+                          <h3 className="text-[11px] font-medium text-white/40 tracking-widest uppercase">Access Decisions (24h)</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Details</span>
                         </div>
                         <div className="flex-1 flex flex-col justify-center">
@@ -279,7 +279,7 @@ const features = [
                       {/* MFA status */}
                       <div className="hidden lg:flex bg-[var(--surface-mockup-raised)] rounded-xl p-3 md:p-4 flex-col">
                         <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-[11px] font-medium text-white/40 tracking-wide uppercase">MFA Enrollment</h3>
+                          <h3 className="text-[11px] font-medium text-white/40 tracking-widest uppercase">MFA Enrollment</h3>
                           <span className="text-[11px] text-[#2563EB] font-medium cursor-pointer hover:underline">Configure</span>
                         </div>
                         <div className="flex items-center gap-3 md:gap-4 flex-1">
@@ -330,7 +330,7 @@ const features = [
                   key={idx}
                   className="p-5 md:p-5 lg:p-6 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
-                  <h3 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-normal">
+                  <h3 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-[-0.01em]">
                     {feature.title}
                   </h3>
                   <p className="text-[#6B6B70] text-[14px] md:text-[16px] leading-relaxed font-normal max-w-lg">
@@ -358,7 +358,7 @@ const features = [
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-8 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Continuous Integration
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -388,7 +388,7 @@ const features = [
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Continuous Deployment / GitOps
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -418,7 +418,7 @@ const features = [
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Boot sequence
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -468,7 +468,7 @@ const features = [
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Model Retraining
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -499,7 +499,7 @@ const features = [
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Risk Evaluation
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -530,7 +530,7 @@ const features = [
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                   Resilient Fallback
                 </h3>
                 <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -595,10 +595,10 @@ const features = [
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
-                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
+                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                     {card.subtitle}
                   </h3>
                   <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">

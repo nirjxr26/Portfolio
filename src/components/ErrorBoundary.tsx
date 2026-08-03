@@ -33,7 +33,7 @@ export default class ErrorBoundary extends Component<Props, State> {
           <div className="flex flex-wrap items-center gap-4 mt-10">
             <button
               onClick={() => { this.setState({ hasError: false }); window.location.href = "/"; }}
-              className="btn-outlined px-5 py-2 rounded-full text-xs font-medium tracking-wide inline-flex items-center gap-2 cursor-pointer"
+              className="btn-outlined px-5 py-2 rounded-full text-xs font-medium tracking-normal inline-flex items-center gap-2 cursor-pointer"
             >
               Back to homepage
             </button>

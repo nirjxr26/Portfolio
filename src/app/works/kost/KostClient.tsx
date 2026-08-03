@@ -101,7 +101,7 @@ export default function KostClient() {
             <ScrollReveal key={feature.title} delay={0.15 + idx * 0.05}>
               <div className={`w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center ${feature.cardJustifyClass || "justify-between"} gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
                 <div className={`w-full min-[1025px]:w-[32%] ${feature.textWrapperClass || ""} min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start`}>
-                  <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-normal">
+                  <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
                     {feature.title}
                   </h3>
                   <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
@@ -166,10 +166,10 @@ export default function KostClient() {
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
-                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
+                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                     {card.subtitle}
                   </h3>
                   <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
@@ -223,10 +223,10 @@ export default function KostClient() {
             ].map((card, index) => (
               <div
                 key={index}
-                className="pt-4 pb-6 px-5 md:pt-5 md:pb-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
-                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
+                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                     {card.subtitle}
                   </h3>
                   <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
