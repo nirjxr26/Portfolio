@@ -132,7 +132,7 @@ export default function HomeClient() {
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
-              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl">
+              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[64px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl">
                 <span className="block text-foreground">
                   Building systems
                 </span>
