@@ -342,8 +342,8 @@ export default function HomeClient() {
           <ScrollReveal delay={0.1}>
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
               <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.25] text-foreground">
-              Every project I've built has solved a real problem I've encountered.
-              Every feature exists for a reason and every decision is driven by a real need.
+              Every project I&apos;ve built has solved a real problem I&apos;ve encountered.
+              Each feature exists for a reason and every decision is driven by a real need.
               </p>
             </div>
           </ScrollReveal>

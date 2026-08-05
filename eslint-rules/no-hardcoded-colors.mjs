@@ -31,6 +31,7 @@ const ALLOWLIST = new Set(
     "#E5E7EB",
     "#a1a1aa",
     "#71717a",
+    "#A98A61",
   ].map((c) => c.toLowerCase())
 );
 
