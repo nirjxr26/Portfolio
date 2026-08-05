@@ -316,7 +316,7 @@ const features = [
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
               text="What It does."
             />
           </div>
