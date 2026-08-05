@@ -84,20 +84,24 @@ export default function HomeClient() {
 
   const services = [
     {
-      title: "Cloud Architecture",
-      desc: "Environments built with Terraform — compute, networking, IAM, storage. Designed once, provisioned on demand. Not patched together over time."
+      title: "Security",
+      highlight: "Built secure from the start.",
+      desc: "I build systems with least privilege, defense in depth, secure authentication, and continuous security validation from day one."
     },
     {
-      title: "Developer Operations",
-      desc: "CI/CD pipelines that get code to production without ceremonies. Automated, tested, and fast enough that deploys stop being an event."
+      title: "Cloud & Infrastructure",
+      highlight: "Built to survive real workloads.",
+      desc: "Cost-efficient, reliable, scalable, resilient, and automated cloud solutions from development to deployment."
     },
     {
-      title: "Pipeline Security",
-      desc: "Problems get caught in the pipeline, not in a postmortem. Static analysis, container scanning, and runtime detection run before code ships, not after something breaks."
+      title: "Automation First",
+      highlight: "If it repeats, automate it.",
+      desc: "CI/CD, Infrastructure as Code, testing, deployment, and operational workflows designed to reduce manual work and human error."
     },
     {
-      title: "Observability & MLOps",
-      desc: "Metrics, logs, traces, and alerts that tell you what's wrong — including an ML risk model feeding signals back into the system it watches."
+      title: "Continuous Visibility",
+      highlight: "You can't secure what you can't see.",
+      desc: "Logs, metrics, traces, security events, and monitoring that turn infrastructure into observable, actionable systems."
     }
   ];
 
@@ -190,17 +194,18 @@ export default function HomeClient() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {services.map((service, idx) => (
               <div
                 key={idx}
-                className="p-5 md:p-[22px] flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
-                <h4 className="text-[18px] md:text-[20px] font-normal text-foreground mb-1 font-sans tracking-[-0.01em]">
+                <h4 className="text-[18px] md:text-[22px] font-normal font-sans tracking-[-0.01em] mb-1.5 text-foreground">
                   {service.title}
                 </h4>
-                <p className="text-secondary text-[15px] md:text-[16px] leading-relaxed font-normal max-w-lg">
-                  {service.desc}
+                <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal max-w-lg">
+                  <span className="text-[#A98A61]">{service.highlight} </span>
+                  <span>{service.desc}</span>
                 </p>
               </div>
             ))}
@@ -225,7 +230,7 @@ export default function HomeClient() {
               return (
                 <div
                   key={proj.title}
-                  className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col justify-between items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
                     <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
@@ -336,8 +341,9 @@ export default function HomeClient() {
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
           <ScrollReveal delay={0.1}>
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.2] text-foreground">
-                I&apos;ve built cloud infrastructure, deployment pipelines, and security systems that prevent problems before they happen. Now I want to build it somewhere it actually matters.
+              <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.25] text-foreground">
+              Every project I've built has solved a real problem I've encountered.
+              Every feature exists for a reason and every decision is driven by a real need.
               </p>
             </div>
           </ScrollReveal>
