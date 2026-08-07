@@ -1,5 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const SECURITY_HEADERS: Record<string, string> = {
+  "X-Frame-Options": "DENY",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  "Cross-Origin-Resource-Policy": "same-origin",
+};
+
+function applySecurityHeaders(response: NextResponse): NextResponse {
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  return response;
+}
+
 export function proxy(request: NextRequest) {
   const host = (request.headers.get("host") ?? "").toLowerCase().replace(/:\d+$/, "");
 
@@ -8,21 +25,19 @@ export function proxy(request: NextRequest) {
     url.port = "";
     url.protocol = "https:";
     url.hostname = "www.nirjar.me";
-    return NextResponse.redirect(url, {
-      status: 308,
-      headers: {
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Content-Security-Policy": "default-src 'none'",
-      },
-    });
+    const response = NextResponse.redirect(url, { status: 308 });
+    applySecurityHeaders(response);
+    response.headers.set("Content-Security-Policy", "default-src 'none'");
+    return response;
   }
 
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/icons/")) {
-    return NextResponse.next({
-      headers: { "Content-Security-Policy": "sandbox" },
-    });
+    const response = NextResponse.next();
+    applySecurityHeaders(response);
+    response.headers.set("Content-Security-Policy", "sandbox");
+    return response;
   }
 
   // Static pages are pre-rendered at build time without nonce attributes on
@@ -54,9 +69,10 @@ export function proxy(request: NextRequest) {
     "form-action 'self'",
   ].join("; ");
 
-  return NextResponse.next({
-    headers: { "Content-Security-Policy": csp },
-  });
+  const response = NextResponse.next();
+  applySecurityHeaders(response);
+  response.headers.set("Content-Security-Policy", csp);
+  return response;
 }
 
 export const config = {
