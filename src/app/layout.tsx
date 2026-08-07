@@ -149,7 +149,7 @@ export default function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#000000" />
-        {/* Inline scripts below are allowed via CSP sha256 hashes in src/proxy.ts — keep them in sync. */}
+        {/* Inline scripts below are allowed via CSP 'unsafe-inline' in src/proxy.ts. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
