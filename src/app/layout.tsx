@@ -6,11 +6,6 @@ import { WebVitals } from "@/components/WebVitals";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { iconUrl } from "@/lib/iconUrl";
 
-// Pages must render per request so the proxy-applied nonce can be injected
-// into Next's own inline scripts; statically prerendered HTML would be
-// served without a nonce and get blocked by the strict CSP.
-export const dynamic = "force-dynamic";
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],

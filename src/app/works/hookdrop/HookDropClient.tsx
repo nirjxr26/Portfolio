@@ -14,7 +14,7 @@ export default function HookDropClient() {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nirjar.me" },
-      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me" },
+      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me/works" },
       { "@type": "ListItem", "position": 3, "name": "HookDrop", "item": "https://nirjar.me/works/hookdrop" }
     ]
   };
@@ -201,6 +201,7 @@ export default function HookDropClient() {
                   <img
                     src={iconUrl("/icons/hookdrop/cicd.svg")}
                     alt="CI/CD pipeline diagram"
+                    loading="lazy"
                     className="w-[280%] sm:w-[130%] md:w-full lg:w-[115%] xl:w-full max-w-none md:max-w-full h-auto sm:h-auto sm:max-h-full object-contain block relative select-none pointer-events-none"
                   />
                 </div>

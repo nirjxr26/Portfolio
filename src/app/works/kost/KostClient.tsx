@@ -14,7 +14,7 @@ export default function KostClient() {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nirjar.me" },
-      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me" },
+      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me/works" },
       { "@type": "ListItem", "position": 3, "name": "Kost", "item": "https://nirjar.me/works/kost" }
     ]
   };

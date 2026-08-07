@@ -1,5 +1,3 @@
-"use client";
-
 type IconProps = { className?: string; "aria-label"?: string };
 
 export function ArrowUpRight({ className }: IconProps) {
