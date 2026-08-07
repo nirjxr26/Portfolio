@@ -71,7 +71,15 @@ export default function Navbar({ variant, title }: NavbarProps) {
             <nav className="flex items-center gap-2 text-xs sm:text-sm text-secondary font-mono">
               <Link href="/" className="hover:text-foreground transition-colors font-sans">Home</Link>
               <Icons.ChevronRight className="w-3 h-3 text-secondary/60" />
-              <span className="text-foreground font-medium font-sans">{title}</span>
+              {title === "Works" ? (
+                <span className="text-foreground font-medium font-sans">Works</span>
+              ) : (
+                <>
+                  <Link href="/works" className="hover:text-foreground transition-colors font-sans">Works</Link>
+                  <Icons.ChevronRight className="w-3 h-3 text-secondary/60" />
+                  <span className="text-foreground font-medium font-sans">{title}</span>
+                </>
+              )}
             </nav>
           ) : <div />}
 

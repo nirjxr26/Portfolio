@@ -34,7 +34,7 @@ const features = [
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nirjar.me" },
-      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me" },
+      { "@type": "ListItem", "position": 2, "name": "Works", "item": "https://nirjar.me/works" },
       { "@type": "ListItem", "position": 3, "name": "Bastion", "item": "https://nirjar.me/works/bastion" }
     ]
   };
@@ -408,6 +408,7 @@ const features = [
                   <img
                     src={iconUrl("/icons/bastion/cd.svg")}
                     alt="GitOps deployment diagram"
+                    loading="lazy"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -438,11 +439,13 @@ const features = [
                   <img
                     src={iconUrl("/icons/bastion/boot-mobile.svg")}
                     alt="Boot sequence order diagram"
+                    loading="lazy"
                     className="block sm:hidden w-[180%] max-w-none h-auto object-contain relative select-none pointer-events-none"
                   />
                   <img
                     src={iconUrl("/icons/bastion/boot.svg")}
                     alt="Boot sequence order diagram"
+                    loading="lazy"
                     className="hidden sm:block w-[180%] sm:w-full max-w-none sm:max-w-[900px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain relative select-none pointer-events-none"
                   />
                 </div>
@@ -488,6 +491,7 @@ const features = [
                   <img
                     src={iconUrl("/icons/bastion/retrain.svg")}
                     alt="Model Retraining diagram"
+                    loading="lazy"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -519,6 +523,7 @@ const features = [
                   <img
                     src={iconUrl("/icons/bastion/risk.svg")}
                     alt="Risk Evaluation diagram"
+                    loading="lazy"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -550,6 +555,7 @@ const features = [
                   <img
                     src={iconUrl("/icons/bastion/fallback.svg")}
                     alt="Resilient Fallback diagram"
+                    loading="lazy"
                     className="w-[180%] sm:w-full max-w-none sm:max-w-[900px] lg:max-w-[700px] min-[1025px]:max-w-full h-auto sm:h-auto sm:max-h-full min-[1025px]:max-h-[440px] object-contain block relative select-none pointer-events-none"
                   />
                 </div>
@@ -608,6 +614,7 @@ const features = [
                   <img
                     src={card.svg}
                     alt={card.subtitle}
+                    loading="lazy"
                     className="w-full h-auto mx-auto block mt-auto select-none pointer-events-none rounded-[6px] overflow-hidden"
                   />
                 </div>
