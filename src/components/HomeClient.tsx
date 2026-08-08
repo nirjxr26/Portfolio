@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -13,6 +13,7 @@ import { projects } from "@/lib/projects";
 
 export default function HomeClient() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const mainStyle: CSSProperties & Record<"--foreground" | "--secondary", string> = {
     color: "#D4D4D8",
     "--foreground": "#D4D4D8",
@@ -20,6 +21,43 @@ export default function HomeClient() {
   };
 
   const [showAllWorks, setShowAllWorks] = useState(false);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const updateCarouselArrows = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const tolerance = 2;
+    setCanScrollLeft(el.scrollLeft > tolerance);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
+  };
+
+  useEffect(() => {
+    updateCarouselArrows();
+    const el = carouselRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateCarouselArrows, { passive: true });
+    window.addEventListener("resize", updateCarouselArrows);
+    return () => {
+      el.removeEventListener("scroll", updateCarouselArrows);
+      window.removeEventListener("resize", updateCarouselArrows);
+    };
+  }, []);
+
+  const scrollCarousel = (dir: 1 | -1) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const card = el.firstElementChild as HTMLElement | null;
+    if (!card) return;
+    const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const target = Math.max(
+      0,
+      Math.min(Math.round((el.scrollLeft + dir * step) / step) * step, maxScroll)
+    );
+    el.scrollTo({ left: target, behavior: "smooth" });
+    setTimeout(updateCarouselArrows, 400);
+  };
 
   const services = [
     {
@@ -44,9 +82,9 @@ export default function HomeClient() {
     }
   ];
 
-  const articles = [
+const articles = [
     {
-      title: "Why AI can't just rewrite Windows ?",
+      title: "Why AI can't rewrite Windows ?",
       category: "Generative AI",
       date: "Jun 4, 2026",
       readTime: "4 min read",
@@ -54,12 +92,28 @@ export default function HomeClient() {
       link: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
     },
     {
-      title: "SonarQube analysis.",
+      title: "SonarQube analysis",
       category: "Observability",
       date: "May 25, 2026",
       readTime: "5 min read",
-      desc: "872 hidden issues, one scan, 30 days to fix what I couldn't see before.",
+      desc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
       link: "https://blog.nirjar.me/sonarqube"
+    },
+    { 
+      title: "How Git changed the way I work",
+      category: "Developer Tools",
+      date: "Apr 16, 2026",
+      readTime: "3 min read",
+      desc: "Not just a code host. A place that quietly reshaped how I build",
+      link: "https://blog.nirjar.me/how-github-changed-my-workflow"
+    },
+    {
+      title: "VaultLock's logo fetching problem",
+      category: "Security",
+      date: "Apr 8, 2026",
+      readTime: "2 min read",
+      desc: "Getting the right brand logo, every time, without breaking the UI.",
+      link: "https://blog.nirjar.me/vaultlock-logo-fetching"
     }
   ];
 
@@ -235,17 +289,20 @@ export default function HomeClient() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <div className="grid grid-cols-1 min-[1025px]:grid-cols-2 gap-4">
+          <div
+            ref={carouselRef}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
             {articles.map((art) => (
               <a
                 key={art.title}
                 href={art.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px]"
+                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px] w-full shrink-0 snap-start sm:w-[420px] lg:w-[455px]"
               >
                 <div>
-                  <h4 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground font-sans tracking-[-0.01em] leading-snug mb-2">
+                  <h4 className="text-[18px] md:text-[22px] font-normal text-foreground font-sans tracking-[-0.01em] leading-snug mb-2">
                     {art.title}
                   </h4>
                   <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
@@ -259,6 +316,29 @@ export default function HomeClient() {
                 </div>
               </a>
             ))}
+          </div>
+
+          <div className="flex justify-end mt-4">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => scrollCarousel(-1)}
+                aria-label="Scroll articles left"
+                disabled={!canScrollLeft}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${canScrollLeft ? "border-white/[0.08] bg-[var(--surface-card)] text-secondary hover:text-foreground hover:border-white/20 cursor-pointer active:scale-95" : "border-white/[0.04] bg-[var(--surface-card)] text-secondary/30 cursor-not-allowed"}`}
+              >
+                <Icons.ChevronRight className="w-4 h-4 rotate-180" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollCarousel(1)}
+                aria-label="Scroll articles right"
+                disabled={!canScrollRight}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${canScrollRight ? "border-white/[0.08] bg-[var(--surface-card)] text-secondary hover:text-foreground hover:border-white/20 cursor-pointer active:scale-95" : "border-white/[0.04] bg-[var(--surface-card)] text-secondary/30 cursor-not-allowed"}`}
+              >
+                <Icons.ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </ScrollReveal>
 
