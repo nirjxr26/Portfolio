@@ -32,18 +32,6 @@ export default function HomeClient() {
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
   };
 
-  useEffect(() => {
-    updateCarouselArrows();
-    const el = carouselRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateCarouselArrows, { passive: true });
-    window.addEventListener("resize", updateCarouselArrows);
-    return () => {
-      el.removeEventListener("scroll", updateCarouselArrows);
-      window.removeEventListener("resize", updateCarouselArrows);
-    };
-  }, []);
-
   const scrollCarousel = (dir: 1 | -1) => {
     const el = carouselRef.current;
     if (!el) return;
@@ -51,13 +39,45 @@ export default function HomeClient() {
     if (!card) return;
     const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
     const maxScroll = el.scrollWidth - el.clientWidth;
-    const target = Math.max(
-      0,
-      Math.min(Math.round((el.scrollLeft + dir * step) / step) * step, maxScroll)
-    );
+    const currentIndex = Math.round(el.scrollLeft / step);
+    const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
+    const target = Math.min(targetIndex * step, maxScroll);
     el.scrollTo({ left: target, behavior: "smooth" });
     setTimeout(updateCarouselArrows, 400);
   };
+
+  useEffect(() => {
+    updateCarouselArrows();
+    const el = carouselRef.current;
+    if (!el) return;
+
+    let isScrolling = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+      if (Math.abs(delta) < 10) return;
+
+      e.preventDefault();
+      if (isScrolling) return;
+
+      isScrolling = true;
+      const dir = delta > 0 ? 1 : -1;
+      scrollCarousel(dir);
+
+      setTimeout(() => {
+        isScrolling = false;
+      }, 500);
+    };
+
+    el.addEventListener("scroll", updateCarouselArrows, { passive: true });
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("resize", updateCarouselArrows);
+    return () => {
+      el.removeEventListener("scroll", updateCarouselArrows);
+      el.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("resize", updateCarouselArrows);
+    };
+  }, []);
 
   const services = [
     {
@@ -82,13 +102,13 @@ export default function HomeClient() {
     }
   ];
 
-const articles = [
+  const articles = [
     {
       title: "Why AI can't rewrite Windows ?",
       category: "Generative AI",
       date: "Jun 4, 2026",
       readTime: "4 min read",
-      desc: "50 million lines. 41 years of decisions. Why 'just use AI' doesn't work at that scale.",
+      desc: "50M lines. 41 years and decades of decisions. ",
       link: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows"
     },
     {
@@ -99,12 +119,12 @@ const articles = [
       desc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
       link: "https://blog.nirjar.me/sonarqube"
     },
-    { 
+    {
       title: "How Git changed the way I work",
       category: "Developer Tools",
       date: "Apr 16, 2026",
       readTime: "3 min read",
-      desc: "Not just a code host. A place that quietly reshaped how I build",
+      desc: "Not just a code host. A place that quietly reshaped how I build.",
       link: "https://blog.nirjar.me/how-github-changed-my-workflow"
     },
     {
@@ -223,7 +243,7 @@ const articles = [
               return (
                 <div
                   key={proj.title}
-                className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                  className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
                     <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
@@ -299,7 +319,7 @@ const articles = [
                 href={art.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px] w-full shrink-0 snap-start sm:w-[420px] lg:w-[455px]"
+                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px] w-[84%] shrink-0 snap-center snap-always [scroll-snap-stop:always] sm:snap-start sm:w-[420px] lg:w-[455px]"
               >
                 <div>
                   <h4 className="text-[18px] md:text-[22px] font-normal text-foreground font-sans tracking-[-0.01em] leading-snug mb-2">
@@ -361,8 +381,8 @@ const articles = [
           <ScrollReveal delay={0.1}>
             <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center">
               <p className="text-lg sm:text-xl md:text-2xl lg:text-[26px] font-normal leading-[1.25] text-foreground">
-              Every project I&apos;ve built has solved a real problem I&apos;ve encountered.
-              Each feature exists for a reason and every decision is driven by a real need.
+                Every project I&apos;ve built has solved a real problem I&apos;ve encountered.
+                Each feature exists for a reason and every decision is driven by a real need.
               </p>
             </div>
           </ScrollReveal>
