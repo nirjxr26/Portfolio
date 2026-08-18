@@ -58,3 +58,7 @@ dev-server*.log
 /public/icons/home/hero.svg
 
 src/lib/icon-versions.generated.ts
+public/fonts/CursorGothic-Bold.ttf
+public/fonts/CursorGothic-BoldItalic.ttf
+public/fonts/CursorGothic-Italic.ttf
+public/fonts/CursorGothic-Regular.ttf
