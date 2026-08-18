@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,27 +24,30 @@ export default function HomeClient() {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
-  const updateCarouselArrows = () => {
+  const updateCarouselArrows = useCallback(() => {
     const el = carouselRef.current;
     if (!el) return;
     const tolerance = 2;
     setCanScrollLeft(el.scrollLeft > tolerance);
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
-  };
+  }, []);
 
-  const scrollCarousel = (dir: 1 | -1) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const card = el.firstElementChild as HTMLElement | null;
-    if (!card) return;
-    const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    const currentIndex = Math.round(el.scrollLeft / step);
-    const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
-    const target = Math.min(targetIndex * step, maxScroll);
-    el.scrollTo({ left: target, behavior: "smooth" });
-    setTimeout(updateCarouselArrows, 400);
-  };
+  const scrollCarousel = useCallback(
+    (dir: 1 | -1) => {
+      const el = carouselRef.current;
+      if (!el) return;
+      const card = el.firstElementChild as HTMLElement | null;
+      if (!card) return;
+      const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const currentIndex = Math.round(el.scrollLeft / step);
+      const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
+      const target = Math.min(targetIndex * step, maxScroll);
+      el.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(updateCarouselArrows, 400);
+    },
+    [updateCarouselArrows]
+  );
 
   useEffect(() => {
     updateCarouselArrows();
@@ -149,7 +152,7 @@ export default function HomeClient() {
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
-              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-sans max-w-6xl">
+              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-medium tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-display max-w-6xl">
                 <span className="block text-foreground">
                   Building systems
                 </span>
@@ -200,7 +203,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-display"
               text="What I do."
             />
           </div>
@@ -213,7 +216,7 @@ export default function HomeClient() {
                 key={idx}
                 className="p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
-                <h4 className="text-[18px] md:text-[22px] font-normal font-sans tracking-[-0.01em] mb-1.5 text-foreground">
+                <h4 className="text-[18px] md:text-[22px] font-normal font-display tracking-[-0.01em] mb-1.5 text-foreground">
                   {service.title}
                 </h4>
                 <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal max-w-lg">
@@ -231,7 +234,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1]"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-display"
               text="Recent Work."
             />
           </div>
@@ -246,7 +249,7 @@ export default function HomeClient() {
                   className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
-                    <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
+                    <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-display tracking-[-0.01em]">
                       {proj.title}
                     </h4>
                     <span className="text-xs text-secondary capitalize tracking-[0.03em] mb-4 block font-medium">
@@ -302,7 +305,7 @@ export default function HomeClient() {
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-display"
               text="Articles."
             />
           </div>
@@ -322,7 +325,7 @@ export default function HomeClient() {
                 className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px] w-[84%] shrink-0 snap-center snap-always [scroll-snap-stop:always] sm:snap-start sm:w-[420px] lg:w-[455px]"
               >
                 <div>
-                  <h4 className="text-[18px] md:text-[22px] font-normal text-foreground font-sans tracking-[-0.01em] leading-snug mb-2">
+                  <h4 className="text-[18px] md:text-[22px] font-normal text-foreground font-display tracking-[-0.01em] leading-snug mb-2">
                     {art.title}
                   </h4>
                   <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
