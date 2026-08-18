@@ -1,5 +1,69 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sentient";
+  src: url("/fonts/Sentient-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --background: rgba(19, 17, 11);
   --foreground: #D4D4D8;
@@ -23,7 +87,7 @@
   --surface-mockup: #14120B;
   --surface-mockup-raised: #1B1913;
   --surface-stage-alt: #252219;
-  --surface-chrome: #201E18;
+  --surface-chrome: #33312d;
   --cta-bg: #EDECEC;
   --cta-bg-hover: #EDECEC;
   --cta-text: #0C0A05;
@@ -38,6 +102,7 @@
   --font-mono: var(--font-geist-mono), monospace;
   --font-serif: var(--font-instrument-serif), serif;
   --font-geist: var(--font-geist-sans), sans-serif;
+  --font-display: var(--font-inter), system-ui, -apple-system, sans-serif;
 }
 
 body {
