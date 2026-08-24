@@ -127,7 +127,7 @@ export default function WorksClient() {
               className="text-[28px] sm:text-[32px] md:text-[36px] font-normal text-foreground tracking-tight leading-[1.15] font-sans text-center mb-3"
               text="Something in mind?"
             />
-            <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
+            <p className="text-secondary text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
               The projects are open and ready for contributors — dig into the code or open an issue anytime.
             </p>
             <a

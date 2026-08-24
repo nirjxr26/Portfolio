@@ -71,7 +71,7 @@ export default function KostClient() {
               <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-tight leading-[1.05] font-sans max-w-5xl">
                 Kost
               </h1>
-              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans">
+              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-secondary max-w-2xl leading-[1.2] mt-2 text-left font-sans">
                 Go agent that flags over-provisioned<br />pods and hands you the kubectl fix.
               </p>
             </div>
@@ -101,10 +101,10 @@ export default function KostClient() {
             <ScrollReveal key={feature.title} delay={0.15 + idx * 0.05}>
               <div className={`w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 ${feature.mainCardClass || "min-[1025px]:p-8"} flex flex-col ${idx % 2 === 1 ? "min-[1025px]:flex-row-reverse" : "min-[1025px]:flex-row"} items-start min-[1025px]:items-center ${feature.cardJustifyClass || "justify-between"} gap-6 md:gap-6 min-[1025px]:gap-8 overflow-hidden`}>
                 <div className={`w-full min-[1025px]:w-[32%] ${feature.textWrapperClass || ""} min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start`}>
-                  <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                  <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                     {feature.title}
                   </h3>
-                  <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                  <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
                     {feature.desc}
                   </p>
                   <a
@@ -121,7 +121,7 @@ export default function KostClient() {
                   {feature.img ? (
                     <img src={iconUrl(feature.img)} alt={feature.alt} loading="lazy" className={`${feature.short ? "w-[220%] max-w-none h-full sm:h-auto sm:max-w-full max-[1024px]:lg:max-w-full max-[1024px]:lg:w-5/6 max-[1024px]:lg:max-h-[500px]" : feature.wide ? `${idx === 0 ? "w-[180%] sm:w-5/6 max-w-none sm:max-w-[600px] max-[1024px]:lg:max-w-[700px]" : "w-[180%] sm:w-full max-w-none sm:max-w-[700px] max-[1024px]:lg:max-w-[800px]"}` : "w-full max-w-[900px] h-auto max-h-full"} ${feature.desktopImgClass || "min-[1025px]:max-h-[440px]"} object-contain block relative select-none pointer-events-none`} />
                   ) : (
-                    <span className="text-[#6B6B70] text-xs sm:text-sm font-mono text-center">
+                    <span className="text-secondary text-xs sm:text-sm font-mono text-center">
                       [{feature.alt}]
                     </span>
                   )}
@@ -172,7 +172,7 @@ export default function KostClient() {
                   <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                     {card.subtitle}
                   </h3>
-                  <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
+                  <p className="text-secondary text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
                     {card.description}
                   </p>
                   <img
@@ -229,7 +229,7 @@ export default function KostClient() {
                   <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
                     {card.subtitle}
                   </h3>
-                  <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
+                  <p className="text-secondary text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
                     {card.description}
                   </p>
                   <img
@@ -257,7 +257,7 @@ export default function KostClient() {
               text="Try Kost now."
             />
 
-            <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
+            <p className="text-secondary text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
             The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
             </p>
 
