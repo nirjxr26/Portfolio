@@ -32,7 +32,7 @@ export default function HookDropClient() {
               <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-tight leading-[1.05] font-sans max-w-5xl">
                 HookDrop
               </h1>
-              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
+              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-secondary max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
                 A webhook sink you can watch live — every event traced,<br />every image signed before it ships.
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function HookDropClient() {
                           <tr key={i} className="text-[12px] text-white/70 border-b border-white/[0.03] last:border-0">
                             <td className="py-2 pr-2">
                               <span className={`text-[11px] font-mono font-medium ${
-                                row.method === 'POST' ? 'text-[#2563EB]' : 'text-[#6B6B70]'
+                                row.method === 'POST' ? 'text-[#2563EB]' : 'text-secondary'
                               }`}>{row.method}</span>
                             </td>
                             <td className="py-2 pr-2">
@@ -181,10 +181,10 @@ export default function HookDropClient() {
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 flex flex-col items-start gap-6 md:gap-8 overflow-hidden">
               <div className="w-full text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Nothing Ships Unverified.
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
                   Every push runs the full gate — tests, lint, a CVE scan — then builds, signs, and waits at the cluster edge for Kyverno to let it in.
                 </p>
                 <a
@@ -222,7 +222,7 @@ export default function HookDropClient() {
               text="Try HookDrop now."
             />
 
-            <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
+            <p className="text-secondary text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
             The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
             </p>
             <a

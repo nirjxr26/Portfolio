@@ -11,9 +11,71 @@ import { StaggerContainer, StaggerItem } from "@/components/Stagger";
 import * as Icons from "@/components/Icons";
 import { projects } from "@/lib/projects";
 
+const PROJECT_LINKS: Record<string, { href: string; isExternal?: boolean }> = {
+  Bastion: { href: "/works/bastion" },
+  HookDrop: { href: "/works/hookdrop" },
+  Kost: { href: "/works/kost" },
+  DeployLens: { href: "https://github.com/nirjxr26/DeployLens", isExternal: true },
+  VaultLock: { href: "https://github.com/nirjxr26/VaultLock-Password-Manager", isExternal: true },
+  BlameLess: { href: "https://github.com/nirjxr26/Blamless", isExternal: true },
+  Blamless: { href: "https://github.com/nirjxr26/Blamless", isExternal: true },
+};
+
+function FormattedBulletText({ text }: { text: string }) {
+  const parts = text.split(/(<u>.*?<\/u>)/g);
+
+  return (
+    <span>
+      {parts.map((part, index) => {
+        if (part.startsWith("<u>") && part.endsWith("</u>")) {
+          const name = part.slice(3, -4);
+          const linkInfo = PROJECT_LINKS[name] || { href: "/works" };
+
+          if (linkInfo.isExternal) {
+            return (
+              <a
+                key={index}
+                href={linkInfo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-accent/70 underline-offset-4 hover:decoration-accent text-foreground hover:text-accent font-medium transition-colors inline-flex items-center gap-0.5 cursor-pointer"
+              >
+                {name}
+                <Icons.ArrowUpRight className="w-3.5 h-3.5 text-accent inline shrink-0" />
+              </a>
+            );
+          }
+          return (
+            <Link
+              key={index}
+              href={linkInfo.href}
+              className="underline decoration-accent/70 underline-offset-4 hover:decoration-accent text-foreground hover:text-accent font-medium transition-colors cursor-pointer"
+            >
+              {name}
+            </Link>
+          );
+        }
+        return <span key={index}>{part}</span>;
+      })}
+    </span>
+  );
+}
+
+export interface FrameDetail {
+  number: string;
+  tag: string;
+  title: string;
+  desc: string;
+  tagline: string;
+  achievements: string[];
+  techStack: string[];
+}
+
 export default function HomeClient() {
   const containerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const frameCarouselRef = useRef<HTMLDivElement>(null);
+
   const mainStyle: CSSProperties & Record<"--foreground" | "--secondary", string> = {
     color: "#D4D4D8",
     "--foreground": "#D4D4D8",
@@ -23,6 +85,30 @@ export default function HomeClient() {
   const [showAllWorks, setShowAllWorks] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [canScrollFrameLeft, setCanScrollFrameLeft] = useState(false);
+  const [canScrollFrameRight, setCanScrollFrameRight] = useState(false);
+  const [selectedFrame, setSelectedFrame] = useState<FrameDetail | null>(null);
+
+  useEffect(() => {
+    if (selectedFrame) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedFrame]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedFrame(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const updateCarouselArrows = useCallback(() => {
     const el = carouselRef.current;
@@ -30,6 +116,14 @@ export default function HomeClient() {
     const tolerance = 2;
     setCanScrollLeft(el.scrollLeft > tolerance);
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
+  }, []);
+
+  const updateFrameCarouselArrows = useCallback(() => {
+    const el = frameCarouselRef.current;
+    if (!el) return;
+    const tolerance = 2;
+    setCanScrollFrameLeft(el.scrollLeft > tolerance);
+    setCanScrollFrameRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
   }, []);
 
   const scrollCarousel = useCallback(
@@ -49,10 +143,28 @@ export default function HomeClient() {
     [updateCarouselArrows]
   );
 
+  const scrollFrameCarousel = useCallback(
+    (dir: 1 | -1) => {
+      const el = frameCarouselRef.current;
+      if (!el) return;
+      const card = el.firstElementChild as HTMLElement | null;
+      if (!card) return;
+      const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "20");
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const currentIndex = Math.round(el.scrollLeft / step);
+      const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
+      const target = Math.min(targetIndex * step, maxScroll);
+      el.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(updateFrameCarouselArrows, 400);
+    },
+    [updateFrameCarouselArrows]
+  );
+
   useEffect(() => {
     updateCarouselArrows();
+    updateFrameCarouselArrows();
     const el = carouselRef.current;
-    if (!el) return;
+    const frameEl = frameCarouselRef.current;
 
     let isScrolling = false;
 
@@ -72,15 +184,96 @@ export default function HomeClient() {
       }, 500);
     };
 
-    el.addEventListener("scroll", updateCarouselArrows, { passive: true });
-    el.addEventListener("wheel", handleWheel, { passive: false });
+    if (el) {
+      el.addEventListener("scroll", updateCarouselArrows, { passive: true });
+      el.addEventListener("wheel", handleWheel, { passive: false });
+    }
+    if (frameEl) {
+      frameEl.addEventListener("scroll", updateFrameCarouselArrows, { passive: true });
+    }
+
     window.addEventListener("resize", updateCarouselArrows);
+    window.addEventListener("resize", updateFrameCarouselArrows);
+
     return () => {
-      el.removeEventListener("scroll", updateCarouselArrows);
-      el.removeEventListener("wheel", handleWheel);
+      if (el) {
+        el.removeEventListener("scroll", updateCarouselArrows);
+        el.removeEventListener("wheel", handleWheel);
+      }
+      if (frameEl) {
+        frameEl.removeEventListener("scroll", updateFrameCarouselArrows);
+      }
       window.removeEventListener("resize", updateCarouselArrows);
+      window.removeEventListener("resize", updateFrameCarouselArrows);
     };
-  }, []);
+  }, [updateCarouselArrows, updateFrameCarouselArrows, scrollCarousel]);
+
+  const frames: FrameDetail[] = [
+    {
+      number: "01",
+      tag: "DevOps",
+      title: "Ship faster, break less.",
+      desc: "CI/CD and infrastructure built for repeatable, predictable deployments.",
+      tagline: "Pipelines that don't page you at 2am.",
+      achievements: [
+        "Zero-touch GitOps pipelines that eliminate manual deploys — built for <u>Bastion</u> with GitHub Actions and ArgoCD reconciliation.",
+        "Signed, scanned delivery pipelines that hold production latency under load — built for <u>HookDrop</u>, sub-35ms SSE at scale.",
+        "Deployment tracking that ties every release back to its exact commit — built for <u>DeployLens</u> with real-time SHA correlation."
+      ],
+      techStack: ["GitHub Actions", "Docker", "Kubernetes", "Helm", "ArgoCD", "AWS ECR", "Terraform"]
+    },
+    {
+      number: "02",
+      tag: "Cybersecurity",
+      title: "Security in every layer.",
+      desc: "Identity, least privilege, and secure defaults — from the ground up.",
+      tagline: "Deny by default, verify always.",
+      achievements: [
+        "Deny-first IAM with real-time login risk scoring — cut flagged security issues 87.4% when applied to <u>Bastion</u>.",
+        "Admission-layer defense that blocks unsigned workloads before they run — built for <u>HookDrop</u> with Kyverno and NetworkPolicies.",
+        "Local-only credential storage with no cloud trust dependency — built for <u>VaultLock</u> on Argon2id and AES-256-GCM."
+      ],
+      techStack: ["RBAC", "MFA", "OAuth", "Argon2id", "AES-256-GCM", "Kyverno", "Falco"]
+    },
+    {
+      number: "03",
+      tag: "Monitoring",
+      title: "Know before it breaks.",
+      desc: "Metrics, logs, and alerts that surface real signal, not noise.",
+      tagline: "See the failure before your users do.",
+      achievements: [
+        "Full-stack tracing that turns failures into alerts instead of tickets — built for <u>HookDrop</u> with OpenTelemetry, Prometheus, and Grafana.",
+        "Unified telemetry that connects an anomaly to its cause in one view — built for <u>Bastion</u> via Datadog APM.",
+        "Usage-based cost alerting that flags waste before it hits the bill — built for <u>Kost</u> with automated Slack reporting."
+      ],
+      techStack: ["OpenTelemetry", "Prometheus", "Grafana", "Loki", "Tempo", "Datadog"]
+    },
+    {
+      number: "04",
+      tag: "Code Security",
+      title: "Catch it before it ships.",
+      desc: "Static analysis, dependency, and container scanning wired into the development workflow.",
+      tagline: "Catch it in the PR, not in prod.",
+      achievements: [
+        "CI-gated static and dependency analysis — dropped open issues from 872 to 479 in 30 days on <u>Bastion</u>, security score 6.5 to 8.5.",
+        "Signature-verified image admission that blocks unverified containers — built for <u>HookDrop</u> with Cosign and Kyverno."
+      ],
+      techStack: ["SonarCloud", "CodeQL", "Trivy", "Cosign", "Kyverno"]
+    },
+    {
+      number: "05",
+      tag: "Automation",
+      title: "Less manual, more scale.",
+      desc: "Deployments and operations that run themselves, end to end.",
+      tagline: "Fewer runbooks, more running itself.",
+      achievements: [
+        "Infra-aware CI retries that stop false failures from blocking merges — shipped as <u>BlamLess</u>, live on GitHub Marketplace.",
+        "Cost audits that output ready-to-run fixes, not just reports — built for <u>Kost</u> with scheduled kubectl remediation.",
+        "Self-updating ML models with no manual retrain step — built for <u>Bastion</u> using Kubernetes CronJobs."
+      ],
+      techStack: ["GitHub Actions", "Kubernetes CronJobs", "ArgoCD", "GitOps"]
+    }
+  ];
 
   const services = [
     {
@@ -125,7 +318,7 @@ export default function HomeClient() {
     {
       title: "How Git changed the way I work",
       category: "Developer Tools",
-      date: "Apr 16, 2026",
+      // date: "Apr 16, 2026",
       readTime: "3 min read",
       desc: "Not just a code host. A place that quietly reshaped how I build.",
       link: "https://blog.nirjar.me/how-github-changed-my-workflow"
@@ -152,7 +345,7 @@ export default function HomeClient() {
         <div className="relative z-10 pt-4 pb-4">
           <StaggerContainer delay={0.15} staggerStep={0.2}>
             <StaggerItem>
-              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-medium tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-display max-w-6xl">
+              <h1 className="text-[40px] sm:text-[48px] md:text-[52px] lg:text-[70px] font-normal tracking-tight leading-[1.15] sm:leading-[1.05] mb-8 font-display max-w-6xl">
                 <span className="block text-foreground">
                   Building systems
                 </span>
@@ -209,8 +402,8 @@ export default function HomeClient() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.25}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* <ScrollReveal delay={0.25}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
             {services.map((service, idx) => (
               <div
                 key={idx}
@@ -226,8 +419,91 @@ export default function HomeClient() {
               </div>
             ))}
           </div>
+        </ScrollReveal> */}
+
+        {/* Carousel inside What I do section container */}
+        <ScrollReveal delay={0.25}>
+          <div className="w-full relative">
+            <div
+              ref={frameCarouselRef}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 min-[1536px]:[margin-left:calc(50%-50vw)] min-[1536px]:[margin-right:calc(50%-50vw)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 min-[1536px]:px-[calc(50vw-704px)] scroll-px-4 sm:scroll-px-6 md:scroll-px-8 lg:scroll-px-12 xl:scroll-px-16 min-[1536px]:scroll-pl-[calc(50vw-704px)]"
+            >
+              {frames.map((frame) => (
+                <div
+                  key={frame.title}
+                  onClick={() => setSelectedFrame(frame)}
+                  className="w-[310px] sm:w-[340px] md:w-[360px] min-h-[300px] p-5 md:p-[22px] rounded-[12px] bg-[var(--surface-card)] border border-white/[0.04] flex flex-col justify-between shrink-0 snap-start shadow-none cursor-pointer"
+                >
+                  <div>
+                    <span className="text-xs text-secondary/70 font-sans tracking-[0.03em] mb-2 block font-medium">
+                      {frame.tag}
+                    </span>
+                    <h3 className="text-[18px] md:text-[22px] font-normal font-display tracking-[-0.01em] mb-1.5 text-foreground">
+                      {frame.title}
+                    </h3>
+                    <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
+                      {frame.desc}
+                    </p>
+                  </div>
+
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedFrame(frame);
+                    }}
+                    aria-label={`View details for ${frame.tag}`}
+                    className="w-8 h-8 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-foreground/80 self-end ml-auto mt-4 cursor-pointer"
+                  >
+                    <Icons.Plus className="w-4 h-4" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </ScrollReveal>
       </section>
+
+      {/* Blurred Backdrop Detail Modal */}
+      {selectedFrame && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xl flex items-center justify-center p-3.5 sm:p-6 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setSelectedFrame(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] bg-[#17150E]/95 backdrop-blur-md border-none rounded-[16px] p-5 sm:p-8 md:p-10 lg:p-12 shadow-2xl overflow-y-auto no-scrollbar my-auto animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-start justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
+              <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-[32px] font-display font-normal text-foreground tracking-tight leading-snug pr-2">
+                {selectedFrame.tagline}
+              </h2>
+              <button
+                type="button"
+                onClick={() => setSelectedFrame(null)}
+                className="p-1.5 sm:p-2 rounded-full text-secondary hover:text-foreground bg-white/[0.05] hover:bg-white/[0.12] transition-colors cursor-pointer shrink-0"
+                aria-label="Close detail modal"
+              >
+                <Icons.X className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
+
+            {/* Achievements with Arrow icons & Secondary Font Color */}
+            <div className="border-t border-white/[0.06] pt-4 sm:pt-6 md:pt-7">
+              <ul className="space-y-3.5 sm:space-y-5 md:space-y-6 lg:space-y-7">
+                {selectedFrame.achievements.map((achievement, idx) => (
+                  <li key={idx} className="flex items-start gap-2 sm:gap-3.5 md:gap-4 lg:gap-5 text-[13px] sm:text-base md:text-lg lg:text-[19px] leading-[1.5] sm:leading-[1.6] text-secondary font-sans">
+                    <Icons.ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-accent shrink-0 mt-0.5 sm:mt-1 -ml-3 sm:-ml-5 md:-ml-6 lg:-ml-7" />
+                    <div>
+                      <FormattedBulletText text={achievement} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section id="work" className="py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto">
         <ScrollReveal delay={0.1}>
@@ -246,7 +522,7 @@ export default function HomeClient() {
               return (
                 <div
                   key={proj.title}
-                  className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                  className="h-full min-h-[240px] p-5 md:p-[22px] flex flex-col items-start rounded-[12px] bg-[var(--surface-card)] border border-white/[0.04]"
                 >
                   <div>
                     <h4 className="text-[18px] md:text-[22px] font-normal text-foreground mb-0 font-display tracking-[-0.01em]">
@@ -312,55 +588,36 @@ export default function HomeClient() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.25}>
-          <div
-            ref={carouselRef}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {articles.map((art) => (
-              <a
-                key={art.title}
-                href={art.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04] p-5 md:p-[22px] flex flex-col justify-between min-h-[200px] w-[84%] shrink-0 snap-center snap-always [scroll-snap-stop:always] sm:snap-start sm:w-[420px] lg:w-[455px]"
-              >
-                <div>
-                  <h4 className="text-[18px] md:text-[22px] font-normal text-foreground font-display tracking-[-0.01em] leading-snug mb-2">
-                    {art.title}
-                  </h4>
-                  <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
-                    {art.desc}
-                  </p>
-                </div>
+          <div className="w-full relative">
+            <div
+              ref={carouselRef}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 min-[1536px]:[margin-left:calc(50%-50vw)] min-[1536px]:[margin-right:calc(50%-50vw)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 min-[1536px]:px-[calc(50vw-704px)] scroll-px-4 sm:scroll-px-6 md:scroll-px-8 lg:scroll-px-12 xl:scroll-px-16 min-[1536px]:scroll-pl-[calc(50vw-704px)]"
+            >
+              {articles.map((art) => (
+                <a
+                  key={art.title}
+                  href={art.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-[310px] sm:w-[360px] md:w-[440px] lg:w-[400px] min-h-[300px] p-5 md:p-[22px] rounded-[12px] bg-[var(--surface-card)] border border-white/[0.04] flex flex-col justify-between shrink-0 snap-start shadow-none cursor-pointer group"
+                >
+                  <div>
+                    <span className="text-xs text-secondary/70 font-sans tracking-[0.03em] mb-2 block font-medium">
+                      {art.category}
+                    </span>
+                    <h3 className="text-[18px] md:text-[22px] font-normal font-display tracking-[-0.01em] mb-1.5 text-foreground leading-snug">
+                      {art.title}
+                    </h3>
+                    <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
+                      {art.desc}
+                    </p>
+                  </div>
 
-                <div className="pt-2 mt-3 flex items-center justify-between text-xs text-secondary/70 font-sans">
-                  <span>{art.date}</span>
-                  <span className="text-foreground/90 font-medium">{art.category}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-
-          <div className="flex justify-end mt-4">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => scrollCarousel(-1)}
-                aria-label="Scroll articles left"
-                disabled={!canScrollLeft}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${canScrollLeft ? "border-white/[0.08] bg-[var(--surface-card)] text-secondary hover:text-foreground hover:border-white/20 cursor-pointer active:scale-95" : "border-white/[0.04] bg-[var(--surface-card)] text-secondary/30 cursor-not-allowed"}`}
-              >
-                <Icons.ChevronRight className="w-4 h-4 rotate-180" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollCarousel(1)}
-                aria-label="Scroll articles right"
-                disabled={!canScrollRight}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors ${canScrollRight ? "border-white/[0.08] bg-[var(--surface-card)] text-secondary hover:text-foreground hover:border-white/20 cursor-pointer active:scale-95" : "border-white/[0.04] bg-[var(--surface-card)] text-secondary/30 cursor-not-allowed"}`}
-              >
-                <Icons.ChevronRight className="w-4 h-4" />
-              </button>
+                  <div className="w-8 h-8 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-foreground/80 self-end ml-auto mt-4">
+                    <Icons.ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </ScrollReveal>

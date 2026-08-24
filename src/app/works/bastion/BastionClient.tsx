@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useCallback, useEffect } from "react";
 import TextReveal from "@/components/TextReveal";
 import ScrollReveal from "@/components/ScrollReveal";
 import { StaggerContainer, StaggerItem } from "@/components/Stagger";
@@ -9,25 +10,158 @@ import * as Icons from "@/components/Icons";
 import { iconUrl } from "@/lib/iconUrl";
 
 export default function BastionClient() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const secureCarouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [canScrollSecureLeft, setCanScrollSecureLeft] = useState(false);
+  const [canScrollSecureRight, setCanScrollSecureRight] = useState(false);
 
-const features = [
-  {
-    title: "Identity & Access",
-    desc: "JWT access and refresh tokens with secure cookie handling. Google and GitHub OAuth with org-lvl policy enforcement — admins can mandate a single identity provider org-wide."
-  },
-  {
-    title: "Access Rules",
-    desc: "Dynamic RBAC across users, roles, groups, and policies — explicit DENY always wins. Simulate a policy or check per-user effective permissions before it ships."
-  },
-  {
-    title: "Stay Verified",
-    desc: "TOTP with backup codes and step-up reauth on sensitive actions. Live session viewer with per-session or bulk revocation."
-  },
-  {
-    title: "Every Action, Logged",
-    desc: "Centralized audit logs — filterable, exportable, streamed, with security alerts. Runs on your infrastructure, no third-party dependency."
-  }
-];
+  const updateCarouselArrows = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const tolerance = 2;
+    setCanScrollLeft(el.scrollLeft > tolerance);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
+  }, []);
+
+  const updateSecureCarouselArrows = useCallback(() => {
+    const el = secureCarouselRef.current;
+    if (!el) return;
+    const tolerance = 2;
+    setCanScrollSecureLeft(el.scrollLeft > tolerance);
+    setCanScrollSecureRight(el.scrollLeft + el.clientWidth < el.scrollWidth - tolerance);
+  }, []);
+
+  const scrollCarousel = useCallback(
+    (dir: 1 | -1) => {
+      const el = carouselRef.current;
+      if (!el) return;
+      const card = el.firstElementChild as HTMLElement | null;
+      if (!card) return;
+      const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const currentIndex = Math.round(el.scrollLeft / step);
+      const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
+      const target = Math.min(targetIndex * step, maxScroll);
+      el.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(updateCarouselArrows, 400);
+    },
+    [updateCarouselArrows]
+  );
+
+  const scrollSecureCarousel = useCallback(
+    (dir: 1 | -1) => {
+      const el = secureCarouselRef.current;
+      if (!el) return;
+      const card = el.firstElementChild as HTMLElement | null;
+      if (!card) return;
+      const step = card.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "16");
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const currentIndex = Math.round(el.scrollLeft / step);
+      const targetIndex = Math.max(0, Math.min(currentIndex + dir, Math.ceil(maxScroll / step)));
+      const target = Math.min(targetIndex * step, maxScroll);
+      el.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(updateSecureCarouselArrows, 400);
+    },
+    [updateSecureCarouselArrows]
+  );
+
+  useEffect(() => {
+    updateCarouselArrows();
+    updateSecureCarouselArrows();
+    const el = carouselRef.current;
+    const secureEl = secureCarouselRef.current;
+    if (el) {
+      el.addEventListener("scroll", updateCarouselArrows, { passive: true });
+    }
+    if (secureEl) {
+      secureEl.addEventListener("scroll", updateSecureCarouselArrows, { passive: true });
+    }
+    window.addEventListener("resize", updateCarouselArrows);
+    window.addEventListener("resize", updateSecureCarouselArrows);
+    return () => {
+      if (el) {
+        el.removeEventListener("scroll", updateCarouselArrows);
+      }
+      if (secureEl) {
+        secureEl.removeEventListener("scroll", updateSecureCarouselArrows);
+      }
+      window.removeEventListener("resize", updateCarouselArrows);
+      window.removeEventListener("resize", updateSecureCarouselArrows);
+    };
+  }, [updateCarouselArrows, updateSecureCarouselArrows]);
+
+  const features = [
+    {
+      title: "Identity & Access",
+      desc: "JWT tokens with secure cookies. Google & GitHub OAuth, org-wide IdP enforcement.",
+      icon: <Icons.Users className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Access Rules",
+      desc: "Dynamic RBAC across users, roles & policies. Explicit DENY always wins.",
+      icon: <Icons.Shield className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Stay Verified",
+      desc: "TOTP + backup codes, step-up reauth on sensitive actions.",
+      icon: <Icons.Eye className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Every Action, Logged",
+      desc: "Filterable, exportable audit logs with real-time alerts. Fully self-hosted.",
+      icon: <Icons.FileText className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Policy Simulator",
+      desc: "Test policy changes against real scenarios before they ship.",
+      icon: <Icons.Sliders className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Effective Permissions",
+      desc: "Per-user view of every permission — direct, inherited, and policy-attached.",
+      icon: <Icons.Layers className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Scoped API Keys",
+      desc: "Keys scoped to exact actions, with reauth and instant revocation.",
+      icon: <Icons.Key className="w-5 h-5 text-secondary" />
+    }
+  ];
+
+  const secureItems = [
+    {
+      title: "Hardened Builds",
+      desc: "Read-only app code, pinned dependencies. No surprise CVEs from upstream.",
+      icon: <Icons.Box className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Runtime Isolation",
+      desc: "Non-root containers, dropped capabilities. Falco watches syscalls live.",
+      icon: <Icons.Server className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Continuous Scanning",
+      desc: "SonarCloud, CodeQL & Trivy gate every PR and image before ship.",
+      icon: <Icons.RefreshCw className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Encrypted Secrets",
+      desc: "Credentials stay encrypted in Git via SealedSecrets, always.",
+      icon: <Icons.Lock className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Request Guardrails",
+      desc: "Rate limiting and input validation stop malformed or abusive requests early.",
+      icon: <Icons.Shield className="w-5 h-5 text-secondary" />
+    },
+    {
+      title: "Network Defense",
+      desc: "CrowdSec blocks malicious IPs; Falco alerts stream to Datadog.",
+      icon: <Icons.Globe className="w-5 h-5 text-secondary" />
+    }
+  ];
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -50,10 +184,10 @@ const features = [
           <StaggerItem>
             <div className="flex flex-col items-start text-left">
 
-              <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-tight leading-[1.05] font-sans max-w-5xl">
+              <h1 className="text-[22px] md:text-[30px] lg:text-[34px] font-normal tracking-normal leading-[1.05] font-sans max-w-5xl">
                 Bastion
               </h1>
-              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-[#6B6B70] max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
+              <p className="text-[17px] md:text-[20px] lg:text-[22px] text-secondary max-w-2xl leading-[1.2] mt-2 text-left font-sans text-balance">
                 Self-hosted access control — auth, MFA, sessions, and audit logs, with zero third-party access to your data.
               </p>
             </div>
@@ -84,7 +218,7 @@ const features = [
                   <aside className="hidden md:block md:w-52 lg:w-60 bg-[var(--surface-mockup)] overflow-x-auto border-b md:border-b-0 md:border-r border-[#E5E7EB]/6 no-scrollbar">
                     <div className="flex md:flex-col gap-1 p-3 md:p-4 pb-4 md:pb-6 min-w-max md:min-w-0">
                       <div className="hidden md:block mb-6 px-2">
-                        <span className="text-base font-bold text-white/90 tracking-tight">Bastion</span>
+                        <span className="text-base font-bold text-white/90 tracking-normal">Bastion</span>
                       </div>
 
                       <p className="hidden md:block text-[9px] uppercase tracking-widest text-white/20 px-3 mb-1">Overview</p>
@@ -142,7 +276,7 @@ const features = [
                     {/* Header */}
                     <div className="flex items-center justify-between mb-3 md:mb-4">
                       <div>
-                        <h2 className="text-sm md:text-base font-semibold text-white/95 tracking-tight">Dashboard</h2>
+                        <h2 className="text-sm md:text-base font-semibold text-white/95 tracking-normal">Dashboard</h2>
                         <p className="text-[11px] md:text-xs text-white/40 mt-0.5">Overview of your identity infrastructure</p>
                       </div>
                       <div className="flex items-center gap-2">
@@ -316,29 +450,78 @@ const features = [
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans"
-              text="What It does."
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-display"
+              text="What Bastion does."
             />
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {features.map((feature, idx) => {
-              return (
+        <ScrollReveal delay={0.25}>
+          <div className="w-full relative">
+            <div
+              ref={carouselRef}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 min-[1536px]:[margin-left:calc(50%-50vw)] min-[1536px]:[margin-right:calc(50%-50vw)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 min-[1536px]:px-[calc(50vw-704px)] scroll-px-4 sm:scroll-px-6 md:scroll-px-8 lg:scroll-px-12 xl:scroll-px-16 min-[1536px]:scroll-pl-[calc(50vw-704px)]"
+            >
+              {features.map((feature) => (
                 <div
-                  key={idx}
-                  className="p-5 md:p-5 lg:p-6 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
+                  key={feature.title}
+                  className="w-[310px] sm:w-[340px] md:w-[360px] min-h-[260px] md:min-h-[330px] p-5 md:p-[22px] rounded-[12px] bg-[var(--surface-card)] border border-white/[0.04] flex flex-col justify-between shrink-0 snap-start shadow-none"
                 >
-                  <h3 className="text-[16px] md:text-[20px] font-normal text-foreground mb-1.5 font-sans tracking-[-0.01em]">
-                    {feature.title}
-                  </h3>
-                  <p className="text-[#6B6B70] text-[14px] md:text-[16px] leading-relaxed font-normal max-w-lg">
-                    {feature.desc}
-                  </p>
+                  <div>
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/[0.06] flex items-center justify-center mb-3.5">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-[18px] md:text-[22px] font-normal font-display tracking-normal mb-1.5 text-foreground leading-snug">
+                      {feature.title}
+                    </h3>
+                    <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
+                      {feature.desc}
+                    </p>
+                  </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Secure by Default Section */}
+      <section className="relative z-10 py-8 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 max-w-screen-2xl mx-auto bg-background">
+        <ScrollReveal delay={0.1}>
+          <div className="mb-[25px]">
+            <TextReveal
+              as="h2"
+              className="text-[30px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-display"
+              text="Secure by default."
+            />
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.25}>
+          <div className="w-full relative">
+            <div
+              ref={secureCarouselRef}
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-16 min-[1536px]:[margin-left:calc(50%-50vw)] min-[1536px]:[margin-right:calc(50%-50vw)] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 min-[1536px]:px-[calc(50vw-704px)] scroll-px-4 sm:scroll-px-6 md:scroll-px-8 lg:scroll-px-12 xl:scroll-px-16 min-[1536px]:scroll-pl-[calc(50vw-704px)]"
+            >
+              {secureItems.map((item) => (
+                <div
+                  key={item.title}
+                  className="w-[310px] sm:w-[340px] md:w-[360px] min-h-[260px] md:min-h-[330px] p-5 md:p-[22px] rounded-[12px] bg-[var(--surface-card)] border border-white/[0.04] flex flex-col justify-between shrink-0 snap-start shadow-none"
+                >
+                  <div>
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/[0.06] flex items-center justify-center mb-3.5">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-[18px] md:text-[22px] font-normal font-display tracking-normal mb-1.5 text-foreground leading-snug">
+                      {item.title}
+                    </h3>
+                    <p className="text-secondary text-[15px] sm:text-base leading-relaxed font-normal">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -348,8 +531,8 @@ const features = [
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
-              text="The new way to control access."
+              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
+              text="How every change ships."
             />
           </div>
         </ScrollReveal>
@@ -358,17 +541,17 @@ const features = [
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-8 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Continuous Integration
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  Every change proves itself before it ships — linting, unit tests, security scans, and reproducible builds, producing a signed, hardened image only if all of it passes.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  Linting, tests, scans, and builds gate every commit — producing a signed, hardened image only when everything passes.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -388,17 +571,17 @@ const features = [
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Continuous Deployment / GitOps
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  Merging to main resolves the new image SHA, patches it into the Kustomize overlays, and auto-merges via bot PR. ArgoCD reconciles the cluster to match — no manual apply.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  Merging main updates Kustomize overlays via bot PR. ArgoCD reconciles the cluster automatically — no manual apply.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -419,17 +602,17 @@ const features = [
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
-                  Boot sequence
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
+                  Boot Sequence
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  Init containers enforce order: DB check, then prisma-migrate, then backend, frontend, and security-engine pods — so nothing boots against a database that isn&apos;t ready.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  Init containers enforce startup order: DB check, migrations, then services — ensuring zero boots on unready databases.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -460,8 +643,8 @@ const features = [
           <div className="mb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-tight leading-[1.1] font-sans"
-              text="Model that watches itself."
+              className="text-[26px] sm:text-[34px] md:text-[40px] lg:text-[48px] font-md text-foreground tracking-normal leading-[1.1] font-sans"
+              text="The risk engine."
             />
           </div>
         </ScrollReveal>
@@ -471,17 +654,17 @@ const features = [
           <ScrollReveal delay={0.25}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Model Retraining
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  The model retrains daily using recent activity through a Kubernetes CronJob and hot-swaps updates without restarting the service.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  A daily CronJob retrains on recent activity and hot-swaps the model — no restart needed.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -503,17 +686,17 @@ const features = [
           <ScrollReveal delay={0.3}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row-reverse items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Risk Evaluation
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  An Isolation Forest model scores every request on login history, action, and timing. High risk or rate-limit triggers step-up — password or MFA — before access is granted.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  Every request is scored on login history, action, and timing. High risk triggers step-up auth.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -535,17 +718,17 @@ const features = [
           <ScrollReveal delay={0.35}>
             <div className="w-full bg-[var(--surface-card)] border border-white/[0.04] rounded-[8px] p-4 md:p-6 min-[1025px]:p-8 flex flex-col min-[1025px]:flex-row items-start min-[1025px]:items-center justify-between gap-6 md:gap-6 min-[1025px]:gap-10 overflow-hidden">
               <div className="w-full min-[1025px]:w-[32%] min-[1025px]:shrink-0 text-left flex flex-col justify-start items-start">
-                <h3 className="text-lg md:text-xl lg:text-[24px] font-normal text-foreground mb-2 font-sans tracking-[-0.01em]">
+                <h3 className="text-lg md:text-[22px] lg:text-[24px] font-normal text-foreground mb-2 md:mb-1.5 font-sans tracking-normal">
                   Resilient Fallback
                 </h3>
-                <p className="text-[#6B6B70] text-sm md:text-base leading-[1.4] max-w-2xl font-sans">
-                  Authentication defaults to neutral/low and keeps running. Account lock, rate limits, session checks, and IP blocking stay active independently.
+                <p className="text-secondary text-sm md:text-[20px] leading-relaxed md:leading-[1.4] max-w-2xl font-sans">
+                  If scoring fails, auth doesn&apos;t stop — it defaults to a neutral score and keeps running.
                 </p>
                 <a
                   href="https://github.com/nirjxr26/Bastion#readme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  className="mt-4 sm:mt-5 md:mt-6 text-[#F54E00] text-sm md:text-base font-normal font-sans inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 >
                   Learn more <span className="text-lg leading-none">→</span>
                 </a>
@@ -571,9 +754,9 @@ const features = [
           <div className="text-center max-w-3xl mx-auto pb-[25px]">
             <TextReveal
               as="h2"
-              className="text-[26px] sm:text-4xl md:text-[48px] font-normal text-foreground tracking-tight leading-[1.1] font-sans text-center"
-              text="Zero trust, enforced automatically."
-              breakAt={2}
+              className="text-[26px] sm:text-4xl md:text-[48px] font-normal text-foreground tracking-normal leading-[1.1] font-sans text-center"
+              text="Zero trust, by design."
+              // breakAt={2}
               breakClassName="sm:hidden"
             />
           </div>
@@ -584,18 +767,18 @@ const features = [
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-3">
             {[
               {
-                subtitle: "Nothing connects without permission.",
-                description: "Every request is checked against policy first — deny by default.",
+                subtitle: "One Policy, Everywhere",
+                description: "The same deny-first rule governing user access governs service-to-service traffic too.",
                 svg: iconUrl("/icons/bastion/zt-auth.svg"),
               },
               {
-                subtitle: "Only the access it needs.",
-                description: "Workloads get scoped to what their job requires — nothing assumed.",
+                subtitle: "Least Privilege",
+                description: "Workloads get scoped to exactly what their job requires — nothing assumed.",
                 svg: iconUrl("/icons/bastion/zt-lock.svg"),
               },
               {
-                subtitle: "Trust is never permanent.",
-                description: "Sessions are re-verified continuously across every device.",
+                subtitle: "Trust Never Expires",
+                description: "Sessions are re-verified continuously, across every device.",
                 svg: iconUrl("/icons/bastion/zt-dep.svg"),
               },
             ].map((card, index) => (
@@ -604,10 +787,10 @@ const features = [
                 className="p-5 flex flex-col rounded-[8px] bg-[var(--surface-card)] border border-white/[0.04]"
               >
                 <div className="flex-grow flex flex-col justify-start">
-                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-[-0.01em]">
+                  <h3 className="text-[15px] md:text-[16px] font-normal text-foreground mb-0 font-sans tracking-normal">
                     {card.subtitle}
                   </h3>
-                  <p className="text-[#6B6B70] text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
+                  <p className="text-secondary text-[15px] md:text-[16px] leading-[1.3] font-normal max-w-lg mb-6">
                     {card.description}
                   </p>
 
@@ -630,12 +813,12 @@ const features = [
           <div className="w-full max-w-xl mx-auto text-center px-4">
             <TextReveal
               as="h2"
-              className="text-[28px] sm:text-[32px] md:text-[36px] font-normal text-foreground tracking-tight leading-[1.15] font-sans text-center mb-3"
+              className="text-[28px] sm:text-[32px] md:text-[36px] font-normal text-foreground tracking-normal leading-[1.15] font-sans text-center mb-3"
               text="Try Bastion now."
             />
 
             <p className="text-[#6B6B70] text-[14px] sm:text-[15px] md:text-[16px] leading-normal max-w-md mx-auto mb-4 font-sans">
-            The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
+              The project&apos;s open and ready for contributors — dig into the code or open an issue anytime.
             </p>
 
             <a
