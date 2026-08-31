@@ -4,26 +4,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-    groups:
-      next:
-        patterns:
-          - "next"
-          - "eslint-config-next"
-      react:
-        patterns:
-          - "react"
-          - "react-dom"
-      tooling:
-        patterns:
-          - "typescript"
-          - "eslint*"
-          - "@types/*"
-    ignore:
-      - dependency-name: "typescript"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "eslint"
-        update-types: ["version-update:semver-major"]
+    open-pull-requests-limit: 10
+    versioning-strategy: increase

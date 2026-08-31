@@ -1,39 +1,25 @@
 {
-  "name": "new_web",
-  "version": "0.1.0",
+  "name": "nirjar-portfolio",
   "private": true,
+  "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "gen:icons": "node scripts/gen-icon-version.mjs",
-    "prebuild": "npm run gen:icons",
-    "dev": "node scripts/dev.mjs",
-    "next-dev": "next dev -p 8082",
-    "build": "next build",
-    "start": "next start -p 8082",
-    "lint": "eslint"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && node scripts/prerender.js",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "next": "^16.2.12",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9.39.5",
-    "eslint-config-next": "^16.2.12",
-    "sharp": "^0.35.3",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  },
-  "overrides": {
-    "minimatch": "^10.2.6",
-    "postcss": "^8.5.25",
-    "sharp": "^0.35.3",
-    "next": {
-      "postcss": "^8.5.25",
-      "sharp": "^0.35.3"
-    }
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.4.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.1.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
   }
 }

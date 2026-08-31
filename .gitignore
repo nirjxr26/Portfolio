@@ -1,64 +1,28 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-DESIGN.md 
-report.md
-.agents/
-codebase-memory-mcp/
-.opencode/
-WEBSITE ANALYSIS/
+# Production build outputs
+dist/
 
-# testing
-/coverage
+# Local cache & temporary files
+.vite/
+.vercel/
 
-# next.js
-/.next/
-/out/
+# Environment files
+.env
+.env.local
+.env.*.local
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# OS system files
+.DS_Store
+Thumbs.db
 
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# dev server logs
-dev-server*.log
-
-# local-only files (not needed on GitHub)
-/dev.bat
-/skills-lock.json
-/SVG-MOCKUP-SYSTEM.md
-/src/app/nirjar_favicon.png
-/src/app/website_icon.png
-/public/icons/home/hero.svg
-
-src/lib/icon-versions.generated.ts
-public/fonts/CursorGothic-Bold.ttf
-public/fonts/CursorGothic-BoldItalic.ttf
-public/fonts/CursorGothic-Italic.ttf
-public/fonts/CursorGothic-Regular.ttf
+# Files
+DESIGN-apple.md
+DESIGN-bastion.md
