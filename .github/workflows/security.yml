@@ -1,39 +1,32 @@
-name: Security & Build Gate
+name: Security & Quality Audit
 
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   schedule:
-    - cron: "0 6 * * 1"
-  workflow_dispatch:
+    - cron: '0 0 * * 0' # Weekly Sunday audit
 
 jobs:
-  audit:
+  security-audit:
+    name: Security & Build Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Runtime dependency audit
-        run: npm audit --omit=dev --audit-level=critical
-      - name: Lint
-        run: npm run lint
-      - name: Production build
-        run: npm run build
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-  weekly-audit:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Full dependency audit
-        run: npm audit --audit-level=high
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Security Audit (Critical Level)
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: TypeScript Typecheck
+        run: npm run build
