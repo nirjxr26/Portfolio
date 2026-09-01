@@ -66,26 +66,36 @@ export function CaseStudyPage({ data }: CaseStudyPageProps) {
       })}
 
       {/* CTA Section */}
-      <section className="bg-canvas py-18 sm:py-24 reveal-on-scroll">
-        <Container className="text-center max-w-3xl">
-          <h2 className="t-hero text-ink">{cta.headline}</h2>
-          <p className="t-lead mt-4 text-muted">{cta.body}</p>
-          <div className="mt-8 flex justify-center">
-            <a
-              href={cta.url}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-primary inline-flex items-center gap-2"
-            >
-              <span>{cta.action}</span>
-              <ArrowUpRight className="shrink-0" />
-            </a>
-          </div>
-        </Container>
-      </section>
+      {(() => {
+        const isCtaSurfaceAlt = sections.length % 2 === 0
+        const ctaBgClass = isCtaSurfaceAlt ? "bg-surface-alt" : "bg-canvas"
+        const footerBgClass = isCtaSurfaceAlt ? "bg-canvas" : "bg-surface-alt"
 
-      {/* Shared Footer */}
-      <Footer />
+        return (
+          <>
+            <section className={`${ctaBgClass} py-18 sm:py-24 reveal-on-scroll`}>
+              <Container className="text-center max-w-3xl">
+                <h2 className="t-hero text-ink">{cta.headline}</h2>
+                <p className="t-lead mt-4 text-muted">{cta.body}</p>
+                <div className="mt-8 flex justify-center">
+                  <a
+                    href={cta.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary inline-flex items-center gap-2"
+                  >
+                    <span>{cta.action}</span>
+                    <ArrowUpRight className="shrink-0" />
+                  </a>
+                </div>
+              </Container>
+            </section>
+
+            {/* Shared Footer */}
+            <Footer bgClass={footerBgClass} />
+          </>
+        )
+      })()}
     </div>
   )
 }

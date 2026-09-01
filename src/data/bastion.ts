@@ -45,15 +45,19 @@ export const bastionData: CaseStudyData = {
       cards: [
         {
           headline: "Nothing ships untested.",
-          body: "Linting, tests, scans, and builds gate every commit — only passing code becomes a signed image.",
+          body: "Tests and scans gate every commit — only verified code gets signed.",
         },
         {
           headline: "Merge is deploy.",
-          body: "Merging to main updates overlays via bot PR. ArgoCD reconciles the cluster automatically.",
+          body: "Merging to main updates overlays via bot PR. ArgoCD syncs the cluster.",
         },
         {
           headline: "Order, enforced.",
-          body: "Init containers check the DB, run migrations, then start services — in that order, every time.",
+          body: "DB checks, migrations, then services — in that exact order, every time.",
+        },
+        {
+          headline: "Shipped, then proven.",
+          body: "Post-deploy smoke tests verify real traffic — not just a running pod.",
         },
       ],
     },
@@ -61,16 +65,20 @@ export const bastionData: CaseStudyData = {
       title: "The Risk engine.",
       cards: [
         {
-          headline: "Retrained daily.",
-          body: "A daily job retrains the model and swaps it into production automatically.",
+          headline: "Scored before it matters.",
+          body: "A non-blocking call to the security engine. Impute, scale, encode, score — before the backend even sees the request.",
         },
         {
-          headline: "Scored live.",
-          body: "Each login is scored in real time — high risk triggers step-up auth, every time.",
+          headline: "Above 0.7, prove it again.",
+          body: "One score, one threshold. Cross it, and step-up auth kicks in automatically.",
         },
         {
-          headline: "Fails safe.",
-          body: "A failed score defaults to neutral, so authentication keeps running without interruption.",
+          headline: "Retrains itself, every night.",
+          body: "A nightly CronJob retrains on fresh logs and hot-swaps the model — zero downtime.",
+        },
+        {
+          headline: "Nothing drifts unnoticed.",
+          body: "MLflow tracks every run. Grafana watches score drift, model version, and latency live.",
         },
       ],
     },
