@@ -39,7 +39,7 @@ export function WorksClient() {
         {projects.length > 3 && (
           <div className="mt-12 sm:mt-16 w-full reveal-on-scroll">
             <Container className="mb-4">
-              <h3 className="t-caption-strong text-ink tracking-normal text-lg min-[375px]:text-xl sm:text-2xl font-bold">More works</h3>
+              <h3 className="t-caption-strong text-ink tracking-normal text-lg min-[375px]:text-xl sm:text-2xl font-medium">More works</h3>
             </Container>
             <CarouselTrack>
               {projects.slice(3).map((project) => (
