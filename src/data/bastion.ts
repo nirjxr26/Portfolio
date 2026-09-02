@@ -66,7 +66,7 @@ export const bastionData: CaseStudyData = {
       cards: [
         {
           headline: "Scored before it matters.",
-          body: "A non-blocking call to the security engine. Impute, scale, encode, score — before the backend even sees the request.",
+          body: "Impute, scale, encode, score — async, before the backend ever sees the request.",
         },
         {
           headline: "Above 0.7, prove it again.",
@@ -74,7 +74,7 @@ export const bastionData: CaseStudyData = {
         },
         {
           headline: "Retrains itself, every night.",
-          body: "A nightly CronJob retrains on fresh logs and hot-swaps the model — zero downtime.",
+          body: "A CronJob retrains on fresh logs and hot-swaps the model — zero downtime.",
         },
         {
           headline: "Nothing drifts unnoticed.",
