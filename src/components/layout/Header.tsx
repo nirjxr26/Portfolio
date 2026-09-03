@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import { Container } from "./Container"
+import { SOCIAL_LINKS, WORK_ITEMS } from "@/data/navigation"
+import { ArrowRight, ChevronDown, HomeIcon } from "../common/Icons"
 import { ThemeToggle } from "../common/ThemeToggle"
+import { Container } from "./Container"
 
 export function Header({ activePath = "/" }: { activePath?: string }) {
   const isWorks = activePath.startsWith("/works")
@@ -37,10 +39,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
             aria-label="Home"
             className="flex items-center text-muted transition-colors hover:text-ink md:hidden"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
+            <HomeIcon width={16} height={16} />
           </a>
 
           {/* Desktop Centered Nav Cluster */}
@@ -50,10 +49,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
               aria-label="Home"
               className="flex items-center text-muted transition-colors hover:text-ink pr-1"
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                <polyline points="9 22 9 12 15 12 15 22" />
-              </svg>
+              <HomeIcon width={15} height={15} />
             </a>
 
             <a
@@ -76,17 +72,12 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                 }`}
               >
                 <span>Works</span>
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+                <ChevronDown
+                  width={10}
+                  height={10}
+                  strokeWidth={2.5}
                   className={`transition-transform duration-200 ${worksDropdownOpen ? "rotate-180" : ""}`}
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
+                />
               </a>
 
               {/* Floating Dropdown Card */}
@@ -94,26 +85,15 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                 <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 z-50">
                   <div className="rounded-2xl bg-card p-3 shadow-xl text-ink">
                     <div className="space-y-1">
-                      <a
-                        href="/works/bastion"
-                        className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
-                      >
-                        Bastion
-                      </a>
-
-                      <a
-                        href="/works/kost"
-                        className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
-                      >
-                        Kost
-                      </a>
-
-                      <a
-                        href="/works/hookdrop"
-                        className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
-                      >
-                        HookDrop
-                      </a>
+                      {WORK_ITEMS.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
+                        >
+                          {item.name}
+                        </a>
+                      ))}
                     </div>
 
                     <div className="mt-2 pt-1">
@@ -122,9 +102,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                         className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-accent transition-colors hover:bg-surface-alt/60"
                       >
                         <span>View All Works</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
+                        <ArrowRight width={12} height={12} />
                       </a>
                     </div>
                   </div>
@@ -136,9 +114,9 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
               Articles
             </a>
             <a
-              href="/assets/nirjar_resume.pdf"
+              href={SOCIAL_LINKS.resume}
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
               className="transition-colors hover:text-ink"
             >
               Resume
@@ -210,43 +188,27 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                     className="p-1.5 text-muted hover:text-ink focus:outline-none"
                     aria-label="Toggle Works Submenu"
                   >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
+                    <ChevronDown
+                      width={20}
+                      height={20}
+                      strokeWidth={2.5}
                       className={`transition-transform duration-200 ${mobileWorksExpanded ? "rotate-180" : ""}`}
-                    >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
+                    />
                   </button>
                 </div>
 
                 {mobileWorksExpanded && (
                   <div className="mt-3 pl-4 border-l-2 border-hairline space-y-4 text-[20px] font-normal text-muted pt-2 pb-1">
-                    <a
-                      href="/works/bastion"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block hover:text-accent transition-colors py-0.5"
-                    >
-                      Bastion
-                    </a>
-                    <a
-                      href="/works/kost"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block hover:text-accent transition-colors py-0.5"
-                    >
-                      Kost
-                    </a>
-                    <a
-                      href="/works/hookdrop"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block hover:text-accent transition-colors py-0.5"
-                    >
-                      HookDrop
-                    </a>
+                    {WORK_ITEMS.map((item) => (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block hover:text-accent transition-colors py-0.5"
+                      >
+                        {item.name}
+                      </a>
+                    ))}
                     <a
                       href="/works"
                       onClick={() => setMobileMenuOpen(false)}
@@ -266,9 +228,9 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                 Articles
               </a>
               <a
-                href="/assets/nirjar_resume.pdf"
+                href={SOCIAL_LINKS.resume}
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
                 onClick={() => setMobileMenuOpen(false)}
                 className="py-1 transition-colors hover:text-accent"
               >

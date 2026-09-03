@@ -46,12 +46,61 @@ function getGitLastMod(relativeFilePath) {
   return new Date().toISOString().split("T")[0]
 }
 
+function createCaseStudyRoute({
+  slug,
+  title,
+  name,
+  description,
+  repoUrl,
+  language = "Go",
+  license = "https://opensource.org/licenses/MIT",
+  runtimePlatform = "Kubernetes, Linux, Docker",
+}) {
+  const itemName = name || slug
+  return {
+    path: `/works/${slug}`,
+    title,
+    description,
+    canonical: `https://nirjar.me/works/${slug}`,
+    sourceFile: `src/data/${slug}.ts`,
+    priority: "0.8",
+    changefreq: "monthly",
+    schema: {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
+            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
+            { "@type": "ListItem", position: 3, name: itemName, item: `https://nirjar.me/works/${slug}` },
+          ],
+        },
+        {
+          "@type": "SoftwareSourceCode",
+          name: itemName,
+          description,
+          codeRepository: repoUrl,
+          programmingLanguage: language,
+          license,
+          runtimePlatform,
+          author: {
+            "@type": "Person",
+            name: "Nirjar Goswami",
+            url: "https://nirjar.me",
+          },
+        },
+      ],
+    },
+  }
+}
+
 const routes = [
   {
     path: "/",
-    title: "Nirjar Goswami | Cloud & DevOps Engineer",
+    title: "Nirjar Goswami | Cloud & Security Engineer",
     description:
-      "Cloud & DevOps Engineer specializing in Kubernetes, Go, access control (Bastion), cost optimization (Kost), and runtime security (HookDrop).",
+      "Cloud, Security & Systems Engineer specializing in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure.",
     canonical: "https://nirjar.me",
     sourceFile: "src/data/home.ts",
     priority: "1.0",
@@ -60,11 +109,20 @@ const routes = [
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "ProfilePage",
+          "@id": "https://nirjar.me/#profilepage",
+          url: "https://nirjar.me",
+          name: "Nirjar Goswami | Cloud & Security Engineer",
+          mainEntity: {
+            "@id": "https://nirjar.me/#person",
+          },
+        },
+        {
           "@type": "Person",
           "@id": "https://nirjar.me/#person",
           name: "Nirjar Goswami",
           url: "https://nirjar.me",
-          jobTitle: "Cloud & DevOps Engineer",
+          jobTitle: "Cloud & Security Engineer",
           sameAs: [
             "https://github.com/nirjxr26",
             "https://www.linkedin.com/in/nirjxr",
@@ -73,25 +131,85 @@ const routes = [
           ],
           knowsAbout: [
             "Cloud Infrastructure",
+            "Cloud Architecture",
+            "Cloud Security",
+            "Cybersecurity",
+            "Identity & Access Management",
+            "System Design",
             "DevOps",
-            "Kubernetes",
-            "Go",
-            "Access Control",
-            "eBPF Runtime Security",
-            "Cluster Optimization",
           ],
-          description: "Cloud & DevOps Engineer building systems meant to be forgotten.",
+          description: "Cloud & Security Engineer building systems meant to be forgotten.",
         },
         {
           "@type": "WebSite",
           "@id": "https://nirjar.me/#website",
           url: "https://nirjar.me",
           name: "Nirjar Goswami Portfolio",
-          description: "Official website and engineering case studies of Nirjar Goswami.",
+          description: "Official website and case studies of Nirjar Goswami.",
           publisher: {
             "@id": "https://nirjar.me/#person",
           },
           inLanguage: "en-US",
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://nirjar.me/#articles",
+          name: "Technical Articles & Publications",
+          description: "Technical articles on systems, observability, security, and developer tooling by Nirjar Goswami.",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              item: {
+                "@type": "TechArticle",
+                headline: "Why AI can't rewrite Windows ?",
+                description: "50M lines. 41 years and decades of decisions.",
+                url: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows",
+                author: { "@id": "https://nirjar.me/#person" },
+                publisher: { "@id": "https://nirjar.me/#person" },
+                about: "Generative AI",
+              },
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              item: {
+                "@type": "TechArticle",
+                headline: "SonarQube analysis",
+                description: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
+                url: "https://blog.nirjar.me/sonarqube",
+                author: { "@id": "https://nirjar.me/#person" },
+                publisher: { "@id": "https://nirjar.me/#person" },
+                about: "Observability",
+              },
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              item: {
+                "@type": "TechArticle",
+                headline: "How Git changed the way I work",
+                description: "Not just a code host. A place that quietly reshaped how I build.",
+                url: "https://blog.nirjar.me/how-github-changed-my-workflow",
+                author: { "@id": "https://nirjar.me/#person" },
+                publisher: { "@id": "https://nirjar.me/#person" },
+                about: "Developer Tools",
+              },
+            },
+            {
+              "@type": "ListItem",
+              position: 4,
+              item: {
+                "@type": "TechArticle",
+                headline: "VaultLock's logo fetching problem",
+                description: "Getting the right brand logo, every time, without breaking the UI.",
+                url: "https://blog.nirjar.me/vaultlock-logo-fetching",
+                author: { "@id": "https://nirjar.me/#person" },
+                publisher: { "@id": "https://nirjar.me/#person" },
+                about: "Security",
+              },
+            },
+          ],
         },
       ],
     },
@@ -104,7 +222,7 @@ const routes = [
     canonical: "https://nirjar.me/works",
     sourceFile: "src/components/pages/WorksClient.tsx",
     priority: "0.9",
-    changefreq: "weekly",
+    changefreq: "monthly",
     schema: {
       "@context": "https://schema.org",
       "@graph": [
@@ -118,114 +236,27 @@ const routes = [
       ],
     },
   },
-  {
-    path: "/works/bastion",
+  createCaseStudyRoute({
+    slug: "bastion",
+    name: "Bastion",
     title: "Bastion | Self-Hosted IAM Platform",
-    description:
-      "Auth, MFA, sessions, and audit logs — self-hosted access control with zero third-party access to your data.",
-    canonical: "https://nirjar.me/works/bastion",
-    sourceFile: "src/data/bastion.ts",
-    priority: "0.8",
-    changefreq: "monthly",
-    schema: {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-            { "@type": "ListItem", position: 3, name: "Bastion", item: "https://nirjar.me/works/bastion" },
-          ],
-        },
-        {
-          "@type": "SoftwareSourceCode",
-          name: "Bastion",
-          description: "Auth, MFA, sessions, and audit logs — self-hosted access control with zero third-party access to your data.",
-          codeRepository: "https://github.com/nirjxr26/Bastion",
-          programmingLanguage: "Go",
-          license: "https://opensource.org/licenses/MIT",
-          author: {
-            "@type": "Person",
-            name: "Nirjar Goswami",
-            url: "https://nirjar.me",
-          },
-        },
-      ],
-    },
-  },
-  {
-    path: "/works/kost",
+    description: "Auth, MFA, sessions, and audit logs — self-hosted access control with zero third-party access to your data.",
+    repoUrl: "https://github.com/nirjxr26/Bastion",
+  }),
+  createCaseStudyRoute({
+    slug: "kost",
+    name: "Kost",
     title: "Kost | Kubernetes Cost Optimizer",
-    description:
-      "A Go agent that flags over-provisioned pods and hands you the kubectl command to fix them.",
-    canonical: "https://nirjar.me/works/kost",
-    sourceFile: "src/data/kost.ts",
-    priority: "0.8",
-    changefreq: "monthly",
-    schema: {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-            { "@type": "ListItem", position: 3, name: "Kost", item: "https://nirjar.me/works/kost" },
-          ],
-        },
-        {
-          "@type": "SoftwareSourceCode",
-          name: "Kost",
-          description: "A Go agent that flags over-provisioned pods and hands you the kubectl command to fix them.",
-          codeRepository: "https://github.com/nirjxr26/Kost",
-          programmingLanguage: "Go",
-          license: "https://opensource.org/licenses/MIT",
-          author: {
-            "@type": "Person",
-            name: "Nirjar Goswami",
-            url: "https://nirjar.me",
-          },
-        },
-      ],
-    },
-  },
-  {
-    path: "/works/hookdrop",
+    description: "A Go agent that flags over-provisioned pods and hands you the kubectl command to fix them.",
+    repoUrl: "https://github.com/nirjxr26/Kost",
+  }),
+  createCaseStudyRoute({
+    slug: "hookdrop",
+    name: "HookDrop",
     title: "HookDrop | Go Webhook Receiver",
-    description:
-      "Built to be watched. Every event traced live. Every image proven before it runs.",
-    canonical: "https://nirjar.me/works/hookdrop",
-    sourceFile: "src/data/hookdrop.ts",
-    priority: "0.8",
-    changefreq: "monthly",
-    schema: {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-            { "@type": "ListItem", position: 3, name: "HookDrop", item: "https://nirjar.me/works/hookdrop" },
-          ],
-        },
-        {
-          "@type": "SoftwareSourceCode",
-          name: "HookDrop",
-          description: "Built to be watched. Every event traced live. Every image proven before it runs.",
-          codeRepository: "https://github.com/nirjxr26",
-          programmingLanguage: "Go",
-          license: "https://opensource.org/licenses/MIT",
-          author: {
-            "@type": "Person",
-            name: "Nirjar Goswami",
-            url: "https://nirjar.me",
-          },
-        },
-      ],
-    },
-  },
+    description: "Built to be watched. Every event traced live. Every image proven before it runs.",
+    repoUrl: "https://github.com/nirjxr26",
+  }),
 ]
 
 console.log("🚀 Prerendering static HTML route heads and dynamic schemas...")

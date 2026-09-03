@@ -2,15 +2,14 @@ import { StrictMode, useState, useEffect } from "react"
 import { createRoot } from "react-dom/client"
 import "./index.css"
 import {
-  BastionClient,
+  CaseStudyPage,
   ErrorBoundary,
   HomeClient,
-  HookDropClient,
-  KostClient,
   NotFoundClient,
   WebVitals,
   WorksClient,
 } from "@/components"
+import { CASE_STUDIES } from "@/data/caseStudies"
 
 // Theme initialization
 if (typeof window !== "undefined") {
@@ -89,18 +88,19 @@ function App() {
     content = <HomeClient />
   } else if (cleanPath === "/works") {
     content = <WorksClient />
-  } else if (cleanPath === "/bastion" || cleanPath === "/works/bastion") {
-    content = <BastionClient />
-  } else if (cleanPath === "/kost" || cleanPath === "/works/kost") {
-    content = <KostClient />
-  } else if (cleanPath === "/hookdrop" || cleanPath === "/works/hookdrop") {
-    content = <HookDropClient />
+  } else {
+    const slug = cleanPath.startsWith("/works/")
+      ? cleanPath.slice(7)
+      : cleanPath.slice(1)
+    if (slug && CASE_STUDIES[slug]) {
+      content = <CaseStudyPage data={CASE_STUDIES[slug]} />
+    }
   }
 
   return (
-    <main id="main-content" key={cleanPath} className="animate-hero-1">
+    <div key={cleanPath} className="animate-hero-1">
       {content}
-    </main>
+    </div>
   )
 }
 

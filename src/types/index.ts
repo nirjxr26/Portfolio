@@ -28,14 +28,10 @@ export interface CaseStudyData {
     action: string
     url: string
   }
+  softwareSchema?: Partial<SoftwareSchema>
 }
 
 // ---- Home & Portfolio Types ----
-export interface ProjectLink {
-  href: string
-  isExternal?: boolean
-}
-
 export interface HeroAction {
   label: string
   url: string
@@ -51,12 +47,6 @@ export interface Frame {
   tagline?: string
   achievements?: string[]
   techStack?: string[]
-}
-
-export interface Service {
-  title: string
-  highlight: string
-  desc: string
 }
 
 export interface Project {
@@ -96,6 +86,10 @@ export interface SoftwareSchema {
   applicationCategory: string
   operatingSystem: string
   url: string
+  codeRepository?: string
+  programmingLanguage?: string
+  license?: string
+  runtimePlatform?: string
 }
 
 export interface PersonSchema {

@@ -1,3 +1,4 @@
+import { ArrowRight } from "../common"
 import { Container, Footer, Header } from "../layout"
 
 export function NotFoundClient() {
@@ -7,7 +8,7 @@ export function NotFoundClient() {
       <Header activePath="/404" />
 
       {/* 404 Hero Header Section */}
-      <main className="flex-1 flex flex-col justify-center py-16 min-[414px]:py-20 sm:py-32 lg:py-36">
+      <main id="main-content" className="flex-1 flex flex-col justify-center py-16 min-[414px]:py-20 sm:py-32 lg:py-36">
         <Container className="text-center max-w-2xl px-4 sm:px-6">
           <p className="t-caption-strong text-accent uppercase tracking-wider text-[11px] min-[375px]:text-xs sm:text-sm font-semibold mb-2 sm:mb-3">
             404 // Error
@@ -26,9 +27,7 @@ export function NotFoundClient() {
             </a>
             <a href="/works" className="btn btn-ghost w-full min-[360px]:w-auto">
               <span>Explore Works</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <ArrowRight width={14} height={14} />
             </a>
           </div>
         </Container>

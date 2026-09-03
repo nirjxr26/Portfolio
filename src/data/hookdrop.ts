@@ -1,6 +1,7 @@
 import type { CaseStudyData } from "@/types"
 
 export const hookdropData: CaseStudyData = {
+  seoTitle: "HookDrop | Go Webhook Receiver",
   hero: {
     title: "HookDrop",
     headline: "Built to be watched.",
