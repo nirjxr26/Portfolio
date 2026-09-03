@@ -1,0 +1,47 @@
+# Nirjar Goswami
+
+> Cloud, Security & Systems Engineer building systems meant to be forgotten. Specializing in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure.
+
+## About
+Nirjar Goswami is a systems and security engineer with practical expertise spanning Cloud Architecture, DevOps, Cybersecurity, and Identity & Access Management (IAM). He focuses on range over narrow specialization — understanding how distributed systems, secure defaults, and infrastructure pipelines fit together to build resilient, self-healing platforms.
+
+- Website: https://nirjar.me
+- GitHub: https://github.com/nirjxr26
+- LinkedIn: https://www.linkedin.com/in/nirjxr
+- X (Twitter): https://x.com/nirjxrgoswami
+- Technical Blog: https://blog.nirjar.me
+
+## Core Systems & Open Source Projects
+
+### Bastion
+- Type: Self-Hosted IAM Platform
+- URL: https://nirjar.me/works/bastion
+- Repository: https://github.com/nirjxr26/Bastion
+- Stack: Go, JWT, OAuth2 (Google/GitHub), MFA (TOTP), RBAC/ABAC, PostgreSQL
+- Architecture: Zero third-party data access, step-up verification, scoped API keys, policy simulation against live scenarios, filterable and exportable audit logs.
+
+### Kost
+- Type: Kubernetes Cluster Cost Optimizer
+- URL: https://nirjar.me/works/kost
+- Repository: https://github.com/nirjxr26/Kost
+- Stack: Go, Kubernetes API, Prometheus Metrics, GitHub Actions
+- Architecture: Compares requested CPU/memory against actual 95th-percentile utilization, outputs exact single-line kubectl patch commands, calculates dollar impact of wasted core-hours, zero-CRD standalone binary with CI gate integration.
+
+### HookDrop
+- Type: Real-Time Event & Webhook Ingestion Engine
+- URL: https://nirjar.me/works/hookdrop
+- Stack: Go, eBPF Probes, Server-Sent Events (SSE), Docker, Kubernetes
+- Architecture: Kernel-level low-overhead event tracing, cryptographic container image provenance verification (SBOM attestations), sub-35ms delivery under load.
+
+## Technical Capabilities & Domains
+- Cloud & Infrastructure: AWS, Docker, Kubernetes, Helm, Terraform, Linux kernel administration, GitOps (ArgoCD).
+- Security & Compliance: Zero Trust architecture, RBAC, OAuth2/OIDC, CVE vulnerability triage (Trivy, Grype), least-privilege identity, policy-as-code.
+- DevOps & CI/CD: GitHub Actions, automated multi-stage builds, signed artifacts, automated rollout/rollback pipelines.
+- Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
+
+## Technical Articles & Writing
+- "Why AI can't rewrite Windows ?": Analysis of 50M lines of legacy code, 41 years of architecture, and why generative models struggle with deep systems code (https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows).
+- "SonarQube analysis": Case study on resolving 872 hidden static analysis and security findings within 30 days (https://blog.nirjar.me/sonarqube).
+- "How Git changed the way I work": Deep dive into Git workflows, GitOps paradigms, and trunk-based deployment disciplines (https://blog.nirjar.me/how-github-changed-my-workflow).
+- "VaultLock's logo fetching problem": Hardening third-party API integrations and deterministic caching without breaking UI (https://blog.nirjar.me/vaultlock-logo-fetching).
+

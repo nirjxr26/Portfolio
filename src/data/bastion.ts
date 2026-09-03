@@ -1,6 +1,7 @@
 import type { CaseStudyData } from "@/types"
 
 export const bastionData: CaseStudyData = {
+  seoTitle: "Bastion | Self-Hosted IAM Platform",
   hero: {
     title: "Bastion",
     headline: "Access control. Fully yours.",

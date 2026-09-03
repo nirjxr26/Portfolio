@@ -1,4 +1,6 @@
+export * from "./CarouselSection"
 export * from "./Container"
+export * from "./CTASection"
 export * from "./Footer"
 export * from "./Header"
 export * from "./PageHero"

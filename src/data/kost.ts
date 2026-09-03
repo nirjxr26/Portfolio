@@ -1,6 +1,7 @@
 import type { CaseStudyData } from "@/types"
 
 export const kostData: CaseStudyData = {
+  seoTitle: "Kost | Kubernetes Cost Optimizer",
   hero: {
     title: "Kost",
     headline: "Find the waste. Fix it in one line.",

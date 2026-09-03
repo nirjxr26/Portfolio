@@ -4,11 +4,9 @@ import type {
   HeroAction,
   ProductionCapability,
   Project,
-  ProjectLink,
-  Service,
 } from "@/types"
 
-export type { Article, Frame, HeroAction, ProductionCapability, Project, ProjectLink, Service }
+export type { Article, Frame, HeroAction, ProductionCapability, Project }
 
 export const productionCapabilities: ProductionCapability[] = [
   {
@@ -54,7 +52,7 @@ export const productionCapabilities: ProductionCapability[] = [
 ]
 
 export const meta = {
-  title: "Nirjar Goswami — Cloud & DevOps Engineer",
+  title: "Nirjar Goswami — Cloud & Security Engineer",
   description: "Building systems meant to be forgotten.",
 }
 
@@ -62,7 +60,7 @@ export const hero = {
   headingPrimary: "Building systems",
   headingSecondary: "meant to be forgotten.",
   subheading:
-    "Nirjar Goswami — everyone's specializing, I went wide instead, learning how most of the pieces connect, not just one of them deep.",
+    "Nirjar Goswami — everyone's specializing, but I went wide instead, learning how most of the pieces connect rather than mastering just one.",
   actions: [
     { label: "View Resume", url: "/assets/nirjar_resume.pdf", type: "primary", isExternal: true },
     { label: "View Works", url: "/works", type: "secondary" },
@@ -157,29 +155,6 @@ export const frames: Frame[] = [
       "Structured runbooks and incident triage workflows mapped straight to telemetry alerts.",
     ],
     techStack: ["Grafana", "Prometheus", "Datadog", "PagerDuty", "ArgoCD"],
-  },
-]
-
-export const services: Service[] = [
-  {
-    title: "Security",
-    highlight: "Built secure from the start.",
-    desc: "I build systems with least privilege, defense in depth, secure authentication, and continuous security validation from day one.",
-  },
-  {
-    title: "Cloud & Infrastructure",
-    highlight: "Built to survive real workloads.",
-    desc: "Cost-efficient, reliable, scalable, resilient, and automated cloud solutions from development to deployment.",
-  },
-  {
-    title: "Automation First",
-    highlight: "If it repeats, automate it.",
-    desc: "CI/CD, Infrastructure as Code, testing, deployment, and operational workflows designed to reduce manual work and human error.",
-  },
-  {
-    title: "Continuous Visibility",
-    highlight: "You can't secure what you can't see.",
-    desc: "Logs, metrics, traces, security events, and monitoring that turn infrastructure into observable, actionable systems.",
   },
 ]
 
@@ -306,14 +281,3 @@ export const articles: Article[] = [
 
 export const quote =
   "Every project I've built has solved a real problem I've encountered. Each feature exists for a reason and every decision is driven by a real need."
-
-export const projectLinks: Record<string, ProjectLink> = {
-  Bastion: { href: "/works/bastion" },
-  HookDrop: { href: "/works/hookdrop" },
-  Kost: { href: "/works/kost" },
-  Canopy: { href: "https://github.com/nirjxr26/Canopy", isExternal: true },
-  DeployLens: { href: "https://github.com/nirjxr26/DeployLens", isExternal: true },
-  VaultLock: { href: "https://github.com/nirjxr26/VaultLock-Password-Manager", isExternal: true },
-  BlameLess: { href: "https://github.com/nirjxr26/Blamless", isExternal: true },
-  Blamless: { href: "https://github.com/nirjxr26/Blamless", isExternal: true },
-}
