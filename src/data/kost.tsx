@@ -4,7 +4,11 @@ export const kostData: CaseStudyData = {
   seoTitle: "Kost | Kubernetes Cost Optimizer",
   hero: {
     title: "Kost",
-    headline: "Find the waste. Fix it in one line.",
+    headline: (
+      <>
+        Find the waste.<br className="sm:hidden" /> Fix it in one line.
+      </>
+    ),
     subhead: "A Go agent that flags over-provisioned pods and hands you the kubectl command to fix them.",
   },
   sections: [

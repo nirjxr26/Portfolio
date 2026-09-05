@@ -4,7 +4,11 @@ export const bastionData: CaseStudyData = {
   seoTitle: "Bastion | Self-Hosted IAM Platform",
   hero: {
     title: "Bastion",
-    headline: "Access control. Fully yours.",
+    headline: (
+      <>
+        Access control.<br className="sm:hidden" /> Fully yours.
+      </>
+    ),
     subhead: "Auth, MFA, sessions, and audit logs — self-hosted, with zero third-party access to your data.",
   },
   sections: [

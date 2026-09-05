@@ -67,9 +67,8 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
             >
               <a
                 href="/works"
-                className={`flex items-center gap-1 transition-colors hover:text-ink ${
-                  isWorks ? "text-ink font-semibold" : ""
-                }`}
+                className={`flex items-center gap-1 transition-colors hover:text-ink ${isWorks ? "text-ink font-semibold" : ""
+                  }`}
               >
                 <span>Works</span>
                 <ChevronDown
@@ -155,7 +154,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
         {mobileMenuOpen && (
           <div className="fixed inset-x-0 top-11 bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline h-[calc(100vh-44px)]">
             {/* Top Links Section with Generous Vertical Padding */}
-            <div className="flex flex-col gap-6 text-[30px] font-bold tracking-tight leading-none py-2 text-ink">
+            <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink">
               <a
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
@@ -191,31 +190,44 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
                     <ChevronDown
                       width={20}
                       height={20}
-                      strokeWidth={2.5}
+                      strokeWidth={2}
                       className={`transition-transform duration-200 ${mobileWorksExpanded ? "rotate-180" : ""}`}
                     />
                   </button>
                 </div>
 
                 {mobileWorksExpanded && (
-                  <div className="mt-3 pl-4 border-l-2 border-hairline space-y-4 text-[20px] font-normal text-muted pt-2 pb-1">
-                    {WORK_ITEMS.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="block hover:text-accent transition-colors py-0.5"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                    <a
-                      href="/works"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block font-semibold text-accent text-[17px] pt-1"
-                    >
-                      View All Works →
-                    </a>
+                  <div className="mt-3 rounded-2xl bg-surface-alt/70 p-1.5 border border-hairline/30">
+                    <ul className="space-y-1">
+                      {WORK_ITEMS.map((item) => {
+                        const isActive = activePath === item.href
+                        return (
+                          <li key={item.name}>
+                            <a
+                              href={item.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className={`flex items-center justify-between rounded-xl px-3.5 py-3 text-[17px] font-normal transition-colors ${isActive
+                                ? "text-accent bg-card"
+                                : "text-ink/90 hover:text-accent hover:bg-card active:bg-card/70"
+                                }`}
+                            >
+                              <span>{item.name}</span>
+                              <ArrowRight width={14} height={14} className={isActive ? "text-accent" : "text-muted/60"} />
+                            </a>
+                          </li>
+                        )
+                      })}
+                      <li className="pt-1 border-t border-hairline/50">
+                        <a
+                          href="/works"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[15px] font-normal text-accent hover:bg-card active:bg-card/70 transition-colors"
+                        >
+                          <span>View All Works</span>
+                          <ArrowRight width={14} height={14} />
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 )}
               </div>
