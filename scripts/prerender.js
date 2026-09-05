@@ -18,7 +18,10 @@ const template = fs.readFileSync(templatePath, "utf-8")
 
 function getGitLastMod(relativeFilePath) {
   try {
-    const fullPath = path.resolve(projectRoot, relativeFilePath)
+    let fullPath = path.resolve(projectRoot, relativeFilePath)
+    if (!fs.existsSync(fullPath) && fs.existsSync(fullPath + "x")) {
+      fullPath = fullPath + "x"
+    }
     if (fs.existsSync(fullPath)) {
       const output = execSync(`git log -1 --format=%aI -- "${fullPath}"`, {
         cwd: projectRoot,
@@ -34,7 +37,10 @@ function getGitLastMod(relativeFilePath) {
   }
 
   try {
-    const fullPath = path.resolve(projectRoot, relativeFilePath)
+    let fullPath = path.resolve(projectRoot, relativeFilePath)
+    if (!fs.existsSync(fullPath) && fs.existsSync(fullPath + "x")) {
+      fullPath = fullPath + "x"
+    }
     if (fs.existsSync(fullPath)) {
       const stat = fs.statSync(fullPath)
       return stat.mtime.toISOString().split("T")[0]
@@ -57,12 +63,15 @@ function createCaseStudyRoute({
   runtimePlatform = "Kubernetes, Linux, Docker",
 }) {
   const itemName = name || slug
+  const sourceFile = fs.existsSync(path.resolve(projectRoot, `src/data/${slug}.tsx`))
+    ? `src/data/${slug}.tsx`
+    : `src/data/${slug}.ts`
   return {
     path: `/works/${slug}`,
     title,
     description,
     canonical: `https://nirjar.me/works/${slug}`,
-    sourceFile: `src/data/${slug}.ts`,
+    sourceFile,
     priority: "0.8",
     changefreq: "monthly",
     schema: {
