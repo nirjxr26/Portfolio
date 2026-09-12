@@ -11,8 +11,13 @@ import {
 } from "@/components"
 import { CASE_STUDIES } from "@/data/caseStudies"
 
-// Theme initialization
+// Theme & scroll initialization
 if (typeof window !== "undefined") {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual"
+  }
+  window.scrollTo(0, 0)
+
   const stored = localStorage.getItem("theme")
   if (
     stored === "dark" ||
@@ -28,6 +33,8 @@ function App() {
   const [pathname, setPathname] = useState(window.location.pathname)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+
     const handlePopState = () => {
       setPathname(window.location.pathname)
       window.scrollTo({ top: 0, left: 0, behavior: "instant" })
@@ -35,15 +42,21 @@ function App() {
 
     // Intercept internal link clicks for buttery smooth SPA transitions
     const handleLinkClick = (e: MouseEvent) => {
+      // Respect default prevented or non-left clicks
+      if (e.defaultPrevented || e.button !== 0) return
+
+      // Let browser handle modifier keys for new tab / new window / download
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+
       const target = (e.target as HTMLElement).closest("a")
       if (!target) return
 
       const href = target.getAttribute("href")
       if (!href) return
 
-      // Do not intercept static files, assets, external URLs, or blank targets
+      // Do not intercept static files, assets, external URLs, downloads, or target=_blank
       const isStaticFile = /\.(pdf|png|jpg|jpeg|svg|webp|xml|txt|json|zip)$/i.test(href) || href.startsWith("/assets/")
-      if (isStaticFile || target.target === "_blank" || target.hasAttribute("download")) {
+      if (isStaticFile || target.target === "_blank" || target.hasAttribute("download") || target.getAttribute("rel") === "external") {
         return
       }
 
@@ -98,7 +111,7 @@ function App() {
   }
 
   return (
-    <div key={cleanPath} className="animate-hero-1">
+    <div key={cleanPath}>
       {content}
     </div>
   )

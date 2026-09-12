@@ -25,6 +25,7 @@ export const DEFAULT_OG_IMAGE = "https://nirjar.me/og-image.webp"
 
 export function getCanonicalUrl(urlOrPath?: string): string {
   if (!urlOrPath) {
+    if (typeof window === "undefined") return DEFAULT_URL
     const clean = window.location.pathname.replace(/\/+$/, "")
     return clean ? `${DEFAULT_URL}${clean.startsWith("/") ? "" : "/"}${clean}` : DEFAULT_URL
   }
@@ -81,6 +82,7 @@ export function SEO({
     setMetaTag('meta[property="og:type"]', "property", "og:type", ogType)
     setMetaTag('meta[property="og:url"]', "property", "og:url", getCanonicalUrl(canonicalUrl))
     setMetaTag('meta[property="og:image"]', "property", "og:image", ogImage)
+    setMetaTag('meta[property="og:image:alt"]', "property", "og:image:alt", title)
     setMetaTag('meta[property="og:site_name"]', "property", "og:site_name", "Nirjar Goswami")
     setMetaTag('meta[property="profile:first_name"]', "property", "profile:first_name", "Nirjar")
     setMetaTag('meta[property="profile:last_name"]', "property", "profile:last_name", "Goswami")
@@ -91,6 +93,7 @@ export function SEO({
     setMetaTag('meta[name="twitter:title"]', "name", "twitter:title", title)
     setMetaTag('meta[name="twitter:description"]', "name", "twitter:description", description)
     setMetaTag('meta[name="twitter:image"]', "name", "twitter:image", ogImage)
+    setMetaTag('meta[name="twitter:image:alt"]', "name", "twitter:image:alt", title)
     setMetaTag('meta[name="twitter:site"]', "name", "twitter:site", "@nirjxrgoswami")
     setMetaTag('meta[name="twitter:creator"]', "name", "twitter:creator", "@nirjxrgoswami")
 
@@ -134,7 +137,9 @@ export function SEO({
           "@id": `${DEFAULT_URL}/#person`,
           name: personSchema?.name || "Nirjar Goswami",
           url: personSchema?.url || DEFAULT_URL,
+          image: `${DEFAULT_URL}/og-image.webp`,
           jobTitle: personSchema?.jobTitle || "Cloud & Security Engineer",
+          email: "mailto:nirjargoswami2626@gmail.com",
           sameAs: personSchema?.sameAs || [
             SOCIAL_LINKS.github,
             SOCIAL_LINKS.linkedin,
@@ -149,7 +154,15 @@ export function SEO({
             "Identity & Access Management",
             "System Design",
             "DevOps",
+            "Kubernetes",
+            "Go",
           ],
+          hasOccupation: {
+            "@type": "Occupation",
+            name: "Cloud & Security Engineer",
+            occupationalCategory: "15-1252.00",
+            skills: "Cloud Architecture, Kubernetes, DevOps, Cybersecurity, IAM, Go",
+          },
           description: "Cloud & Security Engineer building systems meant to be forgotten.",
         },
         {
@@ -180,21 +193,13 @@ export function SEO({
 
     if (softwareSchema) {
       schemaGraph.push({
-        "@type": "SoftwareApplication",
+        "@type": "SoftwareSourceCode",
         name: softwareSchema.name,
         description: softwareSchema.description,
-        applicationCategory: softwareSchema.applicationCategory || "DeveloperApplication",
-        operatingSystem: softwareSchema.operatingSystem || "Linux, macOS, Windows",
-        url: softwareSchema.url,
         codeRepository: softwareSchema.codeRepository || softwareSchema.url,
         programmingLanguage: softwareSchema.programmingLanguage || "Go",
         license: softwareSchema.license || "https://opensource.org/licenses/MIT",
         runtimePlatform: softwareSchema.runtimePlatform || "Kubernetes, Linux, Docker",
-        offers: {
-          "@type": "Offer",
-          price: "0",
-          priceCurrency: "USD",
-        },
         author: {
           "@type": "Person",
           name: "Nirjar Goswami",

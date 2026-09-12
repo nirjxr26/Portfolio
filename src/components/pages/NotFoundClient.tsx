@@ -1,9 +1,14 @@
-import { ArrowRight } from "../common"
+import { ArrowRight, SEO } from "../common"
 import { Container, Footer, Header } from "../layout"
 
 export function NotFoundClient() {
   return (
     <div className="min-h-screen bg-canvas text-ink flex flex-col justify-between">
+      <SEO
+        title="Page Not Found | Nirjar Goswami"
+        description="The page you are looking for does not exist or has been moved."
+        includeDefaultSchemas={false}
+      />
       {/* Shared Global Nav */}
       <Header activePath="/404" />
 
