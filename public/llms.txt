@@ -33,6 +33,12 @@ Nirjar Goswami is a systems and security engineer with practical expertise spann
 - Stack: Go, eBPF Probes, Server-Sent Events (SSE), Docker, Kubernetes
 - Architecture: Kernel-level low-overhead event tracing, cryptographic container image provenance verification (SBOM attestations), sub-35ms delivery under load.
 
+### Trace
+- Type: Digital Forensics & Incident Response Hardware
+- Status: In Development / Coming Up
+- Stack: Embedded Linux, Cryptographic Hashing, Hardware Imaging
+- Architecture: A standalone hardware device that safely images digital evidence and verifies it with cryptographic hashing for tamper-evident chain of custody.
+
 ## Technical Capabilities & Domains
 - Cloud & Infrastructure: AWS, Docker, Kubernetes, Helm, Terraform, Linux kernel administration, GitOps (ArgoCD).
 - Security & Compliance: Zero Trust architecture, RBAC, OAuth2/OIDC, CVE vulnerability triage (Trivy, Grype), least-privilege identity, policy-as-code.

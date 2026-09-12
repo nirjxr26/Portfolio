@@ -10,6 +10,41 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
   const [worksDropdownOpen, setWorksDropdownOpen] = useState(false)
   const [mobileWorksExpanded, setMobileWorksExpanded] = useState(false)
 
+  const [visible, setVisible] = useState(true)
+
+  // Hide header when user scrolls down, reveal when scrolling up or at the top
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    let ticking = false
+
+    const updateHeader = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY <= 20) {
+        setVisible(true)
+      } else if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 5) {
+        // Scrolling down: header should not be shown
+        setVisible(false)
+      } else if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > 5) {
+        // Scrolling up: reveal header
+        setVisible(true)
+      }
+
+      lastScrollY = currentScrollY
+      ticking = false
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader)
+        ticking = true
+      }
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
   // Lock body scroll when full-screen mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -23,7 +58,15 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
   }, [mobileMenuOpen])
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 border-b border-hairline dark:border-hairline/50 text-ink transition-colors duration-200 ${mobileMenuOpen ? "bg-canvas" : "bg-canvas/85 backdrop-blur-md"}`}>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b border-hairline dark:border-hairline/50 text-ink transition-all duration-300 ease-out ${
+        mobileMenuOpen
+          ? "bg-canvas translate-y-0 opacity-100 pointer-events-auto"
+          : visible
+            ? "bg-canvas/85 backdrop-blur-md translate-y-0 opacity-100 pointer-events-auto"
+            : "-translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
       {/* Skip to Main Content for Accessibility */}
       <a
         href="#main-content"

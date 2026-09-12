@@ -22,6 +22,7 @@ export function CaseStudyPage({ data }: CaseStudyPageProps) {
         title={pageTitle}
         description={hero.subhead}
         canonicalUrl={canonicalUrl}
+        includeDefaultSchemas={false}
         breadcrumbs={[
           { name: "Home", url: "/" },
           { name: "Works", url: "/works" },

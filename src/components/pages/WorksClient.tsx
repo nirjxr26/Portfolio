@@ -9,6 +9,11 @@ export function WorksClient() {
         title="Works | Nirjar Goswami"
         description="Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop."
         canonicalUrl="https://nirjar.me/works"
+        includeDefaultSchemas={false}
+        breadcrumbs={[
+          { name: "Home", url: "/" },
+          { name: "Works", url: "/works" },
+        ]}
       />
       <ScrollReveal />
       {/* Shared Global Nav */}

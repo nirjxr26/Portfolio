@@ -12,37 +12,37 @@ export const productionCapabilities: ProductionCapability[] = [
   {
     title: "Systems Fluency",
     tagline: "Where pieces connect.",
-    desc: "Most people go deep on one layer. I've spent enough time across systems to see where they quietly depend on each other.",
+    desc: "Most engineers specialize in one layer. I've worked across enough of them to see where they depend on each other.",
   },
   {
     title: "System Design",
     tagline: "Whiteboard before code.",
-    desc: "I map out what could break before writing what works. Cheaper to argue on a diagram than fix in production.",
+    desc: "I map failure points before writing a line. Cheaper to fix on a diagram than in production.",
   },
   {
     title: "Cost Awareness",
     tagline: "Efficient, not cheap.",
-    desc: "I weigh what infra costs to run, not just to build. Waste is easier to catch in review than on the bill.",
+    desc: "I weigh what infrastructure costs to run, not just to build. Waste shows up in review, not the invoice.",
   },
   {
     title: "Quality",
-    tagline: "Read twice, not skimmed.",
-    desc: "Typed, consistent, checked before a human ever sees it — so review time goes to design, not typos.",
+    tagline: "Checked before it's seen.",
+    desc: "Typed, consistent, verified before a human reviews it — so review time goes to design, not typos.",
   },
   {
     title: "Security",
     tagline: "Threat model, not afterthought.",
-    desc: "I've sat close enough to both infra and code to know security bolted on late rarely holds.",
+    desc: "Security added late rarely holds. I build it in from the start.",
   },
   {
     title: "Fault Isolation",
     tagline: "Small blast radius.",
-    desc: "One failure shouldn't take three others down with it. Cause should be obvious, fast.",
+    desc: "One failure shouldn't take three others down. The cause should be obvious, fast.",
   },
   {
     title: "Pipeline Discipline",
     tagline: "Green means passing.",
-    desc: "Infra sized to real usage, not guesswork. Tests and scans gate every deploy, so passing actually means something.",
+    desc: "Infra sized to real usage. Tests and scans gate every deploy, so a pass actually means something.",
   },
   {
     title: "Observability",
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     tags: ["DevOps"],
   },
   {
-    title: "Data Imaging & Retrieval Device",
+    title: "Trace",
     category: "Digital Forensics & Incident Response",
     year: "Coming Up",
     description:

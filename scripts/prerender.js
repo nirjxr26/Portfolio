@@ -1,7 +1,8 @@
-import fs from "fs"
-import path from "path"
-import { fileURLToPath } from "url"
-import { execSync } from "child_process"
+import fs from "node:fs"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import { execSync } from "node:child_process"
+import { createServer } from "vite"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -52,25 +53,57 @@ function getGitLastMod(relativeFilePath) {
   return new Date().toISOString().split("T")[0]
 }
 
-function createCaseStudyRoute({
-  slug,
-  title,
-  name,
-  description,
-  repoUrl,
-  language = "Go",
-  license = "https://opensource.org/licenses/MIT",
-  runtimePlatform = "Kubernetes, Linux, Docker",
-}) {
-  const itemName = name || slug
+function toPlainText(node) {
+  if (!node) return ""
+  if (typeof node === "string") return node
+  if (typeof node === "number") return String(node)
+  if (Array.isArray(node)) return node.map(toPlainText).join("")
+  if (typeof node === "object" && node !== null && "props" in node) {
+    if (node.props && node.props.children) {
+      return toPlainText(node.props.children)
+    }
+  }
+  return ""
+}
+
+// Dynamically load live TypeScript data modules via Vite's SSR runtime
+console.log("📦 Loading application data modules for unified single-source prerendering...")
+const vite = await createServer({
+  root: projectRoot,
+  server: { middlewareMode: true },
+  appType: "custom",
+  logLevel: "silent",
+})
+
+let homeMod, caseStudiesMod, navMod
+try {
+  homeMod = await vite.ssrLoadModule("/src/data/home.ts")
+  caseStudiesMod = await vite.ssrLoadModule("/src/data/caseStudies.ts")
+  navMod = await vite.ssrLoadModule("/src/data/navigation.ts")
+} finally {
+  await vite.close()
+}
+
+const { articles } = homeMod
+const { CASE_STUDIES } = caseStudiesMod
+const { SOCIAL_LINKS } = navMod
+
+// Dynamically build case study routes from CASE_STUDIES with rich Schema.org metadata
+const caseStudyRoutes = Object.entries(CASE_STUDIES).map(([slug, data]) => {
+  const headlineText = toPlainText(data.hero.headline)
+  const title = data.seoTitle || `${data.hero.title} | ${headlineText || data.hero.subhead}`
+  const description = data.hero.subhead
+  const repoUrl = data.cta.url
+  const canonical = `https://nirjar.me/works/${slug}`
   const sourceFile = fs.existsSync(path.resolve(projectRoot, `src/data/${slug}.tsx`))
     ? `src/data/${slug}.tsx`
     : `src/data/${slug}.ts`
+
   return {
     path: `/works/${slug}`,
     title,
     description,
-    canonical: `https://nirjar.me/works/${slug}`,
+    canonical,
     sourceFile,
     priority: "0.8",
     changefreq: "monthly",
@@ -82,19 +115,26 @@ function createCaseStudyRoute({
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
             { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-            { "@type": "ListItem", position: 3, name: itemName, item: `https://nirjar.me/works/${slug}` },
+            { "@type": "ListItem", position: 3, name: data.hero.title, item: canonical },
           ],
         },
         {
           "@type": "SoftwareSourceCode",
-          name: itemName,
+          "@id": `${canonical}#software`,
+          name: data.hero.title,
           description,
+          url: canonical,
           codeRepository: repoUrl,
-          programmingLanguage: language,
-          license,
-          runtimePlatform,
+          programmingLanguage: data.softwareSchema?.programmingLanguage || "Go",
+          license: data.softwareSchema?.license || "https://opensource.org/licenses/MIT",
+          runtimePlatform: data.softwareSchema?.runtimePlatform || "Kubernetes, Linux, Docker",
+          isPartOf: {
+            "@type": "WebSite",
+            "@id": "https://nirjar.me/#website",
+          },
           author: {
             "@type": "Person",
+            "@id": "https://nirjar.me/#person",
             name: "Nirjar Goswami",
             url: "https://nirjar.me",
           },
@@ -102,7 +142,33 @@ function createCaseStudyRoute({
       ],
     },
   }
-}
+})
+
+const articleSchemaItems = articles.map((art, idx) => ({
+  "@type": "ListItem",
+  position: idx + 1,
+  item: {
+    "@type": "TechArticle",
+    headline: art.title,
+    description: art.desc.trim(),
+    url: art.link,
+    author: { "@id": "https://nirjar.me/#person" },
+    publisher: { "@id": "https://nirjar.me/#person" },
+    about: art.category || "Technology",
+  },
+}))
+
+const worksCollectionItems = Object.entries(CASE_STUDIES).map(([slug, cs], idx) => ({
+  "@type": "ListItem",
+  position: idx + 1,
+  item: {
+    "@type": "SoftwareSourceCode",
+    name: cs.hero.title,
+    description: cs.hero.subhead,
+    url: `https://nirjar.me/works/${slug}`,
+    codeRepository: cs.cta.url,
+  },
+}))
 
 const routes = [
   {
@@ -131,13 +197,15 @@ const routes = [
           "@id": "https://nirjar.me/#person",
           name: "Nirjar Goswami",
           url: "https://nirjar.me",
+          image: "https://nirjar.me/og-image.webp",
           jobTitle: "Cloud & Security Engineer",
+          email: "mailto:nirjargoswami2626@gmail.com",
           sameAs: [
-            "https://github.com/nirjxr26",
-            "https://www.linkedin.com/in/nirjxr",
-            "https://x.com/nirjxrgoswami",
-            "https://instagram.com/nirjar_goswami",
-          ],
+            SOCIAL_LINKS.github,
+            SOCIAL_LINKS.linkedin,
+            SOCIAL_LINKS.twitter,
+            SOCIAL_LINKS.instagram,
+          ].filter(Boolean),
           knowsAbout: [
             "Cloud Infrastructure",
             "Cloud Architecture",
@@ -146,7 +214,15 @@ const routes = [
             "Identity & Access Management",
             "System Design",
             "DevOps",
+            "Kubernetes",
+            "Go",
           ],
+          hasOccupation: {
+            "@type": "Occupation",
+            name: "Cloud & Security Engineer",
+            occupationalCategory: "15-1252.00",
+            skills: "Cloud Architecture, Kubernetes, DevOps, Cybersecurity, IAM, Go",
+          },
           description: "Cloud & Security Engineer building systems meant to be forgotten.",
         },
         {
@@ -165,60 +241,7 @@ const routes = [
           "@id": "https://nirjar.me/#articles",
           name: "Technical Articles & Publications",
           description: "Technical articles on systems, observability, security, and developer tooling by Nirjar Goswami.",
-          itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              item: {
-                "@type": "TechArticle",
-                headline: "Why AI can't rewrite Windows ?",
-                description: "50M lines. 41 years and decades of decisions.",
-                url: "https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows",
-                author: { "@id": "https://nirjar.me/#person" },
-                publisher: { "@id": "https://nirjar.me/#person" },
-                about: "Generative AI",
-              },
-            },
-            {
-              "@type": "ListItem",
-              position: 2,
-              item: {
-                "@type": "TechArticle",
-                headline: "SonarQube analysis",
-                description: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
-                url: "https://blog.nirjar.me/sonarqube",
-                author: { "@id": "https://nirjar.me/#person" },
-                publisher: { "@id": "https://nirjar.me/#person" },
-                about: "Observability",
-              },
-            },
-            {
-              "@type": "ListItem",
-              position: 3,
-              item: {
-                "@type": "TechArticle",
-                headline: "How Git changed the way I work",
-                description: "Not just a code host. A place that quietly reshaped how I build.",
-                url: "https://blog.nirjar.me/how-github-changed-my-workflow",
-                author: { "@id": "https://nirjar.me/#person" },
-                publisher: { "@id": "https://nirjar.me/#person" },
-                about: "Developer Tools",
-              },
-            },
-            {
-              "@type": "ListItem",
-              position: 4,
-              item: {
-                "@type": "TechArticle",
-                headline: "VaultLock's logo fetching problem",
-                description: "Getting the right brand logo, every time, without breaking the UI.",
-                url: "https://blog.nirjar.me/vaultlock-logo-fetching",
-                author: { "@id": "https://nirjar.me/#person" },
-                publisher: { "@id": "https://nirjar.me/#person" },
-                about: "Security",
-              },
-            },
-          ],
+          itemListElement: articleSchemaItems,
         },
       ],
     },
@@ -242,30 +265,24 @@ const routes = [
             { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
           ],
         },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://nirjar.me/works#collection",
+          url: "https://nirjar.me/works",
+          name: "Works & Systems Architecture | Nirjar Goswami",
+          description:
+            "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
+          isPartOf: { "@id": "https://nirjar.me/#website" },
+          mainEntity: {
+            "@type": "ItemList",
+            name: "Featured Software & Infrastructure Systems",
+            itemListElement: worksCollectionItems,
+          },
+        },
       ],
     },
   },
-  createCaseStudyRoute({
-    slug: "bastion",
-    name: "Bastion",
-    title: "Bastion | Self-Hosted IAM Platform",
-    description: "Auth, MFA, sessions, and audit logs — self-hosted access control with zero third-party access to your data.",
-    repoUrl: "https://github.com/nirjxr26/Bastion",
-  }),
-  createCaseStudyRoute({
-    slug: "kost",
-    name: "Kost",
-    title: "Kost | Kubernetes Cost Optimizer",
-    description: "A Go agent that flags over-provisioned pods and hands you the kubectl command to fix them.",
-    repoUrl: "https://github.com/nirjxr26/Kost",
-  }),
-  createCaseStudyRoute({
-    slug: "hookdrop",
-    name: "HookDrop",
-    title: "HookDrop | Go Webhook Receiver",
-    description: "Built to be watched. Every event traced live. Every image proven before it runs.",
-    repoUrl: "https://github.com/nirjxr26",
-  }),
+  ...caseStudyRoutes,
 ]
 
 console.log("🚀 Prerendering static HTML route heads and dynamic schemas...")
@@ -301,6 +318,10 @@ routes.forEach((route) => {
     /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/,
     `<meta property="og:url" content="${route.canonical}" />`
   )
+  html = html.replace(
+    /<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/,
+    `<meta property="og:image:alt" content="${route.title}" />`
+  )
 
   // Replace Twitter Tags
   html = html.replace(
@@ -310,6 +331,10 @@ routes.forEach((route) => {
   html = html.replace(
     /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/,
     `<meta name="twitter:description" content="${route.description}" />`
+  )
+  html = html.replace(
+    /<meta\s+name="twitter:image:alt"\s+content=".*?"\s*\/?>/,
+    `<meta name="twitter:image:alt" content="${route.title}" />`
   )
 
   // Replace JSON-LD schema
@@ -368,4 +393,4 @@ ${sitemapEntries}
 fs.writeFileSync(path.resolve(distDir, "sitemap.xml"), sitemapXml, "utf-8")
 console.log("  ✓ Generated dist/sitemap.xml with dynamic lastmod timestamps")
 
-console.log("✨ All 5 routes prerendered successfully with 100/100 production SEO!")
+console.log(`✨ All ${routes.length} routes prerendered successfully with 100/100 production SEO!`)
