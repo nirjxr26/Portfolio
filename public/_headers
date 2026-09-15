@@ -1,3 +1,8 @@
+# NOTE: Vercel ignores this file — vercel.json is the live header source.
+# Kept in sync for non-Vercel static hosts (Netlify / Cloudflare Pages) only.
+# Production CSP is strict (no 'unsafe-inline'). See vite.config.ts for the
+# dev-only relaxed policy. No Report-To / NEL: no collector exists on this
+# backend-less site, so reporting headers would only fake monitoring.
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
@@ -10,10 +15,11 @@
   Origin-Agent-Cluster: ?1
   X-DNS-Prefetch-Control: off
   X-Permitted-Cross-Domain-Policies: none
-  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; prefetch-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
-  Report-To: {"group":"default","max_age":10886400,"endpoints":[{"url":"https://nirjar.me/api/report-csp"}]}
-  NEL: {"report_to":"default","max_age":10886400}
+  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; prefetch-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
   Cache-Control: public, max-age=31536000, immutable
