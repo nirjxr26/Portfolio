@@ -1,13 +1,12 @@
 import type { CaseStudyData } from "@/types"
-import { FeatureCard, SEO } from "../common"
-import { CarouselSection, CTASection, Footer, Header, PageHero } from "../layout"
-import { ScrollReveal } from "../providers"
+import { FeatureCard, Seo } from "../common"
+import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
 
 interface CaseStudyPageProps {
   data: CaseStudyData
 }
 
-export function CaseStudyPage({ data }: CaseStudyPageProps) {
+export function CaseStudyPage({ data }: Readonly<CaseStudyPageProps>) {
   const { hero, sections, cta, seoTitle } = data
   const slug = hero.title.toLowerCase()
   const canonicalUrl = `https://nirjar.me/works/${slug}`
@@ -17,35 +16,35 @@ export function CaseStudyPage({ data }: CaseStudyPageProps) {
   const footerBgClass = isCtaSurfaceAlt ? "bg-canvas" : "bg-surface-alt"
 
   return (
-    <div className="min-h-screen bg-canvas text-ink">
-      <SEO
-        title={pageTitle}
-        description={hero.subhead}
-        canonicalUrl={canonicalUrl}
-        includeDefaultSchemas={false}
-        breadcrumbs={[
-          { name: "Home", url: "/" },
-          { name: "Works", url: "/works" },
-          { name: hero.title, url: `/works/${slug}` },
-        ]}
-        softwareSchema={{
-          name: hero.title,
-          description: hero.subhead,
-          applicationCategory: "DeveloperApplication",
-          operatingSystem: "Kubernetes / Linux",
-          url: cta.url,
-          codeRepository: cta.url,
-          programmingLanguage: "Go",
-          license: "https://opensource.org/licenses/MIT",
-          runtimePlatform: "Kubernetes, Linux, Docker",
-          ...data.softwareSchema,
-        }}
-      />
-      <ScrollReveal />
-      {/* Shared Global Nav */}
-      <Header activePath="/works" />
-
-      <main id="main-content">
+    <PageShell
+      headerPath="/works"
+      footerBgClass={footerBgClass}
+      seo={
+        <Seo
+          title={pageTitle}
+          description={hero.subhead}
+          canonicalUrl={canonicalUrl}
+          includeDefaultSchemas={false}
+          breadcrumbs={[
+            { name: "Home", url: "/" },
+            { name: "Works", url: "/works" },
+            { name: hero.title, url: `/works/${slug}` },
+          ]}
+          softwareSchema={{
+            name: hero.title,
+            description: hero.subhead,
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Kubernetes / Linux",
+            url: cta.url,
+            codeRepository: cta.url,
+            programmingLanguage: "Go",
+            license: "https://opensource.org/licenses/MIT",
+            runtimePlatform: "Kubernetes, Linux, Docker",
+            ...data.softwareSchema,
+          }}
+        />
+      }
+    >
         {/* Hero Header */}
         <PageHero badge={hero.title} title={hero.headline} subhead={hero.subhead} />
 
@@ -77,10 +76,6 @@ export function CaseStudyPage({ data }: CaseStudyPageProps) {
           bgClass={ctaBgClass}
           ariaLabel={`View ${hero.title} on GitHub`}
         />
-      </main>
-
-      {/* Shared Footer */}
-      <Footer bgClass={footerBgClass} />
-    </div>
+    </PageShell>
   )
 }

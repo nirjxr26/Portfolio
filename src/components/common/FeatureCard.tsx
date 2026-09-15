@@ -1,3 +1,5 @@
+import { BaseCard } from "./BaseCard"
+
 interface FeatureCardItem {
   headline: string
   body?: string
@@ -18,10 +20,11 @@ export function FeatureCard({
   cardWidthClass = "w-[270px] min-[375px]:w-[300px] min-[480px]:w-[340px] min-[577px]:w-[360px] md:w-[380px] lg:w-[400px]",
   cardHeightClass = "h-[320px] sm:h-[350px] min-h-[320px] sm:min-h-[350px]",
   hideBody = false,
-}: FeatureCardProps) {
+}: Readonly<FeatureCardProps>) {
   return (
-    <article
-      className={`${cardWidthClass} shrink-0 snap-start rounded-[20px] p-5 min-[375px]:p-6 sm:p-8 md:p-9 ${cardHeightClass} flex flex-col justify-between apple-card-hover ${cardBgClass}`}
+    <BaseCard
+      as="article"
+      className={`${cardWidthClass} shrink-0 snap-start p-5 min-[375px]:p-6 sm:p-8 md:p-9 ${cardHeightClass} ${cardBgClass}`}
     >
       <div>
         {card.tag && (
@@ -29,7 +32,7 @@ export function FeatureCard({
             {card.tag}
           </p>
         )}
-        <h3 className="t-tagline text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
+        <h3 className="t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
           {card.headline}
         </h3>
         {!hideBody && card.body && (
@@ -38,6 +41,6 @@ export function FeatureCard({
           </p>
         )}
       </div>
-    </article>
+    </BaseCard>
   )
 }

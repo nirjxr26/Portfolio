@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import { Container } from "./Container"
 import { CarouselTrack } from "../common/CarouselTrack"
+import { Section, SectionHeader } from "./Section"
 
 interface CarouselSectionProps {
   id?: string
@@ -18,16 +18,14 @@ export function CarouselSection({
   headerClassName = "mb-6 sm:mb-8",
   trackWrapperClassName = "",
   children,
-}: CarouselSectionProps) {
+}: Readonly<CarouselSectionProps>) {
   return (
-    <section id={id} className={`scroll-mt-12 overflow-hidden py-14 sm:py-18 ${bgClass}`}>
-      <Container className={`reveal-on-scroll ${headerClassName}`}>
-        <h2 className="t-display">{title}</h2>
-      </Container>
+    <Section id={id} bgClass={bgClass}>
+      <SectionHeader title={title} className={headerClassName} />
 
-      <div className={`reveal-on-scroll ${trackWrapperClassName}`}>
+      <div className={`reveal-on-scroll ${trackWrapperClassName}`.trim()}>
         <CarouselTrack>{children}</CarouselTrack>
       </div>
-    </section>
+    </Section>
   )
 }

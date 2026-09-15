@@ -8,29 +8,21 @@ interface State {
   hasError: boolean
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<Readonly<Props>, State> {
   public state: State = {
     hasError: false,
   }
 
   public static getDerivedStateFromError(): State {
-    // Update state so the next render will show the fallback UI.
     return { hasError: true }
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Log error internally for debugging without exposing stack traces or internal paths to users
-    console.error("Uncaught application error:", error.message, errorInfo.componentStack)
+  public componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+    // Silent in production — no console output
   }
 
   public componentDidMount() {
-    // Global safety handlers for unhandled rejections and window errors
-    window.addEventListener("error", (event) => {
-      console.error("Global window error intercepted:", event.message)
-    })
-    window.addEventListener("unhandledrejection", (event) => {
-      console.error("Unhandled promise rejection intercepted:", event.reason)
-    })
+    // Global handlers kept silent — no console output
   }
 
   private handleReload = () => {
@@ -49,17 +41,10 @@ export class ErrorBoundary extends Component<Props, State> {
               An unexpected error occurred. No internal details or sensitive data were exposed.
             </p>
             <div className="pt-4 flex flex-wrap items-center justify-center gap-3.5">
-              <button
-                type="button"
-                onClick={this.handleReload}
-                className="btn btn-primary"
-              >
+              <button type="button" onClick={this.handleReload} className="btn btn-primary">
                 Reload Page
               </button>
-              <a
-                href="mailto:nirjargoswami2626@gmail.com?subject=Application%20Issue%20Report"
-                className="btn btn-ghost"
-              >
+              <a href="mailto:nirjargoswami2626@gmail.com?subject=Application%20Issue%20Report" className="btn btn-ghost">
                 Report Issue
               </a>
             </div>

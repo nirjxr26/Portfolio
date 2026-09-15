@@ -51,18 +51,20 @@
   <meta name="twitter:image" content="https://nirjar.me/og-image.webp" />
   <meta name="twitter:image:alt" content="Nirjar Goswami Portfolio Preview" />
 
-  <!-- Content Security Policy Meta Fallback -->
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'none'; manifest-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; object-src 'none'; media-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;" />
+  <meta http-equiv="Cross-Origin-Embedder-Policy" content="credentialless" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Origin-Agent-Cluster" content="?1" />
+  <meta http-equiv="X-DNS-Prefetch-Control" content="off" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Font Preconnects & DNS-Prefetch -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Font Preconnects & DNS-Prefetch — hardened with SRI-ready crossorigin -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" crossorigin="anonymous" />
+    rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
 
   <!-- Structured Data: JSON-LD (Schema.org) for Search Engines -->

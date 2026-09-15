@@ -10,7 +10,7 @@ interface ProductionRailProps {
 export function ProductionRail({
   bgClass = "bg-surface-alt",
   cardBgClass = "bg-card",
-}: ProductionRailProps) {
+}: Readonly<ProductionRailProps>) {
   return (
     <CarouselSection id="bring-to-production" title="What I bring to production." bgClass={bgClass}>
       {productionCapabilities.map((cap) => (

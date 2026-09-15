@@ -1,5 +1,6 @@
 import { projects } from "@/data/home"
 import { Container } from "../layout/Container"
+import { Section, SectionHeader } from "../layout/Section"
 import { CarouselTrack } from "./CarouselTrack"
 import { ProjectCard } from "./ProjectCard"
 
@@ -15,15 +16,13 @@ export function ProjectsRail({
   cardBgClass = "bg-surface-alt",
   id = "work",
   featuredCount = 4,
-}: ProjectsRailProps) {
+}: Readonly<ProjectsRailProps>) {
   const featured = projects.slice(0, featuredCount)
   const more = projects.slice(featuredCount)
 
   return (
-    <section id={id} className={`scroll-mt-12 overflow-hidden py-14 sm:py-18 ${bgClass}`}>
-      <Container className="mb-6 sm:mb-8 reveal-on-scroll">
-        <h2 className="t-display">Featured Work.</h2>
-      </Container>
+    <Section id={id} bgClass={bgClass}>
+      <SectionHeader title="Featured Work." />
 
       {/* Featured Projects — Apple-style Horizontal Carousel */}
       <div className="reveal-on-scroll">
@@ -49,6 +48,6 @@ export function ProjectsRail({
           </CarouselTrack>
         </div>
       )}
-    </section>
+    </Section>
   )
 }

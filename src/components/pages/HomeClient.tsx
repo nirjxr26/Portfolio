@@ -1,18 +1,17 @@
 import { articles, frames, hero, quote } from "@/data/home"
-import { externalProps } from "@/utils/helpers"
-import { ArticleCard, ArrowRight, FeatureCard, ProductionRail, ProjectsRail, SEO } from "../common"
-import { CarouselSection, Container, Footer, Header } from "../layout"
-import { ScrollReveal } from "../providers"
+import { AppButton, ArticleCard, ArrowRight, FeatureCard, ProductionRail, ProjectsRail, Seo } from "../common"
+import { CarouselSection, Container, PageShell } from "../layout"
+
+const HIDDEN_HOME_TITLES = new Set([
+  "Bastion's Path from Docker to Kubernetes",
+  "DeployLens: Finding My Deployment Blind Spots",
+])
 
 export function HomeClient() {
-  return (
-    <div className="min-h-screen bg-canvas text-ink">
-      <SEO articles={articles} />
-      <ScrollReveal />
-      {/* Global nav */}
-      <Header activePath="/" />
+  const homeArticles = articles.filter((a) => !HIDDEN_HOME_TITLES.has(a.title))
 
-      <main id="main-content">
+  return (
+    <PageShell headerPath="/" footerBgClass="bg-canvas border-t border-hairline" seo={<Seo articles={articles} />}>
         {/* Hero */}
         <section className="bg-canvas pt-28 pb-16 sm:pt-36 sm:pb-20">
           <Container className="text-center">
@@ -25,14 +24,14 @@ export function HomeClient() {
             <div className="mt-8 sm:mt-10 flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0 animate-hero-3">
               {hero.actions.map((action) =>
                 action.type === "primary" ? (
-                  <a key={action.label} href={action.url} className="btn btn-primary w-full min-[360px]:w-auto" {...externalProps(action.url)}>
+                  <AppButton key={action.label} href={action.url} variant="primary" className="w-full min-[360px]:w-auto">
                     {action.label}
-                  </a>
+                  </AppButton>
                 ) : (
-                  <a key={action.label} href={action.url} className="btn btn-ghost w-full min-[360px]:w-auto">
+                  <AppButton key={action.label} href={action.url} variant="ghost" className="w-full min-[360px]:w-auto">
                     <span>{action.label}</span>
                     <ArrowRight width={14} height={14} />
-                  </a>
+                  </AppButton>
                 ),
               )}
             </div>
@@ -60,7 +59,7 @@ export function HomeClient() {
         {/* Reusable What I bring to production Section */}
         <ProductionRail bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
-        {/* Articles Section (Above Quote) */}
+        {/* Articles Section (Above Quote) — Bastion + DeployLens hidden here, still in /article bento */}
         <CarouselSection
           id="articles"
           title="Articles."
@@ -68,10 +67,16 @@ export function HomeClient() {
           headerClassName=""
           trackWrapperClassName="mt-6 sm:mt-10"
         >
-          {articles.map((article) => (
+          {homeArticles.map((article) => (
             <ArticleCard key={article.title} article={article} />
           ))}
         </CarouselSection>
+        <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">
+          <AppButton href="/articles" variant="ghost">
+            <span>View articles</span>
+            <ArrowRight width={14} height={14} />
+          </AppButton>
+        </div>
 
         {/* Quote Section (bg-surface-alt) */}
         <section className="bg-surface-alt py-16 text-ink sm:py-20 reveal-on-scroll">
@@ -79,10 +84,6 @@ export function HomeClient() {
             <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
           </Container>
         </section>
-      </main>
-
-      {/* Footer (bg-canvas) */}
-      <Footer bgClass="bg-canvas border-t border-hairline" />
-    </div>
+    </PageShell>
   )
 }

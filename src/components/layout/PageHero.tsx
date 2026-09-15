@@ -5,11 +5,15 @@ interface PageHeroProps {
   badge?: string
   title: ReactNode
   subhead: string
+  compact?: boolean
 }
 
-export function PageHero({ badge, title, subhead }: PageHeroProps) {
+export function PageHero({ badge, title, subhead, compact = false }: Readonly<PageHeroProps>) {
+  const sectionPadding = compact
+    ? "pt-24 pb-12 min-[480px]:pt-28 min-[480px]:pb-16 sm:pt-32 sm:pb-20 md:pt-36 md:pb-24"
+    : "pt-32 pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28"
   return (
-    <section className="bg-canvas pt-32 pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28">
+    <section className={`bg-canvas ${sectionPadding}`}>
       <Container className="text-center">
         {badge && (
           <p className="font-bold tracking-normal text-accent text-lg min-[375px]:text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-3 animate-hero-1">

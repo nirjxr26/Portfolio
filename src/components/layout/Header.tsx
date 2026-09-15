@@ -4,7 +4,7 @@ import { ArrowRight, ChevronDown, HomeIcon } from "../common/Icons"
 import { ThemeToggle } from "../common/ThemeToggle"
 import { Container } from "./Container"
 
-export function Header({ activePath = "/" }: { activePath?: string }) {
+export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) {
   const isWorks = activePath.startsWith("/works")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [worksDropdownOpen, setWorksDropdownOpen] = useState(false)
@@ -152,7 +152,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
               )}
             </div>
 
-            <a href="/#articles" className="transition-colors hover:text-ink whitespace-nowrap shrink-0">
+            <a href="/articles" className="transition-colors hover:text-ink whitespace-nowrap shrink-0">
               Articles
             </a>
             <a
@@ -276,7 +276,7 @@ export function Header({ activePath = "/" }: { activePath?: string }) {
               </div>
 
               <a
-                href="/#articles"
+                href="/articles"
                 onClick={() => setMobileMenuOpen(false)}
                 className="py-1 transition-colors hover:text-accent"
               >
