@@ -1,3 +1,6 @@
+# NOTE: Vercel ignores this file — routing there comes from vercel.json
+# (cleanUrls) plus the prerendered files themselves. Kept for Netlify-style
+# hosts only.
 # Domain Canonicalization: Redirect www to apex domain
 https://www.nirjar.me/* https://nirjar.me/:splat 301!
 http://www.nirjar.me/* https://nirjar.me/:splat 301!

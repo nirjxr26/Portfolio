@@ -23,14 +23,16 @@
         { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; prefetch-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"
-        },
-        { "key": "Report-To", "value": "{\"group\":\"default\",\"max_age\":10886400,\"endpoints\":[{\"url\":\"https://nirjar.me/api/report-csp\"}]}" },
-        { "key": "NEL", "value": "{\"report_to\":\"default\",\"max_age\":10886400}" }
+          "value": "default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; prefetch-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/fonts/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]

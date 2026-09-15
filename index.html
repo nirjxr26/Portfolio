@@ -57,14 +57,10 @@
   <meta http-equiv="X-DNS-Prefetch-Control" content="off" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <!-- Font Preconnects & DNS-Prefetch — hardened with SRI-ready crossorigin -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Self-hosted fonts (Inter + Manrope, latin/latin-ext woff2 in /fonts).
+    Preloads cover body text + display headings; remaining weights load on demand. -->
+  <link rel="preload" href="/fonts/inter-latin-400.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/manrope-latin-600.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs.txt" />
 
   <!-- Structured Data: JSON-LD (Schema.org) for Search Engines -->
