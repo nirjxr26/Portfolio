@@ -18,6 +18,6 @@ export const WORK_ITEMS = [
 export const NAV_LINKS = [
   { label: "What I do", href: "/#what-i-do" },
   { label: "Works", href: "/works" },
-  { label: "Articles", href: "/#articles" },
+  { label: "Articles", href: "/articles" },
   { label: "Resume", href: SOCIAL_LINKS.resume, isExternal: true },
 ] as const

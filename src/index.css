@@ -99,6 +99,20 @@
     line-height: 1.1;
   }
 
+  .t-section-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  @media (min-width: 640px) {
+    .t-section-title {
+      font-size: 28px;
+    }
+  }
+
   .t-tagline {
     font-family: var(--font-display);
     font-weight: 600;
@@ -163,7 +177,6 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 1.5;
-    /* letter-spacing: normal; */
   }
 
   /* Buttons — pill grammar, scale(.95) press, focus ring per design doc */
@@ -218,52 +231,7 @@
   }
 
   .btn-ghost:hover {
-    /* background: color-mix(in srgb, var(--surface-alt) 85%, var(--ink)); */
     color: var(--ink);
-  }
-
-  /* Chips */
-  .chip {
-    display: inline-block;
-    border-radius: 9999px;
-    border: 1px solid var(--hairline);
-    padding: 4px 12px;
-    font-family: var(--font-text);
-    font-size: 12px;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  .chip-soft {
-    display: inline-block;
-    border-radius: 9999px;
-    background: var(--surface-alt);
-    padding: 4px 11px;
-    font-family: var(--font-text);
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-
-  /* What-I-do frame grid */
-  .frame-grid {
-    display: grid;
-    gap: 2rem;
-  }
-
-  @media (min-width: 768px) {
-    .frame-grid {
-      grid-template-columns: 96px minmax(0, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .frame-grid {
-      grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1.2fr);
-    }
   }
 
   /* Carousel track responsive alignment to match Container.tsx exactly */
@@ -450,6 +418,23 @@
 
   .apple-card-hover:active {
     transform: translate3d(0, -1px, 0) scale(0.97);
+  }
+
+  /* Smooth page transition — buttery SPA fade */
+  @keyframes pageFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-transition {
+    animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
   }
 
   /* Apple signature tactile tap micro-interaction & reduced motion safety */

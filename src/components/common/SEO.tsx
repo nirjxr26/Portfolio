@@ -1,59 +1,67 @@
 import { useEffect } from "react"
-import { SOCIAL_LINKS } from "@/data/navigation"
+import {
+  SITE_DEFAULT_DESC,
+  SITE_DEFAULT_TITLE,
+  SITE_OG_IMAGE,
+  SITE_URL,
+  siteCanonical,
+} from "@/data/site"
+import {
+  absoluteUrl,
+  buildArticlesItemList,
+  buildBreadcrumbSchema,
+  buildDefaultSchemas,
+  buildSoftwareSchema,
+} from "@/data/seo"
 import type { Article, BreadcrumbItem, PersonSchema, SoftwareSchema } from "@/types"
 
 export type { Article, BreadcrumbItem, PersonSchema, SoftwareSchema }
 
-interface SEOProps {
+interface SeoProps {
   title?: string
   description?: string
   canonicalUrl?: string
   ogImage?: string
   ogType?: string
+  publishedTime?: string
+  modifiedTime?: string
   breadcrumbs?: BreadcrumbItem[]
   softwareSchema?: SoftwareSchema
   personSchema?: PersonSchema
   includeDefaultSchemas?: boolean
   articles?: Article[]
+  articleSchema?: Record<string, unknown>
+  extraSchemas?: Record<string, unknown>[]
 }
 
-export const DEFAULT_TITLE = "Nirjar Goswami | Cloud & Security Engineer"
-export const DEFAULT_DESC =
-  "Cloud, Security & Systems Engineer specializing in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure."
-export const DEFAULT_URL = "https://nirjar.me"
-export const DEFAULT_OG_IMAGE = "https://nirjar.me/og-image.webp"
+/** @deprecated Use `SeoProps` (PascalCase, Sonar S6770). */
+export type SEOProps = SeoProps
+
+export const DEFAULT_TITLE = SITE_DEFAULT_TITLE
+export const DEFAULT_DESC = SITE_DEFAULT_DESC
+export const DEFAULT_URL = SITE_URL
+export const DEFAULT_OG_IMAGE = SITE_OG_IMAGE
 
 export function getCanonicalUrl(urlOrPath?: string): string {
-  if (!urlOrPath) {
-    if (typeof window === "undefined") return DEFAULT_URL
-    const clean = window.location.pathname.replace(/\/+$/, "")
-    return clean ? `${DEFAULT_URL}${clean.startsWith("/") ? "" : "/"}${clean}` : DEFAULT_URL
-  }
-  if (urlOrPath.startsWith("http")) {
-    try {
-      const parsed = new URL(urlOrPath)
-      const clean = parsed.pathname.replace(/\/+$/, "")
-      return clean ? `${parsed.origin}${clean.startsWith("/") ? "" : "/"}${clean}` : parsed.origin
-    } catch {
-      return urlOrPath
-    }
-  }
-  const clean = urlOrPath.replace(/\/+$/, "")
-  return clean ? `${DEFAULT_URL}${clean.startsWith("/") ? "" : "/"}${clean}` : DEFAULT_URL
+  return siteCanonical(urlOrPath)
 }
 
-export function SEO({
+export function Seo({
   title = DEFAULT_TITLE,
   description = DEFAULT_DESC,
   canonicalUrl,
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
+  publishedTime,
+  modifiedTime,
   breadcrumbs,
   softwareSchema,
   personSchema,
   includeDefaultSchemas = true,
   articles,
-}: SEOProps) {
+  articleSchema,
+  extraSchemas,
+}: Readonly<SeoProps>) {
   useEffect(() => {
     // 1. Update Title only if different
     if (document.title !== title) {
@@ -87,6 +95,14 @@ export function SEO({
     setMetaTag('meta[property="profile:first_name"]', "property", "profile:first_name", "Nirjar")
     setMetaTag('meta[property="profile:last_name"]', "property", "profile:last_name", "Goswami")
     setMetaTag('meta[property="profile:username"]', "property", "profile:username", "nirjxr")
+
+    // 3b. Article timestamps (only meaningful when og:type is article)
+    if (publishedTime) {
+      setMetaTag('meta[property="article:published_time"]', "property", "article:published_time", publishedTime)
+    }
+    if (modifiedTime) {
+      setMetaTag('meta[property="article:modified_time"]', "property", "article:modified_time", modifiedTime)
+    }
 
     // 4. Twitter Card Tags
     setMetaTag('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image")
@@ -122,116 +138,32 @@ export function SEO({
     const schemaGraph: Record<string, unknown>[] = []
 
     if (includeDefaultSchemas) {
-      schemaGraph.push(
-        {
-          "@type": "ProfilePage",
-          "@id": `${DEFAULT_URL}/#profilepage`,
-          url: DEFAULT_URL,
-          name: "Nirjar Goswami | Cloud & Security Engineer",
-          mainEntity: {
-            "@id": `${DEFAULT_URL}/#person`,
-          },
-        },
-        {
-          "@type": "Person",
-          "@id": `${DEFAULT_URL}/#person`,
-          name: personSchema?.name || "Nirjar Goswami",
-          url: personSchema?.url || DEFAULT_URL,
-          image: `${DEFAULT_URL}/og-image.webp`,
-          jobTitle: personSchema?.jobTitle || "Cloud & Security Engineer",
-          email: "mailto:nirjargoswami2626@gmail.com",
-          sameAs: personSchema?.sameAs || [
-            SOCIAL_LINKS.github,
-            SOCIAL_LINKS.linkedin,
-            SOCIAL_LINKS.twitter,
-            SOCIAL_LINKS.instagram,
-          ],
-          knowsAbout: [
-            "Cloud Infrastructure",
-            "Cloud Architecture",
-            "Cloud Security",
-            "Cybersecurity",
-            "Identity & Access Management",
-            "System Design",
-            "DevOps",
-            "Kubernetes",
-            "Go",
-          ],
-          hasOccupation: {
-            "@type": "Occupation",
-            name: "Cloud & Security Engineer",
-            occupationalCategory: "15-1252.00",
-            skills: "Cloud Architecture, Kubernetes, DevOps, Cybersecurity, IAM, Go",
-          },
-          description: "Cloud & Security Engineer building systems meant to be forgotten.",
-        },
-        {
-          "@type": "WebSite",
-          "@id": `${DEFAULT_URL}/#website`,
-          url: DEFAULT_URL,
-          name: "Nirjar Goswami Portfolio",
-          description: "Official website and case studies of Nirjar Goswami.",
-          publisher: {
-            "@id": `${DEFAULT_URL}/#person`,
-          },
-          inLanguage: "en-US",
-        },
-      )
+      schemaGraph.push(...buildDefaultSchemas(personSchema))
     }
 
     if (breadcrumbs && breadcrumbs.length > 0) {
-      schemaGraph.push({
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumbs.map((b, idx) => ({
-          "@type": "ListItem",
-          position: idx + 1,
-          name: b.name,
-          item: b.url.startsWith("http") ? b.url : `${DEFAULT_URL}${b.url}`,
-        })),
-      })
+      schemaGraph.push(buildBreadcrumbSchema(breadcrumbs))
     }
 
     if (softwareSchema) {
-      schemaGraph.push({
-        "@type": "SoftwareSourceCode",
-        name: softwareSchema.name,
-        description: softwareSchema.description,
-        codeRepository: softwareSchema.codeRepository || softwareSchema.url,
-        programmingLanguage: softwareSchema.programmingLanguage || "Go",
-        license: softwareSchema.license || "https://opensource.org/licenses/MIT",
-        runtimePlatform: softwareSchema.runtimePlatform || "Kubernetes, Linux, Docker",
-        author: {
-          "@type": "Person",
-          name: "Nirjar Goswami",
-          url: DEFAULT_URL,
-        },
-      })
+      schemaGraph.push(
+        buildSoftwareSchema(softwareSchema, {
+          url: absoluteUrl(canonicalUrl ?? DEFAULT_URL),
+          image: ogImage,
+        }),
+      )
+    }
+
+    if (articleSchema) {
+      schemaGraph.push(articleSchema)
     }
 
     if (articles && articles.length > 0) {
-      schemaGraph.push({
-        "@type": "ItemList",
-        "@id": `${DEFAULT_URL}/#articles`,
-        name: "Technical Articles & Publications",
-        description: "Technical articles on systems, observability, security, and developer tooling by Nirjar Goswami.",
-        itemListElement: articles.map((article, idx) => ({
-          "@type": "ListItem",
-          position: idx + 1,
-          item: {
-            "@type": "TechArticle",
-            headline: article.title,
-            description: article.desc,
-            url: article.link,
-            author: {
-              "@id": `${DEFAULT_URL}/#person`,
-            },
-            publisher: {
-              "@id": `${DEFAULT_URL}/#person`,
-            },
-            about: article.category,
-          },
-        })),
-      })
+      schemaGraph.push(buildArticlesItemList(articles))
+    }
+
+    if (extraSchemas && extraSchemas.length > 0) {
+      schemaGraph.push(...extraSchemas)
     }
 
     const newSchemaContent = schemaGraph.length > 0
@@ -241,7 +173,10 @@ export function SEO({
     if (scriptEl.textContent?.trim() !== newSchemaContent.trim()) {
       scriptEl.textContent = newSchemaContent
     }
-  }, [title, description, canonicalUrl, ogImage, ogType, breadcrumbs, softwareSchema, personSchema, includeDefaultSchemas, articles])
+  }, [title, description, canonicalUrl, ogImage, ogType, publishedTime, modifiedTime, breadcrumbs, softwareSchema, personSchema, includeDefaultSchemas, articles, articleSchema, extraSchemas])
 
   return null
 }
+
+/** @deprecated Use `Seo` (PascalCase, Sonar S6770). Kept for backward compat. */
+export const SEO = Seo

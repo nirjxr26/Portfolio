@@ -13,15 +13,114 @@ const CONNECT_LINKS = [
 
 const RESOURCE_LINKS = [
   { name: "Home", href: "/", isExternal: false },
-  { name: "Articles", href: "/#articles", isExternal: false },
+  { name: "Articles", href: "/articles", isExternal: false },
   { name: "Resume", href: SOCIAL_LINKS.resume, isExternal: true },
 ] as const
+
+const WORK_LINKS = WORK_ITEMS.map((item) => ({ name: item.name, href: item.href, isExternal: false }))
 
 interface FooterProps {
   bgClass?: string
 }
 
-export function Footer({ bgClass = "bg-surface-alt" }: FooterProps) {
+interface FooterLinkItem {
+  name: string
+  href: string
+  isExternal?: boolean
+}
+
+function FooterLinkList({
+  items,
+  linkClass,
+  listClassName = "pb-3.5 space-y-2.5 text-sm",
+}: Readonly<{ items: readonly FooterLinkItem[]; linkClass: string; listClassName?: string }>) {
+  return (
+    <ul className={listClassName}>
+      {items.map((item) => (
+        <li key={item.name}>
+          <a
+            href={item.href}
+            target={item.isExternal ? "_blank" : undefined}
+            rel={item.isExternal ? "noreferrer noopener" : undefined}
+            className={linkClass}
+          >
+            {item.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function FooterContactList({
+  linkClass,
+  subtextClass,
+  listClassName = "pb-3.5 space-y-2.5 text-sm",
+}: Readonly<{ linkClass: string; subtextClass: string; listClassName?: string }>) {
+  return (
+    <ul className={listClassName}>
+      <li>
+        <a href={SOCIAL_LINKS.email} className={`${linkClass} block truncate`}>
+          {SOCIAL_LINKS.emailAddress}
+        </a>
+      </li>
+      <li>
+        <a href="tel:+918799142626" className={linkClass}>
+          +91 87991 42626
+        </a>
+      </li>
+      <li className={subtextClass}>Ahmedabad, Gujarat, India</li>
+    </ul>
+  )
+}
+
+function FooterAccordionSection({
+  id,
+  title,
+  open,
+  onToggle,
+  headingClass,
+  iconClass,
+  children,
+}: Readonly<{
+  id: string
+  title: string
+  open: boolean
+  onToggle: (id: string) => void
+  headingClass: string
+  iconClass: string
+  children: React.ReactNode
+}>) {
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => onToggle(id)}
+        className={`flex w-full items-center justify-between py-3.5 text-left text-sm ${headingClass}`}
+        aria-expanded={open}
+      >
+        <span>{title}</span>
+        <ChevronDown className={`transition-transform duration-200 ${iconClass} ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && children}
+    </div>
+  )
+}
+
+function FooterColumn({
+  title,
+  headingClass,
+  children,
+}: Readonly<{ title: string; headingClass: string; children: React.ReactNode }>) {
+  return (
+    <div>
+      <h4 className={`text-base mb-4 ${headingClass}`}>{title}</h4>
+      {children}
+    </div>
+  )
+}
+
+export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
 
   const toggleSection = (section: string) => {
@@ -44,202 +143,68 @@ export function Footer({ bgClass = "bg-surface-alt" }: FooterProps) {
       <Container>
         {/* Mobile Accordion View (< 640px) */}
         <div className={`block sm:hidden divide-y ${divideClass}`}>
-          {/* Section 1: Works */}
-          <div>
-            <button
-              type="button"
-              onClick={() => toggleSection("works")}
-              className={`flex w-full items-center justify-between py-3.5 text-left text-sm ${headingClass}`}
-              aria-expanded={Boolean(openSections.works)}
-            >
-              <span>Works</span>
-              <ChevronDown
-                className={`transition-transform duration-200 ${iconClass} ${openSections.works ? "rotate-180" : ""}`}
-              />
-            </button>
-            {openSections.works && (
-              <ul className="pb-3.5 space-y-2.5 text-sm">
-                {WORK_ITEMS.map((item) => (
-                  <li key={item.name}>
-                    <a href={item.href} className={linkClass}>
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <FooterAccordionSection
+            id="works"
+            title="Works"
+            open={Boolean(openSections.works)}
+            onToggle={toggleSection}
+            headingClass={headingClass}
+            iconClass={iconClass}
+          >
+            <FooterLinkList items={WORK_LINKS} linkClass={linkClass} />
+          </FooterAccordionSection>
 
-          {/* Section 2: Connect */}
-          <div>
-            <button
-              type="button"
-              onClick={() => toggleSection("connect")}
-              className={`flex w-full items-center justify-between py-3.5 text-left text-sm ${headingClass}`}
-              aria-expanded={Boolean(openSections.connect)}
-            >
-              <span>Connect</span>
-              <ChevronDown
-                className={`transition-transform duration-200 ${iconClass} ${openSections.connect ? "rotate-180" : ""}`}
-              />
-            </button>
-            {openSections.connect && (
-              <ul className="pb-3.5 space-y-2.5 text-sm">
-                {CONNECT_LINKS.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className={linkClass}
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <FooterAccordionSection
+            id="connect"
+            title="Connect"
+            open={Boolean(openSections.connect)}
+            onToggle={toggleSection}
+            headingClass={headingClass}
+            iconClass={iconClass}
+          >
+            <FooterLinkList items={CONNECT_LINKS} linkClass={linkClass} />
+          </FooterAccordionSection>
 
-          {/* Section 3: Resources */}
-          <div>
-            <button
-              type="button"
-              onClick={() => toggleSection("resources")}
-              className={`flex w-full items-center justify-between py-3.5 text-left text-sm ${headingClass}`}
-              aria-expanded={Boolean(openSections.resources)}
-            >
-              <span>Resources</span>
-              <ChevronDown
-                className={`transition-transform duration-200 ${iconClass} ${openSections.resources ? "rotate-180" : ""}`}
-              />
-            </button>
-            {openSections.resources && (
-              <ul className="pb-3.5 space-y-2.5 text-sm">
-                {RESOURCE_LINKS.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      target={item.isExternal ? "_blank" : undefined}
-                      rel={item.isExternal ? "noreferrer noopener" : undefined}
-                      className={linkClass}
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <FooterAccordionSection
+            id="resources"
+            title="Resources"
+            open={Boolean(openSections.resources)}
+            onToggle={toggleSection}
+            headingClass={headingClass}
+            iconClass={iconClass}
+          >
+            <FooterLinkList items={RESOURCE_LINKS} linkClass={linkClass} />
+          </FooterAccordionSection>
 
-          {/* Section 4: Contact */}
-          <div>
-            <button
-              type="button"
-              onClick={() => toggleSection("contact")}
-              className={`flex w-full items-center justify-between py-3.5 text-left text-sm ${headingClass}`}
-              aria-expanded={Boolean(openSections.contact)}
-            >
-              <span>Contact</span>
-              <ChevronDown
-                className={`transition-transform duration-200 ${iconClass} ${openSections.contact ? "rotate-180" : ""}`}
-              />
-            </button>
-            {openSections.contact && (
-              <ul className="pb-3.5 space-y-2.5 text-sm">
-                <li>
-                  <a
-                    href={SOCIAL_LINKS.email}
-                    className={`${linkClass} block truncate`}
-                  >
-                    {SOCIAL_LINKS.emailAddress}
-                  </a>
-                </li>
-                <li>
-                  <a href="tel:+918799142626" className={linkClass}>
-                    +91 87991 42626
-                  </a>
-                </li>
-                <li className={subtextClass}>Ahmedabad, Gujarat, India</li>
-              </ul>
-            )}
-          </div>
+          <FooterAccordionSection
+            id="contact"
+            title="Contact"
+            open={Boolean(openSections.contact)}
+            onToggle={toggleSection}
+            headingClass={headingClass}
+            iconClass={iconClass}
+          >
+            <FooterContactList linkClass={linkClass} subtextClass={subtextClass} />
+          </FooterAccordionSection>
         </div>
 
         {/* Desktop / Tablet 4-Column Layout (>= 640px) */}
         <div className="hidden sm:grid sm:grid-cols-4 sm:gap-8">
-          {/* Column 1: Works */}
-          <div>
-            <h4 className={`text-base mb-4 ${headingClass}`}>Works</h4>
-            <ul className="space-y-2.5 text-[15px]">
-              {WORK_ITEMS.map((item) => (
-                <li key={item.name}>
-                  <a href={item.href} className={linkClass}>
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="Works" headingClass={headingClass}>
+            <FooterLinkList items={WORK_LINKS} linkClass={linkClass} listClassName="space-y-2.5 text-[15px]" />
+          </FooterColumn>
 
-          {/* Column 2: Connect */}
-          <div>
-            <h4 className={`text-base mb-4 ${headingClass}`}>Connect</h4>
-            <ul className="space-y-2.5 text-[15px]">
-              {CONNECT_LINKS.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className={linkClass}
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="Connect" headingClass={headingClass}>
+            <FooterLinkList items={CONNECT_LINKS} linkClass={linkClass} listClassName="space-y-2.5 text-[15px]" />
+          </FooterColumn>
 
-          {/* Column 3: Resources */}
-          <div>
-            <h4 className={`text-base mb-4 ${headingClass}`}>Resources</h4>
-            <ul className="space-y-2.5 text-[15px]">
-              {RESOURCE_LINKS.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.href}
-                    target={item.isExternal ? "_blank" : undefined}
-                    rel={item.isExternal ? "noreferrer noopener" : undefined}
-                    className={linkClass}
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <FooterColumn title="Resources" headingClass={headingClass}>
+            <FooterLinkList items={RESOURCE_LINKS} linkClass={linkClass} listClassName="space-y-2.5 text-[15px]" />
+          </FooterColumn>
 
-          {/* Column 4: Contact */}
-          <div>
-            <h4 className={`text-base mb-4 ${headingClass}`}>Contact</h4>
-            <ul className="space-y-2.5 text-[15px]">
-              <li>
-                <a
-                  href={SOCIAL_LINKS.email}
-                  className={`${linkClass} block truncate`}
-                >
-                  {SOCIAL_LINKS.emailAddress}
-                </a>
-              </li>
-              <li>
-                <a href="tel:+918799142626" className={linkClass}>
-                  +91 87991 42626
-                </a>
-              </li>
-              <li className={subtextClass}>Ahmedabad, Gujarat, India</li>
-            </ul>
-          </div>
+          <FooterColumn title="Contact" headingClass={headingClass}>
+            <FooterContactList linkClass={linkClass} subtextClass={subtextClass} listClassName="space-y-2.5 text-[15px]" />
+          </FooterColumn>
         </div>
 
         {/* Bottom Copyright Divider & Centered Legal Text */}

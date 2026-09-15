@@ -46,8 +46,11 @@ Nirjar Goswami is a systems and security engineer with practical expertise spann
 - Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
 
 ## Technical Articles & Writing
-- "Why AI can't rewrite Windows ?": Analysis of 50M lines of legacy code, 41 years of architecture, and why generative models struggle with deep systems code (https://blog.nirjar.me/why-ai-can-t-just-rewrite-windows).
-- "SonarQube analysis": Case study on resolving 872 hidden static analysis and security findings within 30 days (https://blog.nirjar.me/sonarqube).
-- "How Git changed the way I work": Deep dive into Git workflows, GitOps paradigms, and trunk-based deployment disciplines (https://blog.nirjar.me/how-github-changed-my-workflow).
-- "VaultLock's logo fetching problem": Hardening third-party API integrations and deterministic caching without breaking UI (https://blog.nirjar.me/vaultlock-logo-fetching).
+- "AI Agents Have Permissions Now. Who Controls Them?": Why agent security is an authorization problem, not a model-quality problem — OAuth identity, blast radius, and least-privilege for agents (https://nirjar.me/articles/ai-agents-have-permissions-who-controls-them).
+- "Why AI Can't Rewrite Windows": Analysis of 50M lines of legacy code, 41 years of architecture, and why generative models struggle with deep systems code (https://nirjar.me/articles/why-ai-cant-just-rewrite-windows).
+- "872 to 479: Cutting Security Issues with SonarQube": Case study on resolving 872 hidden static analysis and security findings within 30 days (https://nirjar.me/articles/872-issues-30-days-sonarqube).
+- "Bastion's Path from Docker to Kubernetes": Containerizing an IAM platform, moving it to Kubernetes, and building the Jenkins pipeline (https://nirjar.me/articles/containerized-aegismesh-docker-kubernetes-jenkins).
+- "Rethinking My Git Workflow": How moving from unmanaged folders to GitHub changed the way I build (https://nirjar.me/articles/rethinking-my-git-workflow).
+- "Diagnosing VaultLock's Logo-Fetching Failure": Hardening third-party API integrations and deterministic caching without breaking UI (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).
+- "DeployLens: Finding My Deployment Blind Spots": What building DeployLens revealed about CI/CD security, pipeline permissions, and knowing what runs in production (https://nirjar.me/articles/building-deploylens-exposed-my-deployment-blind-spots).
 
