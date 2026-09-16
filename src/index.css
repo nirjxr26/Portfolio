@@ -14,6 +14,7 @@
   --hairline: #e0e0e0;
   --accent: #0066cc;
   --accent-hover: #0071e3;
+  --page-gutter: 1rem;
 }
 
 .dark {
@@ -26,6 +27,24 @@
   --hairline: #333336;
   --accent: #2997ff;
   --accent-hover: #4aa8ff;
+}
+
+@media (min-width: 414px) {
+  :root {
+    --page-gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-gutter: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 3rem;
+  }
 }
 
 @theme inline {
@@ -92,12 +111,6 @@
     line-height: 1.12;
     letter-spacing: -0.005em;
     overflow: visible;
-    /* Descender insurance: the spec'd 1.07 leading is tuned for SF Pro, but
-       the stack resolves Manrope first and its descenders ("g" in
-       "Building"/"forgotten.") get clipped. 1.12 matches Manrope's metrics
-       while keeping the tight display feel. The bottom padding reserves paint
-       room against any clipping context; the negative margin keeps vertical
-       rhythm identical. */
     padding-bottom: 0.08em;
     margin-bottom: -0.08em;
   }
@@ -244,39 +257,68 @@
     color: var(--ink);
   }
 
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline);
+    background: var(--surface-alt);
+    padding: 8px 16px;
+    font-family: var(--font-text);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink);
+    transition:
+      transform 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-sm:active {
+    transform: scale(0.95);
+  }
+
+  .btn-sm:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 2px;
+  }
+
+  .btn-sm:hover {
+    background: var(--card);
+  }
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--surface-alt);
+    color: var(--muted);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-icon:hover {
+    background: var(--card);
+    color: var(--ink);
+  }
+
   /* Carousel track responsive alignment to match Container.tsx exactly */
+  .page-gutter {
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+  }
+
   .carousel-track-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    scroll-padding-left: 1rem;
-    scroll-padding-right: 1rem;
-  }
-
-  @media (min-width: 414px) {
-    .carousel-track-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      scroll-padding-left: 1.5rem;
-      scroll-padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 640px) {
-    .carousel-track-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-      scroll-padding-left: 2rem;
-      scroll-padding-right: 2rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .carousel-track-container {
-      padding-left: 3rem;
-      padding-right: 3rem;
-      scroll-padding-left: 3rem;
-      scroll-padding-right: 3rem;
-    }
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
+    scroll-padding-left: var(--page-gutter);
+    scroll-padding-right: var(--page-gutter);
   }
 
   @media (min-width: 1280px) {
@@ -286,6 +328,10 @@
       scroll-padding-left: calc((100vw - 80rem) / 2 + 3rem);
       scroll-padding-right: calc((100vw - 80rem) / 2 + 3rem);
     }
+  }
+
+  .carousel-track-centered {
+    justify-content: safe center;
   }
 
   /* Ultra-Silky Slow Apple Curtain Fall Animation */
@@ -428,6 +474,17 @@
 
   .apple-card-hover:active {
     transform: translate3d(0, -1px, 0) scale(0.97);
+  }
+
+  /* Card text-stack rhythm — single source for every card on the site.
+     Values match Featured Work (ProjectCard): roomy tag-to-title gap,
+     tight title-to-desc gap. Change once here, all cards follow. */
+  .card-tag {
+    @apply mb-3 sm:mb-4;
+  }
+
+  .card-desc {
+    @apply mt-1.5 sm:mt-2;
   }
 
   /* Smooth page transition — buttery SPA fade */

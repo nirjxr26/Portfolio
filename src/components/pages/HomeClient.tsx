@@ -1,14 +1,9 @@
 import { articles, frames, hero, quote } from "@/data/home"
-import { AppButton, ArticleCard, ArrowRight, FeatureCard, ProductionRail, ProjectsRail, Seo } from "../common"
+import { ActionButtons, AppButton, ArticleCard, ArrowRight, FeatureCard, ProductionRail, ProjectsRail, Seo } from "../common"
 import { CarouselSection, Container, PageShell } from "../layout"
 
-const HIDDEN_HOME_TITLES = new Set([
-  "Bastion's Path from Docker to Kubernetes",
-  "DeployLens: Finding My Deployment Blind Spots",
-])
-
 export function HomeClient() {
-  const homeArticles = articles.filter((a) => !HIDDEN_HOME_TITLES.has(a.title))
+  const homeArticles = articles.filter((a) => !a.hideFromHome)
 
   return (
     <PageShell headerPath="/" footerBgClass="bg-canvas border-t border-hairline" seo={<Seo articles={articles} />}>
@@ -22,18 +17,7 @@ export function HomeClient() {
             </h1>
             <p className="t-lead mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
             <div className="mt-8 sm:mt-10 flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0 animate-hero-3">
-              {hero.actions.map((action) =>
-                action.type === "primary" ? (
-                  <AppButton key={action.label} href={action.url} variant="primary" className="w-full min-[360px]:w-auto">
-                    {action.label}
-                  </AppButton>
-                ) : (
-                  <AppButton key={action.label} href={action.url} variant="ghost" className="w-full min-[360px]:w-auto">
-                    <span>{action.label}</span>
-                    <ArrowRight width={14} height={14} />
-                  </AppButton>
-                ),
-              )}
+              <ActionButtons actions={hero.actions} />
             </div>
           </Container>
         </section>
@@ -80,7 +64,7 @@ export function HomeClient() {
 
         {/* Quote Section (bg-surface-alt) */}
         <section className="bg-surface-alt py-16 text-ink sm:py-20 reveal-on-scroll">
-          <Container className="max-w-3xl text-center">
+          <Container size="wide" className="text-center text-pretty sm:text-balance">
             <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
           </Container>
         </section>

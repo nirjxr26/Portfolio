@@ -19,14 +19,13 @@ const cspProd = [
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   "object-src 'none'",
-  "script-src 'self'",
+  "script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c='",
   "style-src 'self'",
   "font-src 'self'",
   "img-src 'self' data: https:",
   "media-src 'self'",
   "connect-src 'self'",
   "worker-src 'self'",
-  "prefetch-src 'self'",
   "upgrade-insecure-requests",
   "block-all-mixed-content",
 ].join("; ")
@@ -48,7 +47,6 @@ const cspDev = [
   "media-src 'self'",
   "connect-src 'self' ws:",
   "worker-src 'self'",
-  "prefetch-src 'self'",
   "upgrade-insecure-requests",
   "block-all-mixed-content",
 ].join("; ")

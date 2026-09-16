@@ -1,6 +1,7 @@
 import { articles } from "@/data/home"
 import { ArticlesBento, Seo } from "../common"
 import { PageHero, PageShell } from "../layout"
+import { ROUTE_META } from "@/data/routes"
 
 export function ArticleClient() {
   return (
@@ -9,9 +10,9 @@ export function ArticleClient() {
       footerBgClass="bg-canvas"
       seo={
         <Seo
-          title="Article | Nirjar Goswami"
-          description="Notes on systems, security, and the craft of building by Nirjar Goswami."
-          canonicalUrl="https://nirjar.me/articles"
+          title={ROUTE_META["/articles"].title}
+          description={ROUTE_META["/articles"].description}
+          canonicalUrl={ROUTE_META["/articles"].canonical}
           includeDefaultSchemas={false}
           breadcrumbs={[
             { name: "Home", url: "/" },

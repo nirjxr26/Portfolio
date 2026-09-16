@@ -13,9 +13,10 @@ import {
   buildDefaultSchemas,
   buildSoftwareSchema,
 } from "@/data/seo"
-import type { Article, BreadcrumbItem, PersonSchema, SoftwareSchema } from "@/types"
+import type { Article, BreadcrumbItem, SoftwareSchema } from "@/types"
 
-export type { Article, BreadcrumbItem, PersonSchema, SoftwareSchema }
+export type { Article, BreadcrumbItem, SoftwareSchema } from "@/types"
+export type { PersonSchema } from "@/types"
 
 interface SeoProps {
   title?: string
@@ -27,11 +28,9 @@ interface SeoProps {
   modifiedTime?: string
   breadcrumbs?: BreadcrumbItem[]
   softwareSchema?: SoftwareSchema
-  personSchema?: PersonSchema
   includeDefaultSchemas?: boolean
   articles?: Article[]
   articleSchema?: Record<string, unknown>
-  extraSchemas?: Record<string, unknown>[]
 }
 
 /** @deprecated Use `SeoProps` (PascalCase, Sonar S6770). */
@@ -56,11 +55,9 @@ export function Seo({
   modifiedTime,
   breadcrumbs,
   softwareSchema,
-  personSchema,
   includeDefaultSchemas = true,
   articles,
   articleSchema,
-  extraSchemas,
 }: Readonly<SeoProps>) {
   useEffect(() => {
     // 1. Update Title only if different
@@ -138,7 +135,7 @@ export function Seo({
     const schemaGraph: Record<string, unknown>[] = []
 
     if (includeDefaultSchemas) {
-      schemaGraph.push(...buildDefaultSchemas(personSchema))
+      schemaGraph.push(...buildDefaultSchemas())
     }
 
     if (breadcrumbs && breadcrumbs.length > 0) {
@@ -162,10 +159,6 @@ export function Seo({
       schemaGraph.push(buildArticlesItemList(articles))
     }
 
-    if (extraSchemas && extraSchemas.length > 0) {
-      schemaGraph.push(...extraSchemas)
-    }
-
     const newSchemaContent = schemaGraph.length > 0
       ? JSON.stringify({ "@context": "https://schema.org", "@graph": schemaGraph }, null, 2)
       : ""
@@ -173,7 +166,7 @@ export function Seo({
     if (scriptEl.textContent?.trim() !== newSchemaContent.trim()) {
       scriptEl.textContent = newSchemaContent
     }
-  }, [title, description, canonicalUrl, ogImage, ogType, publishedTime, modifiedTime, breadcrumbs, softwareSchema, personSchema, includeDefaultSchemas, articles, articleSchema, extraSchemas])
+  }, [title, description, canonicalUrl, ogImage, ogType, publishedTime, modifiedTime, breadcrumbs, softwareSchema, includeDefaultSchemas, articles, articleSchema])
 
   return null
 }

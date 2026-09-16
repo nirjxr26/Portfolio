@@ -1,5 +1,35 @@
 import { BLOG_ARTICLES } from "./blogArticles"
 import { CASE_STUDIES } from "./caseStudies"
+import { SITE_DEFAULT_DESC, SITE_DEFAULT_TITLE, SITE_URL } from "./site"
+
+export interface RouteMeta {
+  title: string
+  description: string
+  canonical?: string
+}
+
+export const ROUTE_META: Record<string, RouteMeta> = {
+  "/": {
+    title: SITE_DEFAULT_TITLE,
+    description: SITE_DEFAULT_DESC,
+    canonical: SITE_URL,
+  },
+  "/works": {
+    title: "Works | Nirjar Goswami",
+    description:
+      "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
+    canonical: "https://nirjar.me/works",
+  },
+  "/articles": {
+    title: "Article | Nirjar Goswami",
+    description: "Notes on systems, security, and the craft of building by Nirjar Goswami.",
+    canonical: "https://nirjar.me/articles",
+  },
+  "/404": {
+    title: "Page Not Found | Nirjar Goswami",
+    description: "The page you are looking for does not exist or has been moved.",
+  },
+}
 
 export type RouteKind = "home" | "works" | "articles" | "article-detail" | "case-study" | "not-found"
 
@@ -9,7 +39,7 @@ export interface ResolvedRoute {
   caseSlug?: string
 }
 
-function cleanPath(pathname: string) {
+export function cleanPath(pathname: string) {
   return pathname.replace(/\/$/, "") || "/"
 }
 

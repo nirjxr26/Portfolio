@@ -1,8 +1,3 @@
-/* Self-hosted Inter + Manrope (latin + latin-ext), byte-identical woff2 files
-   previously served by Google Fonts. Replaces the fonts.googleapis.com
-   stylesheet so no third party sees visitor requests. font-display: swap
-   matches the previous display=swap behavior. */
-
 @font-face {
   font-family: "Inter";
   font-style: normal;

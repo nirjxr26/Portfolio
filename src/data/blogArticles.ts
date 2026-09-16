@@ -7,19 +7,28 @@ export type BlogArticle = {
   readTime: string
   category: string
   sections: BlogSection[]
+  cardDate: string
+  cardDesc: string
+  cardReadTime: string
+  hideFromHome?: boolean
+  keywords: string
 }
 
-// Structured export of all six Hashnode articles — single source for detail pages
-// Slugs match the internal routes we expose at /article/<slug>
+// Structured export of all seven articles — single source for detail pages
+// Slugs match the internal routes we expose at /articles/<slug>
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "why-ai-cant-just-rewrite-windows",
-    title: "Why AI Can't Rewrite Windows",
+    title: "Why AI can't just rewrite Windows",
     description:
       "Why rewriting Windows with AI is not primarily a code-generation problem, but a problem of scale, complexity, backward compatibility, and decades of accumulated dependencies.",
     updated: "June 4, 2026",
     readTime: "6 min",
     category: "UPDATE",
+    cardDate: "Jun 4, 2026",
+    cardDesc: "50M lines. 41 years and decades of decisions. ",
+    cardReadTime: "4 min read",
+    keywords: "AI, Windows, code generation, scale, complexity, backward compatibility, dependencies, Microsoft, 50 million lines, Git, context window, Gemini, Claude, Veracode, Brooks Law, multi-agent, .NET Runtime, operating system, rewrite",
     sections: [
       {
         subtitle: "The scale is hard to actually picture",
@@ -64,13 +73,17 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "872-issues-30-days-sonarqube",
-    title: "872 to 479: Cutting security issues with SonarQube",
+    slug: "making-technical-debt-visible-with-sonarqube",
+    title: "Making technical debt visible with SonarQube",
     description:
       "A 30-day cleanup of AegisMesh using SonarQube, turning 872 initially invisible bugs, vulnerabilities, hotspots, code smells, and duplication into measurable technical debt and a quality-gated workflow.",
     updated: "May 25, 2026",
     readTime: "3 min",
     category: "OBSERVABILITY",
+    cardDate: "May 25, 2026",
+    cardDesc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
+    cardReadTime: "5 min read",
+    keywords: "SonarQube, AegisMesh, code quality, technical debt, bugs, vulnerabilities, security hotspots, code smells, duplication, Quality Gates, React, cognitive complexity, JWT, regex, maintainability, reliability",
     sections: [
       {
         subtitle: "Why bother",
@@ -115,13 +128,18 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "containerized-aegismesh-docker-kubernetes-jenkins",
+    slug: "bastions-path-from-docker-to-kubernetes",
     title: "Bastion's path from Docker to Kubernetes",
     description:
       "The practical lessons from containerizing AegisMesh, moving it into Kubernetes, and building a Jenkins pipeline, including startup ordering, Prisma, Node versions, plugins, configuration, and build hygiene.",
     updated: "April 30, 2026",
     readTime: "3 min",
     category: "QUICK READ",
+    cardDate: "Mar 22, 2026",
+    cardDesc: "How Bastion ships as a single container and scales on Kubernetes without leaking host trust.",
+    cardReadTime: "6 min read",
+    hideFromHome: true,
+    keywords: "Docker, Kubernetes, Jenkins, Prisma, dumb-init, Nginx, Vite, healthcheck, ConfigMap, Secret, .dockerignore, Node.js, CI/CD, containerization, AegisMesh, DevOps",
     sections: [
       {
         subtitle: "Starting with Docker",
@@ -162,6 +180,10 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     updated: "April 16, 2026",
     readTime: "3 min",
     category: "NOTES",
+    cardDate: "Feb 10, 2026",
+    cardDesc: "Not just a code host. A place that quietly reshaped how I build.",
+    cardReadTime: "3 min read",
+    keywords: "Git, GitHub, workflow, version control, commit, branch, README, portfolio, collaboration, green squares, staging, push, clone",
     sections: [
       {
         subtitle: "Before GitHub",
@@ -197,12 +219,16 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   },
   {
     slug: "how-vaultlock-reliably-fetches-brand-logos",
-    title: "Diagnosing VaultLock's logo-fetching failure",
+    title: "How VaultLock reliably fetches brand logos",
     description:
       "How VaultLock moved logo fetching out of the UI and into a dedicated backend flow using input normalization, caching, multiple fallback sources, response validation, and graceful failure handling.",
     updated: "April 8, 2026",
     readTime: "2 min",
     category: "SECURITY",
+    cardDate: "Apr 8, 2026",
+    cardDesc: "Getting the right brand logo, every time, without breaking the UI.",
+    cardReadTime: "2 min read",
+    keywords: "VaultLock, logo, brand, favicon, Clearbit, Google, DuckDuckGo, caching, validation, QML, Qt, backend, input normalization, offline password manager",
     sections: [
       {
         subtitle: "Showing a logo sounds trivial. It isn't.",
@@ -242,13 +268,18 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "building-deploylens-exposed-my-deployment-blind-spots",
+    slug: "deploylens-finding-my-deployment-blind-spots",
     title: "DeployLens: finding my deployment blind spots",
     description:
       "What building DeployLens revealed about CI/CD security, excessive pipeline permissions, long-lived AWS credentials, CodeQL findings, and the importance of knowing exactly what version is running in production.",
     updated: "April 8, 2026",
     readTime: "4 min",
     category: "UPDATE",
+    cardDate: "Feb 18, 2026",
+    cardDesc: "GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap.",
+    cardReadTime: "5 min read",
+    hideFromHome: true,
+    keywords: "DeployLens, CI/CD, pipeline, GitHub Actions, AWS, IAM, OIDC, CodeQL, SAST, ECS, SHA, deployment, visibility, security, secrets, CodeDeploy",
     sections: [
       {
         subtitle: "Your pipeline has permissions. Real ones.",
@@ -278,13 +309,17 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "ai-agents-have-permissions-who-controls-them",
-    title: "AI Agents Have Permissions Now. Who Controls Them?",
+    slug: "ai-agents-have-permissions-now-but-whos-in-control",
+    title: "AI agents have permissions now — but who's in control?",
     description:
       "A chatbot gives you bad information. An agent takes bad actions. Why agent security is an authorization problem, not a model-quality problem — and what to actually do about it.",
     updated: "September 15, 2026",
     readTime: "9 min",
     category: "SECURITY",
+    cardDate: "Sep 15, 2026",
+    cardDesc: "A chatbot lies to you. An agent acts on it — why that's an authorization problem.",
+    cardReadTime: "9 min read",
+    keywords: "AI agents, IAM, authorization, least privilege, OAuth, non-human identity, prompt injection, insider threat, short-lived credentials, infrastructure as code, AegisMesh, deployment security",
     sections: [
       {
         subtitle: "A chatbot can lie to you. An agent can act on it.",

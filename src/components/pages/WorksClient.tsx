@@ -1,5 +1,6 @@
 import { ProductionRail, ProjectsRail, Seo } from "../common"
 import { PageHero, PageShell } from "../layout"
+import { ROUTE_META } from "@/data/routes"
 
 export function WorksClient() {
   return (
@@ -7,9 +8,9 @@ export function WorksClient() {
       headerPath="/works"
       seo={
         <Seo
-          title="Works | Nirjar Goswami"
-          description="Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop."
-          canonicalUrl="https://nirjar.me/works"
+          title={ROUTE_META["/works"].title}
+          description={ROUTE_META["/works"].description}
+          canonicalUrl={ROUTE_META["/works"].canonical}
           includeDefaultSchemas={false}
           breadcrumbs={[
             { name: "Home", url: "/" },

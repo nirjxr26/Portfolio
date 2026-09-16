@@ -13,8 +13,14 @@ export const SITE_DEFAULT_DESC =
 export const SITE_KEYWORDS =
   "Nirjar Goswami, Cloud Engineer, Security Engineer, Cloud Architecture, DevOps, Kubernetes, Go, System Design, IAM, Cybersecurity, AegisMesh, Bastion, Kost, HookDrop, DeployLens, VaultLock"
 
+function stripTrailingSlashes(path: string): string {
+  let end = path.length
+  while (end > 0 && path[end - 1] === "/") end -= 1
+  return path.slice(0, end)
+}
+
 function withPath(origin: string, path: string): string {
-  const clean = path.replace(/\/+$/, "")
+  const clean = stripTrailingSlashes(path)
   if (!clean) return origin
 
   const separator = clean.startsWith("/") ? "" : "/"

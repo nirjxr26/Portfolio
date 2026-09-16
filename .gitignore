@@ -3,6 +3,8 @@ node_modules/
 
 # Production build outputs
 dist/
+public/rss.xml
+public/sitemap.xml
 
 # Local cache & temporary files
 .vite/

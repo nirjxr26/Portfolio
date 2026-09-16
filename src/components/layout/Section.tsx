@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { Container } from "./Container"
-import { CarouselTrack } from "../common/CarouselTrack"
 
 interface SectionProps {
   id?: string
@@ -37,32 +36,3 @@ export function SectionHeader({ title, className = "mb-6 sm:mb-8" }: Readonly<Se
   )
 }
 
-interface CarouselSectionNextProps {
-  id?: string
-  title: string
-  bgClass?: string
-  headerClassName?: string
-  trackWrapperClassName?: string
-  children: ReactNode
-}
-
-/**
- * Carousel section built on Section primitives — same output as legacy CarouselSection.
- */
-export function SectionCarousel({
-  id,
-  title,
-  bgClass = "bg-canvas",
-  headerClassName,
-  trackWrapperClassName = "",
-  children,
-}: Readonly<CarouselSectionNextProps>) {
-  return (
-    <Section id={id} bgClass={bgClass}>
-      <SectionHeader title={title} className={headerClassName} />
-      <div className={`reveal-on-scroll ${trackWrapperClassName}`.trim()}>
-        <CarouselTrack>{children}</CarouselTrack>
-      </div>
-    </Section>
-  )
-}

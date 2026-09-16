@@ -1,37 +1,13 @@
-import { useEffect, useMemo, useState } from "react"
-import { BaseCard, ShareButton } from "../common"
-import { CheckIcon, ClockIcon, CopyIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
-import { Seo } from "../common"
-import { PageShell } from "../layout"
+import { useMemo } from "react"
+import { ArticleMoreCard, ShareButton, Seo } from "../common"
+import { CheckIcon, CopyIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
+import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
+import { byNewestFirst } from "@/utils/helpers"
 import { renderContent, slugify } from "@/utils/markdown"
 import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
-import { BLOG_ARTICLES, type BlogArticle } from "@/data/blogArticles"
+import { getBlogArticle, type BlogArticle } from "@/data/blogArticles"
 import { articles as HOME_ARTICLES } from "@/data/home"
-
-function ArticleMoreCard({ article }: Readonly<{ article: BlogArticle }>) {
-  const href = `/articles/${article.slug}`
-  // Use same short desc as /articles bento cards (home.ts) for visual parity — fallback to blog description
-  const homeMatch = HOME_ARTICLES.find((h) => h.title === article.title || h.link.endsWith(article.slug))
-  const shortDesc = homeMatch?.desc ?? article.description
-  return (
-    <BaseCard
-      as="a"
-      href={href}
-      aria-label={`Read article: ${article.title}`}
-      className="group h-[320px] min-h-[320px] bg-card p-5 min-[375px]:p-6 sm:h-[350px] sm:min-h-[350px] sm:p-8"
-    >
-      <div>
-        <h3 className="t-tagline tracking-normal text-ink line-clamp-3">{article.title}</h3>
-        <p className="t-body mt-3 line-clamp-3 text-muted">{shortDesc}</p>
-      </div>
-      <div className="mt-6 flex items-center gap-1.5">
-        <ClockIcon width={12} height={12} className="shrink-0 text-muted" />
-        <span className="t-fine text-muted">{article.readTime}</span>
-      </div>
-    </BaseCard>
-  )
-}
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
@@ -56,19 +32,28 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
     })
   }, [article, canonical, isoDate])
 
-  const [moreArticles, setMoreArticles] = useState(() => BLOG_ARTICLES.filter((a) => a.slug !== article.slug).slice(0, 2))
-
-  useEffect(() => {
-    const others = [...BLOG_ARTICLES.filter((a) => a.slug !== article.slug)]
-    for (let i = others.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[others[i], others[j]] = [others[j]!, others[i]!]
+  const neighbors = useMemo(() => {
+    const orderedSlugs = [...HOME_ARTICLES]
+      .sort(byNewestFirst)
+      .map((a) => a.link.split("/").pop() ?? "")
+    const idx = orderedSlugs.indexOf(article.slug)
+    const pairs: { blog: BlogArticle; eyebrow: string }[] = []
+    const olderSlug = idx >= 0 ? orderedSlugs[idx + 1] : undefined
+    const newerSlug = idx > 0 ? orderedSlugs[idx - 1] : undefined
+    if (olderSlug) {
+      const blog = getBlogArticle(olderSlug)
+      if (blog) pairs.push({ blog, eyebrow: "← Previous" })
     }
-    setMoreArticles(others.slice(0, 2))
+    if (newerSlug) {
+      const blog = getBlogArticle(newerSlug)
+      if (blog) pairs.push({ blog, eyebrow: "Next →" })
+    }
+    return pairs
   }, [article.slug])
 
   const handleCopyText = () => {
-    const fullText = `${article.title}\n\n${article.description}\n\n${article.sections.map((s) => `${s.subtitle}\n${s.content}`).join("\n\n")}`
+    const sectionsText = article.sections.map((section) => section.subtitle + "\n" + section.content).join("\n\n")
+    const fullText = [article.title, article.description, sectionsText].join("\n\n")
     void copyText(fullText)
   }
 
@@ -76,9 +61,15 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
     void copyLink(shareUrl)
   }
 
-  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(`${shareTitle} ${shareUrl}`)}`
+  const whatsappShareText = `${shareTitle} ${shareUrl}`
+  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(whatsappShareText)}`
   const xHref = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`
   const mailHref = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareUrl)}`
+  const shareLinks = [
+    { label: "Share on WhatsApp", href: whatsappHref, Icon: WhatsAppIcon, width: 16, height: 16 },
+    { label: "Share on X", href: xHref, Icon: XIcon, width: 14, height: 14 },
+    { label: "Share via mail", href: mailHref, Icon: MailIcon, width: 16, height: 16 },
+  ]
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -135,7 +126,16 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                 return (
                   <div key={id}>
                     <section id={id} className="scroll-mt-28 reveal-on-scroll">
-                      <h2 className="t-section-title tracking-normal text-ink">{section.subtitle}</h2>
+                      <h2 className="t-section-title tracking-normal text-ink group flex items-center gap-2">
+                        <span>{section.subtitle}</span>
+                        <a
+                          href={`#${id}`}
+                          aria-label={`Link to section: ${section.subtitle}`}
+                          className="text-[0.8em] font-normal text-muted no-underline opacity-0 transition-opacity hover:text-accent focus-visible:opacity-100 group-hover:opacity-100"
+                        >
+                          #
+                        </a>
+                      </h2>
                       <div className="mt-6 space-y-5 t-body leading-relaxed text-muted sm:text-[16px]">
                         {renderContent(section.content)}
                       </div>
@@ -146,11 +146,11 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
               })}
             </div>
 
-            <div className="mt-12 flex flex-col gap-6 border-t border-hairline pt-8 sm:mt-14 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-12 flex flex-row flex-wrap items-center justify-between gap-6 border-t border-hairline pt-8 sm:mt-14">
               <button
                 type="button"
                 onClick={handleCopyText}
-                className="inline-flex items-center gap-2 rounded-full border border-hairline bg-surface-alt px-4 py-2 t-fine text-ink transition-colors hover:bg-card"
+                className="btn-sm"
               >
                 {copiedText ? <CheckIcon width={14} height={14} className="text-accent" /> : <CopyIcon width={14} height={14} />}
                 <span>{copiedText ? "Copied!" : "Copy Article"}</span>
@@ -159,15 +159,11 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
               <div className="flex flex-wrap items-center gap-3">
                 <span className="t-fine text-muted">Share this article</span>
                 <div className="flex items-center gap-2">
-                  <ShareButton label="Share on WhatsApp" href={whatsappHref}>
-                    <WhatsAppIcon width={16} height={16} />
-                  </ShareButton>
-                  <ShareButton label="Share on X" href={xHref}>
-                    <XIcon width={14} height={14} />
-                  </ShareButton>
-                  <ShareButton label="Share via mail" href={mailHref}>
-                    <MailIcon width={16} height={16} />
-                  </ShareButton>
+                  {shareLinks.map((s) => (
+                    <ShareButton key={s.label} label={s.label} href={s.href}>
+                      <s.Icon width={s.width} height={s.height} />
+                    </ShareButton>
+                  ))}
                   <ShareButton label="Copy link or share" onClick={handleShare}>
                     {copiedLink ? <CheckIcon width={14} height={14} className="text-accent" /> : <LinkIcon width={16} height={16} />}
                   </ShareButton>
@@ -177,16 +173,17 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
           </div>
         </article>
 
-        <section className="bg-surface-alt py-14 sm:py-18">
-          <div className="mx-auto w-full max-w-[980px] px-4 min-[414px]:px-6 sm:px-8 lg:px-0">
-            <h2 className="t-display tracking-normal text-ink reveal-on-scroll">Other Articles.</h2>
-            <div className="mt-8 grid grid-cols-1 gap-4 min-[414px]:gap-5 sm:grid-cols-2 sm:gap-6 reveal-on-scroll">
-              {moreArticles.map((a) => (
-                <ArticleMoreCard key={a.slug} article={a} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <CarouselSection
+          id="keep-reading"
+          title="Keep reading."
+          bgClass="bg-surface-alt"
+          headerClassName="mb-6 sm:mb-8 text-center"
+          trackCentered
+        >
+          {neighbors.map(({ blog, eyebrow }) => (
+            <ArticleMoreCard key={blog.slug} article={blog} eyebrow={eyebrow} />
+          ))}
+        </CarouselSection>
     </PageShell>
   )
 }

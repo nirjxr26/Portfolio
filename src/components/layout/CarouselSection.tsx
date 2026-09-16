@@ -8,6 +8,7 @@ interface CarouselSectionProps {
   bgClass?: string
   headerClassName?: string
   trackWrapperClassName?: string
+  trackCentered?: boolean
   children: ReactNode
 }
 
@@ -17,6 +18,7 @@ export function CarouselSection({
   bgClass = "bg-canvas",
   headerClassName = "mb-6 sm:mb-8",
   trackWrapperClassName = "",
+  trackCentered = false,
   children,
 }: Readonly<CarouselSectionProps>) {
   return (
@@ -24,7 +26,7 @@ export function CarouselSection({
       <SectionHeader title={title} className={headerClassName} />
 
       <div className={`reveal-on-scroll ${trackWrapperClassName}`.trim()}>
-        <CarouselTrack>{children}</CarouselTrack>
+        <CarouselTrack centered={trackCentered}>{children}</CarouselTrack>
       </div>
     </Section>
   )

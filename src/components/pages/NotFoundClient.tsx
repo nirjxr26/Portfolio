@@ -1,5 +1,6 @@
-import { AppButton, ArrowRight, Seo } from "../common"
+import { ActionButtons, Seo } from "../common"
 import { Container, PageShell } from "../layout"
+import { ROUTE_META } from "@/data/routes"
 
 export function NotFoundClient() {
   return (
@@ -9,14 +10,14 @@ export function NotFoundClient() {
       mainClassName="flex-1 flex flex-col justify-center py-16 min-[414px]:py-20 sm:py-32 lg:py-36"
       seo={
         <Seo
-          title="Page Not Found | Nirjar Goswami"
-          description="The page you are looking for does not exist or has been moved."
+          title={ROUTE_META["/404"].title}
+          description={ROUTE_META["/404"].description}
           includeDefaultSchemas={false}
         />
       }
     >
       {/* 404 Hero Header Section */}
-        <Container className="text-center max-w-2xl px-4 sm:px-6">
+        <Container className="text-center max-w-2xl">
           <p className="t-caption-strong text-accent uppercase tracking-wider text-[11px] min-[375px]:text-xs sm:text-sm font-semibold mb-2 sm:mb-3">
             404 // Error
           </p>
@@ -29,13 +30,12 @@ export function NotFoundClient() {
 
           {/* Responsive Action CTAs */}
           <div className="mt-6 sm:mt-8 flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
-            <AppButton href="/" variant="primary" className="w-full min-[360px]:w-auto">
-              Go to Home
-            </AppButton>
-            <AppButton href="/works" variant="ghost" className="w-full min-[360px]:w-auto">
-              <span>Explore Works</span>
-              <ArrowRight width={14} height={14} />
-            </AppButton>
+            <ActionButtons
+              actions={[
+                { label: "Go to Home", url: "/", type: "primary" },
+                { label: "Explore Works", url: "/works", type: "secondary" },
+              ]}
+            />
           </div>
         </Container>
     </PageShell>

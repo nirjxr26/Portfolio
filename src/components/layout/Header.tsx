@@ -4,6 +4,9 @@ import { ArrowRight, ChevronDown, HomeIcon } from "../common/Icons"
 import { ThemeToggle } from "../common/ThemeToggle"
 import { Container } from "./Container"
 
+const DESKTOP_LINK = "transition-colors hover:text-ink whitespace-nowrap shrink-0"
+const MOBILE_LINK = "py-1 transition-colors hover:text-accent"
+
 export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) {
   const isWorks = activePath.startsWith("/works")
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -97,7 +100,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
 
             <a
               href="/#what-i-do"
-              className="transition-colors hover:text-ink whitespace-nowrap shrink-0"
+              className={DESKTOP_LINK}
             >
               What I do
             </a>
@@ -152,18 +155,18 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               )}
             </div>
 
-            <a href="/articles" className="transition-colors hover:text-ink whitespace-nowrap shrink-0">
+            <a href="/articles" className={DESKTOP_LINK}>
               Articles
             </a>
             <a
               href={SOCIAL_LINKS.resume}
               target="_blank"
               rel="noreferrer noopener"
-              className="transition-colors hover:text-ink whitespace-nowrap shrink-0"
+              className={DESKTOP_LINK}
             >
               Resume
             </a>
-            <a href="/#footer" className="transition-colors hover:text-ink whitespace-nowrap shrink-0">
+            <a href="/#footer" className={DESKTOP_LINK}>
               Contact
             </a>
           </div>
@@ -201,7 +204,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               <a
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 transition-colors hover:text-accent"
+                className={MOBILE_LINK}
               >
                 Home
               </a>
@@ -209,7 +212,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               <a
                 href="/#what-i-do"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 transition-colors hover:text-accent"
+                className={MOBILE_LINK}
               >
                 What I do
               </a>
@@ -278,7 +281,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               <a
                 href="/articles"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 transition-colors hover:text-accent"
+                className={MOBILE_LINK}
               >
                 Articles
               </a>
@@ -287,14 +290,14 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                 target="_blank"
                 rel="noreferrer noopener"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 transition-colors hover:text-accent"
+                className={MOBILE_LINK}
               >
                 Resume
               </a>
               <a
                 href="/#footer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-1 transition-colors hover:text-accent"
+                className={MOBILE_LINK}
               >
                 Contact
               </a>

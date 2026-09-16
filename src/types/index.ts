@@ -64,6 +64,7 @@ export interface Article {
   readTime?: string
   desc: string
   link: string
+  hideFromHome?: boolean
 }
 
 export interface ProductionCapability {

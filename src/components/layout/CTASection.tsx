@@ -22,7 +22,7 @@ export function CTASection({
 }: Readonly<CTASectionProps>) {
   return (
     <section className={`${bgClass} py-18 sm:py-24 reveal-on-scroll`}>
-      <Container className="text-center max-w-3xl">
+      <Container size="narrow" className="text-center">
         <h2 className="t-hero text-ink">{headline}</h2>
         <p className="t-lead mt-4 text-muted">{body}</p>
         <div className="mt-8 flex justify-center">

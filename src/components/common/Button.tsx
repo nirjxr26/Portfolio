@@ -1,5 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react"
+import type { HeroAction } from "@/types"
 import { externalProps } from "@/utils/helpers"
+import { ArrowRight } from "./Icons"
 
 type ButtonVariant = "primary" | "ghost"
 
@@ -60,5 +62,24 @@ export function AppLink({ href, className, children, ...rest }: Readonly<AppLink
     <a href={href} className={className} {...externalProps(href)} {...rest}>
       {children}
     </a>
+  )
+}
+
+export function ActionButtons({ actions }: Readonly<{ actions: HeroAction[] }>) {
+  return (
+    <>
+      {actions.map((action) =>
+        action.type === "primary" ? (
+          <AppButton key={action.label} href={action.url} variant="primary" className="w-full min-[360px]:w-auto">
+            {action.label}
+          </AppButton>
+        ) : (
+          <AppButton key={action.label} href={action.url} variant="ghost" className="w-full min-[360px]:w-auto">
+            <span>{action.label}</span>
+            <ArrowRight width={14} height={14} />
+          </AppButton>
+        ),
+      )}
+    </>
   )
 }
