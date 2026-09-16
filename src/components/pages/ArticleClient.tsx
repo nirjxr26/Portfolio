@@ -1,5 +1,4 @@
-import { articles } from "@/data/home"
-import { ArticlesBento, Seo } from "../common"
+import { ArticleCategoryRails, Seo } from "../common"
 import { PageHero, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
 
@@ -21,8 +20,8 @@ export function ArticleClient() {
         />
       }
     >
-        <PageHero title="Article." subhead="Notes on systems, security, and the craft of building." compact />
-        <ArticlesBento articles={articles} bgClass="bg-surface-alt" cardBgClass="bg-card" />
+        <PageHero title="Article." subhead="Writing about things I’ve experienced and worked on, not just ideas I’ve read about." compact />
+        <ArticleCategoryRails bgClass="bg-surface-alt" cardBgClass="bg-card" />
     </PageShell>
   )
 }

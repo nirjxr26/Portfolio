@@ -1,15 +1,25 @@
 # Nirjar Goswami
 
-> Cloud, Security & Systems Engineer building systems meant to be forgotten. Proficient in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure.
+> Cloud & Security Engineer building systems meant to be forgotten — resilient, cost-aware infrastructure with security built in from day one, not bolted on after. Range over narrow specialization: cloud architecture, DevOps, cybersecurity, and identity platforms, understood as one connected system.
 
 ## About
-Nirjar Goswami is a systems and security engineer with proficiency spanning across Cloud Architecture, DevOps, Cybersecurity, and Identity & Access Management (IAM). He focuses on range over narrow specialization — understanding how distributed systems, secure defaults, and infrastructure pipelines fit together to build resilient, self-healing platforms.
+Nirjar Goswami is a systems and security engineer working across Cloud Architecture, DevOps, Cybersecurity, and Identity & Access Management (IAM). His operating principle is that infrastructure should be boring to operate: secure by default, cheap to run, observable before launch, and recoverable by plan instead of by improvisation. Every project he ships solves a problem he actually ran into — each feature exists for a reason.
 
 - Website: https://nirjar.me
 - GitHub: https://github.com/nirjxr26
 - LinkedIn: https://www.linkedin.com/in/nirjxr
 - X (Twitter): https://x.com/nirjxrgoswami
 - Technical Blog: https://blog.nirjar.me
+- Email: nirjargoswami2626@gmail.com
+- Location: Ahmedabad, Gujarat, India
+
+## How He Works
+- Systems fluency: works across layers instead of one specialty, so dependencies between layers get designed, not discovered in incidents.
+- Cost awareness: infrastructure weighed by what it costs to run, not just to build.
+- Security from day one: least privilege and secure defaults up front; threat modeling before code, CVE triage by severity with SLAs.
+- Small blast radius: fault isolation so one failure stays one failure, with a fast obvious cause.
+- Pipeline discipline: tests, static analysis, and container scans gate every deploy — green means passing.
+- Observability first: logs, metrics, and traces exist before launch; alerts fire only for what matters.
 
 ## Core Systems & Open Source Projects
 
@@ -18,20 +28,37 @@ Nirjar Goswami is a systems and security engineer with proficiency spanning acro
 - URL: https://nirjar.me/works/bastion
 - Repository: https://github.com/nirjxr26/Bastion
 - Stack: Go, JWT, OAuth2 (Google/GitHub), MFA (TOTP), RBAC/ABAC, PostgreSQL
-- Architecture: Zero third-party data access, step-up verification, scoped API keys, policy simulation against live scenarios, filterable and exportable audit logs.
+- Architecture: Enterprise-grade access control without handing user data to a third party. Auth, policy enforcement, MFA, session control, and audit logging in one self-hosted stack — zero third-party data access, step-up verification, scoped API keys, policy simulation against live scenarios, filterable and exportable audit logs.
 
 ### Kost
 - Type: Kubernetes Cluster Cost Optimizer
 - URL: https://nirjar.me/works/kost
 - Repository: https://github.com/nirjxr26/Kost
 - Stack: Go, Kubernetes API, Prometheus Metrics, GitHub Actions
-- Architecture: Compares requested CPU/memory against actual 95th-percentile utilization, outputs exact single-line kubectl patch commands, calculates dollar impact of wasted core-hours, zero-CRD standalone binary with CI gate integration.
+- Architecture: Compares requested CPU/memory against actual 95th-percentile utilization, outputs exact single-line kubectl patch commands, calculates dollar impact of wasted core-hours. Zero-CRD standalone binary with CI gate integration — no dashboard, no database, no bill.
 
 ### HookDrop
 - Type: Real-Time Event & Webhook Ingestion Engine
 - URL: https://nirjar.me/works/hookdrop
 - Stack: Go, eBPF Probes, Server-Sent Events (SSE), Docker, Kubernetes
-- Architecture: Kernel-level low-overhead event tracing, cryptographic container image provenance verification (SBOM attestations), sub-35ms delivery under load.
+- Architecture: Mock webhook receiver — POST to a bucket URL, it catches, stores, and streams live. Production-grade pipeline around it: containerization, hardening, GitOps delivery, sub-35ms delivery under load.
+
+### DeployLens
+- Type: Deployment Insights Timeline
+- Stack: GitHub Actions, AWS CodeQL, AWS CodeDeploy
+- Architecture: Ties GitHub Actions and AWS CodeDeploy into a single timeline so a commit's full deployment story is visible on both sides instead of split across two dashboards.
+
+### Canopy
+- Type: Self-Hosted Identity & Authentication (Clerk Alternative)
+- Repository: https://github.com/nirjxr26/canopy
+- Stack: Argon2id Password Hashing, Encrypted MFA, Session Control
+- Architecture: Auth, encrypted MFA, and session control users never have to think about, with zero per-user pricing.
+
+### VaultLock
+- Type: Offline Password Manager
+- Repository: https://github.com/nirjxr26/VaultLock-Password-Manager
+- Stack: AES-256 Encryption, Desktop UI, Zero Network Sync
+- Architecture: Credentials stay on the machine — AES-256 encrypted, no cloud sync, no external servers, fully working offline.
 
 ### Trace
 - Type: Digital Forensics & Incident Response Hardware
@@ -46,11 +73,11 @@ Nirjar Goswami is a systems and security engineer with proficiency spanning acro
 - Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
 
 ## Technical Articles & Writing
-- "AI agents have permissions now — but who's in control?": Why agent security is an authorization problem, not a model-quality problem — OAuth identity, blast radius, and least-privilege for agents (https://nirjar.me/articles/ai-agents-have-permissions-now-but-whos-in-control).
-- "Why AI can't just rewrite Windows": Analysis of 50M lines of legacy code, 41 years of architecture, and why generative models struggle with deep systems code (https://nirjar.me/articles/why-ai-cant-just-rewrite-windows).
-- "Making technical debt visible with SonarQube": Case study on resolving 872 hidden static analysis and security findings within 30 days (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
-- "Bastion's path from Docker to Kubernetes": Containerizing an IAM platform, moving it to Kubernetes, and building the Jenkins pipeline (https://nirjar.me/articles/bastions-path-from-docker-to-kubernetes).
-- "Rethinking my Git workflow": How moving from unmanaged folders to GitHub changed the way I build (https://nirjar.me/articles/rethinking-my-git-workflow).
-- "How VaultLock reliably fetches brand logos": Hardening third-party API integrations and deterministic caching without breaking UI (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).
-- "DeployLens: finding my deployment blind spots": What building DeployLens revealed about CI/CD security, pipeline permissions, and knowing what runs in production (https://nirjar.me/articles/deploylens-finding-my-deployment-blind-spots).
-
+- "Context engineering: why AGENTS.md beats a better model": Why a rules file can matter more than which AI you're using to write code. (https://nirjar.me/articles/context-engineering-why-agents-md-beats-a-better-model).
+- "AI agents have permissions now — but who's in control?": A chatbot lies to you. An agent acts on it — why that's an authorization problem. (https://nirjar.me/articles/ai-agents-have-permissions-now-but-whos-in-control).
+- "Why AI can't just rewrite Windows": 50M lines. 41 years and decades of decisions. (https://nirjar.me/articles/why-ai-cant-just-rewrite-windows).
+- "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
+- "Bastion's path from Docker to Kubernetes": How Bastion ships as a single container and scales on Kubernetes without leaking host trust. (https://nirjar.me/articles/bastions-path-from-docker-to-kubernetes).
+- "Rethinking my Git workflow": Not just a code host. A place that quietly reshaped how I build. (https://nirjar.me/articles/rethinking-my-git-workflow).
+- "How VaultLock reliably fetches brand logos": Getting the right brand logo, every time, without breaking the UI. (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).
+- "DeployLens: finding my deployment blind spots": GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap. (https://nirjar.me/articles/deploylens-finding-my-deployment-blind-spots).

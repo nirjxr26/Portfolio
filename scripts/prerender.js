@@ -98,7 +98,6 @@ const caseStudyRoutes = Object.entries(CASE_STUDIES).map(([slug, data]) => {
     title,
     description,
     canonical,
-    keywords,
     sourceFile,
     priority: "0.8",
     changefreq: "monthly",
@@ -156,7 +155,6 @@ function buildArticleRoute(blog) {
     title: `${blog.title} | Nirjar Goswami`,
     description: blog.description,
     canonical,
-    keywords,
     sourceFile: "src/data/blogArticles.ts",
     priority: "0.8",
     changefreq: "monthly",
@@ -197,7 +195,6 @@ const routes = [
   {
     path: "/",
     ...ROUTE_META["/"],
-    keywords: `${SITE_KEYWORDS}, ${allArticleKeywords}`,
     sourceFile: "src/data/home.ts",
     priority: "1.0",
     changefreq: "weekly",
@@ -209,7 +206,6 @@ const routes = [
   {
     path: "/works",
     ...ROUTE_META["/works"],
-    keywords: `Works, ${SITE_KEYWORDS}, Bastion, Kost, HookDrop, Systems, Infrastructure`,
     sourceFile: "src/components/pages/WorksClient.tsx",
     priority: "0.9",
     changefreq: "monthly",
@@ -236,7 +232,6 @@ const routes = [
   {
     path: "/articles",
     ...ROUTE_META["/articles"],
-    keywords: `Articles, Blog, Technical Writing, ${allArticleKeywords}`,
     sourceFile: "src/components/pages/ArticleClient.tsx",
     priority: "0.9",
     changefreq: "weekly",
@@ -251,7 +246,7 @@ const routes = [
           "@id": "https://nirjar.me/articles#collection",
           url: "https://nirjar.me/articles",
           name: "Articles | Nirjar Goswami",
-          description: "Notes on systems, security, and the craft of building by Nirjar Goswami.",
+          description: "Writing about things I’ve experienced and worked on, not just ideas I’ve read about.",
           keywords: allArticleKeywords,
           listName: "Technical Articles & Publications",
           listDescription: "All technical articles by Nirjar Goswami — bento grid, same short desc as cards.",
@@ -268,14 +263,6 @@ routes.forEach((route) => {
   let html = template
   html = html.replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`)
   html = html.replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/, `<meta name="description" content="${route.description}" />`)
-  // Keywords — add or replace
-  if (route.keywords) {
-    if (html.includes('name="keywords"')) {
-      html = html.replace(/<meta\s+name="keywords"\s+content=".*?"\s*\/?>/, `<meta name="keywords" content="${route.keywords}" />`)
-    } else {
-      html = html.replace("</head>", `  <meta name="keywords" content="${route.keywords}" />\n  </head>`)
-    }
-  }
   html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/, `<link rel="canonical" href="${route.canonical}" />`)
   html = html.replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/, `<meta property="og:title" content="${route.title}" />`)
   html = html.replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/, `<meta property="og:description" content="${route.description}" />`)
@@ -374,7 +361,7 @@ const rssXml =
   `  <title>Nirjar Goswami — Articles</title>\n` +
   `  <link>https://nirjar.me/articles</link>\n` +
   `  <atom:link href="https://nirjar.me/rss.xml" rel="self" type="application/rss+xml" />\n` +
-  `  <description>Notes on systems, security, and the craft of building by Nirjar Goswami.</description>\n` +
+  `  <description>Writing about things I’ve experienced and worked on, not just ideas I’ve read about.</description>\n` +
   `  <language>en-us</language>\n` +
   `  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n` +
   `  <generator>nirjar.me prerender</generator>\n` +
@@ -383,3 +370,18 @@ const rssXml =
   `</rss>\n`
 fs.writeFileSync(path.resolve(distDir, "rss.xml"), rssXml, "utf-8")
 fs.writeFileSync(path.resolve(projectRoot, "public/rss.xml"), rssXml, "utf-8")
+
+const llmsPublicPath = path.resolve(projectRoot, "public/llms.txt")
+const llmsLines = fs.readFileSync(llmsPublicPath, "utf-8").split("\n")
+const llmsStart = llmsLines.findIndex((l) => l.trim() === "## Technical Articles & Writing")
+if (llmsStart !== -1) {
+  let llmsEnd = llmsStart + 1
+  while (llmsEnd < llmsLines.length && llmsLines[llmsEnd].startsWith("- ")) llmsEnd += 1
+  const llmsItems = [...BLOG_ARTICLES]
+    .sort((a, b) => new Date(b.updated) - new Date(a.updated))
+    .map((b) => `- "${b.title}": ${b.cardDesc.trim()} (https://nirjar.me/articles/${b.slug}).`)
+  llmsLines.splice(llmsStart + 1, llmsEnd - llmsStart - 1, ...llmsItems)
+  const llmsOut = llmsLines.join("\n")
+  fs.writeFileSync(llmsPublicPath, llmsOut, "utf-8")
+  fs.writeFileSync(path.resolve(distDir, "llms.txt"), llmsOut, "utf-8")
+}

@@ -28,3 +28,9 @@ Thumbs.db
 # Files
 DESIGN-apple.md
 DESIGN-bastion.md
+
+# Local-only tests (run with `npm test`, never committed)
+*.test.ts
+*.test.tsx
+*.test.js
+*.test.jsx
