@@ -52,7 +52,7 @@ export function HomeClient() {
           trackWrapperClassName="mt-6 sm:mt-10"
         >
           {homeArticles.map((article) => (
-            <ArticleCard key={article.title} article={article} />
+            <ArticleCard key={article.title} article={article} variant="standard" />
           ))}
         </CarouselSection>
         <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">

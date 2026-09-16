@@ -15,7 +15,7 @@ const NON_EXECUTABLE_TYPES = new Set([
   "speculationrules",
 ])
 
-function executableInlineScripts(html) {
+export function executableInlineScripts(html) {
   const out = []
   const re = /<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi
   let m
@@ -32,50 +32,59 @@ function executableInlineScripts(html) {
   return out
 }
 
-const html = fs.readFileSync(path.resolve(projectRoot, "index.html"), "utf-8")
-const scripts = executableInlineScripts(html)
-
-if (scripts.length === 0) {
-  console.error("verify-csp: no executable inline <script> found in index.html")
-  process.exit(1)
+export function hashInlineScript(source) {
+  return `sha256-${crypto.createHash("sha256").update(source, "utf8").digest("base64")}`
 }
 
-const expected = scripts.map((s) => `sha256-${crypto.createHash("sha256").update(s, "utf8").digest("base64")}`)
+export function verifyCsp() {
+  const html = fs.readFileSync(path.resolve(projectRoot, "index.html"), "utf-8")
+  const scripts = executableInlineScripts(html)
 
-const found = new Map()
-for (const rel of CSP_FILES) {
-  const full = path.resolve(projectRoot, rel)
-  const content = fs.readFileSync(full, "utf-8")
-  const hashes = [...content.matchAll(/sha256-([A-Za-z0-9+/=]+)/g)].map((m) => `sha256-${m[1]}`)
-  found.set(rel, hashes)
-}
+  if (scripts.length === 0) {
+    console.error("verify-csp: no executable inline <script> found in index.html")
+    process.exit(1)
+  }
 
-const allHashes = [...found.values()].flat()
-const uniqueHashes = [...new Set(allHashes)]
+  const expected = scripts.map(hashInlineScript)
 
-let failed = false
+  const found = new Map()
+  for (const rel of CSP_FILES) {
+    const full = path.resolve(projectRoot, rel)
+    const content = fs.readFileSync(full, "utf-8")
+    const hashes = [...content.matchAll(/sha256-([A-Za-z0-9+/=]+)/g)].map((m) => `sha256-${m[1]}`)
+    found.set(rel, hashes)
+  }
 
-if (allHashes.length === 0 || uniqueHashes.length !== 1) {
-  console.error(
-    `verify-csp: expected exactly 1 unique CSP hash across ${CSP_FILES.join(", ")}, found ${uniqueHashes.length}: ${uniqueHashes.join(", ") || "(none)"}`,
-  )
-  failed = true
-}
+  const allHashes = [...found.values()].flat()
+  const uniqueHashes = [...new Set(allHashes)]
 
-for (const [rel, hashes] of found) {
-  for (const want of expected) {
-    if (!hashes.includes(want)) {
-      console.error(`verify-csp: ${rel} is missing ${want}`)
-      failed = true
+  let failed = false
+
+  if (allHashes.length === 0 || uniqueHashes.length !== 1) {
+    console.error(
+      `verify-csp: expected exactly 1 unique CSP hash across ${CSP_FILES.join(", ")}, found ${uniqueHashes.length}: ${uniqueHashes.join(", ") || "(none)"}`,
+    )
+    failed = true
+  }
+
+  for (const [rel, hashes] of found) {
+    for (const want of expected) {
+      if (!hashes.includes(want)) {
+        console.error(`verify-csp: ${rel} is missing ${want}`)
+        failed = true
+      }
     }
   }
+
+  if (failed) {
+    console.error(
+      `\nFix: copy the hash above into the script-src of ${CSP_FILES.join(", ")}. index.html inline script changed without updating CSP.`,
+    )
+    process.exit(1)
+  }
+
+  console.log(`verify-csp: ok (${expected.join(", ")})`)
 }
 
-if (failed) {
-  console.error(
-    `\nFix: copy the hash above into the script-src of ${CSP_FILES.join(", ")}. index.html inline script changed without updating CSP.`,
-  )
-  process.exit(1)
-}
-
-console.log(`verify-csp: ok (${expected.join(", ")})`)
+const invokedDirectly = process.argv[1] !== undefined && path.resolve(process.argv[1]) === __filename
+if (invokedDirectly) verifyCsp()

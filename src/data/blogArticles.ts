@@ -14,9 +14,76 @@ export type BlogArticle = {
   keywords: string
 }
 
-// Structured export of all seven articles — single source for detail pages
+// Structured export of all eight articles — single source for detail pages
 // Slugs match the internal routes we expose at /articles/<slug>
 export const BLOG_ARTICLES: BlogArticle[] = [
+  {
+    slug: "context-engineering-why-agents-md-beats-a-better-model",
+    title: "Context engineering: why AGENTS.md beats a better model",
+    description:
+      "Why repository-level rules and project context can matter more for AI-generated code quality than simply switching to a stronger model.",
+    updated: "September 16, 2026",
+    readTime: "5 min",
+    category: "Artificial Intelligence",
+    cardDate: "Sep 16, 2026",
+    cardDesc:
+      "Why a rules file can matter more than which AI you're using to write code.",
+    cardReadTime: "5 min read",
+    keywords:
+      "Context engineering, AGENTS.md, CLAUDE.md, AI coding agents, AI coding, code quality, repository context, software engineering, coding assistants, developer tools",
+    sections: [
+      {
+        subtitle: "Why rules matter more than the model",
+        content:
+          "I keep seeing the same debate play out: which model writes the best code. Claude versus GPT versus whatever shipped this week. People benchmark them on leaderboards, argue about which one \"feels smarter,\" and treat the model choice like it's the deciding factor.\n\nIt isn't, and I want to be specific about what I mean before this turns into another \"prompt better\" post.\n\nI'm not talking about which model makes better decisions. A stronger model will still reason through an ambiguous problem better than a weaker one, and no amount of documentation fixes that gap. I'm talking about code quality: how easy it is to understand, maintain, reuse, and keep consistent. Most of the time, when a small problem comes up, you won't always hand that task to AI. Sometimes you'll handle it yourself. And with today's tools to make the codebase more understandable and reusable, why not keep the codebase consistent?\n\nI've seen AI write separate and multiple coding patterns for different things across a backend or website simply because it didn't have enough context. In my own repos, I've repeatedly gotten cleaner, more reusable, easier-to-maintain, and more understandable code from a mid-tier model with a real rules file than from a frontier model working from a blank context.",
+      },
+      {
+        subtitle: "The thing almost nobody sets up",
+        content:
+          "Most AI coding agents support a repo-level instructions file. Claude Code reads CLAUDE.md. Other agents read AGENTS.md or their own variant. The idea is simple: instead of repeating your conventions in every prompt, you write them once and the agent reads them automatically at the start of a session.\n\nPlenty of teams still aren't doing this. They'll pay for the most expensive model tier available and then hand it a blank context window every single time, as if the agent is supposed to guess their branch naming scheme or figure out on its own that a particular directory is legacy code nobody wants touched.\n\nA rules file isn't optional polish. It's the difference between an agent that writes code matching your project and one that writes code matching whatever the internet trained it on.",
+      },
+      {
+        subtitle: "What actually goes in one",
+        content:
+          "This isn't a generic checklist you copy-paste into every repo. That's the mistake I see most often, someone finds a template on GitHub, drops it in unchanged, and wonders why the output still feels off. The file has to reflect the actual codebase in front of it. That said, here's roughly what I cover, grouped by what each part is actually doing.",
+      },
+      {
+        subtitle: "The baseline",
+        content:
+          "The facts an agent can't infer from the code alone, no matter how well it reads.\n\n- Stack and versions. Exact framework versions, not \"React.\" I've had agents suggest patterns from three major versions ago because nothing told them otherwise.\n\n- File and folder conventions. Where new components live, how modules are named, what the test file naming pattern is. Agents will invent their own scheme if you don't give them one, and it usually won't match yours.\n\n- Existing utilities and abstractions. A running list of \"we already have a function for this, don't write a new one.\" This is probably the single highest-value section, and the one people skip most.",
+      },
+      {
+        subtitle: "The guardrails",
+        content:
+          "The parts that stop an agent from doing technically-reasonable things you don't actually want.\n\n- What not to touch. Legacy modules, generated files, anything mid-migration. This one saves more time than almost anything else on the list.\n\n- Security constraints. Anything touching auth, secrets, or user data gets flagged explicitly, because this is the category where I want zero improvisation.\n\n- Scope discipline. What counts as in scope for a given change and what doesn't. Without this, an agent will \"improve\" formatting in a file it was never asked to touch, and your diff triples in size for no reason.\n\n- Solution sizing. A cap on how big a fix should be relative to the problem. Left alone, a model will reach for a new abstraction layer or config system when a two-line change would do.",
+      },
+      {
+        subtitle: "The process",
+        content:
+          "How work gets done, not just what it should look like when it's finished.\n\n- Testing requirements. Whether tests are mandatory for new code, which framework, and what coverage actually matters versus what's just noise.\n\n- Error handling patterns. How your codebase actually handles failures, not the generic try/catch the model defaults to.\n\n- Commit and PR conventions. Message format, branch naming, whether commits should be atomic or squashed.\n\n- A required sequence. Understand, plan, implement, verify, review, spelled out explicitly rather than assumed. Left to itself, an agent will implement first and verify never, or call something done without running the tests it claims to have run.\n\nNone of this is exotic. It's the stuff a competent new hire would ask about in their first week. The difference is the agent won't ask. It'll just guess, and the guess will look plausible enough that you might not catch it in review.",
+      },
+      {
+        subtitle: "Domain rules aren't style rules",
+        content:
+          "Everything above keeps the code looking consistent. It doesn't keep it correct, and those are different problems.\n\nIn one of my forensic-tooling projects, closed cases can never transition back to open. Case IDs are immutable once assigned. Every mutation has to travel through the application service rather than touching the ORM directly from a CLI layer, no shortcuts. None of that is a formatting preference. It's a business rule the codebase depends on, and it's exactly the kind of thing an agent will violate without hesitation if you don't spell it out, because \"add a quick fix that reopens a case\" reads as a completely reasonable request until you know it isn't.\n\nIf a project has hard invariants like this, they get their own section, separate from general style. Burying \"cases can never reopen\" in the same list as \"we use camelCase\" means it gets read with the same weight as a formatting preference, and it's not one. It's the one rule in the whole file you genuinely can't afford to have ignored.",
+      },
+      {
+        subtitle: "Different models, different files",
+        content:
+          "One thing I've had to adjust: the same rules file doesn't perform identically across models. Some agents follow terse, bulleted instructions well. Others need more explicit examples of the pattern you want, a before-and-after, not just a description of it. \n\nOn one project, \"reuse the existing service layer\" was enough for one agent to consistently find and extend the right service. Another agent read the same line and still wrote a parallel implementation, and only stopped once I added a concrete example showing which service to reuse and which pattern not to reintroduce. I've ended up keeping model-specific variants for a couple of projects rather than one universal file, because instructions tuned for one agent produced noticeably worse adherence on another. It's annoying to maintain, but it's less annoying than fixing the output afterward.",
+      },
+      {
+        subtitle: "The part people skip: making the codebase legible to a new agent",
+        content:
+          "Rules files handle behavior. They don't handle context, and a repo of any real size has a lot of it that isn't visible from the code alone. Why a particular service is structured the way it is. Which parts are being actively migrated. What broke last time someone touched the payment logic without reading the three-year-old comment explaining why.\n\n### Building the index\n\nI keep this in a separate notes system, Obsidian in my case, though Notion works the same way. Not as a replacement for code comments, but as an index: what each major component does, why certain decisions were made, what's currently in flux. When I bring a new AI agent into an unfamiliar part of the codebase, pointing it at that index gets it oriented faster than letting it infer the architecture from file names and hope for the best.\n\nThink about onboarding a new engineer. You wouldn't hand them the repo and nothing else. You'd walk them through the architecture, or at least point them at a doc that does. AI agents need the same thing, and most people don't bother because it feels excessive to write documentation for something that isn't human. It isn't excessive. It's the same onboarding problem, just with a different kind of new hire.",
+      },
+      {
+        subtitle: "Where this actually lands",
+        content:
+          "None of this makes a weak model outreason a strong one. It won't fix bad architectural decisions or catch a subtle logic error the model wasn't capable of spotting in the first place. What it does is close the gap on everything downstream of the decision: the actual code that gets written, how well it fits what's already there, how much cleanup you're doing afterward.\n\nA better model gives you better reasoning. Better repository context gives that reasoning somewhere useful to land.",
+      },
+    ],
+  },
   {
     slug: "why-ai-cant-just-rewrite-windows",
     title: "Why AI can't just rewrite Windows",
@@ -24,7 +91,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "Why rewriting Windows with AI is not primarily a code-generation problem, but a problem of scale, complexity, backward compatibility, and decades of accumulated dependencies.",
     updated: "June 4, 2026",
     readTime: "6 min",
-    category: "UPDATE",
+    category: "Artificial Intelligence",
     cardDate: "Jun 4, 2026",
     cardDesc: "50M lines. 41 years and decades of decisions. ",
     cardReadTime: "4 min read",
@@ -79,7 +146,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "A 30-day cleanup of AegisMesh using SonarQube, turning 872 initially invisible bugs, vulnerabilities, hotspots, code smells, and duplication into measurable technical debt and a quality-gated workflow.",
     updated: "May 25, 2026",
     readTime: "3 min",
-    category: "OBSERVABILITY",
+    category: "Practice",
     cardDate: "May 25, 2026",
     cardDesc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
     cardReadTime: "5 min read",
@@ -134,7 +201,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "The practical lessons from containerizing AegisMesh, moving it into Kubernetes, and building a Jenkins pipeline, including startup ordering, Prisma, Node versions, plugins, configuration, and build hygiene.",
     updated: "April 30, 2026",
     readTime: "3 min",
-    category: "QUICK READ",
+    category: "DevOps",
     cardDate: "Mar 22, 2026",
     cardDesc: "How Bastion ships as a single container and scales on Kubernetes without leaking host trust.",
     cardReadTime: "6 min read",
@@ -179,7 +246,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "How moving from unmanaged folders and versioned filenames to GitHub, commits, branches, documentation, and repositories changed the way I build and maintain projects.",
     updated: "April 16, 2026",
     readTime: "3 min",
-    category: "NOTES",
+    category: "Practice",
     cardDate: "Feb 10, 2026",
     cardDesc: "Not just a code host. A place that quietly reshaped how I build.",
     cardReadTime: "3 min read",
@@ -224,7 +291,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "How VaultLock moved logo fetching out of the UI and into a dedicated backend flow using input normalization, caching, multiple fallback sources, response validation, and graceful failure handling.",
     updated: "April 8, 2026",
     readTime: "2 min",
-    category: "SECURITY",
+    category: "Security",
     cardDate: "Apr 8, 2026",
     cardDesc: "Getting the right brand logo, every time, without breaking the UI.",
     cardReadTime: "2 min read",
@@ -274,7 +341,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "What building DeployLens revealed about CI/CD security, excessive pipeline permissions, long-lived AWS credentials, CodeQL findings, and the importance of knowing exactly what version is running in production.",
     updated: "April 8, 2026",
     readTime: "4 min",
-    category: "UPDATE",
+    category: "DevOps",
     cardDate: "Feb 18, 2026",
     cardDesc: "GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap.",
     cardReadTime: "5 min read",
@@ -315,7 +382,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       "A chatbot gives you bad information. An agent takes bad actions. Why agent security is an authorization problem, not a model-quality problem — and what to actually do about it.",
     updated: "September 15, 2026",
     readTime: "9 min",
-    category: "SECURITY",
+    category: "Artificial Intelligence",
     cardDate: "Sep 15, 2026",
     cardDesc: "A chatbot lies to you. An agent acts on it — why that's an authorization problem.",
     cardReadTime: "9 min read",

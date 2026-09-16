@@ -22,7 +22,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
   "/articles": {
     title: "Article | Nirjar Goswami",
-    description: "Notes on systems, security, and the craft of building by Nirjar Goswami.",
+    description: "Writing about things I’ve experienced and worked on, not just ideas I’ve read about.",
     canonical: "https://nirjar.me/articles",
   },
   "/404": {

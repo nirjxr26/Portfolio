@@ -1,4 +1,4 @@
-export * from "./ArticlesBento"
+export * from "./ArticleCategoryRails"
 export * from "./BaseCard"
 export * from "./Button"
 export * from "./cards"
