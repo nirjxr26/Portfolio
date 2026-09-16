@@ -17,7 +17,7 @@ const NON_EXECUTABLE_TYPES = new Set([
 
 export function executableInlineScripts(html) {
   const out = []
-  const re = /<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi
+  const re = /<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi
   let m
   while ((m = re.exec(html)) !== null) {
     const attrs = m[1] ?? ""
