@@ -5,6 +5,9 @@ import type {
   ProductionCapability,
   Project,
 } from "@/types"
+import type { BlogArticle } from "./blogArticles"
+import { BLOG_ARTICLES } from "./blogArticles"
+import { byNewestFirst } from "@/utils/helpers"
 
 export type { Article, Frame, HeroAction, ProductionCapability, Project }
 
@@ -214,64 +217,19 @@ export const projects: Project[] = [
   },
 ]
 
-export const articles: Article[] = [
-  {
-    title: "AI Agents Have Permissions Now. Who Controls Them?",
-    category: "SECURITY",
-    date: "Sep 15, 2026",
-    readTime: "9 min read",
-    desc: "A chatbot lies to you. An agent acts on it — why that's an authorization problem.",
-    link: "/articles/ai-agents-have-permissions-who-controls-them",
-  },
-  {
-    title: "Why AI Can't Rewrite Windows",
-    category: "UPDATE",
-    date: "Jun 4, 2026",
-    readTime: "4 min read",
-    desc: "50M lines. 41 years and decades of decisions. ",
-    link: "/articles/why-ai-cant-just-rewrite-windows",
-  },
-  {
-    title: "872 to 479: Cutting Security Issues with SonarQube",
-    category: "OBSERVABILITY",
-    date: "May 25, 2026",
-    readTime: "5 min read",
-    desc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
-    link: "/articles/872-issues-30-days-sonarqube",
-  },
-  {
-    title: "Diagnosing VaultLock's Logo-Fetching Failure",
-    category: "SECURITY",
-    date: "Apr 8, 2026",
-    readTime: "2 min read",
-    desc: "Getting the right brand logo, every time, without breaking the UI.",
-    link: "/articles/how-vaultlock-reliably-fetches-brand-logos",
-  },
-  {
-    title: "Bastion's Path from Docker to Kubernetes",
-    category: "QUICK READ",
-    date: "Mar 22, 2026",
-    readTime: "6 min read",
-    desc: "How Bastion ships as a single container and scales on Kubernetes without leaking host trust.",
-    link: "/articles/containerized-aegismesh-docker-kubernetes-jenkins",
-  },
-  {
-    title: "DeployLens: Finding My Deployment Blind Spots",
-    category: "UPDATE",
-    date: "Feb 18, 2026",
-    readTime: "5 min read",
-    desc: "GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap.",
-    link: "/articles/building-deploylens-exposed-my-deployment-blind-spots",
-  },
-  {
-    title: "Rethinking My Git Workflow",
-    category: "PRESS RELEASE",
-    date: "Feb 10, 2026",
-    readTime: "3 min read",
-    desc: "Not just a code host. A place that quietly reshaped how I build.",
-    link: "/articles/rethinking-my-git-workflow",
-  },
-]
+function toCardArticle(a: BlogArticle): Article {
+  return {
+    title: a.title,
+    category: a.category,
+    date: a.cardDate,
+    readTime: a.cardReadTime,
+    desc: a.cardDesc,
+    link: `/articles/${a.slug}`,
+    hideFromHome: a.hideFromHome,
+  }
+}
+
+export const articles: Article[] = BLOG_ARTICLES.map(toCardArticle).sort(byNewestFirst)
 
 export const quote =
   "Every project I've built has solved a real problem I've encountered. Each feature exists for a reason and every decision is driven by a real need."

@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react"
+import { AppButton } from "../common/Button"
 
 interface Props {
   children: ReactNode
@@ -41,12 +42,12 @@ export class ErrorBoundary extends Component<Readonly<Props>, State> {
               An unexpected error occurred. No internal details or sensitive data were exposed.
             </p>
             <div className="pt-4 flex flex-wrap items-center justify-center gap-3.5">
-              <button type="button" onClick={this.handleReload} className="btn btn-primary">
+              <AppButton variant="primary" onClick={this.handleReload}>
                 Reload Page
-              </button>
-              <a href="mailto:nirjargoswami2626@gmail.com?subject=Application%20Issue%20Report" className="btn btn-ghost">
+              </AppButton>
+              <AppButton variant="ghost" href="mailto:nirjargoswami2626@gmail.com?subject=Application%20Issue%20Report">
                 Report Issue
-              </a>
+              </AppButton>
             </div>
           </div>
         </div>

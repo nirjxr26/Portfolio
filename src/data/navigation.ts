@@ -15,9 +15,28 @@ export const WORK_ITEMS = [
   { name: "HookDrop", href: "/works/hookdrop" },
 ] as const
 
-export const NAV_LINKS = [
-  { label: "What I do", href: "/#what-i-do" },
-  { label: "Works", href: "/works" },
-  { label: "Articles", href: "/articles" },
-  { label: "Resume", href: SOCIAL_LINKS.resume, isExternal: true },
-] as const
+export interface FooterLinkItem {
+  name: string
+  href: string
+}
+
+export const FOOTER_CONNECT: FooterLinkItem[] = [
+  { name: "GitHub", href: SOCIAL_LINKS.github },
+  { name: "LinkedIn", href: SOCIAL_LINKS.linkedin },
+  { name: "X (Twitter)", href: SOCIAL_LINKS.twitter },
+  { name: "Instagram", href: SOCIAL_LINKS.instagram },
+]
+
+export const FOOTER_RESOURCES: FooterLinkItem[] = [
+  { name: "Home", href: "/" },
+  { name: "Articles", href: "/articles" },
+  { name: "Resume", href: SOCIAL_LINKS.resume },
+]
+
+export const CONTACT = {
+  emailHref: SOCIAL_LINKS.email,
+  emailAddress: SOCIAL_LINKS.emailAddress,
+  phoneHref: "tel:+918799142626",
+  phoneLabel: "+91 87991 42626",
+  location: "Ahmedabad, Gujarat, India",
+} as const

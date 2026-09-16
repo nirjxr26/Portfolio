@@ -10,3 +10,9 @@ http://nirjar.me/* https://nirjar.me/:splat 301!
 # Static prerendered pages (/works, /works/bastion, /works/kost, /works/hookdrop) are served directly by the static host.
 # Any genuinely nonexistent route falls back to 404.html with real HTTP 404 status.
 /* /404.html 404
+
+# Legacy article slugs → current title-based slugs (mirrors vercel.json redirects)
+/articles/ai-agents-have-permissions-who-controls-them /articles/ai-agents-have-permissions-now-but-whos-in-control 301
+/articles/872-issues-30-days-sonarqube /articles/making-technical-debt-visible-with-sonarqube 301
+/articles/containerized-aegismesh-docker-kubernetes-jenkins /articles/bastions-path-from-docker-to-kubernetes 301
+/articles/building-deploylens-exposed-my-deployment-blind-spots /articles/deploylens-finding-my-deployment-blind-spots 301

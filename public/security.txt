@@ -3,4 +3,4 @@ Contact: mailto:nirjargoswami2626@gmail.com
 Expires: 2027-08-27T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://nirjar.me/.well-known/security.txt
-Policy: https://github.com/nirjxr26/nirjar-portfolio/blob/main/SECURITY.md
+Policy: https://github.com/nirjxr26/Portfolio//main/SECURITY.md

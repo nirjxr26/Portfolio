@@ -1,6 +1,6 @@
 import { productionCapabilities } from "@/data/home"
 import { CarouselSection } from "../layout/CarouselSection"
-import { FeatureCard } from "./FeatureCard"
+import { FeatureCard } from "./cards"
 
 interface ProductionRailProps {
   bgClass?: string

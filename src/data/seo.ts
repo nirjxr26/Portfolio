@@ -1,6 +1,6 @@
 import { SOCIAL_LINKS } from "./navigation"
-import { SITE_OG_IMAGE, SITE_URL } from "./site"
-import type { Article, BreadcrumbItem, PersonSchema, SoftwareSchema } from "@/types"
+import { SITE_KEYWORDS, SITE_OG_IMAGE, SITE_URL } from "./site"
+import type { Article, BreadcrumbItem, SoftwareSchema } from "@/types"
 
 /**
  * Single source for SEO structured-data builders — pure functions, no React.
@@ -17,8 +17,10 @@ export function absoluteUrl(pathOrUrl: string): string {
 
 export function toISODate(dateStr: string): string {
   const d = new Date(dateStr)
-  if (!isNaN(d.getTime())) return d.toISOString().split("T")[0] as string
-  return dateStr
+  if (isNaN(d.getTime())) return dateStr
+  const month = `${d.getMonth() + 1}`.padStart(2, "0")
+  const day = `${d.getDate()}`.padStart(2, "0")
+  return `${d.getFullYear()}-${month}-${day}`
 }
 
 export function estimateWordCount(text: string): number {
@@ -37,7 +39,7 @@ export function buildBreadcrumbSchema(items: BreadcrumbItem[]): Record<string, u
   }
 }
 
-export function buildDefaultSchemas(personSchema?: PersonSchema): Record<string, unknown>[] {
+export function buildDefaultSchemas(): Record<string, unknown>[] {
   return [
     {
       "@type": "ProfilePage",
@@ -47,19 +49,19 @@ export function buildDefaultSchemas(personSchema?: PersonSchema): Record<string,
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
     {
-      "@type": "Person",
-      "@id": `${SITE_URL}/#person`,
-      name: personSchema?.name || "Nirjar Goswami",
-      url: personSchema?.url || SITE_URL,
+          "@type": "Person",
+          "@id": `${SITE_URL}/#person`,
+          name: "Nirjar Goswami",
+          url: SITE_URL,
       image: `${SITE_URL}/og-image.webp`,
-      jobTitle: personSchema?.jobTitle || "Cloud & Security Engineer",
+          jobTitle: "Cloud & Security Engineer",
       email: "mailto:nirjargoswami2626@gmail.com",
-      sameAs: personSchema?.sameAs || [
-        SOCIAL_LINKS.github,
-        SOCIAL_LINKS.linkedin,
-        SOCIAL_LINKS.twitter,
-        SOCIAL_LINKS.instagram,
-      ],
+          sameAs: [
+            SOCIAL_LINKS.github,
+            SOCIAL_LINKS.linkedin,
+            SOCIAL_LINKS.twitter,
+            SOCIAL_LINKS.instagram,
+          ],
       knowsAbout: [
         "Cloud Infrastructure",
         "Cloud Architecture",
@@ -85,28 +87,58 @@ export function buildDefaultSchemas(personSchema?: PersonSchema): Record<string,
       url: SITE_URL,
       name: "Nirjar Goswami Portfolio",
       description: "Official website and case studies of Nirjar Goswami.",
-      publisher: { "@id": `${SITE_URL}/#person` },
-      inLanguage: "en-US",
-    },
-  ]
-}
+          publisher: { "@id": `${SITE_URL}/#person` },
+          inLanguage: "en-US",
+          keywords: SITE_KEYWORDS,
+        },
+      ]
+    }
 
 export function buildSoftwareSchema(
   s: SoftwareSchema,
-  opts?: { url?: string; image?: string },
+  opts?: { url?: string; image?: string; keywords?: string },
 ): Record<string, unknown> {
-  return {
+  const url = opts?.url ?? s.url
+  const node: Record<string, unknown> = {
     "@type": "SoftwareSourceCode",
+    "@id": `${url}#software`,
     name: s.name,
     description: s.description,
-    url: opts?.url ?? s.url,
+    url,
     image: opts?.image ?? SITE_OG_IMAGE,
     codeRepository: s.codeRepository || s.url,
     programmingLanguage: s.programmingLanguage || "Go",
     license: s.license || "https://opensource.org/licenses/MIT",
     runtimePlatform: s.runtimePlatform || "Kubernetes, Linux, Docker",
     author: { "@type": "Person", name: "Nirjar Goswami", url: SITE_URL },
+    publisher: { "@id": `${SITE_URL}/#person` },
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    inLanguage: "en-US",
   }
+  if (opts?.keywords) node["keywords"] = opts.keywords
+  return node
+}
+
+export function buildArticleListElements(articles: Article[]): Record<string, unknown>[] {
+  return articles.map((article, idx) => ({
+    "@type": "ListItem",
+    position: idx + 1,
+    item: {
+      "@type": "TechArticle",
+      headline: article.title,
+      description: article.desc.trim(),
+      url: absoluteUrl(article.link),
+      image: SITE_OG_IMAGE,
+      author: { "@id": `${SITE_URL}/#person` },
+      publisher: { "@id": `${SITE_URL}/#person` },
+      datePublished: article.date ? toISODate(article.date) : undefined,
+      dateModified: article.date ? toISODate(article.date) : undefined,
+      mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(article.link) },
+      inLanguage: "en-US",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      keywords: article.category,
+    },
+  }))
 }
 
 export function buildArticlesItemList(articles: Article[]): Record<string, unknown> {
@@ -116,19 +148,38 @@ export function buildArticlesItemList(articles: Article[]): Record<string, unkno
     name: "Technical Articles & Publications",
     description:
       "Technical articles on systems, observability, security, and developer tooling by Nirjar Goswami.",
-    itemListElement: articles.map((article, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      item: {
-        "@type": "TechArticle",
-        headline: article.title,
-        description: article.desc,
-        url: absoluteUrl(article.link),
-        author: { "@id": `${SITE_URL}/#person` },
-        publisher: { "@id": `${SITE_URL}/#person` },
-        about: article.category,
-      },
-    })),
+    itemListElement: buildArticleListElements(articles),
+  }
+}
+
+export interface CollectionPageInput {
+  id: string
+  url: string
+  name: string
+  description: string
+  keywords: string
+  listName: string
+  listDescription?: string
+  items: Record<string, unknown>[]
+}
+
+export function buildCollectionPage(input: CollectionPageInput): Record<string, unknown> {
+  const mainEntity: Record<string, unknown> = {
+    "@type": "ItemList",
+    name: input.listName,
+    itemListElement: input.items,
+  }
+  if (input.listDescription) mainEntity["description"] = input.listDescription
+  return {
+    "@type": "CollectionPage",
+    "@id": input.id,
+    url: input.url,
+    name: input.name,
+    description: input.description,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    inLanguage: "en-US",
+    keywords: input.keywords,
+    mainEntity,
   }
 }
 

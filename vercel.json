@@ -3,6 +3,28 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/articles/ai-agents-have-permissions-who-controls-them",
+      "destination": "/articles/ai-agents-have-permissions-now-but-whos-in-control",
+      "permanent": true
+    },
+    {
+      "source": "/articles/872-issues-30-days-sonarqube",
+      "destination": "/articles/making-technical-debt-visible-with-sonarqube",
+      "permanent": true
+    },
+    {
+      "source": "/articles/containerized-aegismesh-docker-kubernetes-jenkins",
+      "destination": "/articles/bastions-path-from-docker-to-kubernetes",
+      "permanent": true
+    },
+    {
+      "source": "/articles/building-deploylens-exposed-my-deployment-blind-spots",
+      "destination": "/articles/deploylens-finding-my-deployment-blind-spots",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -23,7 +45,7 @@
         { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; prefetch-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"
+          "value": "default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c='; style-src 'self'; font-src 'self'; img-src 'self' data: https:; media-src 'self'; connect-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;"
         }
       ]
     },

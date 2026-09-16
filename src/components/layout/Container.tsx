@@ -3,9 +3,12 @@ import { ReactNode } from "react"
 export function Container({
   children,
   className = "",
+  size = "default",
 }: Readonly<{
   children: ReactNode
   className?: string
+  size?: "default" | "narrow" | "wide"
 }>) {
-  return <div className={`mx-auto max-w-7xl px-4 min-[414px]:px-6 sm:px-8 lg:px-12 ${className}`}>{children}</div>
+  const widthClass = size === "narrow" ? "max-w-3xl" : size === "wide" ? "max-w-6xl" : "max-w-7xl"
+  return <div className={`mx-auto ${widthClass} page-gutter ${className}`}>{children}</div>
 }

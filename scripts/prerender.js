@@ -48,27 +48,9 @@ function toPlainText(node) {
 // NOTE: toISODate + estimateWordCount come from src/data/seo.ts (shared with
 // the runtime `Seo` component) — do not redeclare them here.
 
-const BLOG_KEYWORDS = {
-  "why-ai-cant-just-rewrite-windows":
-    "AI, Windows, code generation, scale, complexity, backward compatibility, dependencies, Microsoft, 50 million lines, Git, context window, Gemini, Claude, Veracode, Brooks Law, multi-agent, .NET Runtime, operating system, rewrite",
-  "872-issues-30-days-sonarqube":
-    "SonarQube, AegisMesh, code quality, technical debt, bugs, vulnerabilities, security hotspots, code smells, duplication, Quality Gates, React, cognitive complexity, JWT, regex, maintainability, reliability",
-  "containerized-aegismesh-docker-kubernetes-jenkins":
-    "Docker, Kubernetes, Jenkins, Prisma, dumb-init, Nginx, Vite, healthcheck, ConfigMap, Secret, .dockerignore, Node.js, CI/CD, containerization, AegisMesh, DevOps",
-  "rethinking-my-git-workflow":
-    "Git, GitHub, workflow, version control, commit, branch, README, portfolio, collaboration, green squares, staging, push, clone",
-  "how-vaultlock-reliably-fetches-brand-logos":
-    "VaultLock, logo, brand, favicon, Clearbit, Google, DuckDuckGo, caching, validation, QML, Qt, backend, input normalization, offline password manager",
-  "building-deploylens-exposed-my-deployment-blind-spots":
-    "DeployLens, CI/CD, pipeline, GitHub Actions, AWS, IAM, OIDC, CodeQL, SAST, ECS, SHA, deployment, visibility, security, secrets, CodeDeploy",
-  "ai-agents-have-permissions-who-controls-them":
-    "AI agents, IAM, authorization, least privilege, OAuth, non-human identity, prompt injection, insider threat, short-lived credentials, infrastructure as code, AegisMesh, deployment security",
-}
-
-console.log("📦 Loading application data modules for unified single-source prerendering...")
 const vite = await createServer({ root: projectRoot, server: { middlewareMode: true }, appType: "custom", logLevel: "silent" })
 
-let homeMod, caseStudiesMod, navMod, blogMod, siteMod, seoMod
+let homeMod, caseStudiesMod, navMod, blogMod, siteMod, seoMod, routesMod
 try {
   homeMod = await vite.ssrLoadModule("/src/data/home.ts")
   caseStudiesMod = await vite.ssrLoadModule("/src/data/caseStudies.ts")
@@ -76,6 +58,7 @@ try {
   blogMod = await vite.ssrLoadModule("/src/data/blogArticles.ts")
   siteMod = await vite.ssrLoadModule("/src/data/site.ts")
   seoMod = await vite.ssrLoadModule("/src/data/seo.ts")
+  routesMod = await vite.ssrLoadModule("/src/data/routes.ts")
 } finally {
   await vite.close()
 }
@@ -85,7 +68,18 @@ const { CASE_STUDIES } = caseStudiesMod
 const { SOCIAL_LINKS } = navMod
 const { BLOG_ARTICLES } = blogMod
 const { SITE_KEYWORDS: SITE_KEYWORDS_SHARED, SITE_OG_IMAGE, SITE_URL } = siteMod
-const { buildBreadcrumbSchema, buildTechArticleSchema, estimateWordCount, toISODate } = seoMod
+const {
+  buildArticleListElements,
+  buildArticlesItemList,
+  buildBreadcrumbSchema,
+  buildCollectionPage,
+  buildDefaultSchemas,
+  buildSoftwareSchema,
+  buildTechArticleSchema,
+  estimateWordCount,
+  toISODate,
+} = seoMod
+const { ROUTE_META } = routesMod
 
 const SITE_KEYWORDS = SITE_KEYWORDS_SHARED
 
@@ -111,75 +105,52 @@ const caseStudyRoutes = Object.entries(CASE_STUDIES).map(([slug, data]) => {
     schema: {
       "@context": "https://schema.org",
       "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-            { "@type": "ListItem", position: 3, name: data.hero.title, item: canonical },
-          ],
-        },
-        {
-          "@type": "SoftwareSourceCode",
-          "@id": `${canonical}#software`,
-          name: data.hero.title,
-          description,
-          url: canonical,
-          image: OG_IMAGE,
-          codeRepository: repoUrl,
-          programmingLanguage: data.softwareSchema?.programmingLanguage || "Go",
-          license: data.softwareSchema?.license || "https://opensource.org/licenses/MIT",
-          runtimePlatform: data.softwareSchema?.runtimePlatform || "Kubernetes, Linux, Docker",
-          author: { "@id": "https://nirjar.me/#person" },
-          publisher: { "@id": "https://nirjar.me/#person" },
-          isPartOf: { "@id": "https://nirjar.me/#website" },
-          inLanguage: "en-US",
-          keywords,
-        },
+        buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Works", url: "/works" },
+          { name: data.hero.title, url: `/works/${slug}` },
+        ]),
+        buildSoftwareSchema(
+          {
+            name: data.hero.title,
+            description,
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Kubernetes / Linux",
+            url: repoUrl,
+            codeRepository: repoUrl,
+            ...data.softwareSchema,
+          },
+          { url: canonical, image: OG_IMAGE, keywords },
+        ),
       ],
     },
   }
 })
 
-const articleCardItems = articles.map((art, idx) => ({
-  "@type": "ListItem",
-  position: idx + 1,
-  item: {
-    "@type": "TechArticle",
-    headline: art.title,
-    description: art.desc.trim(),
-    url: `https://nirjar.me${art.link}`,
-    image: OG_IMAGE,
-    author: { "@id": "https://nirjar.me/#person" },
-    publisher: { "@id": "https://nirjar.me/#person" },
-    datePublished: art.date ? toISODate(art.date) : undefined,
-    dateModified: art.date ? toISODate(art.date) : undefined,
-    mainEntityOfPage: { "@type": "WebPage", "@id": `https://nirjar.me${art.link}` },
-    inLanguage: "en-US",
-    isPartOf: { "@id": "https://nirjar.me/#website" },
-    keywords: art.category,
-  },
-}))
+const articleCardItems = buildArticleListElements(articles)
 
 const worksCollectionItems = Object.entries(CASE_STUDIES).map(([slug, cs], idx) => ({
   "@type": "ListItem",
   position: idx + 1,
-  item: {
-    "@type": "SoftwareSourceCode",
-    name: cs.hero.title,
-    description: cs.hero.subhead,
-    url: `https://nirjar.me/works/${slug}`,
-    image: OG_IMAGE,
-    codeRepository: cs.cta.url,
-    author: { "@id": "https://nirjar.me/#person" },
-  },
+  item: buildSoftwareSchema(
+    {
+      name: cs.hero.title,
+      description: cs.hero.subhead,
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Kubernetes / Linux",
+      url: `https://nirjar.me/works/${slug}`,
+      codeRepository: cs.cta.url,
+      ...cs.softwareSchema,
+    },
+    { url: `https://nirjar.me/works/${slug}`, image: OG_IMAGE },
+  ),
 }))
 
 function buildArticleRoute(blog) {
   const canonical = `https://nirjar.me/articles/${blog.slug}`
   const isoDate = toISODate(blog.updated)
   const wordCount = estimateWordCount(blog.sections.map((s) => s.subtitle + " " + s.content).join(" ") + " " + blog.description)
-  const keywords = BLOG_KEYWORDS[blog.slug] || `${blog.category}, ${blog.title}, Nirjar Goswami, ${SITE_KEYWORDS}`
+  const keywords = blog.keywords || `${blog.category}, ${blog.title}, Nirjar Goswami, ${SITE_KEYWORDS}`
   return {
     path: `/articles/${blog.slug}`,
     title: `${blog.title} | Nirjar Goswami`,
@@ -220,83 +191,24 @@ function buildArticleRoute(blog) {
 
 const articleDetailRoutes = BLOG_ARTICLES.map(buildArticleRoute)
 
-const allArticleKeywords = BLOG_ARTICLES.map((b) => BLOG_KEYWORDS[b.slug]).join(", ")
+const allArticleKeywords = BLOG_ARTICLES.map((b) => b.keywords).join(", ")
 
 const routes = [
   {
     path: "/",
-    title: "Nirjar Goswami | Cloud & Security Engineer",
-    description:
-      "Cloud, Security & Systems Engineer specializing in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure.",
-    canonical: "https://nirjar.me",
+    ...ROUTE_META["/"],
     keywords: `${SITE_KEYWORDS}, ${allArticleKeywords}`,
     sourceFile: "src/data/home.ts",
     priority: "1.0",
     changefreq: "weekly",
     schema: {
       "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "ProfilePage",
-          "@id": "https://nirjar.me/#profilepage",
-          url: "https://nirjar.me",
-          name: "Nirjar Goswami | Cloud & Security Engineer",
-          mainEntity: { "@id": "https://nirjar.me/#person" },
-        },
-        {
-          "@type": "Person",
-          "@id": "https://nirjar.me/#person",
-          name: "Nirjar Goswami",
-          url: "https://nirjar.me",
-          image: OG_IMAGE,
-          jobTitle: "Cloud & Security Engineer",
-          email: "mailto:nirjargoswami2626@gmail.com",
-          sameAs: [SOCIAL_LINKS.github, SOCIAL_LINKS.linkedin, SOCIAL_LINKS.twitter, SOCIAL_LINKS.instagram].filter(Boolean),
-          knowsAbout: [
-            "Cloud Infrastructure",
-            "Cloud Architecture",
-            "Cloud Security",
-            "Cybersecurity",
-            "Identity & Access Management",
-            "System Design",
-            "DevOps",
-            "Kubernetes",
-            "Go",
-          ],
-          hasOccupation: {
-            "@type": "Occupation",
-            name: "Cloud & Security Engineer",
-            occupationalCategory: "15-1252.00",
-            skills: "Cloud Architecture, Kubernetes, DevOps, Cybersecurity, IAM, Go",
-          },
-          description: "Cloud & Security Engineer building systems meant to be forgotten.",
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://nirjar.me/#website",
-          url: "https://nirjar.me",
-          name: "Nirjar Goswami Portfolio",
-          description: "Official website and case studies of Nirjar Goswami.",
-          publisher: { "@id": "https://nirjar.me/#person" },
-          inLanguage: "en-US",
-          keywords: SITE_KEYWORDS,
-        },
-        {
-          "@type": "ItemList",
-          "@id": "https://nirjar.me/#articles",
-          name: "Technical Articles & Publications",
-          description: "Technical articles on systems, observability, security, and developer tooling by Nirjar Goswami.",
-          itemListElement: articleCardItems,
-        },
-      ],
+      "@graph": [...buildDefaultSchemas(), buildArticlesItemList(articles)],
     },
   },
   {
     path: "/works",
-    title: "Works | Nirjar Goswami",
-    description:
-      "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
-    canonical: "https://nirjar.me/works",
+    ...ROUTE_META["/works"],
     keywords: `Works, ${SITE_KEYWORDS}, Bastion, Kost, HookDrop, Systems, Infrastructure`,
     sourceFile: "src/components/pages/WorksClient.tsx",
     priority: "0.9",
@@ -304,37 +216,26 @@ const routes = [
     schema: {
       "@context": "https://schema.org",
       "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Works", item: "https://nirjar.me/works" },
-          ],
-        },
-        {
-          "@type": "CollectionPage",
+        buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Works", url: "/works" },
+        ]),
+        buildCollectionPage({
           "@id": "https://nirjar.me/works#collection",
           url: "https://nirjar.me/works",
           name: "Works & Systems Architecture | Nirjar Goswami",
           description:
             "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
-          isPartOf: { "@id": "https://nirjar.me/#website" },
-          inLanguage: "en-US",
           keywords: `Works, ${SITE_KEYWORDS}`,
-          mainEntity: {
-            "@type": "ItemList",
-            name: "Featured Software & Infrastructure Systems",
-            itemListElement: worksCollectionItems,
-          },
-        },
+          listName: "Featured Software & Infrastructure Systems",
+          items: worksCollectionItems,
+        }),
       ],
     },
   },
   {
     path: "/articles",
-    title: "Articles | Nirjar Goswami",
-    description: "Notes on systems, security, and the craft of building by Nirjar Goswami.",
-    canonical: "https://nirjar.me/articles",
+    ...ROUTE_META["/articles"],
     keywords: `Articles, Blog, Technical Writing, ${allArticleKeywords}`,
     sourceFile: "src/components/pages/ArticleClient.tsx",
     priority: "0.9",
@@ -342,37 +243,26 @@ const routes = [
     schema: {
       "@context": "https://schema.org",
       "@graph": [
-        {
-          "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Home", item: "https://nirjar.me" },
-            { "@type": "ListItem", position: 2, name: "Articles", item: "https://nirjar.me/articles" },
-          ],
-        },
-        {
-          "@type": "CollectionPage",
+        buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Articles", url: "/articles" },
+        ]),
+        buildCollectionPage({
           "@id": "https://nirjar.me/articles#collection",
           url: "https://nirjar.me/articles",
           name: "Articles | Nirjar Goswami",
           description: "Notes on systems, security, and the craft of building by Nirjar Goswami.",
-          isPartOf: { "@id": "https://nirjar.me/#website" },
-          inLanguage: "en-US",
           keywords: allArticleKeywords,
-          mainEntity: {
-            "@type": "ItemList",
-            name: "Technical Articles & Publications",
-            description: "All technical articles by Nirjar Goswami — bento grid, same short desc as cards.",
-            itemListElement: articleCardItems,
-          },
-        },
+          listName: "Technical Articles & Publications",
+          listDescription: "All technical articles by Nirjar Goswami — bento grid, same short desc as cards.",
+          items: articleCardItems,
+        }),
       ],
     },
   },
   ...articleDetailRoutes,
   ...caseStudyRoutes,
 ]
-
-console.log("🚀 Prerendering static HTML route heads and dynamic schemas...")
 
 routes.forEach((route) => {
   let html = template
@@ -419,17 +309,13 @@ routes.forEach((route) => {
     outputPath = path.resolve(routeDir, "index.html")
   }
   fs.writeFileSync(outputPath, html, "utf-8")
-  console.log(`  ✓ Prerendered ${route.path} -> ${outputPath}`)
 })
 
-console.log("🛑 Prerendering 404.html error page...")
 let notFoundHtml = template
-notFoundHtml = notFoundHtml.replace(/<title>.*?<\/title>/, `<title>Page Not Found | Nirjar Goswami</title>`)
+notFoundHtml = notFoundHtml.replace(/<title>.*?<\/title>/, `<title>${ROUTE_META["/404"].title}</title>`)
 notFoundHtml = notFoundHtml.replace(/<meta\s+name="robots"\s+content=".*?"\s*\/?>/, `<meta name="robots" content="noindex, nofollow" />`)
 fs.writeFileSync(path.resolve(distDir, "404.html"), notFoundHtml, "utf-8")
-console.log("  ✓ Generated dist/404.html with noindex headers")
 
-console.log("🗺️  Generating dynamic sitemap.xml with Git commit timestamps...")
 const seenCanonical = new Set()
 const sitemapRoutes = routes.filter((r) => {
   if (seenCanonical.has(r.canonical)) return false
@@ -444,5 +330,56 @@ const sitemapEntries = sitemapRoutes
   .join("\n")
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`
 fs.writeFileSync(path.resolve(distDir, "sitemap.xml"), sitemapXml, "utf-8")
-console.log("  ✓ Generated dist/sitemap.xml with dynamic lastmod timestamps")
-console.log(`✨ All ${routes.length} routes prerendered successfully with 100/100 production SEO!`)
+fs.writeFileSync(path.resolve(projectRoot, "public/sitemap.xml"), sitemapXml, "utf-8")
+
+const escXml = (s) =>
+  s
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;")
+const rssPubDate = (updated) => new Date(`${updated} 12:00:00 UTC`).toUTCString()
+const rssItems = [...BLOG_ARTICLES]
+  .sort((a, b) => new Date(b.updated) - new Date(a.updated))
+  .map((b) => {
+    const link = `https://nirjar.me/articles/${b.slug}`
+    const bodyHtml = b.sections
+      .map(
+        (s) =>
+          `<h2>${escXml(s.subtitle)}</h2>` +
+          s.content
+            .split("\n\n")
+            .map((p) => `<p>${escXml(p).replaceAll("\n", "<br/>")}</p>`)
+            .join(""),
+      )
+      .join("")
+    return [
+      "  <item>",
+      `    <title>${escXml(b.title)}</title>`,
+      `    <link>${link}</link>`,
+      `    <guid isPermaLink="true">${link}</guid>`,
+      `    <description>${escXml(b.description)}</description>`,
+      `    <content:encoded>${escXml(bodyHtml)}</content:encoded>`,
+      `    <category>${escXml(b.category)}</category>`,
+      `    <pubDate>${rssPubDate(b.updated)}</pubDate>`,
+      "  </item>",
+    ].join("\n")
+  })
+  .join("\n")
+const rssXml =
+  `<?xml version="1.0" encoding="UTF-8"?>\n` +
+  `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">\n` +
+  `<channel>\n` +
+  `  <title>Nirjar Goswami — Articles</title>\n` +
+  `  <link>https://nirjar.me/articles</link>\n` +
+  `  <atom:link href="https://nirjar.me/rss.xml" rel="self" type="application/rss+xml" />\n` +
+  `  <description>Notes on systems, security, and the craft of building by Nirjar Goswami.</description>\n` +
+  `  <language>en-us</language>\n` +
+  `  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n` +
+  `  <generator>nirjar.me prerender</generator>\n` +
+  `${rssItems}\n` +
+  `</channel>\n` +
+  `</rss>\n`
+fs.writeFileSync(path.resolve(distDir, "rss.xml"), rssXml, "utf-8")
+fs.writeFileSync(path.resolve(projectRoot, "public/rss.xml"), rssXml, "utf-8")

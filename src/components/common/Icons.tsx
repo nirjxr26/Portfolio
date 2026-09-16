@@ -181,11 +181,15 @@ export function LinkIcon({ className = "", width = 16, height = 16, strokeWidth 
   )
 }
 
-// Official brand marks — Simple Icons (MIT) — not custom-drawn
+// Artwork from public/assets/icons/whatsapp-svgrepo-com.svg (SVG Repo) — inlined
+// so it keeps the component API (size via props) and inherits the parent text
+// color via currentColor (the file's fixed black would vanish on dark theme
+// and kill the share buttons' hover tint).
 export function WhatsAppIcon({ className = "", width = 16, height = 16 }: Readonly<IconProps>) {
   return (
-    <svg width={width} height={height} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 10.91c0 1.57.41 3.1 1.19 4.45L2 22l6.81-1.32a9.86 9.86 0 0 0 3.23.55h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.41Zm-7.01 15.24h-.01c-1.32 0-2.62-.35-3.75-1.02l-.27-.16-4.04.78.79-3.94-.17-.28a8.13 8.13 0 0 1-1.25-4.32c0-4.49 3.66-8.15 8.16-8.15 2.18 0 4.23.85 5.77 2.39a8.11 8.11 0 0 1 2.39 5.76c0 4.49-3.66 8.15-8.15 8.15Zm6.54-5.95c-.36-.18-2.12-1.05-2.45-1.17-.33-.12-.57-.18-.81.18s-.93 1.17-1.14 1.41-.42.27-.78.09c-.36-.18-1.52-.56-2.9-1.78-1.07-.96-1.79-2.14-2-2.5-.21-.36-.02-.56.16-.74.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.29-.7-.59-.61-.81-.62l-.69-.01c-.24 0-.63.09-.96.45-.33.36-1.26 1.23-1.26 3 0 1.77 1.29 3.48 1.47 3.72.18.24 2.54 3.88 6.15 5.44.86.37 1.53.59 2.05.76.86.27 1.65.23 2.27.14.69-.1 2.12-.87 2.42-1.71.3-.84.3-1.56.21-1.71-.09-.15-.33-.24-.69-.42Z" />
+    <svg width={width} height={height} viewBox="0 0 16 16" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M11.42 9.49c-.19-.09-1.1-.54-1.27-.61s-.29-.09-.42.1-.48.6-.59.73-.21.14-.4 0a5.13 5.13 0 0 1-1.49-.92 5.25 5.25 0 0 1-1-1.29c-.11-.18 0-.28.08-.38s.18-.21.28-.32a1.39 1.39 0 0 0 .18-.31.38.38 0 0 0 0-.33c0-.09-.42-1-.58-1.37s-.3-.32-.41-.32h-.4a.72.72 0 0 0-.5.23 2.1 2.1 0 0 0-.65 1.55A3.59 3.59 0 0 0 5 8.2 8.32 8.32 0 0 0 8.19 11c.44.19.78.3 1.05.39a2.53 2.53 0 0 0 1.17.07 1.93 1.93 0 0 0 1.26-.88 1.67 1.67 0 0 0 .11-.88c-.05-.07-.17-.12-.36-.21z" />
+      <path d="M13.29 2.68A7.36 7.36 0 0 0 8 .5a7.44 7.44 0 0 0-6.41 11.15l-1 3.85 3.94-1a7.4 7.4 0 0 0 3.55.9H8a7.44 7.44 0 0 0 5.29-12.72zM8 14.12a6.12 6.12 0 0 1-3.15-.87l-.22-.13-2.34.61.62-2.28-.14-.23a6.18 6.18 0 0 1 9.6-7.65 6.12 6.12 0 0 1 1.81 4.37A6.19 6.19 0 0 1 8 14.12z" />
     </svg>
   )
 }
@@ -194,6 +198,16 @@ export function XIcon({ className = "", width = 14, height = 14 }: Readonly<Icon
   return (
     <svg width={width} height={height} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
       <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932M17.61 20.644h2.039L6.486 3.24H4.298z" />
+    </svg>
+  )
+}
+
+export function RssIcon({ className = "", width = 14, height = 14 }: Readonly<IconProps>) {
+  return (
+    <svg width={width} height={height} viewBox="0 0 10 10" fill="currentColor" className={className} aria-hidden="true">
+      <g transform="translate(-209 -3484)" fillRule="evenodd">
+        <path d="M209,3492 L209,3494 L210.971803,3494 C210.971803,3492.895 210.089421,3492 209,3492 M209,3488 L209,3490 C210.971803,3490 213.08459,3492 213.08459,3494 L215.056394,3494 C215.056394,3491 211.957705,3488 209,3488 M219,3494 L217.028197,3494 C217.028197,3490 212.943606,3486 209,3486 L209,3484 C213.929508,3484 219,3488 219,3494" />
+      </g>
     </svg>
   )
 }

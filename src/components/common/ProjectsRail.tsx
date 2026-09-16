@@ -2,7 +2,7 @@ import { projects } from "@/data/home"
 import { Container } from "../layout/Container"
 import { Section, SectionHeader } from "../layout/Section"
 import { CarouselTrack } from "./CarouselTrack"
-import { ProjectCard } from "./ProjectCard"
+import { ProjectCard } from "./cards"
 
 interface ProjectsRailProps {
   bgClass?: string
