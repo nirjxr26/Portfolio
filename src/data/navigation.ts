@@ -3,7 +3,6 @@ export const SOCIAL_LINKS = {
   linkedin: "https://www.linkedin.com/in/nirjxr",
   twitter: "https://x.com/nirjxrgoswami",
   instagram: "https://instagram.com/nirjar_goswami",
-  blog: "https://blog.nirjar.me",
   email: "mailto:nirjargoswami2626@gmail.com",
   emailAddress: "nirjargoswami2626@gmail.com",
   resume: "/assets/nirjar_resume.pdf",

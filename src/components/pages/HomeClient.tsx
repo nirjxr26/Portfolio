@@ -56,9 +56,9 @@ export function HomeClient() {
           ))}
         </CarouselSection>
         <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">
-          <AppButton href="/articles" variant="ghost">
+          <AppButton href="/articles" variant="flow">
             <span>View articles</span>
-            <ArrowRight width={14} height={14} />
+            <ArrowRight width={14} height={14} className="flow-arrow" />
           </AppButton>
         </div>
 

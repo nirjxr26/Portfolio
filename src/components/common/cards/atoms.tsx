@@ -19,3 +19,11 @@ export function CardReadTime({ timeText }: Readonly<{ timeText: string }>) {
     </div>
   )
 }
+
+export function CardBody({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    <p className="t-body card-desc text-muted text-sm sm:text-base leading-relaxed">
+      {children}
+    </p>
+  )
+}

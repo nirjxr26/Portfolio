@@ -282,7 +282,7 @@ routes.forEach((route) => {
   html = html.replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/, `<meta name="twitter:description" content="${route.description}" />`)
   html = html.replace(/<meta\s+name="twitter:image:alt"\s+content=".*?"\s*\/?>/, `<meta name="twitter:image:alt" content="${route.title}" />`)
   if (route.schema) {
-    const formattedSchema = JSON.stringify(route.schema, null, 2)
+    const formattedSchema = JSON.stringify(route.schema, null, 2).replace(/</g, "\\u003c")
     html = html.replace(
       /<script\s+id="dynamic-jsonld-schema"\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
       `<script id="dynamic-jsonld-schema" type="application/ld+json">\n${formattedSchema}\n    </script>`,

@@ -1,18 +1,19 @@
 import { useMemo } from "react"
 import { ArticleMoreCard, ShareButton, Seo } from "../common"
-import { CheckIcon, CopyIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
+import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
 import { byNewestFirst } from "@/utils/helpers"
 import { renderContent, slugify } from "@/utils/markdown"
 import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
 import { getBlogArticle, type BlogArticle } from "@/data/blogArticles"
+import { SITE_URL } from "@/data/site"
 import { articles as HOME_ARTICLES } from "@/data/home"
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
   const { copied: copiedLink, copy: copyLink } = useCopy()
-  const canonical = `https://nirjar.me/articles/${article.slug}`
+  const canonical = `${SITE_URL}/articles/${article.slug}`
   const shareUrl = typeof window !== "undefined" ? window.location.href : canonical
   const shareTitle = article.title
   const isoDate = toISODate(article.updated)
@@ -150,9 +151,9 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
               <button
                 type="button"
                 onClick={handleCopyText}
-                className="btn-sm"
+                className="btn-sm cursor-pointer border-0"
               >
-                {copiedText ? <CheckIcon width={14} height={14} className="text-accent" /> : <CopyIcon width={14} height={14} />}
+                <CopySwapIcon copied={copiedText} width={14} height={14} />
                 <span>{copiedText ? "Copied!" : "Copy Article"}</span>
               </button>
 

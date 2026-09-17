@@ -15,6 +15,7 @@
   --accent: #0066cc;
   --accent-hover: #0071e3;
   --page-gutter: 1rem;
+  --header-h: 2.75rem;
 }
 
 .dark {
@@ -98,6 +99,24 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  @supports (corner-shape: squircle) {
+    .squircle {
+      border-radius: 30px;
+    }
+  }
+
+  .text-ink-soft {
+    color: color-mix(in oklab, var(--ink) 90%, transparent);
+  }
+
+  .text-muted-soft {
+    color: color-mix(in oklab, var(--muted) 80%, transparent);
+  }
+
+  .text-muted-faint {
+    color: color-mix(in oklab, var(--muted) 60%, transparent);
   }
 }
 
@@ -257,6 +276,21 @@
     color: var(--ink);
   }
 
+  .btn-flow {
+    background: var(--surface-alt);
+    border: none;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .btn-flow .flow-arrow {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-flow:is(:hover, :focus-visible) .flow-arrow {
+    transform: translateX(6px);
+  }
+
   .btn-sm {
     display: inline-flex;
     align-items: center;
@@ -306,6 +340,21 @@
   .btn-icon:hover {
     background: var(--card);
     color: var(--ink);
+  }
+
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 2px;
+  }
+
+  .hit-area {
+    position: relative;
+  }
+
+  .hit-area::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
   }
 
   /* Carousel track responsive alignment to match Container.tsx exactly */
@@ -378,50 +427,8 @@
     transform: translate3d(0, 0, 0);
   }
 
-  .reveal-from-left {
-    opacity: 0;
-    transform: translate3d(-140px, 0, 0);
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-    backface-visibility: hidden;
-  }
-
-  .reveal-from-left.is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .reveal-from-right {
-    opacity: 0;
-    transform: translate3d(140px, 0, 0);
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-    backface-visibility: hidden;
-  }
-
-  .reveal-from-right.is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .reveal-from-bottom {
-    opacity: 0;
-    transform: translate3d(0, 100px, 0);
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
-    backface-visibility: hidden;
-  }
-
-  .reveal-from-bottom.is-visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .reveal-on-scroll,
-    .reveal-from-left,
-    .reveal-from-right,
-    .reveal-from-bottom {
+    .reveal-on-scroll {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
@@ -460,6 +467,13 @@
     will-change: opacity, transform, filter;
   }
 
+  /* Apple continuous corners — progressive enhancement.
+     Chromium renders the squircle, Safari/Firefox ignore it
+     and keep the plain border-radius fallback. */
+  .squircle {
+    corner-shape: squircle;
+  }
+
   /* Card Hover Lift & Scale Micro-Interaction with Hardware Compositing */
   .apple-card-hover {
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
@@ -474,6 +488,11 @@
 
   .apple-card-hover:active {
     transform: translate3d(0, -1px, 0) scale(0.97);
+  }
+
+  .apple-card-hover:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 3px;
   }
 
   /* Card text-stack rhythm — single source for every card on the site.
@@ -505,12 +524,35 @@
   }
 
   /* Apple signature tactile tap micro-interaction & reduced motion safety */
-  .interactive-tap {
-    transition: transform 0.15s cubic-bezier(0.2, 0, 0, 1), background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  .icon-swap {
+    display: grid;
   }
 
-  .interactive-tap:active {
-    transform: scale(0.95);
+  .icon-swap > * {
+    grid-area: 1 / 1;
+  }
+
+  .icon-swap-out {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .icon-swap-in {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .icon-swap.is-copied .icon-swap-out {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  .icon-swap.is-copied .icon-swap-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -78,7 +78,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
         Skip to main content
       </a>
       <nav>
-        <Container className="relative flex h-11 items-center justify-between">
+          <Container className="relative flex h-[var(--header-h)] items-center justify-between">
           {/* Mobile Home Icon Link */}
           <a
             href="/"
@@ -179,7 +179,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:text-ink md:hidden focus:outline-none"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:text-ink md:hidden focus:outline-none hit-area"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -198,7 +198,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
 
         {/* Full-Screen Vertical Curtain-Falling Nav Drawer (Mobile <= 768px) */}
         {mobileMenuOpen && (
-          <div className="fixed inset-x-0 top-11 bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100vh-44px)]">
+          <div className="fixed inset-x-0 top-[var(--header-h)] bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100vh-var(--header-h))]">
             {/* Top Links Section with Generous Vertical Padding */}
             <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink">
               <a
@@ -254,11 +254,11 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                               onClick={() => setMobileMenuOpen(false)}
                               className={`flex items-center justify-between rounded-xl px-3.5 py-3 text-[17px] font-normal transition-colors ${isActive
                                 ? "text-accent bg-card"
-                                : "text-ink/90 hover:text-accent hover:bg-card active:bg-card/70"
+                                 : "text-ink-soft hover:text-accent hover:bg-card active:bg-card/70"
                                 }`}
                             >
                               <span>{item.name}</span>
-                              <ArrowRight width={14} height={14} className={isActive ? "text-accent" : "text-muted/60"} />
+                              <ArrowRight width={14} height={14} className={isActive ? "text-accent" : "text-muted-faint"} />
                             </a>
                           </li>
                         )

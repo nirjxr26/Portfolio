@@ -6,9 +6,7 @@ export function ScrollReveal() {
     let rafId: number | null = null
 
     rafId = requestAnimationFrame(() => {
-      const revealElements = document.querySelectorAll(
-        ".reveal-on-scroll, .reveal-from-left, .reveal-from-right, .reveal-from-bottom",
-      )
+      const revealElements = document.querySelectorAll(".reveal-on-scroll")
 
       if (revealElements.length === 0) return
 
