@@ -1,4 +1,5 @@
 import type { CaseStudyData } from "@/types"
+import { SITE_URL } from "@/data/site"
 import { alternateSurfaces } from "@/utils/helpers"
 import { FeatureCard, Seo } from "../common"
 import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
@@ -10,11 +11,10 @@ interface CaseStudyPageProps {
 
 export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
   const { hero, sections, cta, seoTitle } = data
-  const canonicalUrl = `https://nirjar.me/works/${slug}`
+  const canonicalUrl = `${SITE_URL}/works/${slug}`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
-  const isCtaSurfaceAlt = sections.length % 2 === 0
-  const ctaBgClass = isCtaSurfaceAlt ? "bg-surface-alt" : "bg-canvas"
-  const footerBgClass = isCtaSurfaceAlt ? "bg-canvas" : "bg-surface-alt"
+  const ctaBgClass = alternateSurfaces(sections.length).section
+  const footerBgClass = alternateSurfaces(sections.length + 1).section
 
   return (
     <PageShell

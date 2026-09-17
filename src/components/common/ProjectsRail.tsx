@@ -1,7 +1,7 @@
 import { projects } from "@/data/home"
-import { Container } from "../layout/Container"
 import { Section, SectionHeader } from "../layout/Section"
 import { CarouselTrack } from "./CarouselTrack"
+import { RailGroup } from "./RailGroup"
 import { ProjectCard } from "./cards"
 
 interface ProjectsRailProps {
@@ -35,18 +35,11 @@ export function ProjectsRail({
 
       {/* More Works Carousel */}
       {more.length > 0 && (
-        <div className="mt-12 sm:mt-16 w-full reveal-on-scroll">
-          <Container className="mb-6 sm:mb-8">
-            <h3 className="t-caption-strong text-ink tracking-normal text-lg min-[375px]:text-xl sm:text-2xl font-medium">
-              More works
-            </h3>
-          </Container>
-          <CarouselTrack>
-            {more.map((project) => (
-              <ProjectCard key={project.title} project={project} cardBgClass={cardBgClass} isFeatured={false} />
-            ))}
-          </CarouselTrack>
-        </div>
+        <RailGroup title="More works">
+          {more.map((project) => (
+            <ProjectCard key={project.title} project={project} cardBgClass={cardBgClass} isFeatured={false} />
+          ))}
+        </RailGroup>
       )}
     </Section>
   )

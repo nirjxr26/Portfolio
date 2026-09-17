@@ -5,11 +5,11 @@ interface IconProps {
   strokeWidth?: number
 }
 
-export function ArrowUpRight({ className = "", width = 20, height = 20 }: Readonly<IconProps>) {
+export function ArrowUpRight({ className = "" }: Readonly<{ className?: string }>) {
   return (
     <svg
-      width={width}
-      height={height}
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -138,6 +138,25 @@ export function CheckIcon({ className = "", width = 14, height = 14, strokeWidth
     >
       <path d="M5 12l5 5L20 7" />
     </svg>
+  )
+}
+
+export function CopySwapIcon({
+  copied,
+  width = 14,
+  height = 14,
+  className = "",
+  checkClassName = "text-accent",
+}: Readonly<IconProps & { copied: boolean; checkClassName?: string }>) {
+  return (
+    <span className={`icon-swap${copied ? " is-copied" : ""} ${className}`.trim()} aria-hidden="true">
+      <span className="icon-swap-out">
+        <CopyIcon width={width} height={height} />
+      </span>
+      <span className="icon-swap-in">
+        <CheckIcon width={width} height={height} className={checkClassName} />
+      </span>
+    </span>
   )
 }
 

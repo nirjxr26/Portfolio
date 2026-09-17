@@ -2,7 +2,7 @@ import type { Project } from "@/data/home"
 import { externalProps } from "@/utils/helpers"
 import { BaseCard, PROJECT_CARD_HEIGHT, PROJECT_CARD_PADDING, PROJECT_CARD_SIZE } from "../BaseCard"
 import { ArrowUpRight } from "../Icons"
-import { CardEyebrow } from "./atoms"
+import { CardBody, CardEyebrow } from "./atoms"
 
 export function ProjectCard({
   project,
@@ -26,9 +26,7 @@ export function ProjectCard({
         <h3 className="t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
           {project.title}
         </h3>
-        <p className="t-body card-desc text-muted text-sm sm:text-base leading-relaxed">
-          {project.description}
-        </p>
+        <CardBody>{project.description}</CardBody>
       </div>
 
       <div className={`mt-4 sm:mt-6 flex items-center ${url ? "justify-between" : "justify-end"}`}>

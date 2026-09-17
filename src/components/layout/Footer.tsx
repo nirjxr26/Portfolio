@@ -6,9 +6,8 @@ import {
   WORK_ITEMS,
   type FooterLinkItem,
 } from "@/data/navigation"
-import { useCopy } from "@/utils/useCopy"
 import { AppLink } from "../common/Button"
-import { CheckIcon, ChevronDown, CopyIcon, RssIcon } from "../common/Icons"
+import { ChevronDown, RssIcon } from "../common/Icons"
 import { Container } from "./Container"
 
 interface FooterProps {
@@ -38,22 +37,12 @@ function FooterContactList({
   subtextClass,
   listClassName = "pb-3.5 space-y-2.5 text-sm",
 }: Readonly<{ linkClass: string; subtextClass: string; listClassName?: string }>) {
-  const { copied, copy } = useCopy()
   return (
     <ul className={listClassName}>
-      <li className="flex items-center gap-2">
-        <a href={CONTACT.emailHref} className={`${linkClass} block min-w-0 flex-1 truncate`}>
+      <li>
+        <a href={CONTACT.emailHref} className={`${linkClass} block truncate`}>
           {CONTACT.emailAddress}
         </a>
-        <button
-          type="button"
-          onClick={() => void copy(CONTACT.emailAddress)}
-          aria-label={copied ? "Email address copied" : "Copy email address"}
-          title={copied ? "Copied!" : "Copy email"}
-          className="btn-icon h-6 w-6 shrink-0"
-        >
-          {copied ? <CheckIcon width={12} height={12} className="text-accent" /> : <CopyIcon width={12} height={12} />}
-        </button>
       </li>
       <li>
         <a href={CONTACT.phoneHref} className={linkClass}>
@@ -129,9 +118,9 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
 
   const headingClass = "text-ink font-semibold"
   const linkClass = "text-muted hover:text-ink transition-colors"
-  const subtextClass = "text-muted/80"
-  const divideClass = "divide-muted/15"
-  const borderClass = "border-muted/15"
+  const subtextClass = "text-muted-soft"
+  const divideClass = "divide-hairline"
+  const borderClass = "border-hairline"
   const iconClass = "text-muted"
 
   return (
@@ -181,7 +170,7 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
         {/* Bottom Copyright Divider & Centered Legal Text */}
         <div className={`mt-8 pt-6 sm:mt-12 sm:pt-8 border-t ${borderClass} flex flex-wrap items-center justify-center gap-3`}>
           <p className={`text-xs sm:text-[13px] font-normal ${subtextClass}`}>
-            &copy; 2026 Nirjar Goswami. All rights reserved.
+            &copy; {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
           </p>
           <a
             href="/rss.xml"

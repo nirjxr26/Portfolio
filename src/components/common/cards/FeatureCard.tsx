@@ -1,6 +1,6 @@
 import type { CardItem } from "@/types"
 import { BaseCard, CARD_HEIGHT, CARD_PADDING, FEATURE_CARD_SIZE } from "../BaseCard"
-import { CardEyebrow } from "./atoms"
+import { CardBody, CardEyebrow } from "./atoms"
 
 export function FeatureCard({
   card,
@@ -16,11 +16,7 @@ export function FeatureCard({
         <h3 className="t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
           {card.headline}
         </h3>
-        {card.body && (
-          <p className="t-body card-desc text-muted text-sm sm:text-base leading-relaxed">
-            {card.body}
-          </p>
-        )}
+        {card.body && <CardBody>{card.body}</CardBody>}
       </div>
     </BaseCard>
   )

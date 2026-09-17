@@ -14,7 +14,7 @@ export function ShareButton({ label, href, onClick, children }: Readonly<ShareBu
       <a
         href={href}
         aria-label={label}
-        className="btn-icon h-8 w-8"
+        className="btn-icon h-8 w-8 hit-area"
         {...externalProps(href)}
       >
         {children}

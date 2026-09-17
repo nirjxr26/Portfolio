@@ -3,7 +3,7 @@ import type { HeroAction } from "@/types"
 import { externalProps } from "@/utils/helpers"
 import { ArrowRight } from "./Icons"
 
-type ButtonVariant = "primary" | "ghost"
+type ButtonVariant = "primary" | "ghost" | "flow"
 
 interface ButtonBase {
   variant?: ButtonVariant
@@ -74,9 +74,9 @@ export function ActionButtons({ actions }: Readonly<{ actions: HeroAction[] }>) 
             {action.label}
           </AppButton>
         ) : (
-          <AppButton key={action.label} href={action.url} variant="ghost" className="w-full min-[360px]:w-auto">
+          <AppButton key={action.label} href={action.url} variant="flow" className="w-full min-[360px]:w-auto">
             <span>{action.label}</span>
-            <ArrowRight width={14} height={14} />
+            <ArrowRight width={14} height={14} className="flow-arrow" />
           </AppButton>
         ),
       )}

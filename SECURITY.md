@@ -64,7 +64,7 @@ Every response carries:
   `Cross-Origin-Embedder-Policy: credentialless`,
   `Origin-Agent-Cluster: ?1`.
 - A locked-down `Permissions-Policy` (camera, microphone, geolocation,
-  payment, USB, and sensors all disabled).
+  payment, USB, browsing-topics, and sensors all disabled).
 
 There is intentionally no `Report-To` / `NEL` endpoint: with no backend there
 is nowhere trustworthy to receive violation reports, and a dead reporting

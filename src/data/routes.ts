@@ -18,12 +18,12 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: "Works | Nirjar Goswami",
     description:
       "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
-    canonical: "https://nirjar.me/works",
+    canonical: `${SITE_URL}/works`,
   },
   "/articles": {
     title: "Article | Nirjar Goswami",
     description: "Writing about things I’ve experienced and worked on, not just ideas I’ve read about.",
-    canonical: "https://nirjar.me/articles",
+    canonical: `${SITE_URL}/articles`,
   },
   "/404": {
     title: "Page Not Found | Nirjar Goswami",
