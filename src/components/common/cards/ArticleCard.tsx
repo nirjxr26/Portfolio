@@ -9,7 +9,7 @@ import {
   PROJECT_CARD_SIZE,
 } from "../BaseCard"
 import { ArrowUpRight } from "../Icons"
-import { CardBody, CardReadTime } from "./atoms"
+import { articleAriaLabel, CardBody, CardReadTime } from "./atoms"
 
 export function ArticleCard({
   article,
@@ -23,7 +23,7 @@ export function ArticleCard({
     <BaseCard
       as="a"
       href={article.link}
-      aria-label={`Read article: ${article.title}`}
+      aria-label={articleAriaLabel(article.title)}
       className={
         feature
           ? `${PROJECT_CARD_SIZE} ${PROJECT_CARD_PADDING} ${PROJECT_CARD_HEIGHT} ${cardBgClass}`

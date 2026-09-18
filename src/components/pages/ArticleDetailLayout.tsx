@@ -3,12 +3,10 @@ import { ArticleMoreCard, ShareButton, Seo } from "../common"
 import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
-import { byNewestFirst } from "@/utils/helpers"
 import { renderContent, slugify } from "@/utils/markdown"
 import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
-import { getBlogArticle, type BlogArticle } from "@/data/blogArticles"
+import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
 import { SITE_URL } from "@/data/site"
-import { articles as HOME_ARTICLES } from "@/data/home"
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
@@ -34,21 +32,10 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
   }, [article, canonical, isoDate])
 
   const neighbors = useMemo(() => {
-    const orderedSlugs = [...HOME_ARTICLES]
-      .sort(byNewestFirst)
-      .map((a) => a.link.split("/").pop() ?? "")
-    const idx = orderedSlugs.indexOf(article.slug)
+    const { previous, next } = getAdjacentArticles(article.slug)
     const pairs: { blog: BlogArticle; eyebrow: string }[] = []
-    const olderSlug = idx >= 0 ? orderedSlugs[idx + 1] : undefined
-    const newerSlug = idx > 0 ? orderedSlugs[idx - 1] : undefined
-    if (olderSlug) {
-      const blog = getBlogArticle(olderSlug)
-      if (blog) pairs.push({ blog, eyebrow: "← Previous" })
-    }
-    if (newerSlug) {
-      const blog = getBlogArticle(newerSlug)
-      if (blog) pairs.push({ blog, eyebrow: "Next →" })
-    }
+    if (previous) pairs.push({ blog: previous, eyebrow: "← Previous" })
+    if (next) pairs.push({ blog: next, eyebrow: "Next →" })
     return pairs
   }, [article.slug])
 

@@ -7,6 +7,7 @@ import {
   siteCanonical,
 } from "@/data/site"
 import {
+  JSONLD_SCRIPT_ID,
   absoluteUrl,
   buildArticlesItemList,
   buildBreadcrumbSchema,
@@ -123,7 +124,7 @@ export function Seo({
     }
 
     // 6. JSON-LD Dynamic Schema Sync
-    const scriptId = "dynamic-jsonld-schema"
+    const scriptId = JSONLD_SCRIPT_ID
     let scriptEl = document.getElementById(scriptId) as HTMLScriptElement | null
     if (!scriptEl) {
       scriptEl = document.createElement("script")

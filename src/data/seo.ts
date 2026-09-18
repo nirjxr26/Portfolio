@@ -9,6 +9,8 @@ import type { Article, BreadcrumbItem, SoftwareSchema } from "@/types"
  * identical schemas. 0 UI change: head-only output.
  */
 
+export const JSONLD_SCRIPT_ID = "dynamic-jsonld-schema"
+
 export function absoluteUrl(pathOrUrl: string): string {
   if (pathOrUrl.startsWith("http")) return pathOrUrl
   if (pathOrUrl === "/") return SITE_URL

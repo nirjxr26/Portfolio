@@ -27,3 +27,7 @@ export function CardBody({ children }: Readonly<{ children: ReactNode }>) {
     </p>
   )
 }
+
+export function articleAriaLabel(title: string) {
+  return `Read article: ${title}`
+}

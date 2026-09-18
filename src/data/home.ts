@@ -217,7 +217,7 @@ export const projects: Project[] = [
   },
 ]
 
-function toCardArticle(a: BlogArticle): Article {
+export function toCardArticle(a: BlogArticle): Article {
   return {
     title: a.title,
     category: a.category,

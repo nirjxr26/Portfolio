@@ -1,0 +1,138 @@
+﻿@layer components {
+
+  /* Buttons — pill grammar, scale(.95) press, focus ring per design doc */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9999px;
+    padding: 10px 20px;
+    font-family: var(--font-text);
+    font-size: 15px;
+    line-height: 1;
+    letter-spacing: -0.022em;
+    transition:
+      transform 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  @media (min-width: 640px) {
+    .btn {
+      padding: 13px 26px;
+      font-size: 17px;
+    }
+  }
+
+  .btn:active {
+    transform: scale(0.95);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-hover);
+    color: #ffffff;
+  }
+
+  .btn-ghost {
+    background: var(--surface-alt);
+    border: none;
+    color: var(--ink);
+  }
+
+  .btn-ghost:hover {
+    color: var(--ink);
+  }
+
+  .btn-flow {
+    background: var(--surface-alt);
+    border: none;
+    color: var(--ink);
+    overflow: hidden;
+  }
+
+  .btn-flow .flow-arrow {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-flow:is(:hover, :focus-visible) .flow-arrow {
+    transform: translateX(6px);
+  }
+
+  .btn-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9999px;
+    border: 1px solid var(--hairline);
+    background: var(--surface-alt);
+    padding: 8px 16px;
+    font-family: var(--font-text);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink);
+    transition:
+      transform 0.15s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-sm:active {
+    transform: scale(0.95);
+  }
+
+  .btn-sm:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 2px;
+  }
+
+  .btn-sm:hover {
+    background: var(--card);
+  }
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: var(--surface-alt);
+    color: var(--muted);
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .btn-icon:hover {
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 2px;
+  }
+
+  .hit-area {
+    position: relative;
+  }
+
+  .hit-area::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+  }
+}

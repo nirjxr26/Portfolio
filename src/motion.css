@@ -1,0 +1,191 @@
+﻿@layer components {
+
+  /* Ultra-Silky Slow Apple Curtain Fall Animation */
+  @keyframes curtainFall {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0) scaleY(0.96);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scaleY(1);
+    }
+  }
+
+  .animate-curtain-fall {
+    animation: curtainFall 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: top;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  /* Smooth Instant Theme Cross-Fade */
+  body,
+  header,
+  article,
+  section,
+  button,
+  a {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* Apple Signature GPU Hardware-Accelerated Animation System */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translate3d(0, 36px, 0);
+    transition: opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+  }
+
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* Hero Staggered Slow Load Animations */
+  @keyframes heroFadeUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 40px, 0) scale(0.97);
+      filter: blur(6px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .animate-hero-1 {
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: opacity, transform, filter;
+  }
+
+  .animate-hero-2 {
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    opacity: 0;
+    will-change: opacity, transform, filter;
+  }
+
+  .animate-hero-3 {
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    opacity: 0;
+    will-change: opacity, transform, filter;
+  }
+
+  /* Apple continuous corners — progressive enhancement.
+     Chromium renders the squircle, Safari/Firefox ignore it
+     and keep the plain border-radius fallback. */
+  .squircle {
+    corner-shape: squircle;
+  }
+
+  /* Card Hover Lift & Scale Micro-Interaction with Hardware Compositing */
+  .apple-card-hover {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .apple-card-hover:hover {
+    transform: translate3d(0, -6px, 0) scale(1.012);
+  }
+
+  .apple-card-hover:active {
+    transform: translate3d(0, -1px, 0) scale(0.97);
+  }
+
+  .apple-card-hover:focus-visible {
+    outline: 2px solid var(--accent-hover);
+    outline-offset: 3px;
+  }
+
+  /* Card text-stack rhythm — single source for every card on the site.
+     Values match Featured Work (ProjectCard): roomy tag-to-title gap,
+     tight title-to-desc gap. Change once here, all cards follow. */
+  .card-tag {
+    @apply mb-3 sm:mb-4;
+  }
+
+  .card-desc {
+    @apply mt-1.5 sm:mt-2;
+  }
+
+  /* Smooth page transition — buttery SPA fade */
+  @keyframes pageFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-transition {
+    animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+
+  /* Copy-button icon cross-fade */
+  .icon-swap {
+    display: grid;
+  }
+
+  .icon-swap > * {
+    grid-area: 1 / 1;
+  }
+
+  .icon-swap-out {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .icon-swap-in {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .icon-swap.is-copied .icon-swap-out {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  .icon-swap.is-copied .icon-swap-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

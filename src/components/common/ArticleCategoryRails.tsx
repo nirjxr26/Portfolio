@@ -1,9 +1,9 @@
-import { articles } from "@/data/home"
+import { ARTICLE_CATEGORIES, BLOG_ARTICLES } from "@/data/blogArticles"
+import { toCardArticle } from "@/data/home"
+import { byNewestFirst } from "@/utils/helpers"
 import { Section } from "../layout/Section"
 import { ArticleCard } from "./cards/ArticleCard"
 import { RailGroup } from "./RailGroup"
-
-export const ARTICLE_CATEGORIES = ["Artificial Intelligence", "DevOps", "Practice", "Security"] as const
 
 interface ArticleCategoryRailsProps {
   id?: string
@@ -18,7 +18,9 @@ export function ArticleCategoryRails({
 }: Readonly<ArticleCategoryRailsProps>) {
   const groups = ARTICLE_CATEGORIES.map((category) => ({
     category,
-    items: articles.filter((article) => article.category === category),
+    items: BLOG_ARTICLES.filter((article) => article.category === category)
+      .map(toCardArticle)
+      .sort(byNewestFirst),
   })).filter((group) => group.items.length > 0)
 
   if (groups.length === 0) return null

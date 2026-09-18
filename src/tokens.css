@@ -1,0 +1,63 @@
+﻿/* ---- Theme variables (light = Apple white/parchment, dark = Apple black/tile) ---- */
+:root {
+  color-scheme: light;
+  --canvas: #ffffff;
+  --surface-alt: #f5f5f7;
+  --card: #ffffff;
+  --ink: #1d1d1f;
+  --muted: #6E6E73;
+  --hairline: #e0e0e0;
+  --accent: #0066cc;
+  --accent-hover: #0071e3;
+  --page-gutter: 1rem;
+  --header-h: 2.75rem;
+}
+
+.dark {
+  color-scheme: dark;
+  --canvas: #000000;
+  --surface-alt: #111112;
+  --card: #1d1d1f;
+  --ink: #ffffff;
+  --muted: #b8b8bd;
+  --hairline: #333336;
+  --accent: #2997ff;
+  --accent-hover: #4aa8ff;
+}
+
+@media (min-width: 414px) {
+  :root {
+    --page-gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --page-gutter: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-gutter: 3rem;
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface-alt: var(--surface-alt);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-hairline: var(--hairline);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+}
+
+@theme {
+  --color-tile-dark: #272729;
+  --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --font-text: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-manrope: "Manrope", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
