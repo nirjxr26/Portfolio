@@ -8,7 +8,6 @@ import {
   ErrorBoundary,
   HomeClient,
   NotFoundClient,
-  WebVitals,
   WorksClient,
 } from "@/components"
 import { getBlogArticle } from "@/data/blogArticles"
@@ -57,7 +56,6 @@ function App() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
-      <WebVitals />
       <App />
     </ErrorBoundary>
   </StrictMode>,

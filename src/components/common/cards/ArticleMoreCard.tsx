@@ -1,6 +1,6 @@
 import type { BlogArticle } from "@/data/blogArticles"
 import { BaseCard, CAROUSEL_CARD_SIZE, CARD_HEIGHT, CARD_PADDING } from "../BaseCard"
-import { CardReadTime } from "./atoms"
+import { articleAriaLabel, CardReadTime } from "./atoms"
 
 export function ArticleMoreCard({ article, eyebrow }: Readonly<{ article: BlogArticle; eyebrow?: string }>) {
   const href = `/articles/${article.slug}`
@@ -8,7 +8,7 @@ export function ArticleMoreCard({ article, eyebrow }: Readonly<{ article: BlogAr
     <BaseCard
       as="a"
       href={href}
-      aria-label={`Read article: ${article.title}`}
+      aria-label={articleAriaLabel(article.title)}
       className={`group ${CAROUSEL_CARD_SIZE} ${CARD_HEIGHT} bg-card ${CARD_PADDING}`}
     >
       <div>

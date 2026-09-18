@@ -3,6 +3,14 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { execSync } from "node:child_process"
 import { createServer } from "vite"
+import {
+  buildLlmsArticleLines,
+  buildRssItems,
+  buildRssXml,
+  buildSitemapXml,
+  spliceLlmsSection,
+  toPlainText,
+} from "./prerender-lib.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -32,17 +40,6 @@ function getGitLastMod(relativeFilePath) {
     if (fs.existsSync(fullPath)) return fs.statSync(fullPath).mtime.toISOString().split("T")[0]
   } catch {}
   return new Date().toISOString().split("T")[0]
-}
-
-function toPlainText(node) {
-  if (!node) return ""
-  if (typeof node === "string") return node
-  if (typeof node === "number") return String(node)
-  if (Array.isArray(node)) return node.map(toPlainText).join("")
-  if (typeof node === "object" && node !== null && "props" in node) {
-    if (node.props?.children) return toPlainText(node.props.children)
-  }
-  return ""
 }
 
 // NOTE: toISODate + estimateWordCount come from src/data/seo.ts (shared with
@@ -77,6 +74,7 @@ const {
   buildSoftwareSchema,
   buildTechArticleSchema,
   estimateWordCount,
+  JSONLD_SCRIPT_ID,
   toISODate,
 } = seoMod
 const { ROUTE_META } = routesMod
@@ -284,8 +282,8 @@ routes.forEach((route) => {
   if (route.schema) {
     const formattedSchema = JSON.stringify(route.schema, null, 2).replace(/</g, "\\u003c")
     html = html.replace(
-      /<script\s+id="dynamic-jsonld-schema"\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
-      `<script id="dynamic-jsonld-schema" type="application/ld+json">\n${formattedSchema}\n    </script>`,
+      new RegExp(`<script\\s+id="${JSONLD_SCRIPT_ID}"\\s+type="application\\/ld\\+json">[\\s\\S]*?<\\/script>`),
+      `<script id="${JSONLD_SCRIPT_ID}" type="application/ld+json">\n${formattedSchema}\n    </script>`,
     )
   }
   let outputPath
@@ -309,79 +307,22 @@ const sitemapRoutes = routes.filter((r) => {
   seenCanonical.add(r.canonical)
   return true
 })
-const sitemapEntries = sitemapRoutes
-  .map((r) => {
-    const lastmod = getGitLastMod(r.sourceFile)
-    return `  <url>\n    <loc>${r.canonical}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`
-  })
-  .join("\n")
-const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>\n`
+const sitemapXml = buildSitemapXml(
+  sitemapRoutes.map((r) => ({ ...r, lastmod: getGitLastMod(r.sourceFile) })),
+)
 fs.writeFileSync(path.resolve(distDir, "sitemap.xml"), sitemapXml, "utf-8")
 fs.writeFileSync(path.resolve(projectRoot, "public/sitemap.xml"), sitemapXml, "utf-8")
 
-const escXml = (s) =>
-  s
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;")
-const rssPubDate = (updated) => new Date(`${updated} 12:00:00 UTC`).toUTCString()
-const rssItems = [...BLOG_ARTICLES]
-  .sort((a, b) => new Date(b.updated) - new Date(a.updated))
-  .map((b) => {
-    const link = `https://nirjar.me/articles/${b.slug}`
-    const bodyHtml = b.sections
-      .map(
-        (s) =>
-          `<h2>${escXml(s.subtitle)}</h2>` +
-          s.content
-            .split("\n\n")
-            .map((p) => `<p>${escXml(p).replaceAll("\n", "<br/>")}</p>`)
-            .join(""),
-      )
-      .join("")
-    return [
-      "  <item>",
-      `    <title>${escXml(b.title)}</title>`,
-      `    <link>${link}</link>`,
-      `    <guid isPermaLink="true">${link}</guid>`,
-      `    <description>${escXml(b.description)}</description>`,
-      `    <content:encoded>${escXml(bodyHtml)}</content:encoded>`,
-      `    <category>${escXml(b.category)}</category>`,
-      `    <pubDate>${rssPubDate(b.updated)}</pubDate>`,
-      "  </item>",
-    ].join("\n")
-  })
-  .join("\n")
-const rssXml =
-  `<?xml version="1.0" encoding="UTF-8"?>\n` +
-  `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">\n` +
-  `<channel>\n` +
-  `  <title>Nirjar Goswami — Articles</title>\n` +
-  `  <link>https://nirjar.me/articles</link>\n` +
-  `  <atom:link href="https://nirjar.me/rss.xml" rel="self" type="application/rss+xml" />\n` +
-  `  <description>Writing about things I’ve experienced and worked on, not just ideas I’ve read about.</description>\n` +
-  `  <language>en-us</language>\n` +
-  `  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n` +
-  `  <generator>nirjar.me prerender</generator>\n` +
-  `${rssItems}\n` +
-  `</channel>\n` +
-  `</rss>\n`
+const rssXml = buildRssXml(buildRssItems(BLOG_ARTICLES), ROUTE_META["/articles"].description)
 fs.writeFileSync(path.resolve(distDir, "rss.xml"), rssXml, "utf-8")
 fs.writeFileSync(path.resolve(projectRoot, "public/rss.xml"), rssXml, "utf-8")
 
 const llmsPublicPath = path.resolve(projectRoot, "public/llms.txt")
-const llmsLines = fs.readFileSync(llmsPublicPath, "utf-8").split("\n")
-const llmsStart = llmsLines.findIndex((l) => l.trim() === "## Technical Articles & Writing")
-if (llmsStart !== -1) {
-  let llmsEnd = llmsStart + 1
-  while (llmsEnd < llmsLines.length && llmsLines[llmsEnd].startsWith("- ")) llmsEnd += 1
-  const llmsItems = [...BLOG_ARTICLES]
-    .sort((a, b) => new Date(b.updated) - new Date(a.updated))
-    .map((b) => `- "${b.title}": ${b.cardDesc.trim()} (https://nirjar.me/articles/${b.slug}).`)
-  llmsLines.splice(llmsStart + 1, llmsEnd - llmsStart - 1, ...llmsItems)
-  const llmsOut = llmsLines.join("\n")
+const llmsOut = spliceLlmsSection(
+  fs.readFileSync(llmsPublicPath, "utf-8"),
+  buildLlmsArticleLines(BLOG_ARTICLES),
+)
+if (llmsOut !== null) {
   fs.writeFileSync(llmsPublicPath, llmsOut, "utf-8")
   fs.writeFileSync(path.resolve(distDir, "llms.txt"), llmsOut, "utf-8")
 }

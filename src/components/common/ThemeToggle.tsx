@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
+import { THEME_DARK_CLASS, THEME_STORAGE_KEY } from "@/utils/helpers"
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(() =>
     typeof document !== "undefined"
-      ? document.documentElement.classList.contains("dark")
+      ? document.documentElement.classList.contains(THEME_DARK_CLASS)
       : true,
   )
 
   useEffect(() => {
     const root = document.documentElement
-    root.classList.toggle("dark", dark)
-    localStorage.setItem("theme", dark ? "dark" : "light")
+    root.classList.toggle(THEME_DARK_CLASS, dark)
+    localStorage.setItem(THEME_STORAGE_KEY, dark ? THEME_DARK_CLASS : "light")
   }, [dark])
 
   return (

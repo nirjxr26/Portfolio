@@ -440,3 +440,14 @@ export const BLOG_ARTICLES: BlogArticle[] = [
 export function getBlogArticle(slug: string) {
   return BLOG_ARTICLES.find((a) => a.slug === slug)
 }
+
+export const ARTICLE_CATEGORIES = ["Artificial Intelligence", "DevOps", "Practice", "Security"] as const
+
+export function getAdjacentArticles(slug: string) {
+  const ordered = [...BLOG_ARTICLES].sort((a, b) => Date.parse(b.cardDate) - Date.parse(a.cardDate))
+  const idx = ordered.findIndex((a) => a.slug === slug)
+  return {
+    previous: idx >= 0 ? ordered[idx + 1] : undefined,
+    next: idx > 0 ? ordered[idx - 1] : undefined,
+  }
+}
