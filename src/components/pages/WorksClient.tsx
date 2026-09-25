@@ -29,7 +29,7 @@ export function WorksClient() {
         {/* Reusable Featured Works & More Works Carousels */}
         <ProjectsRail id="featured-works" bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
-        {/* Reusable What I bring to production Section */}
+        {/* Reusable How I engineer Section */}
         <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
     </PageShell>
   )

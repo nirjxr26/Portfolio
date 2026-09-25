@@ -40,7 +40,7 @@ export function HomeClient() {
         {/* Reusable Work Section (Featured Work + More Works) */}
         <ProjectsRail id="work" bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
 
-        {/* Reusable What I bring to production Section */}
+        {/* Reusable How I engineer Section */}
         <ProductionRail bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
         {/* Articles Section (Above Quote) — Bastion + DeployLens hidden here, still in /article bento */}
