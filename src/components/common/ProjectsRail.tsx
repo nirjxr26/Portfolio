@@ -22,7 +22,7 @@ export function ProjectsRail({
 
   return (
     <Section id={id} bgClass={bgClass}>
-      <SectionHeader title="Featured Work." />
+      <SectionHeader title="Featured work." />
 
       {/* Featured Projects — Apple-style Horizontal Carousel */}
       <div className="reveal-on-scroll">

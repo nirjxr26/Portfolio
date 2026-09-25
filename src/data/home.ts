@@ -15,42 +15,27 @@ export const productionCapabilities: ProductionCapability[] = [
   {
     title: "Systems Fluency",
     tagline: "Where pieces connect.",
-    desc: "Most engineers specialize in one layer. I've worked across enough of them to see where they depend on each other.",
+    desc: "I've built across the frontend, backend, infra, and pipeline layers — enough to see how a change in one breaks another.",
   },
   {
     title: "System Design",
     tagline: "Whiteboard before code.",
-    desc: "I map failure points before writing a line. Cheaper to fix on a diagram than in production.",
+    desc: "Failure points get mapped on paper first. Cheaper to redesign a diagram than rewrite production code.",
   },
   {
     title: "Cost Awareness",
     tagline: "Efficient, not cheap.",
-    desc: "I weigh what infrastructure costs to run, not just to build. Waste shows up in review, not the invoice.",
+    desc: "I size systems to what they actually need to handle, not what looks impressive on a spec sheet.",
   },
   {
-    title: "Quality",
+    title: "Code Quality",
     tagline: "Checked before it's seen.",
-    desc: "Typed, consistent, verified before a human reviews it — so review time goes to design, not typos.",
-  },
-  {
-    title: "Security",
-    tagline: "Threat model, not afterthought.",
-    desc: "Security added late rarely holds. I build it in from the start.",
+    desc: "Style, types, and tests are enforced automatically — so review time goes to design decisions, not typos.",
   },
   {
     title: "Fault Isolation",
     tagline: "Small blast radius.",
-    desc: "One failure shouldn't take three others down. The cause should be obvious, fast.",
-  },
-  {
-    title: "Pipeline Discipline",
-    tagline: "Green means passing.",
-    desc: "Infra sized to real usage. Tests and scans gate every deploy, so a pass actually means something.",
-  },
-  {
-    title: "Observability",
-    tagline: "Unmonitored is unproven.",
-    desc: "Logs, metrics, and traces exist before launch, not after the first outage. Alerts fire only for what matters.",
+    desc: "Components are scoped so one failure doesn't cascade — and the cause is obvious immediately.",
   },
 ]
 
@@ -73,52 +58,33 @@ export const hero = {
 export const frames: Frame[] = [
   {
     number: "01",
-    tag: "Delivery",
+    tag: "CI/CD Pipelines",
     title: "Ship faster, break less.",
-    desc: "CI/CD built for repeatable deploys — not manual steps someone has to remember.",
-    tagline: "Pipelines that don't page you at 2am.",
+    desc: "Every change gets built, tested, and deployed automatically — no step depends on someone remembering it.",
   },
   {
     number: "02",
-    tag: "Patch Discipline",
+    tag: "Vulnerability Patching",
     title: "Fixed, not filed.",
-    desc: "CVEs get triaged by CVSS severity and closed within SLA — before they're weaponized, not after.",
-    tagline: "Patched before they're exploited.",
+    desc: "Vulnerabilities get triaged by real severity and closed inside SLA — before they're exploited, not after.",
   },
   {
     number: "03",
-    tag: "Automation",
-    title: "Repeats become pipelines.",
-    desc: "Fewer manual steps, fewer places for mistakes to hide.",
-    tagline: "Fewer runbooks, more running itself.",
+    tag: "Secure by default.",
+    title: "Nothing left open.",
+    desc: "Access is scoped tight and secrets stay encrypted from the first commit — security isn't a later step.",
   },
   {
     number: "04",
-    tag: "Defense",
-    title: "Breach-proof by default.",
-    desc: "Least privilege and secure defaults from day one, not patched in after something breaks.",
-    tagline: "Deny by default, verify always.",
+    tag: "Monitoring & Alerting",
+    title: "Know before it breaks.",
+    desc: "Systems are instrumented so problems surface on a dashboard, not from a user complaint.",
   },
   {
     number: "05",
-    tag: "Code Security",
-    title: "Catch it before it ships.",
-    desc: "Static analysis, dependency, and container scans run inside CI. Bad code never reaches review.",
-    tagline: "Catch it in the PR, not in prod.",
-  },
-  {
-    number: "06",
-    tag: "Monitoring",
-    title: "Know before it breaks.",
-    desc: "Metrics and alerts tuned for real signal — incidents get caught by a dashboard, not by users.",
-    tagline: "See the failure before your users do.",
-  },
-  {
-    number: "07",
-    tag: "Resilience",
+    tag: "Incident Response & Recovery",
     title: "Fail loud, recover fast.",
-    desc: "Rollbacks and runbooks get planned before an incident, not written during one.",
-    tagline: "Prepared before the alert fires.",
+    desc: "Rollback paths and runbooks exist before something breaks — not improvised while it's on fire.",
   },
 ]
 

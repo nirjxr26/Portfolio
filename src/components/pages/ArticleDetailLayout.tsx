@@ -71,6 +71,11 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
     }
   }
 
+  const toc = article.sections.map((section) => ({
+    id: slugify(section.subtitle),
+    title: section.subtitle,
+  }))
+
   return (
     <PageShell
       headerPath="/articles"
@@ -104,7 +109,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
           </div>
         </section>
 
-        <article className="bg-canvas pb-8 sm:pb-12">
+        <article className="relative bg-canvas pb-8 sm:pb-12">
           <div className="mx-auto w-full max-w-[720px] px-4 min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
             <hr className="border-hairline" />
             <div className="mt-10 space-y-10 sm:mt-14 sm:space-y-12">
@@ -159,6 +164,23 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
               </div>
             </div>
           </div>
+
+          <aside className="hidden xl:block absolute top-24 bottom-8 sm:bottom-12 w-52 left-[max(1rem,calc(25%-294px))]" aria-label="On this page">
+            <div className="sticky top-28">
+              <ul className="space-y-4">
+                {toc.map((entry) => (
+                  <li key={entry.id}>
+                    <a
+                      href={`#${entry.id}`}
+                      className="block text-sm text-muted hover:text-accent transition-colors leading-snug"
+                    >
+                      {entry.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </article>
 
         <CarouselSection
