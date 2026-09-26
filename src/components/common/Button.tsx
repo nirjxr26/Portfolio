@@ -1,9 +1,18 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react"
 import type { HeroAction } from "@/types"
 import { externalProps } from "@/utils/helpers"
-import { ArrowRight } from "./Icons"
+import { ArrowRight, ArrowUpRight } from "./Icons"
 
-type ButtonVariant = "primary" | "ghost" | "flow"
+export type ButtonVariant =
+  | "primary"
+  | "ghost"
+  | "flow"
+  | "dark"
+  | "light"
+  | "apple-dark"
+  | "apple-light"
+  | "glass-dark"
+  | "glass-light"
 
 interface ButtonBase {
   variant?: ButtonVariant
@@ -24,12 +33,17 @@ type ButtonButtonProps = ButtonBase &
 export type AppButtonProps = ButtonLinkProps | ButtonButtonProps
 
 /**
- * Single pill button — `btn btn-primary/ghost` grammar from DESIGN-apple.md.
- * Auto-applies external link props (target/rel) so callers drop `externalProps()` spreads.
- * 0 UI change: same classes, same DOM (`a` when href, `button` otherwise).
+ * Single pill button supporting traditional tokens and Apple tactile CTAs.
  */
 export function AppButton({ variant = "primary", className = "", children, ...rest }: AppButtonProps) {
-  const classes = `btn btn-${variant} ${className}`.trim()
+  let variantClass = `btn btn-${variant}`
+  if (variant === "dark" || variant === "apple-dark" || variant === "glass-dark") {
+    variantClass = "dark-btn btn-apple-dark"
+  } else if (variant === "light" || variant === "apple-light" || variant === "glass-light") {
+    variantClass = "light-btn btn-apple-light"
+  }
+
+  const classes = `${variantClass} ${className}`.trim()
 
   if ("href" in rest && typeof rest.href === "string") {
     const { href, ...anchorRest } = rest as ButtonLinkProps
@@ -47,6 +61,78 @@ export function AppButton({ variant = "primary", className = "", children, ...re
     </button>
   )
 }
+
+type AppleButtonLinkProps = Omit<ButtonLinkProps, "variant" | "children"> & {
+  arrow?: boolean | "right" | "up-right"
+  children: ReactNode
+}
+
+type AppleButtonButtonProps = Omit<ButtonButtonProps, "variant" | "children"> & {
+  arrow?: boolean | "right" | "up-right"
+  children: ReactNode
+}
+
+export type AppleButtonProps = AppleButtonLinkProps | AppleButtonButtonProps
+
+function renderPillButton(
+  variant: "dark" | "light" | "primary",
+  { arrow, children, ...rest }: AppleButtonProps,
+) {
+  const content = (
+    <>
+      <span>{children}</span>
+      {arrow === "up-right" ? (
+        <ArrowUpRight width={14} height={14} strokeWidth={2.2} className="flow-arrow shrink-0" />
+      ) : arrow ? (
+        <ArrowRight width={13} height={13} strokeWidth={2.2} className="flow-arrow shrink-0" />
+      ) : null}
+    </>
+  )
+
+  if ("href" in rest && typeof rest.href === "string") {
+    return (
+      <AppButton variant={variant} {...(rest as ButtonLinkProps)}>
+        {content}
+      </AppButton>
+    )
+  }
+
+  return (
+    <AppButton variant={variant} {...(rest as ButtonButtonProps)}>
+      {content}
+    </AppButton>
+  )
+}
+
+/**
+ * Reusable Apple Primary Accent Pill Button ("View resume" reference style)
+ * Accent fill with specular metallic gradient ring around the edge.
+ */
+export function PrimaryButton(props: AppleButtonProps) {
+  return renderPillButton("primary", props)
+}
+
+export const ApplePrimaryButton = PrimaryButton
+
+/**
+ * Reusable Apple Primary Dark Pill Button ("Apply now" reference style)
+ * Charcoal gradient, tinted ambient shadow, top specular highlight, squircle curvature.
+ */
+export function DarkButton(props: AppleButtonProps) {
+  return renderPillButton("dark", props)
+}
+
+export const AppleDarkButton = DarkButton
+
+/**
+ * Reusable Apple Secondary Light Pill Button ("Read docs" reference style)
+ * Alabaster gradient, refined border contrast, ambient floating shadow, squircle curvature.
+ */
+export function LightButton(props: AppleButtonProps) {
+  return renderPillButton("light", props)
+}
+
+export const AppleLightButton = LightButton
 
 interface AppLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className" | "children"> {
   href: string
@@ -70,14 +156,24 @@ export function ActionButtons({ actions }: Readonly<{ actions: HeroAction[] }>) 
     <>
       {actions.map((action) =>
         action.type === "primary" ? (
-          <AppButton key={action.label} href={action.url} variant="primary" className="w-full min-[360px]:w-auto">
+          <PrimaryButton
+            key={action.label}
+            id={action.label.toLowerCase().includes("resume") ? "btn-view-resume" : undefined}
+            href={action.url}
+            className="w-full min-[360px]:w-auto"
+          >
             {action.label}
-          </AppButton>
+          </PrimaryButton>
         ) : (
-          <AppButton key={action.label} href={action.url} variant="flow" className="w-full min-[360px]:w-auto">
-            <span>{action.label}</span>
-            <ArrowRight width={14} height={14} className="flow-arrow" />
-          </AppButton>
+          <LightButton
+            key={action.label}
+            id={action.label.toLowerCase().includes("work") ? "btn-view-works" : undefined}
+            href={action.url}
+            arrow
+            className="w-full min-[360px]:w-auto"
+          >
+            {action.label}
+          </LightButton>
         ),
       )}
     </>

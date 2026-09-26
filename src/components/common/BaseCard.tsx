@@ -18,6 +18,9 @@ export const FEATURE_CARD_SIZE =
 export const PROJECT_CARD_SIZE =
   "w-[280px] min-[375px]:w-[320px] min-[480px]:w-[360px] min-[577px]:w-[420px] md:w-[480px] lg:w-[520px] shrink-0 snap-start"
 
+export const WIDE_CARD_SIZE =
+  "w-[280px] min-[375px]:w-[330px] min-[480px]:w-[380px] min-[577px]:w-[440px] md:w-[500px] lg:w-[540px] shrink-0 snap-start"
+
 export const CARD_PADDING = "p-5 min-[375px]:p-6 sm:p-8"
 
 export const CARD_HEIGHT = "h-[320px] min-h-[320px] sm:h-[350px] sm:min-h-[350px]"

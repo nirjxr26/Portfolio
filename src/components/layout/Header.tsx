@@ -54,11 +54,17 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
+      setMobileWorksExpanded(false)
     }
     return () => {
       document.body.style.overflow = ""
     }
   }, [mobileMenuOpen])
+
+  const closeMobileNav = () => {
+    setMobileMenuOpen(false)
+    setMobileWorksExpanded(false)
+  }
 
   return (
     <header
@@ -199,109 +205,123 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
         {/* Full-Screen Vertical Curtain-Falling Nav Drawer (Mobile <= 768px) */}
         {mobileMenuOpen && (
           <div className="fixed inset-x-0 top-[var(--header-h)] bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100vh-var(--header-h))]">
-            {/* Top Links Section with Generous Vertical Padding */}
-            <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink">
-              <a
-                href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className={MOBILE_LINK}
-              >
-                Home
-              </a>
+            {mobileWorksExpanded ? (
+              /* Apple-style Works Submenu View: Project list shown independently without card/box */
+              <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink animate-drill-in">
+                <button
+                  type="button"
+                  onClick={() => setMobileWorksExpanded(false)}
+                  className="flex items-center justify-between text-left w-full text-accent hover:opacity-80 transition-opacity py-1"
+                  aria-expanded={true}
+                  aria-label="Back to main navigation menu"
+                >
+                  <span>Works</span>
+                  <ChevronDown
+                    width={20}
+                    height={20}
+                    strokeWidth={2}
+                    className="rotate-180 text-muted"
+                  />
+                </button>
 
-              <a
-                href="/#what-i-do"
-                onClick={() => setMobileMenuOpen(false)}
-                className={MOBILE_LINK}
-              >
-                What I do
-              </a>
+                <div className="flex flex-col gap-4 text-[22px] min-[380px]:text-[24px] font-normal">
+                  {WORK_ITEMS.map((item) => {
+                    const isActive = activePath === item.href
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={closeMobileNav}
+                        className={`flex items-center justify-between py-1 transition-colors ${
+                          isActive
+                            ? "text-accent font-medium"
+                            : "text-ink-soft hover:text-accent"
+                        }`}
+                      >
+                        <span>{item.name}</span>
+                        <ArrowRight
+                          width={16}
+                          height={16}
+                          className={isActive ? "text-accent" : "text-muted-faint"}
+                        />
+                      </a>
+                    )
+                  })}
 
-              {/* Works Section Accordion */}
-              <div>
-                <div className="flex items-center justify-between py-1">
-                  <a
-                    href="/works"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`transition-colors hover:text-accent ${isWorks ? "text-accent" : ""}`}
-                  >
-                    Works
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setMobileWorksExpanded(!mobileWorksExpanded)}
-                    className="p-1.5 text-muted hover:text-ink focus:outline-none"
-                    aria-label="Toggle Works Submenu"
-                  >
-                    <ChevronDown
-                      width={20}
-                      height={20}
-                      strokeWidth={2}
-                      className={`transition-transform duration-200 ${mobileWorksExpanded ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                </div>
-
-                {mobileWorksExpanded && (
-                  <div className="mt-3 rounded-2xl bg-surface-alt/70 p-1.5 border border-hairline/30">
-                    <ul className="space-y-1">
-                      {WORK_ITEMS.map((item) => {
-                        const isActive = activePath === item.href
-                        return (
-                          <li key={item.name}>
-                            <a
-                              href={item.href}
-                              onClick={() => setMobileMenuOpen(false)}
-                              className={`flex items-center justify-between rounded-xl px-3.5 py-3 text-[17px] font-normal transition-colors ${isActive
-                                ? "text-accent bg-card"
-                                 : "text-ink-soft hover:text-accent hover:bg-card active:bg-card/70"
-                                }`}
-                            >
-                              <span>{item.name}</span>
-                              <ArrowRight width={14} height={14} className={isActive ? "text-accent" : "text-muted-faint"} />
-                            </a>
-                          </li>
-                        )
-                      })}
-                      <li className="pt-1 border-t border-hairline/50">
-                        <a
-                          href="/works"
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[15px] font-normal text-accent hover:bg-card active:bg-card/70 transition-colors"
-                        >
-                          <span>View All Works</span>
-                          <ArrowRight width={14} height={14} />
-                        </a>
-                      </li>
-                    </ul>
+                  <div className="pt-3 mt-1 border-t border-hairline dark:border-hairline/50">
+                    <a
+                      href="/works"
+                      onClick={closeMobileNav}
+                      className="flex items-center justify-between py-1 text-accent hover:opacity-80 transition-opacity font-medium"
+                    >
+                      <span>View All Works</span>
+                      <ArrowRight width={16} height={16} />
+                    </a>
                   </div>
-                )}
+                </div>
               </div>
+            ) : (
+              /* Main Mobile Menu View */
+              <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink">
+                <a
+                  href="/"
+                  onClick={closeMobileNav}
+                  className={MOBILE_LINK}
+                >
+                  Home
+                </a>
 
-              <a
-                href="/articles"
-                onClick={() => setMobileMenuOpen(false)}
-                className={MOBILE_LINK}
-              >
-                Articles
-              </a>
-              <a
-                href={SOCIAL_LINKS.resume}
-                target="_blank"
-                rel="noreferrer noopener"
-                onClick={() => setMobileMenuOpen(false)}
-                className={MOBILE_LINK}
-              >
-                Resume
-              </a>
-              <a
-                href="/#footer"
-                onClick={() => setMobileMenuOpen(false)}
-                className={MOBILE_LINK}
-              >
-                Contact
-              </a>
-            </div>
+                <a
+                  href="/#what-i-do"
+                  onClick={closeMobileNav}
+                  className={MOBILE_LINK}
+                >
+                  What I do
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => setMobileWorksExpanded(true)}
+                  className={`w-full flex items-center justify-between text-left ${MOBILE_LINK} ${
+                    isWorks ? "text-accent" : ""
+                  }`}
+                  aria-expanded={false}
+                  aria-label="Open Works submenu"
+                >
+                  <span>Works</span>
+                  <ChevronDown
+                    width={20}
+                    height={20}
+                    strokeWidth={2}
+                    className="text-muted"
+                  />
+                </button>
+
+                <a
+                  href="/articles"
+                  onClick={closeMobileNav}
+                  className={MOBILE_LINK}
+                >
+                  Articles
+                </a>
+                <a
+                  href={SOCIAL_LINKS.resume}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  onClick={closeMobileNav}
+                  className={MOBILE_LINK}
+                >
+                  Resume
+                </a>
+                <a
+                  href="/#footer"
+                  onClick={closeMobileNav}
+                  className={MOBILE_LINK}
+                >
+                  Contact
+                </a>
+              </div>
+            )}
           </div>
         )}
       </nav>

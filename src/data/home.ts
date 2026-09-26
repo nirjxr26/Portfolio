@@ -90,6 +90,16 @@ export const frames: Frame[] = [
 
 export const projects: Project[] = [
   {
+    title: "Trace",
+    category: "Digital Forensics & Incident Response",
+    year: "2026",
+    description:
+      "It is a local-first CLI case management tool with a built-in, tamper-evident audit trail — so every change to an investigation is recorded, verifiable, and provably untouched.",
+    link: "https://github.com/nirjxr26/Trace",
+    projectLink: "/works/trace",
+    tags: ["Security", "Forensics"],
+  },
+  {
     title: "Bastion",
     category: "Identity & Access Management",
     year: "2025 - 2026",
@@ -118,14 +128,6 @@ export const projects: Project[] = [
     link: "https://github.com/nirjxr26/HookDrop",
     projectLink: "/works/hookdrop",
     tags: ["DevOps"],
-  },
-  {
-    title: "Trace",
-    category: "Digital Forensics & Incident Response",
-    year: "Coming Up",
-    description:
-      "A standalone Hardware device that safely images digital evidence and verifies it with cryptographic hashing for chain of custody.",
-    tags: ["DevOps", "Cloud"],
   },
   {
     title: "DeployLens",

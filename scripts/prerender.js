@@ -219,7 +219,7 @@ const routes = [
           url: "https://nirjar.me/works",
           name: "Works & Systems Architecture | Nirjar Goswami",
           description:
-            "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
+            "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, HookDrop, and Trace.",
           keywords: `Works, ${SITE_KEYWORDS}`,
           listName: "Featured Software & Infrastructure Systems",
           items: worksCollectionItems,

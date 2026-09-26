@@ -9,6 +9,7 @@ export const SOCIAL_LINKS = {
 } as const
 
 export const WORK_ITEMS = [
+  { name: "Trace", href: "/works/trace" },
   { name: "Bastion", href: "/works/bastion" },
   { name: "Kost", href: "/works/kost" },
   { name: "HookDrop", href: "/works/hookdrop" },

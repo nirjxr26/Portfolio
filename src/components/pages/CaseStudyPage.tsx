@@ -1,7 +1,7 @@
 import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
 import { alternateSurfaces } from "@/utils/helpers"
-import { FeatureCard, Seo } from "../common"
+import { FeatureCard, InstallSnippet, Seo } from "../common"
 import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
 
 interface CaseStudyPageProps {
@@ -47,7 +47,16 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
       }
     >
         {/* Hero Header */}
-        <PageHero badge={hero.title} title={hero.headline} subhead={hero.subhead} />
+        <PageHero
+          badge={hero.title}
+          title={hero.headline}
+          subhead={hero.subhead}
+          childrenClassName="hidden sm:flex"
+        >
+          {hero.installCommands && hero.installCommands.length > 0 && (
+            <InstallSnippet commands={hero.installCommands} />
+          )}
+        </PageHero>
 
         {/* Feature Sections */}
         {sections.map((section, idx) => {
@@ -58,9 +67,16 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
               key={section.title}
               title={section.title}
               bgClass={sectionBgClass}
+              headerClassName={section.centeredHeader ? "mb-6 sm:mb-8 text-center" : "mb-6 sm:mb-8"}
             >
               {section.cards.map((card) => (
-                <FeatureCard key={card.headline} card={card} cardBgClass={cardBgClass} />
+                <FeatureCard
+                  key={card.headline}
+                  card={card}
+                  cardBgClass={cardBgClass}
+                  wide={Boolean(section.wideCards || card.wide)}
+                  centered={Boolean(section.centeredCards || card.centered)}
+                />
               ))}
             </CarouselSection>
           )
@@ -72,6 +88,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           body={cta.body}
           action={cta.action}
           url={cta.url}
+          secondaryAction={cta.secondaryAction}
           bgClass={ctaBgClass}
           ariaLabel={`View ${hero.title} on GitHub`}
         />

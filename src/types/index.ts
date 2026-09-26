@@ -7,11 +7,21 @@ export interface CardItem {
   tag?: string
   link?: string
   url?: string
+  wide?: boolean
+  centered?: boolean
 }
 
 export interface SectionItem {
   title: string
   cards: CardItem[]
+  wideCards?: boolean
+  centeredHeader?: boolean
+  centeredCards?: boolean
+}
+
+export interface InstallCommand {
+  label: string
+  command: string
 }
 
 export interface CaseStudyData {
@@ -20,6 +30,7 @@ export interface CaseStudyData {
     title: string
     headline: ReactNode | string
     subhead: string
+    installCommands?: InstallCommand[]
   }
   sections: SectionItem[]
   cta: {
@@ -27,6 +38,10 @@ export interface CaseStudyData {
     body: ReactNode | string
     action: string
     url: string
+    secondaryAction?: {
+      label: string
+      url: string
+    }
   }
   softwareSchema?: Partial<SoftwareSchema>
 }

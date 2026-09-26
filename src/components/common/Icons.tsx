@@ -5,26 +5,13 @@ interface IconProps {
   strokeWidth?: number
 }
 
-export function ArrowUpRight({ className = "" }: Readonly<{ className?: string }>) {
-  return (
-    <svg
-      width={24}
-      height={24}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={`w-6 h-6 sm:w-5 sm:h-5 ${className}`}
-      aria-hidden="true"
-    >
-      <path d="M7 17 17 7M9 7h8v8" />
-    </svg>
-  )
-}
-
-export function ArrowRight({ className = "", width = 14, height = 14 }: Readonly<IconProps>) {
+export function ArrowUpRight({
+  className = "",
+  width = 24,
+  height = 24,
+  strokeWidth = 2,
+}: Readonly<IconProps>) {
+  const sizeClasses = className.includes("w-") && className.includes("h-") ? "" : "w-6 h-6 sm:w-5 sm:h-5"
   return (
     <svg
       width={width}
@@ -32,7 +19,26 @@ export function ArrowRight({ className = "", width = 14, height = 14 }: Readonly
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${sizeClasses} ${className}`.trim()}
+      aria-hidden="true"
+    >
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  )
+}
+
+export function ArrowRight({ className = "", width = 14, height = 14, strokeWidth = 2 }: Readonly<IconProps>) {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
