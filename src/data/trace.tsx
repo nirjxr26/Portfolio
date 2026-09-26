@@ -12,16 +12,11 @@ export const traceData: CaseStudyData = {
     ),
     subhead:
       "Case management, tamper-proof records, and safe updates — all in one local-first CLI tool.",
-    installCommands: [
-      {
-        label: "PowerShell",
-        command: "irm https://raw.githubusercontent.com/nirjxr26/Trace/main/install.ps1 | iex",
-      },
-      {
-        label: "Linux / macOS",
-        command: "curl -fsSL https://raw.githubusercontent.com/nirjxr26/Trace/main/install.sh | sh",
-      },
-    ],
+    heroAsset: {
+      src: "/assets/trace/cli_hero.svg",
+      alt: "Trace CLI forensic case management terminal interface",
+      visiblePercent: 65,
+    },
   },
   sections: [
     {
@@ -114,6 +109,16 @@ export const traceData: CaseStudyData = {
       label: "View its changelog",
       url: "https://github.com/nirjxr26/Trace/releases",
     },
+    installCommands: [
+      {
+        label: "PowerShell",
+        command: "irm https://raw.githubusercontent.com/nirjxr26/Trace/main/install.ps1 | iex",
+      },
+      {
+        label: "Linux / macOS",
+        command: "curl -fsSL https://raw.githubusercontent.com/nirjxr26/Trace/main/install.sh | sh",
+      },
+    ],
   },
   softwareSchema: {
     name: "Trace",

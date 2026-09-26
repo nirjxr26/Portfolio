@@ -1,7 +1,7 @@
 import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
 import { alternateSurfaces } from "@/utils/helpers"
-import { FeatureCard, InstallSnippet, Seo } from "../common"
+import { FeatureCard, HeroAssetPreview, InstallSnippet, Seo } from "../common"
 import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
 
 interface CaseStudyPageProps {
@@ -15,6 +15,9 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
   const ctaBgClass = alternateSurfaces(sections.length).section
   const footerBgClass = alternateSurfaces(sections.length + 1).section
+  const hasHeroContent = Boolean(
+    (hero.installCommands && hero.installCommands.length > 0) || hero.heroAsset
+  )
 
   return (
     <PageShell
@@ -51,11 +54,24 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           badge={hero.title}
           title={hero.headline}
           subhead={hero.subhead}
-          childrenClassName="hidden sm:flex"
+          bottomFlush={Boolean(hero.heroAsset)}
+          childrenClassName={hasHeroContent ? "flex flex-col items-center w-full" : undefined}
         >
-          {hero.installCommands && hero.installCommands.length > 0 && (
-            <InstallSnippet commands={hero.installCommands} />
-          )}
+          {hasHeroContent ? (
+            <>
+              {hero.installCommands && hero.installCommands.length > 0 && (
+                <div className="hidden sm:flex justify-center w-full">
+                  <InstallSnippet commands={hero.installCommands} />
+                </div>
+              )}
+              {hero.heroAsset && (
+                <HeroAssetPreview
+                  asset={hero.heroAsset}
+                  className={hero.installCommands && hero.installCommands.length > 0 ? "mt-0 sm:mt-10 md:mt-12" : "mt-2 sm:mt-4 md:mt-6"}
+                />
+              )}
+            </>
+          ) : null}
         </PageHero>
 
         {/* Feature Sections */}
@@ -89,6 +105,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           action={cta.action}
           url={cta.url}
           secondaryAction={cta.secondaryAction}
+          installCommands={cta.installCommands}
           bgClass={ctaBgClass}
           ariaLabel={`View ${hero.title} on GitHub`}
         />
