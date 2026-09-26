@@ -1,0 +1,127 @@
+import type { CaseStudyData } from "@/types"
+
+export const traceData: CaseStudyData = {
+  seoTitle: "Trace | Digital Forensics & Incident Response",
+  hero: {
+    title: "Trace",
+    headline: (
+      <>
+        Recorded. <br className="sm:hidden" />Proven. Sealed.
+        {/* <br className="sm:hidden" /> never lies. */}
+      </>
+    ),
+    subhead:
+      "Case management, tamper-proof records, and safe updates — all in one local-first CLI tool.",
+    installCommands: [
+      {
+        label: "PowerShell",
+        command: "irm https://raw.githubusercontent.com/nirjxr26/Trace/main/install.ps1 | iex",
+      },
+      {
+        label: "Linux / macOS",
+        command: "curl -fsSL https://raw.githubusercontent.com/nirjxr26/Trace/main/install.sh | sh",
+      },
+    ],
+  },
+  sections: [
+    {
+      title: "The chain of custody.",
+      wideCards: true,
+      centeredCards: true,
+      cards: [
+        {
+          tag: "Cases",
+          headline: "Every case, organized from start to close. Easy to find, safe to store.",
+          // body: "Keep every investigation organized and under control.",
+        },
+        {
+          tag: "Audit trail",
+          headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
+          // body: "Prove that nothing was changed in secret.",
+        },
+        {
+          tag: "Updates",
+          headline: "Verified, staged, and health-checked before going live. Failures roll back.",
+          // body: "Install new versions safely, without breaking anything.",
+        },
+      ],
+    },
+    {
+      title: "Cases.",
+      cards: [
+        {
+          headline: "Never lose track.",
+          body: "Open, under review, or closed — every case shows exactly where it stands.",
+        },
+        {
+          headline: "No collisions, ever.",
+          body: "IDs are generated safely, even with multiple investigators working at once.",
+        },
+        {
+          headline: "Closing isn't deleting.",
+          body: "Filing a case away never changes whether it's open or closed.",
+        },
+      ],
+    },
+    {
+      title: "Audit trail.",
+      cards: [
+        {
+          headline: "Recorded, automatically.",
+          body: "Every case action is logged the instant it happens — no way to skip it.",
+        },
+        {
+          headline: "Broken chains don't hide.",
+          body: "Each record links to the last. Edit one, and the break shows immediately.",
+        },
+        {
+          headline: "Sealed for transport.",
+          body: "Exports can be encrypted, so evidence stays private once it leaves the system.",
+        },
+      ],
+    },
+    {
+      title: "Updates.",
+      cards: [
+        {
+          headline: "Waits for the right moment.",
+          body: "Active work in progress? Trace holds off installing anything new.",
+        },
+        {
+          headline: "Verified before install.",
+          body: "Every release is checked for authenticity before it ever runs.",
+        },
+        {
+          headline: "Never stuck broken.",
+          body: "A failed update rolls back automatically, restoring things exactly as they were.",
+        },
+      ],
+    },
+  ],
+  cta: {
+    headline: "Try Trace today.",
+    body: (
+      <>
+        The project&apos;s still in its{" "}
+        <span className="underline underline-offset-4 decoration-muted/60">
+          development phase
+        </span>, but you can start your first case in under a minute.
+      </>
+    ),
+    action: "View on GitHub",
+    url: "https://github.com/nirjxr26/Trace",
+    secondaryAction: {
+      label: "View its changelog",
+      url: "https://github.com/nirjxr26/Trace/releases",
+    },
+  },
+  softwareSchema: {
+    name: "Trace",
+    description:
+      "Case management, tamper-proof records, and safe updates — all in one local-first CLI tool.",
+    applicationCategory: "SecurityApplication",
+    operatingSystem: "Windows, macOS, Linux",
+    programmingLanguage: "Python / Textual / PostgreSQL",
+    url: "https://github.com/nirjxr26/Trace",
+  },
+}

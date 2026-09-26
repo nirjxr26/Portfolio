@@ -1,4 +1,4 @@
-﻿@layer components {
+@layer components {
 
   /* Ultra-Silky Slow Apple Curtain Fall Animation */
   @keyframes curtainFall {
@@ -20,6 +20,31 @@
     backface-visibility: hidden;
   }
 
+  /* Apple Mobile Drill-Down Submenu Glide */
+  @keyframes drillIn {
+    0% {
+      opacity: 0;
+      transform: translate3d(10px, 0, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-drill-in {
+    animation: drillIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-drill-in {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
   /* Smooth Instant Theme Cross-Fade */
   body,
   header,
@@ -27,7 +52,7 @@
   section,
   button,
   a {
-    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
   /* Apple Signature GPU Hardware-Accelerated Animation System */

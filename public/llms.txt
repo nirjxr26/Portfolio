@@ -60,10 +60,11 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Architecture: Credentials stay on the machine — AES-256 encrypted, no cloud sync, no external servers, fully working offline.
 
 ### Trace
-- Type: Digital Forensics & Incident Response Hardware
-- Status: In Development / Coming Up
-- Stack: Embedded Linux, Cryptographic Hashing, Hardware Imaging
-- Architecture: A standalone hardware device that safely images digital evidence and verifies it with cryptographic hashing for tamper-evident chain of custody.
+- Type: Digital Forensics & Incident Response
+- URL: https://nirjar.me/works/trace
+- Repository: https://github.com/nirjxr26/Trace
+- Stack: Python, Textual, PostgreSQL, SHA-256 Chain of Custody
+- Architecture: A local-first CLI tool for managing forensic cases, proving nothing was tampered with, and updating itself without ever putting evidence at risk. Case management, tamper-proof records, and safe updates — all in one local-first CLI tool. Tracks cases from open to sealed, with cryptographic hash-chaining, tamper-evident audit logs, and isolated atomic updates with automatic rollback.
 
 ## Technical Capabilities & Domains
 - Cloud & Infrastructure: AWS, Docker, Kubernetes, Helm, Terraform, Linux kernel administration, GitOps (ArgoCD).

@@ -1,5 +1,5 @@
 import { articles, frames, hero, quote } from "@/data/home"
-import { ActionButtons, AppButton, ArticleCard, ArrowRight, FeatureCard, ProductionRail, ProjectsRail, Seo } from "../common"
+import { ActionButtons, ArticleCard, FeatureCard, LightButton, ProductionRail, ProjectsRail, Seo } from "../common"
 import { CarouselSection, Container, PageShell } from "../layout"
 
 export function HomeClient() {
@@ -56,10 +56,9 @@ export function HomeClient() {
           ))}
         </CarouselSection>
         <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">
-          <AppButton href="/articles" variant="flow">
-            <span>View articles</span>
-            <ArrowRight width={14} height={14} className="flow-arrow" />
-          </AppButton>
+          <LightButton href="/articles" arrow>
+            View other articles
+          </LightButton>
         </div>
 
         {/* Quote Section (bg-surface-alt) */}

@@ -17,7 +17,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   "/works": {
     title: "Works | Nirjar Goswami",
     description:
-      "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, and HookDrop.",
+      "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, HookDrop, and Trace.",
     canonical: `${SITE_URL}/works`,
   },
   "/articles": {
