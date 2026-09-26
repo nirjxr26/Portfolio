@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "./tokens.css";
 @import "./typography.css";
 @import "./buttons.css";
@@ -56,6 +56,10 @@
 
   .text-muted-faint {
     color: color-mix(in oklab, var(--muted) 60%, transparent);
+  }
+
+  .aspect-hero-65 {
+    aspect-ratio: 1808 / 793;
   }
 }
 @layer components {

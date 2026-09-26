@@ -24,6 +24,15 @@ export interface InstallCommand {
   command: string
 }
 
+export interface HeroAsset {
+  src: string
+  alt?: string
+  width?: number
+  height?: number
+  visiblePercent?: number
+  maxWidthClass?: string
+}
+
 export interface CaseStudyData {
   seoTitle?: string
   hero: {
@@ -31,6 +40,7 @@ export interface CaseStudyData {
     headline: ReactNode | string
     subhead: string
     installCommands?: InstallCommand[]
+    heroAsset?: HeroAsset
   }
   sections: SectionItem[]
   cta: {
@@ -42,6 +52,7 @@ export interface CaseStudyData {
       label: string
       url: string
     }
+    installCommands?: InstallCommand[]
   }
   softwareSchema?: Partial<SoftwareSchema>
 }

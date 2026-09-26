@@ -109,6 +109,37 @@
     will-change: opacity, transform, filter;
   }
 
+  /* Smooth Device Rise Hero Animation */
+  @keyframes deviceRise {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 64px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-device-rise {
+    animation: deviceRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-hero-1,
+    .animate-hero-2,
+    .animate-hero-3,
+    .animate-device-rise {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+  }
+
   /* Apple continuous corners — progressive enhancement.
      Chromium renders the squircle, Safari/Firefox ignore it
      and keep the plain border-radius fallback. */
