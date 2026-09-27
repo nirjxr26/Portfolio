@@ -68,12 +68,18 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
 
           return (
             <CarouselSection
-              key={section.title}
+              key={typeof section.title === "string" ? section.title : idx}
+              tag={section.tag}
+              tagClassName={section.tagClassName}
               title={section.title}
+              desc={section.desc}
+              descClassName={section.descClassName}
+              media={section.media}
+              layeredAsset={section.layeredAsset}
               bgClass={sectionBgClass}
-              headerClassName={section.centeredHeader ? "mb-6 sm:mb-8 text-center" : "mb-6 sm:mb-8"}
+              centeredHeader={Boolean(section.centeredHeader)}
             >
-              {section.cards.map((card) => (
+              {section.cards?.map((card) => (
                 <FeatureCard
                   key={card.headline}
                   card={card}
