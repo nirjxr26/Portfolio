@@ -25,6 +25,10 @@
     font-family: var(--font-display);
   }
 
+  code, kbd, samp, pre {
+    font-family: var(--font-mono);
+  }
+
   ::selection {
     background: var(--accent);
     color: #fff;

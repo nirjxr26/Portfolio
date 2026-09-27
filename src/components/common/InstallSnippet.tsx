@@ -71,7 +71,7 @@ export function InstallSnippet({
 
   return (
     <div className={`hidden sm:block w-fit max-w-full mx-auto text-left ${className}`.trim()}>
-      <div className="apple-tactile-border w-fit max-w-full rounded-2xl bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
+      <div className="apple-tactile-border w-full max-w-full rounded-2xl bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
         {/* Top Header: Tabs on Left, Copy Button on Right */}
         <div className="flex items-center justify-between gap-4 px-2.5 py-1.5 mb-2">
           {/* Shell Switcher Tabs */}
@@ -119,9 +119,9 @@ export function InstallSnippet({
           </button>
         </div>
 
-        {/* Inner Code Block: Full Command Shown without Cropping */}
-        <div className="apple-tactile-border rounded-xl bg-surface-alt/80 dark:bg-[#0c0c0e] px-4 py-3.5 sm:px-5 sm:py-4">
-          <code className="block font-mono text-xs sm:text-[13.5px] leading-relaxed whitespace-pre-wrap break-all sm:break-normal sm:whitespace-nowrap select-all tracking-normal cursor-text">
+        {/* Inner Code Block: Full Command Shown without Cropping or Bleeding */}
+        <div className="apple-tactile-border rounded-xl bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
+          <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-text">
             {renderCommandTokens(current.command)}
           </code>
         </div>

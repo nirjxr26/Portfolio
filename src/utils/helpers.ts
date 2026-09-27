@@ -18,3 +18,7 @@ export function alternateSurfaces(index: number) {
   if (index % 2 === 0) return { section: "bg-surface-alt", card: "bg-card" }
   return { section: "bg-canvas", card: "bg-surface-alt" }
 }
+
+export function createBreadcrumbs(items: { name: string; url: string }[]) {
+  return [{ name: "Home", url: "/" }, ...items]
+}

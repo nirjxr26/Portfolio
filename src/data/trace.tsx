@@ -100,7 +100,7 @@ export const traceData: CaseStudyData = {
         The project&apos;s still in its{" "}
         <span className="underline underline-offset-4 decoration-muted/60">
           development phase
-        </span>, but you can start your first case in under a minute.
+        </span>, but you can start your first case in under a minute. 
       </>
     ),
     action: "View on GitHub",

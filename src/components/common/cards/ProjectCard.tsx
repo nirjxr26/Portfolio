@@ -2,7 +2,7 @@ import type { Project } from "@/data/home"
 import { externalProps } from "@/utils/helpers"
 import { BaseCard, PROJECT_CARD_HEIGHT, PROJECT_CARD_PADDING, PROJECT_CARD_SIZE } from "../BaseCard"
 import { ArrowUpRight } from "../Icons"
-import { CardBody, CardEyebrow } from "./atoms"
+import { CardBody, CardEyebrow, CardHeadline } from "./atoms"
 
 export function ProjectCard({
   project,
@@ -23,9 +23,7 @@ export function ProjectCard({
     <>
       <div>
         <CardEyebrow tone="muted">{project.category}</CardEyebrow>
-        <h3 className="t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
-          {project.title}
-        </h3>
+        <CardHeadline>{project.title}</CardHeadline>
         <CardBody>{project.description}</CardBody>
       </div>
 
@@ -40,25 +38,13 @@ export function ProjectCard({
     </>
   )
 
-  if (url) {
-    return (
-      <BaseCard
-        as="a"
-        href={url}
-        {...externalProps(url)}
-        aria-label={`${project.title} — ${project.category}`}
-        className={`${PROJECT_CARD_SIZE} ${PROJECT_CARD_PADDING} ${PROJECT_CARD_HEIGHT} border-0 ${cardBgClass}`}
-      >
-        {cardContent}
-      </BaseCard>
-    )
-  }
-
   return (
     <BaseCard
-      as="div"
+      as={url ? "a" : "div"}
+      href={url}
+      {...(url ? externalProps(url) : {})}
       aria-label={`${project.title} — ${project.category}`}
-      className={`${PROJECT_CARD_SIZE} ${PROJECT_CARD_PADDING} ${PROJECT_CARD_HEIGHT} border-0 ${cardBgClass} cursor-default`}
+      className={`${PROJECT_CARD_SIZE} ${PROJECT_CARD_PADDING} ${PROJECT_CARD_HEIGHT} border-0 ${cardBgClass} ${url ? "" : "cursor-default"}`.trim()}
     >
       {cardContent}
     </BaseCard>

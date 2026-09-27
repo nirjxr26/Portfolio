@@ -151,31 +151,71 @@ export function AppLink({ href, className, children, ...rest }: Readonly<AppLink
   )
 }
 
-export function ActionButtons({ actions }: Readonly<{ actions: HeroAction[] }>) {
+export const HERO_BUTTON_CLASS =
+  "w-full min-[360px]:flex-1 sm:flex-initial min-[360px]:max-w-[185px] sm:max-w-none sm:w-auto justify-center text-center whitespace-nowrap px-4 sm:px-7"
+
+/**
+ * Reusable container for hero and CTA action buttons with responsive equal-width centering.
+ */
+export function ActionGroup({
+  className = "",
+  children,
+}: Readonly<{ className?: string; children: ReactNode }>) {
+  return (
+    <div
+      className={`flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-[390px] sm:max-w-none mx-auto ${className}`.trim()}
+    >
+      {children}
+    </div>
+  )
+}
+
+/**
+ * Unified action button group renderer supporting primary/secondary variants, arrows, and custom labels.
+ */
+export function ActionButtons({
+  actions,
+  className = HERO_BUTTON_CLASS,
+}: Readonly<{
+  actions: HeroAction[]
+  className?: string
+}>) {
   return (
     <>
-      {actions.map((action) =>
-        action.type === "primary" ? (
+      {actions.map((action) => {
+        const arrow = action.arrow ?? (action.type === "secondary" ? true : undefined)
+        const btnId =
+          action.id ??
+          (action.label.toLowerCase().includes("resume")
+            ? "btn-view-resume"
+            : action.label.toLowerCase().includes("work")
+              ? "btn-view-works"
+              : undefined)
+
+        return action.type === "primary" ? (
           <PrimaryButton
             key={action.label}
-            id={action.label.toLowerCase().includes("resume") ? "btn-view-resume" : undefined}
+            id={btnId}
             href={action.url}
-            className="w-full min-[360px]:w-auto"
+            arrow={arrow}
+            aria-label={action.ariaLabel}
+            className={`${className} ${action.className ?? ""}`.trim()}
           >
             {action.label}
           </PrimaryButton>
         ) : (
           <LightButton
             key={action.label}
-            id={action.label.toLowerCase().includes("work") ? "btn-view-works" : undefined}
+            id={btnId}
             href={action.url}
-            arrow
-            className="w-full min-[360px]:w-auto"
+            arrow={arrow}
+            aria-label={action.ariaLabel}
+            className={`${className} ${action.className ?? ""}`.trim()}
           >
             {action.label}
           </LightButton>
-        ),
-      )}
+        )
+      })}
     </>
   )
 }

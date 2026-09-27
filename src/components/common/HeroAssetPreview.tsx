@@ -1,4 +1,5 @@
-import type { HeroAsset } from "@/types"
+import type { HeroAsset, InstallCommand } from "@/types"
+import { InstallSnippet } from "./InstallSnippet"
 
 export interface HeroAssetPreviewProps {
   asset: HeroAsset
@@ -25,5 +26,36 @@ export function HeroAssetPreview({
         decoding="async"
       />
     </div>
+  )
+}
+
+/**
+ * Reusable hero media component combining install snippet and device hero mockup
+ * with responsive vertical rhythm and spacing.
+ */
+export function CaseStudyHeroMedia({
+  installCommands,
+  heroAsset,
+}: Readonly<{
+  installCommands?: InstallCommand[]
+  heroAsset?: HeroAsset
+}>) {
+  const hasCommands = Boolean(installCommands && installCommands.length > 0)
+  if (!hasCommands && !heroAsset) return null
+
+  return (
+    <>
+      {installCommands && hasCommands && (
+        <div className="hidden sm:flex justify-center w-full">
+          <InstallSnippet commands={installCommands} />
+        </div>
+      )}
+      {heroAsset && (
+        <HeroAssetPreview
+          asset={heroAsset}
+          className={hasCommands ? "mt-0 sm:mt-10 md:mt-12" : "mt-2 sm:mt-4 md:mt-6"}
+        />
+      )}
+    </>
   )
 }
