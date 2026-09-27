@@ -42,6 +42,22 @@ export const traceData: CaseStudyData = {
       ],
     },
     {
+      tag: "Beyond Terminal",
+      title: (
+        <>
+          One console. <br /> Everything in view.
+        </>
+      ),
+      desc: "Same cases, same audit trail, same updates — just laid out in one dark, full-screen TUI console. No new commands to learn, no mouse needed. Just Trace, unfolded.",
+      centeredHeader: true,
+      layeredAsset: {
+        bgSrc: "/assets/trace/tui_intro_bg.svg",
+        fgSrc: "/assets/trace/intro_tui.svg",
+        bgAlt: "Trace TUI environment background",
+        fgAlt: "Trace TUI console showing cases, audit trail, and updates",
+      },
+    },
+    {
       title: "Cases.",
       cards: [
         {
@@ -56,7 +72,23 @@ export const traceData: CaseStudyData = {
           headline: "Closing isn't deleting.",
           body: "Filing a case away never changes whether it's open or closed.",
         },
+        {
+          headline: "Suggests as you type.",
+          body: "Commands and flags autocomplete as you go — no docs, no memorizing syntax.",
+        },
       ],
+    },
+    {
+      tag: "Tamper-evident by design",
+      title: "Verify. Instantly.",
+      desc: "One command checks the whole chain — signature, hash, sequence. If anything was ever touched, Trace shows you exactly where.",
+      centeredHeader: true,
+      layeredAsset: {
+        bgSrc: "/assets/trace/audit_intro_bg.svg",
+        fgSrc: "/assets/trace/audit_tui.svg",
+        bgAlt: "Trace audit verification environment background",
+        fgAlt: "Trace TUI audit verification console",
+      },
     },
     {
       title: "Audit trail.",

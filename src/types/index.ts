@@ -12,8 +12,14 @@ export interface CardItem {
 }
 
 export interface SectionItem {
-  title: string
-  cards: CardItem[]
+  tag?: ReactNode | string
+  tagClassName?: string
+  title: ReactNode | string
+  desc?: ReactNode | string
+  descClassName?: string
+  media?: ReactNode
+  layeredAsset?: LayeredAsset
+  cards?: CardItem[]
   wideCards?: boolean
   centeredHeader?: boolean
   centeredCards?: boolean
@@ -30,6 +36,19 @@ export interface HeroAsset {
   width?: number
   height?: number
   visiblePercent?: number
+  maxWidthClass?: string
+}
+
+export interface LayeredAsset {
+  bgSrc: string
+  fgSrc: string
+  bgAlt?: string
+  fgAlt?: string
+  bgWidth?: number
+  bgHeight?: number
+  fgWidth?: number
+  fgHeight?: number
+  fgWidthClass?: string
   maxWidthClass?: string
 }
 
