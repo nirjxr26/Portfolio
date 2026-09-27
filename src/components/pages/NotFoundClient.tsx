@@ -1,4 +1,4 @@
-import { ActionButtons, Seo } from "../common"
+import { ActionButtons, ActionGroup, Seo } from "../common"
 import { Container, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
 
@@ -29,14 +29,14 @@ export function NotFoundClient() {
           </p>
 
           {/* Responsive Action CTAs */}
-          <div className="mt-6 sm:mt-8 flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
+          <ActionGroup className="mt-6 sm:mt-8">
             <ActionButtons
               actions={[
                 { label: "Go to Home", url: "/", type: "primary" },
                 { label: "Explore Works", url: "/works", type: "secondary" },
               ]}
             />
-          </div>
+          </ActionGroup>
         </Container>
     </PageShell>
   )

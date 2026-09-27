@@ -28,6 +28,23 @@ export function CardBody({ children }: Readonly<{ children: ReactNode }>) {
   )
 }
 
+export const CARD_HEADLINE_CLASS =
+  "t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight"
+
+export function CardHeadline({
+  className = "",
+  centered = false,
+  children,
+}: Readonly<{ className?: string; centered?: boolean; children: ReactNode }>) {
+  return (
+    <h3
+      className={`${CARD_HEADLINE_CLASS} ${centered ? "text-center" : ""} ${className}`.trim()}
+    >
+      {children}
+    </h3>
+  )
+}
+
 export function articleAriaLabel(title: string) {
   return `Read article: ${title}`
 }

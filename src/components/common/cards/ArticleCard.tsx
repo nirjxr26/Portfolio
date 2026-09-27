@@ -9,7 +9,7 @@ import {
   PROJECT_CARD_SIZE,
 } from "../BaseCard"
 import { ArrowUpRight } from "../Icons"
-import { articleAriaLabel, CardBody, CardReadTime } from "./atoms"
+import { articleAriaLabel, CardBody, CardHeadline, CardReadTime } from "./atoms"
 
 export function ArticleCard({
   article,
@@ -31,9 +31,7 @@ export function ArticleCard({
       }
     >
       <div>
-        <h3 className="t-tagline mt-1 tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight">
-          {article.title}
-        </h3>
+        <CardHeadline className="mt-1">{article.title}</CardHeadline>
         {feature && <CardBody>{article.desc}</CardBody>}
       </div>
 

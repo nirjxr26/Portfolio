@@ -63,6 +63,10 @@ export interface HeroAction {
   url: string
   type: "primary" | "secondary"
   isExternal?: boolean
+  arrow?: boolean | "right" | "up-right"
+  ariaLabel?: string
+  id?: string
+  className?: string
 }
 
 export interface Frame {

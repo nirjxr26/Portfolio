@@ -7,6 +7,7 @@ import { renderContent, slugify } from "@/utils/markdown"
 import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
 import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
 import { SITE_URL } from "@/data/site"
+import { createBreadcrumbs } from "@/utils/helpers"
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
@@ -90,11 +91,10 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
           modifiedTime={isoDate}
           includeDefaultSchemas={false}
           articleSchema={articleSchema}
-          breadcrumbs={[
-            { name: "Home", url: "/" },
+          breadcrumbs={createBreadcrumbs([
             { name: "Articles", url: "/articles" },
             { name: article.title, url: `/articles/${article.slug}` },
-          ]}
+          ])}
         />
       }
     >

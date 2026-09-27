@@ -1,5 +1,5 @@
 import { articles, frames, hero, quote } from "@/data/home"
-import { ActionButtons, ArticleCard, FeatureCard, LightButton, ProductionRail, ProjectsRail, Seo } from "../common"
+import { ActionButtons, ActionGroup, ArticleCard, FeatureCard, LightButton, ProductionRail, ProjectsRail, Seo } from "../common"
 import { CarouselSection, Container, PageShell } from "../layout"
 
 export function HomeClient() {
@@ -16,9 +16,9 @@ export function HomeClient() {
               {hero.headingSecondary}
             </h1>
             <p className="t-lead mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
-            <div className="mt-8 sm:mt-10 flex flex-col min-[360px]:flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-4 sm:px-0 animate-hero-3">
+            <ActionGroup className="mt-8 sm:mt-10 px-4 sm:px-0 animate-hero-3">
               <ActionButtons actions={hero.actions} />
-            </div>
+            </ActionGroup>
           </Container>
         </section>
 

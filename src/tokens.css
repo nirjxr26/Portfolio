@@ -1,4 +1,4 @@
-﻿/* ---- Theme variables (light = Apple white/parchment, dark = Apple black/tile) ---- */
+/* ---- Theme variables (light = Apple white/parchment, dark = Apple black/tile) ---- */
 :root {
   color-scheme: light;
   --canvas: #ffffff;
@@ -11,6 +11,7 @@
   --accent-hover: #0071e3;
   --page-gutter: 1rem;
   --header-h: 2.75rem;
+  --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .dark {
@@ -60,4 +61,5 @@
   --font-text: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

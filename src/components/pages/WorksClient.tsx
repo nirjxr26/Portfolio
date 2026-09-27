@@ -1,6 +1,7 @@
 import { ProductionRail, ProjectsRail, Seo } from "../common"
 import { PageHero, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
+import { createBreadcrumbs } from "@/utils/helpers"
 
 export function WorksClient() {
   return (
@@ -12,10 +13,9 @@ export function WorksClient() {
           description={ROUTE_META["/works"].description}
           canonicalUrl={ROUTE_META["/works"].canonical}
           includeDefaultSchemas={false}
-          breadcrumbs={[
-            { name: "Home", url: "/" },
+          breadcrumbs={createBreadcrumbs([
             { name: "Works", url: "/works" },
-          ]}
+          ])}
         />
       }
     >

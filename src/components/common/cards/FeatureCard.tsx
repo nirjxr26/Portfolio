@@ -1,6 +1,6 @@
 import type { CardItem } from "@/types"
 import { BaseCard, CARD_HEIGHT, CARD_PADDING, FEATURE_CARD_SIZE, WIDE_CARD_SIZE } from "../BaseCard"
-import { CardBody, CardEyebrow } from "./atoms"
+import { CardBody, CardEyebrow, CardHeadline } from "./atoms"
 
 export function FeatureCard({
   card,
@@ -18,9 +18,7 @@ export function FeatureCard({
     >
       <div className={isCentered ? "text-center flex flex-col items-center w-full" : ""}>
         {card.tag && <CardEyebrow tone="accent">{card.tag}</CardEyebrow>}
-        <h3 className={`t-tagline tracking-normal text-ink text-lg min-[375px]:text-xl sm:text-2xl leading-tight ${isCentered ? "text-center" : ""}`}>
-          {card.headline}
-        </h3>
+        <CardHeadline centered={isCentered}>{card.headline}</CardHeadline>
         {card.body && <CardBody>{card.body}</CardBody>}
       </div>
     </BaseCard>

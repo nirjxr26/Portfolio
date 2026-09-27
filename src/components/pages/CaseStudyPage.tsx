@@ -1,7 +1,7 @@
 import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
-import { alternateSurfaces } from "@/utils/helpers"
-import { FeatureCard, HeroAssetPreview, InstallSnippet, Seo } from "../common"
+import { alternateSurfaces, createBreadcrumbs } from "@/utils/helpers"
+import { CaseStudyHeroMedia, FeatureCard, Seo } from "../common"
 import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
 
 interface CaseStudyPageProps {
@@ -29,11 +29,10 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           description={hero.subhead}
           canonicalUrl={canonicalUrl}
           includeDefaultSchemas={false}
-          breadcrumbs={[
-            { name: "Home", url: "/" },
+          breadcrumbs={createBreadcrumbs([
             { name: "Works", url: "/works" },
             { name: hero.title, url: `/works/${slug}` },
-          ]}
+          ])}
           softwareSchema={{
             name: hero.title,
             description: hero.subhead,
@@ -57,21 +56,10 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           bottomFlush={Boolean(hero.heroAsset)}
           childrenClassName={hasHeroContent ? "flex flex-col items-center w-full" : undefined}
         >
-          {hasHeroContent ? (
-            <>
-              {hero.installCommands && hero.installCommands.length > 0 && (
-                <div className="hidden sm:flex justify-center w-full">
-                  <InstallSnippet commands={hero.installCommands} />
-                </div>
-              )}
-              {hero.heroAsset && (
-                <HeroAssetPreview
-                  asset={hero.heroAsset}
-                  className={hero.installCommands && hero.installCommands.length > 0 ? "mt-0 sm:mt-10 md:mt-12" : "mt-2 sm:mt-4 md:mt-6"}
-                />
-              )}
-            </>
-          ) : null}
+          <CaseStudyHeroMedia
+            installCommands={hero.installCommands}
+            heroAsset={hero.heroAsset}
+          />
         </PageHero>
 
         {/* Feature Sections */}

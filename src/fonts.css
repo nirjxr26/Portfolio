@@ -1,4 +1,15 @@
 @font-face {
+  font-family: "Berkeley Mono Variable";
+  src: url("/fonts/BerkeleyMonoVariable.woff2") format("woff2-variations"),
+       url("/fonts/BerkeleyMonoVariable.woff2") format("woff2"),
+       local("Berkeley Mono Variable"),
+       local("Berkeley Mono");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 300;

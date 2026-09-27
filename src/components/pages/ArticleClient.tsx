@@ -1,6 +1,7 @@
 import { ArticleCategoryRails, Seo } from "../common"
 import { PageHero, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
+import { createBreadcrumbs } from "@/utils/helpers"
 
 export function ArticleClient() {
   return (
@@ -13,10 +14,9 @@ export function ArticleClient() {
           description={ROUTE_META["/articles"].description}
           canonicalUrl={ROUTE_META["/articles"].canonical}
           includeDefaultSchemas={false}
-          breadcrumbs={[
-            { name: "Home", url: "/" },
+          breadcrumbs={createBreadcrumbs([
             { name: "Article", url: "/articles" },
-          ]}
+          ])}
         />
       }
     >
