@@ -10,6 +10,7 @@ interface CarouselSectionProps {
   tag?: ReactNode | string
   tagClassName?: string
   title: ReactNode | string
+  titleClassName?: string
   desc?: ReactNode | string
   descClassName?: string
   media?: ReactNode
@@ -27,6 +28,7 @@ export function CarouselSection({
   tag,
   tagClassName,
   title,
+  titleClassName,
   desc,
   descClassName,
   media,
@@ -49,6 +51,7 @@ export function CarouselSection({
         tag={tag}
         tagClassName={tagClassName}
         title={title}
+        titleClassName={titleClassName}
         desc={desc}
         descClassName={descClassName}
         className={headerClass}
@@ -56,9 +59,11 @@ export function CarouselSection({
       />
 
       {resolvedMedia && (
-        <Container className="reveal-on-scroll mt-8 sm:mt-10 md:mt-12 flex justify-center">
-          {resolvedMedia}
-        </Container>
+        <div className="reveal-on-scroll mt-8 sm:mt-10 md:mt-12 w-full">
+          <Container className="flex justify-center">
+            {resolvedMedia}
+          </Container>
+        </div>
       )}
 
       {hasChildren ? (

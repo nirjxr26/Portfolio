@@ -72,6 +72,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
               tag={section.tag}
               tagClassName={section.tagClassName}
               title={section.title}
+              titleClassName={section.titleClassName}
               desc={section.desc}
               descClassName={section.descClassName}
               media={section.media}

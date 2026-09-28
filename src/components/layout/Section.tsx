@@ -24,6 +24,7 @@ interface SectionHeaderProps {
   tag?: ReactNode | string
   tagClassName?: string
   title: ReactNode | string
+  titleClassName?: string
   desc?: ReactNode | string
   className?: string
   centered?: boolean
@@ -37,25 +38,30 @@ export function SectionHeader({
   tag,
   tagClassName,
   title,
+  titleClassName,
   desc,
   className = "mb-6 sm:mb-8",
   centered = false,
   descClassName,
 }: Readonly<SectionHeaderProps>) {
   const defaultTagClass = "text-accent text-sm sm:text-base font-semibold tracking-wide mb-2 sm:mb-3"
+  const defaultTitleClass = "t-display text-ink"
   const defaultDescClass =
     "t-body text-muted text-sm sm:text-base font-normal leading-relaxed mt-3 sm:mt-4 max-w-lg text-pretty"
+  const titleClass = titleClassName
+    ? `font-display font-semibold text-ink ${titleClassName}`
+    : defaultTitleClass
 
   return (
-    <Container className={`reveal-on-scroll ${centered ? "text-center" : ""} ${className}`.trim()}>
+    <Container className={`reveal-on-scroll ${centered ? "text-left sm:text-center" : ""} ${className}`.trim()}>
       {tag && (
-        <p className={`${tagClassName ?? defaultTagClass} ${centered ? "mx-auto" : ""}`.trim()}>
+        <p className={`${tagClassName ?? defaultTagClass} ${centered ? "mr-auto sm:mx-auto" : ""}`.trim()}>
           {tag}
         </p>
       )}
-      <h2 className="t-display text-ink">{title}</h2>
+      <h2 className={titleClass}>{title}</h2>
       {desc && (
-        <p className={`${descClassName ?? defaultDescClass} ${centered ? "mx-auto" : ""}`.trim()}>
+        <p className={`${descClassName ?? defaultDescClass} ${centered ? "mr-auto sm:mx-auto" : ""}`.trim()}>
           {desc}
         </p>
       )}
