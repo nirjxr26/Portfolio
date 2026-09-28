@@ -7,7 +7,7 @@
     justify-content: center;
     gap: 8px;
     border-radius: 9999px;
-    padding: 10px 20px;
+    padding: 14px 22px;
     font-family: var(--font-text);
     font-size: 15px;
     line-height: 1;
@@ -21,7 +21,7 @@
 
   @media (min-width: 640px) {
     .btn {
-      padding: 13px 26px;
+      padding: 16px 28px;
       font-size: 17px;
     }
   }
@@ -156,7 +156,7 @@
     justify-content: center;
     gap: 7px;
     border-radius: 999px;
-    padding: 9.5px 18px;
+    padding: 14px 22px;
     font-family: var(--font-text);
     font-size: 14px;
     font-weight: 600;
@@ -192,7 +192,7 @@
     .btn-primary,
     .glass-btn {
       gap: 10px;
-      padding: 13px 28px;
+      padding: 16px 28px;
       font-size: 16px;
     }
   }

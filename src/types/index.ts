@@ -15,6 +15,7 @@ export interface SectionItem {
   tag?: ReactNode | string
   tagClassName?: string
   title: ReactNode | string
+  titleClassName?: string
   desc?: ReactNode | string
   descClassName?: string
   media?: ReactNode
@@ -50,6 +51,9 @@ export interface LayeredAsset {
   fgHeight?: number
   fgWidthClass?: string
   maxWidthClass?: string
+  mobileWidthClass?: string
+  mobileHeightClass?: string
+  mobilePaddingClass?: string
 }
 
 export interface CaseStudyData {

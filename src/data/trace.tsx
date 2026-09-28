@@ -48,7 +48,8 @@ export const traceData: CaseStudyData = {
           One console. <br /> Everything in view.
         </>
       ),
-      desc: "Same cases, same audit trail, same updates — just laid out in one dark, full-screen TUI console. No new commands to learn, no mouse needed. Just Trace, unfolded.",
+      titleClassName: "t-hero-headline",
+      desc: "Cases, audit trail and updates, now in one dark full-screen console. Built for long sessions. No new syntax, no mouse.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
@@ -81,7 +82,8 @@ export const traceData: CaseStudyData = {
     {
       tag: "Tamper-evident by design",
       title: "Verify. Instantly.",
-      desc: "One command checks the whole chain — signature, hash, sequence. If anything was ever touched, Trace shows you exactly where.",
+      titleClassName: "t-hero-headline",
+      desc: "One command checks every signature, hash, and sequence. If anything was ever touched, Trace shows you exactly where.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/audit_intro_bg.svg",
