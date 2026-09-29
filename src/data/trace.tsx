@@ -110,6 +110,23 @@ export const traceData: CaseStudyData = {
       ],
     },
     {
+      tag: "Safe updates",
+      title: (
+        <>
+          Never interrupts. <br /> Never breaks things.
+        </>
+      ),
+      titleClassName: "t-hero-headline",
+      desc: "Trace installs only when you're idle, verifies every release before it runs, and rolls back automatically if anything fails.",
+      centeredHeader: true,
+      layeredAsset: {
+        bgSrc: "/assets/trace/update_bg.svg",
+        fgSrc: "/assets/trace/update_tui.svg",
+        bgAlt: "Trace update environment background",
+        fgAlt: "Trace TUI update console",
+      },
+    },
+    {
       title: "Updates.",
       cards: [
         {
