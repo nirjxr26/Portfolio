@@ -77,6 +77,10 @@ export const traceData: CaseStudyData = {
           headline: "Suggests as you type.",
           body: "Commands and flags autocomplete as you go — no docs, no memorizing syntax.",
         },
+        {
+          headline: "Also speaks JSON.",
+          body: "Every case and dossier can be output as JSON — ready for scripts and automation.",
+        },
       ],
     },
     {
