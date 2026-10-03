@@ -12,8 +12,10 @@
   --page-gutter: 1rem;
   --header-h: 2.75rem;
   --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
 }
 
+:root.dark,
 .dark {
   color-scheme: dark;
   --canvas: #000000;

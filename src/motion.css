@@ -69,14 +69,6 @@
     transform: translate3d(0, 0, 0);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .reveal-on-scroll {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-  }
-
   /* Hero Staggered Slow Load Animations */
   @keyframes heroFadeUp {
     0% {
@@ -88,25 +80,26 @@
     100% {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
-      filter: blur(0);
+      filter: none;
     }
   }
 
   .animate-hero-1 {
-    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
     will-change: opacity, transform, filter;
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .animate-hero-2 {
-    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
     opacity: 0;
     will-change: opacity, transform, filter;
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
   }
 
   .animate-hero-3 {
-    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
     opacity: 0;
     will-change: opacity, transform, filter;
+    animation: heroFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
   }
 
   /* Smooth Device Rise Hero Animation */
@@ -123,21 +116,9 @@
   }
 
   .animate-device-rise {
-    animation: deviceRise 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+    animation: deviceRise 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
     will-change: transform, opacity;
     backface-visibility: hidden;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .animate-hero-1,
-    .animate-hero-2,
-    .animate-hero-3,
-    .animate-device-rise {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: none !important;
-      filter: none !important;
-    }
   }
 
   /* Apple continuous corners — progressive enhancement.
@@ -226,22 +207,5 @@
     opacity: 1;
     transform: scale(1);
     transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal-on-scroll {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-
-    *,
-    ::before,
-    ::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
   }
 }

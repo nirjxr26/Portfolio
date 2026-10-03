@@ -1,6 +1,9 @@
 import { useEffect } from "react"
+import { useInternalRouter } from "@/utils/useInternalRouter"
 
 export function ScrollReveal() {
+  const pathname = useInternalRouter()
+
   useEffect(() => {
     let observer: IntersectionObserver | null = null
     let rafId: number | null = null
@@ -22,17 +25,11 @@ export function ScrollReveal() {
       observer = new IntersectionObserver(observerCallback, {
         root: null,
         threshold: 0.05,
-        rootMargin: "0px 0px -20px 0px",
+        rootMargin: "0px 0px -30px 0px",
       })
 
-      const windowHeight = window.innerHeight
-
       revealElements.forEach((el) => {
-        const rect = el.getBoundingClientRect()
-        // If element is already within the viewport on mount, reveal immediately
-        if (rect.top < windowHeight && rect.bottom > 0) {
-          el.classList.add("is-visible")
-        } else {
+        if (!el.classList.contains("is-visible")) {
           observer?.observe(el)
         }
       })
@@ -42,7 +39,7 @@ export function ScrollReveal() {
       if (rafId) cancelAnimationFrame(rafId)
       if (observer) observer.disconnect()
     }
-  }, [])
+  }, [pathname])
 
   return null
 }
