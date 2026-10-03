@@ -3,16 +3,7 @@ import type { HeroAction } from "@/types"
 import { externalProps } from "@/utils/helpers"
 import { ArrowRight, ArrowUpRight } from "./Icons"
 
-export type ButtonVariant =
-  | "primary"
-  | "ghost"
-  | "flow"
-  | "dark"
-  | "light"
-  | "apple-dark"
-  | "apple-light"
-  | "glass-dark"
-  | "glass-light"
+export type ButtonVariant = "primary" | "ghost" | "flow" | "light" | "dark" | "apple-dark" | "apple-light"
 
 interface ButtonBase {
   variant?: ButtonVariant
@@ -33,14 +24,14 @@ type ButtonButtonProps = ButtonBase &
 export type AppButtonProps = ButtonLinkProps | ButtonButtonProps
 
 /**
- * Single pill button supporting traditional tokens and Apple tactile CTAs.
+ * Simple, clean pill button grammar from original design.
  */
 export function AppButton({ variant = "primary", className = "", children, ...rest }: AppButtonProps) {
   let variantClass = `btn btn-${variant}`
-  if (variant === "dark" || variant === "apple-dark" || variant === "glass-dark") {
-    variantClass = "dark-btn btn-apple-dark"
-  } else if (variant === "light" || variant === "apple-light" || variant === "glass-light") {
-    variantClass = "light-btn btn-apple-light"
+  if (variant === "dark" || variant === "apple-dark") {
+    variantClass = "btn dark-btn"
+  } else if (variant === "light" || variant === "apple-light") {
+    variantClass = "btn btn-ghost"
   }
 
   const classes = `${variantClass} ${className}`.trim()
@@ -82,9 +73,9 @@ function renderPillButton(
     <>
       <span>{children}</span>
       {arrow === "up-right" ? (
-        <ArrowUpRight width={14} height={14} strokeWidth={2.2} className="flow-arrow shrink-0" />
+        <ArrowUpRight width={14} height={14} className="flow-arrow shrink-0" />
       ) : arrow ? (
-        <ArrowRight width={13} height={13} strokeWidth={2.2} className="flow-arrow shrink-0" />
+        <ArrowRight width={13} height={13} className="flow-arrow shrink-0" />
       ) : null}
     </>
   )
@@ -104,30 +95,18 @@ function renderPillButton(
   )
 }
 
-/**
- * Reusable Apple Primary Accent Pill Button ("View resume" reference style)
- * Accent fill with specular metallic gradient ring around the edge.
- */
 export function PrimaryButton(props: AppleButtonProps) {
   return renderPillButton("primary", props)
 }
 
 export const ApplePrimaryButton = PrimaryButton
 
-/**
- * Reusable Apple Primary Dark Pill Button ("Apply now" reference style)
- * Charcoal gradient, tinted ambient shadow, top specular highlight, squircle curvature.
- */
 export function DarkButton(props: AppleButtonProps) {
   return renderPillButton("dark", props)
 }
 
 export const AppleDarkButton = DarkButton
 
-/**
- * Reusable Apple Secondary Light Pill Button ("Read docs" reference style)
- * Alabaster gradient, refined border contrast, ambient floating shadow, squircle curvature.
- */
 export function LightButton(props: AppleButtonProps) {
   return renderPillButton("light", props)
 }
@@ -140,9 +119,6 @@ interface AppLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "cl
   children: ReactNode
 }
 
-/**
- * Single link with automatic external handling. Use for non-button links.
- */
 export function AppLink({ href, className, children, ...rest }: Readonly<AppLinkProps>) {
   return (
     <a href={href} className={className} {...externalProps(href)} {...rest}>
@@ -152,11 +128,8 @@ export function AppLink({ href, className, children, ...rest }: Readonly<AppLink
 }
 
 export const HERO_BUTTON_CLASS =
-  "w-full min-[360px]:flex-1 sm:flex-initial min-[360px]:max-w-[185px] sm:max-w-none sm:w-auto justify-center text-center whitespace-nowrap px-4 sm:px-7"
+  "w-full min-[360px]:flex-1 sm:flex-initial min-[360px]:max-w-[185px] sm:max-w-none sm:w-auto justify-center text-center whitespace-nowrap px-5 sm:px-7"
 
-/**
- * Reusable container for hero and CTA action buttons with responsive equal-width centering.
- */
 export function ActionGroup({
   className = "",
   children,
@@ -170,9 +143,6 @@ export function ActionGroup({
   )
 }
 
-/**
- * Unified action button group renderer supporting primary/secondary variants, arrows, and custom labels.
- */
 export function ActionButtons({
   actions,
   className = HERO_BUTTON_CLASS,
@@ -184,18 +154,10 @@ export function ActionButtons({
     <>
       {actions.map((action) => {
         const arrow = action.arrow ?? (action.type === "secondary" ? true : undefined)
-        const btnId =
-          action.id ??
-          (action.label.toLowerCase().includes("resume")
-            ? "btn-view-resume"
-            : action.label.toLowerCase().includes("work")
-              ? "btn-view-works"
-              : undefined)
 
         return action.type === "primary" ? (
           <PrimaryButton
             key={action.label}
-            id={btnId}
             href={action.url}
             arrow={arrow}
             aria-label={action.ariaLabel}
@@ -206,7 +168,6 @@ export function ActionButtons({
         ) : (
           <LightButton
             key={action.label}
-            id={btnId}
             href={action.url}
             arrow={arrow}
             aria-label={action.ariaLabel}

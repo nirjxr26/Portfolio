@@ -68,6 +68,54 @@ export function ChevronDown({ className = "", width = 16, height = 16, strokeWid
   )
 }
 
+export function ChevronLeft({
+  className = "",
+  width = 16,
+  height = 16,
+  strokeWidth = 2.5,
+}: Readonly<IconProps>) {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  )
+}
+
+export function ChevronRight({
+  className = "",
+  width = 16,
+  height = 16,
+  strokeWidth = 2.5,
+}: Readonly<IconProps>) {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  )
+}
+
 export function HomeIcon({ className = "", width = 16, height = 16 }: Readonly<IconProps>) {
   return (
     <svg
