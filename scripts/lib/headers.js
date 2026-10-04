@@ -59,15 +59,18 @@ export function baseHeaders(csp) {
 export const REVALIDATE_CACHE = "public, max-age=0, must-revalidate"
 export const IMMUTABLE_CACHE = "public, max-age=31536000, immutable"
 
+const immutable = IMMUTABLE_CACHE
+const revalidate = REVALIDATE_CACHE
+
 export const CACHE_RULES = [
-  { source: "/assets/*", cacheControl: IMMUTABLE_CACHE },
-  { source: "/fonts/*", cacheControl: IMMUTABLE_CACHE },
-  { source: "/", cacheControl: REVALIDATE_CACHE },
-  { source: "/works", cacheControl: REVALIDATE_CACHE },
-  { source: "/articles", cacheControl: REVALIDATE_CACHE },
-  { source: "/works/:slug", cacheControl: REVALIDATE_CACHE },
-  { source: "/articles/:slug", cacheControl: REVALIDATE_CACHE },
-  { source: "/404.html", cacheControl: REVALIDATE_CACHE },
+  { path: "/assets/*", vercelPath: "/assets/(.*)", cacheControl: immutable },
+  { path: "/", vercelPath: "/", cacheControl: revalidate },
+  { path: "/works", vercelPath: "/works", cacheControl: revalidate },
+  { path: "/articles", vercelPath: "/articles", cacheControl: revalidate },
+  { path: "/works/:slug", vercelPath: "/works/:slug", cacheControl: revalidate },
+  { path: "/articles/:slug", vercelPath: "/articles/:slug", cacheControl: revalidate },
+  { path: "/404.html", vercelPath: "/404.html", cacheControl: revalidate },
+  { path: "/fonts/*", vercelPath: "/fonts/(.*)", cacheControl: immutable },
 ]
 
 export function renderHeadersFile(csp = cspProd) {
@@ -77,7 +80,7 @@ export function renderHeadersFile(csp = cspProd) {
   }
   lines.push(`  Cache-Control: ${REVALIDATE_CACHE}`)
   for (const rule of CACHE_RULES) {
-    lines.push("", rule.source)
+    lines.push("", rule.path)
     lines.push(`  Cache-Control: ${rule.cacheControl}`)
   }
   return `${lines.join("\n")}\n`
@@ -90,7 +93,7 @@ export function renderVercelHeaders(csp = cspProd) {
       headers: Object.entries(baseHeaders(csp)).map(([key, value]) => ({ key, value })),
     },
     ...CACHE_RULES.map((rule) => ({
-      source: rule.source,
+      source: rule.vercelPath,
       headers: [{ key: "Cache-Control", value: rule.cacheControl }],
     })),
   ]

@@ -1,5 +1,6 @@
 export interface CacheRule {
-  source: string
+  path: string
+  vercelPath: string
   cacheControl: string
 }
 
