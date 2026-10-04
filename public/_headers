@@ -1,8 +1,3 @@
-# NOTE: Vercel ignores this file — vercel.json is the live header source.
-# Kept in sync for non-Vercel static hosts (Netlify / Cloudflare Pages) only.
-# Production CSP is strict (no 'unsafe-inline'). See vite.config.ts for the
-# dev-only relaxed policy. No Report-To / NEL: no collector exists on this
-# backend-less site, so reporting headers would only fake monitoring.
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
@@ -15,7 +10,7 @@
   Origin-Agent-Cluster: ?1
   X-DNS-Prefetch-Control: off
   X-Permitted-Cross-Domain-Policies: none
-  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c='; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
+  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c='; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*
@@ -23,3 +18,21 @@
 
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/works
+  Cache-Control: public, max-age=0, must-revalidate
+
+/articles
+  Cache-Control: public, max-age=0, must-revalidate
+
+/works/:slug
+  Cache-Control: public, max-age=0, must-revalidate
+
+/articles/:slug
+  Cache-Control: public, max-age=0, must-revalidate
+
+/404.html
+  Cache-Control: public, max-age=0, must-revalidate

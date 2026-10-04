@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react"
 import { isInternalRoute } from "@/data/routes"
+import { isStaticAsset } from "./helpers"
 
 let currentPath = typeof window !== "undefined" ? window.location.pathname : "/"
 const listeners = new Set<() => void>()
@@ -35,8 +36,6 @@ if (typeof window !== "undefined") {
     window.history.replaceState(null, "", `#${hash}`)
     return true
   }
-
-  // Single global click delegator for client-side routing
   document.addEventListener("click", (e: MouseEvent) => {
     if (e.defaultPrevented || e.button !== 0) return
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
@@ -45,18 +44,15 @@ if (typeof window !== "undefined") {
     const href = target.getAttribute("href")
     if (!href) return
 
-    const isStaticFile =
-      /\.(pdf|png|jpg|jpeg|svg|webp|xml|txt|json|zip)$/i.test(href) ||
-      href.startsWith("/assets/")
+    if (isStaticAsset(href)) return
+
     const isExternalLink =
       target.target === "_blank" ||
       target.hasAttribute("download") ||
       target.getAttribute("rel") === "external"
-    if (isStaticFile || isExternalLink) {
+    if (isExternalLink) {
       return
     }
-
-    // Pure hash link on current page (e.g. "#what-i-do")
     if (href.startsWith("#")) {
       const hash = href.slice(1)
       if (hash && scrollToHash(hash)) {
@@ -66,8 +62,6 @@ if (typeof window !== "undefined") {
     }
 
     if (!isInternalRoute(href)) return
-
-    // Route with hash (e.g. "/#what-i-do" or "/works#grid")
     if (href.includes("#")) {
       const [path, hash] = href.split("#")
       const currentClean = window.location.pathname.replace(/\/$/, "") || "/"
@@ -79,8 +73,6 @@ if (typeof window !== "undefined") {
           return
         }
       }
-
-      // Navigating across pages to a hash
       e.preventDefault()
       window.history.pushState({}, "", href)
       notify()
@@ -96,8 +88,6 @@ if (typeof window !== "undefined") {
       })
       return
     }
-
-    // Standard internal SPA navigation
     e.preventDefault()
     window.history.pushState({}, "", href)
     notify()

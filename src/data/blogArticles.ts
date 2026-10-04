@@ -14,8 +14,6 @@ export type BlogArticle = {
   keywords: string
 }
 
-// Structured export of all eight articles — single source for detail pages
-// Slugs match the internal routes we expose at /articles/<slug>
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "context-engineering-why-agents-md-beats-a-better-model",

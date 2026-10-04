@@ -15,6 +15,21 @@ export const WORK_ITEMS = [
   { name: "HookDrop", href: "/works/hookdrop" },
 ] as const
 
+export interface NavLink {
+  label: string
+  href: string
+  external?: boolean
+  expandable?: boolean
+}
+
+export const NAV_LINKS: readonly NavLink[] = [
+  { label: "What I do", href: "/#what-i-do" },
+  { label: "Works", href: "/works", expandable: true },
+  { label: "Articles", href: "/articles" },
+  { label: "Resume", href: SOCIAL_LINKS.resume, external: true },
+  { label: "Contact", href: "/#footer" },
+]
+
 export interface FooterLinkItem {
   name: string
   href: string

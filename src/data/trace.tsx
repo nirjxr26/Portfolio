@@ -7,7 +7,6 @@ export const traceData: CaseStudyData = {
     headline: (
       <>
         Recorded. <br className="sm:hidden" />Proven. Sealed.
-        {/* <br className="sm:hidden" /> never lies. */}
       </>
     ),
     subhead:
@@ -15,7 +14,6 @@ export const traceData: CaseStudyData = {
     heroAsset: {
       src: "/assets/trace/cli_hero.svg",
       alt: "Trace CLI forensic case management terminal interface",
-      visiblePercent: 65,
     },
   },
   sections: [
@@ -27,17 +25,14 @@ export const traceData: CaseStudyData = {
         {
           tag: "Cases",
           headline: "Every case, organized from start to close. Easy to find, safe to store.",
-          // body: "Keep every investigation organized and under control.",
         },
         {
           tag: "Audit trail",
           headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
-          // body: "Prove that nothing was changed in secret.",
         },
         {
           tag: "Updates",
           headline: "Verified, staged, and health-checked before going live. Failures roll back.",
-          // body: "Install new versions safely, without breaking anything.",
         },
       ],
     },

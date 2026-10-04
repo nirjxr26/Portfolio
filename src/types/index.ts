@@ -1,12 +1,9 @@
 import type { ReactNode } from "react"
 
-// ---- Case Study Types ----
 export interface CardItem {
   headline: string
   body?: string
   tag?: string
-  link?: string
-  url?: string
   wide?: boolean
   centered?: boolean
 }
@@ -36,7 +33,6 @@ export interface HeroAsset {
   alt?: string
   width?: number
   height?: number
-  visiblePercent?: number
   maxWidthClass?: string
 }
 
@@ -51,7 +47,6 @@ export interface LayeredAsset {
   fgHeight?: number
   fgWidthClass?: string
   maxWidthClass?: string
-  mobileWidthClass?: string
   mobileHeightClass?: string
   mobilePaddingClass?: string
 }
@@ -80,24 +75,19 @@ export interface CaseStudyData {
   softwareSchema?: Partial<SoftwareSchema>
 }
 
-// ---- Home & Portfolio Types ----
 export interface HeroAction {
   label: string
   url: string
   type: "primary" | "secondary"
-  isExternal?: boolean
   arrow?: boolean | "right" | "up-right"
   ariaLabel?: string
-  id?: string
   className?: string
 }
 
 export interface Frame {
-  number?: string
   tag: string
   title: string
   desc: string
-  tagline?: string
 }
 
 export interface Project {
@@ -107,7 +97,6 @@ export interface Project {
   description: string
   link?: string
   projectLink?: string
-  tags: string[]
 }
 
 export interface Article {
@@ -126,7 +115,6 @@ export interface ProductionCapability {
   desc: string
 }
 
-// ---- SEO & Metadata Types ----
 export interface BreadcrumbItem {
   name: string
   url: string
@@ -142,11 +130,4 @@ export interface SoftwareSchema {
   programmingLanguage?: string
   license?: string
   runtimePlatform?: string
-}
-
-export interface PersonSchema {
-  name: string
-  url: string
-  jobTitle: string
-  sameAs: string[]
 }

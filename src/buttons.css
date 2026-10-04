@@ -1,6 +1,5 @@
 @layer components {
 
-  /* Clean, simple Apple pill button grammar from original commits */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -38,7 +37,6 @@
     outline-offset: 2px;
   }
 
-  /* Primary Blue Button ("View resume") */
   .btn-primary {
     background: var(--accent);
     color: #ffffff;
@@ -49,35 +47,18 @@
     color: #ffffff;
   }
 
-  /* Ghost / Secondary Button ("View works", "Read docs", "View other articles") */
-  .btn-ghost,
-  .btn-flow,
-  .light-btn,
-  .btn-apple-light {
+  .btn-ghost {
     background: var(--surface-alt);
     color: var(--ink);
     border: none;
   }
 
-  .dark .btn-ghost,
-  .dark .btn-flow,
-  .dark .light-btn,
-  .dark .btn-apple-light {
+  .dark .btn-ghost {
     background: #1c1c1e;
     color: #ffffff;
     border: none;
   }
 
-  /* Dark Button Variant */
-  .dark-btn,
-  .btn-dark,
-  .btn-apple-dark {
-    background: #1c1c1e;
-    color: #ffffff;
-    border: none;
-  }
-
-  /* Flow Arrow Smooth Glide */
   .flow-arrow {
     transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -86,7 +67,6 @@
     transform: translateX(4px);
   }
 
-  /* Small button variant */
   .btn-sm {
     display: inline-flex;
     align-items: center;
@@ -106,7 +86,6 @@
     transform: scale(0.96);
   }
 
-  /* Icon button */
   .btn-icon {
     display: inline-flex;
     align-items: center;

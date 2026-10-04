@@ -1,6 +1,6 @@
 import { BLOG_ARTICLES } from "./blogArticles"
 import { CASE_STUDIES } from "./caseStudies"
-import { SITE_DEFAULT_DESC, SITE_DEFAULT_TITLE, SITE_URL } from "./site"
+import { SITE_DEFAULT_DESC, SITE_DEFAULT_TITLE, SITE_URL, stripTrailingSlashes } from "./site"
 
 export interface RouteMeta {
   title: string
@@ -40,14 +40,9 @@ export interface ResolvedRoute {
 }
 
 export function cleanPath(pathname: string) {
-  return pathname.replace(/\/$/, "") || "/"
+  return stripTrailingSlashes(pathname) || "/"
 }
 
-/**
- * Single route resolver — replaces hardcoded slug if-chains in main.tsx.
- * Derives valid slugs from BLOG_ARTICLES + CASE_STUDIES so adding content
- * needs no router edit. 0 UI change: same paths as before.
- */
 export function resolveRoute(pathname: string): ResolvedRoute {
   const clean = cleanPath(pathname.split("#")[0] ?? "/")
 
@@ -71,8 +66,7 @@ export function resolveRoute(pathname: string): ResolvedRoute {
     return { kind: "not-found" }
   }
 
-  // Legacy single-segment case URLs (e.g. `/bastion`) still resolve to case studies
-  const legacy = clean.slice(1)
+    const legacy = clean.slice(1)
   if (legacy && CASE_STUDIES[legacy]) {
     return { kind: "case-study", caseSlug: legacy }
   }
