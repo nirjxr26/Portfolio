@@ -1,25 +1,24 @@
-import { SOCIAL_LINKS } from "./navigation"
-import { SITE_KEYWORDS, SITE_OG_IMAGE, SITE_URL } from "./site"
+import { CONTACT, SOCIAL_LINKS } from "./navigation"
+import {
+  SITE_DEFAULT_TITLE,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_URL,
+  joinSiteUrl,
+} from "./site"
 import type { Article, BreadcrumbItem, SoftwareSchema } from "@/types"
-
-/**
- * Single source for SEO structured-data builders — pure functions, no React.
- * Used by both the runtime `Seo` component and `scripts/prerender.js`
- * (via `vite.ssrLoadModule`) so static heads and SPA-navigated heads emit
- * identical schemas. 0 UI change: head-only output.
- */
 
 export const JSONLD_SCRIPT_ID = "dynamic-jsonld-schema"
 
 export function absoluteUrl(pathOrUrl: string): string {
   if (pathOrUrl.startsWith("http")) return pathOrUrl
-  if (pathOrUrl === "/") return SITE_URL
-  return `${SITE_URL}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`
+  return joinSiteUrl(pathOrUrl)
 }
 
 export function toISODate(dateStr: string): string {
   const d = new Date(dateStr)
-  if (isNaN(d.getTime())) return dateStr
+  if (Number.isNaN(d.getTime())) return dateStr
   const month = `${d.getMonth() + 1}`.padStart(2, "0")
   const day = `${d.getDate()}`.padStart(2, "0")
   return `${d.getFullYear()}-${month}-${day}`
@@ -27,6 +26,11 @@ export function toISODate(dateStr: string): string {
 
 export function estimateWordCount(text: string): number {
   return text.split(/\s+/).filter(Boolean).length
+}
+
+export function toISODuration(readTime: string): string {
+  const minutes = /\d+/.exec(readTime)?.[0]
+  return `PT${minutes ?? "0"}M`
 }
 
 export function buildBreadcrumbSchema(items: BreadcrumbItem[]): Record<string, unknown> {
@@ -47,23 +51,23 @@ export function buildDefaultSchemas(): Record<string, unknown>[] {
       "@type": "ProfilePage",
       "@id": `${SITE_URL}/#profilepage`,
       url: SITE_URL,
-      name: "Nirjar Goswami | Cloud & Security Engineer",
+      name: SITE_DEFAULT_TITLE,
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
     {
-          "@type": "Person",
-          "@id": `${SITE_URL}/#person`,
-          name: "Nirjar Goswami",
-          url: SITE_URL,
-      image: `${SITE_URL}/og-image.webp`,
-          jobTitle: "Cloud & Security Engineer",
-      email: "mailto:nirjargoswami2626@gmail.com",
-          sameAs: [
-            SOCIAL_LINKS.github,
-            SOCIAL_LINKS.linkedin,
-            SOCIAL_LINKS.twitter,
-            SOCIAL_LINKS.instagram,
-          ],
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      image: SITE_OG_IMAGE,
+      jobTitle: "Cloud & Security Engineer",
+      email: `mailto:${CONTACT.emailAddress}`,
+      sameAs: [
+        SOCIAL_LINKS.github,
+        SOCIAL_LINKS.linkedin,
+        SOCIAL_LINKS.twitter,
+        SOCIAL_LINKS.instagram,
+      ],
       knowsAbout: [
         "Cloud Infrastructure",
         "Cloud Architecture",
@@ -87,14 +91,14 @@ export function buildDefaultSchemas(): Record<string, unknown>[] {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Nirjar Goswami Portfolio",
-      description: "Official website and case studies of Nirjar Goswami.",
-          publisher: { "@id": `${SITE_URL}/#person` },
-          inLanguage: "en-US",
-          keywords: SITE_KEYWORDS,
-        },
-      ]
-    }
+      name: `${SITE_NAME} Portfolio`,
+      description: `Official website and case studies of ${SITE_NAME}.`,
+      publisher: { "@id": `${SITE_URL}/#person` },
+      inLanguage: "en-US",
+      keywords: SITE_KEYWORDS,
+    },
+  ]
+}
 
 export function buildSoftwareSchema(
   s: SoftwareSchema,
@@ -220,7 +224,7 @@ export function buildTechArticleSchema(a: TechArticleInput): Record<string, unkn
     articleSection: a.category,
     keywords: a.keywords,
     wordCount: a.wordCount,
-    timeRequired: `PT${a.readTime.replace(" min", "M")}`,
+    timeRequired: toISODuration(a.readTime),
     thumbnailUrl: SITE_OG_IMAGE,
     copyrightHolder: { "@id": `${SITE_URL}/#person` },
     isAccessibleForFree: true,

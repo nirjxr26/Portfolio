@@ -1,8 +1,3 @@
-/**
- * Single site source — canonical URL, OG image, keywords.
- * SEO.tsx + prerender.js must read from here to avoid drift. 0 UI change.
- */
-
 export const SITE_URL = "https://nirjar.me"
 export const SITE_OG_IMAGE = "https://nirjar.me/og-image.webp"
 export const SITE_NAME = "Nirjar Goswami"
@@ -13,36 +8,36 @@ export const SITE_DEFAULT_DESC =
 export const SITE_KEYWORDS =
   "Nirjar Goswami, Cloud Engineer, Security Engineer, Cloud Architecture, DevOps, Kubernetes, Go, System Design, IAM, Cybersecurity, AegisMesh, Bastion, Kost, HookDrop, Trace, DeployLens, VaultLock"
 
-function stripTrailingSlashes(path: string): string {
+export function stripTrailingSlashes(path: string): string {
   let end = path.length
   while (end > 0 && path[end - 1] === "/") end -= 1
   return path.slice(0, end)
 }
 
-function withPath(origin: string, path: string): string {
+function joinUrl(origin: string, path: string): string {
   const clean = stripTrailingSlashes(path)
   if (!clean) return origin
-
   const separator = clean.startsWith("/") ? "" : "/"
   return `${origin}${separator}${clean}`
 }
 
-function currentCanonical(): string {
-  if (typeof window === "undefined") return SITE_URL
-  return withPath(SITE_URL, window.location.pathname)
+export function joinSiteUrl(path: string): string {
+  return joinUrl(SITE_URL, path)
 }
 
 function urlCanonical(pathOrUrl: string): string {
   try {
     const parsed = new URL(pathOrUrl)
-    return withPath(parsed.origin, parsed.pathname)
+    return joinUrl(parsed.origin, parsed.pathname)
   } catch {
     return pathOrUrl
   }
 }
 
 export function siteCanonical(pathOrUrl?: string): string {
-  if (!pathOrUrl) return currentCanonical()
+  if (!pathOrUrl) {
+    return typeof window === "undefined" ? SITE_URL : joinSiteUrl(window.location.pathname)
+  }
   if (pathOrUrl.startsWith("http")) return urlCanonical(pathOrUrl)
-  return withPath(SITE_URL, pathOrUrl)
+  return joinSiteUrl(pathOrUrl)
 }

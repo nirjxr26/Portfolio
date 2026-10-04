@@ -1,6 +1,5 @@
 @layer components {
 
-  /* Typography scale — SF Pro Display/Text per design doc */
   .t-hero {
     font-family: var(--font-display);
     font-weight: 600;
@@ -113,9 +112,6 @@
     font-size: 12px;
     line-height: 1.5;
   }
-  /* Card text-stack rhythm — single source for every card on the site.
-     Values match Featured Work (ProjectCard): roomy tag-to-title gap,
-     tight title-to-desc gap. Change once here, all cards follow. */
   .card-tag {
     @apply mb-3 sm:mb-4;
   }

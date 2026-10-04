@@ -10,9 +10,6 @@ interface InstallSnippetProps {
 
 const EXECUTOR_COMMANDS = new Set(["iex", "sh", "bash", "zsh", "cmd", "pwsh"])
 
-/**
- * Universal CLI syntax tokenizer supporting PowerShell, POSIX, npm, cargo, brew, etc.
- */
 function renderCommandTokens(command: string): ReactNode {
   const tokens = command.split(" ")
   let isNextCommand = true
@@ -71,10 +68,8 @@ export function InstallSnippet({
 
   return (
     <div className={`hidden sm:block w-fit max-w-full mx-auto text-left ${className}`.trim()}>
-      <div className="apple-tactile-border w-full max-w-full rounded-2xl bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
-        {/* Top Header: Tabs on Left, Copy Button on Right */}
+      <div className="w-full max-w-full border border-hairline squircle bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
         <div className="flex items-center justify-between gap-4 px-2.5 py-1.5 mb-2">
-          {/* Shell Switcher Tabs */}
           <div className="flex items-center gap-4 sm:gap-6">
             {commands.map((cmd, idx) => {
               const isActive = activeTab === idx
@@ -97,7 +92,6 @@ export function InstallSnippet({
             })}
           </div>
 
-          {/* Clean Copy Button with Feedback */}
           <button
             type="button"
             onClick={() => copy(current.command)}
@@ -119,8 +113,7 @@ export function InstallSnippet({
           </button>
         </div>
 
-        {/* Inner Code Block: Full Command Shown without Cropping or Bleeding */}
-        <div className="apple-tactile-border rounded-xl bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
+        <div className="border border-hairline squircle bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
           <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-text">
             {renderCommandTokens(current.command)}
           </code>

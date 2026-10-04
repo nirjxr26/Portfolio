@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && node scripts/verify-csp.js && vite build && node scripts/prerender.js",
+    "build": "tsc --noEmit && node scripts/sync-headers.js && node scripts/verify-csp.js && vite build && node scripts/prerender.js",
+    "sync:headers": "node scripts/sync-headers.js",
     "test": "vitest run",
     "preview": "vite preview"
   },

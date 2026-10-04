@@ -1,4 +1,3 @@
-/* ---- Theme variables (light = Apple white/parchment, dark = Apple black/tile) ---- */
 :root {
   color-scheme: light;
   --canvas: #ffffff;

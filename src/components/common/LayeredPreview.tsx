@@ -8,12 +8,6 @@ export interface LayeredPreviewProps extends Partial<LayeredAsset> {
   children?: ReactNode
 }
 
-export type TuiPreviewProps = LayeredPreviewProps
-
-/**
- * Reusable layered spotlight preview showcasing a foreground console/UI graphic
- * elevated over a contextual workspace background canvas.
- */
 export function LayeredPreview({
   bgSrc,
   fgSrc,
@@ -32,9 +26,8 @@ export function LayeredPreview({
 }: Readonly<LayeredPreviewProps>) {
   return (
     <div
-      className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden rounded-2xl sm:rounded-none sm:overflow-visible ${mobileHeightClass} border border-white/[0.08] sm:border-transparent ${className}`.trim()}
+      className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden squircle sm:rounded-none sm:overflow-visible ${mobileHeightClass} border border-white/[0.08] sm:border-transparent ${className}`.trim()}
     >
-      {/* Elevated Background Canvas */}
       <img
         src={bgSrc}
         alt={bgAlt}
@@ -45,8 +38,6 @@ export function LayeredPreview({
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover object-center sm:static sm:h-auto sm:w-full select-none pointer-events-none"
       />
-
-      {/* Main TUI Console: Equal padding on all visible sides of the outer bg SVG */}
       <div className={`absolute ${mobilePaddingClass} sm:inset-0 sm:top-0 sm:bottom-0 sm:left-0 flex items-center justify-start sm:justify-center w-auto sm:w-full pointer-events-none`}>
         <img
           src={fgSrc}
@@ -64,5 +55,3 @@ export function LayeredPreview({
     </div>
   )
 }
-
-export const TuiPreview = LayeredPreview

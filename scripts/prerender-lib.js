@@ -1,14 +1,3 @@
-export function toPlainText(node) {
-  if (!node) return ""
-  if (typeof node === "string") return node
-  if (typeof node === "number") return String(node)
-  if (Array.isArray(node)) return node.map(toPlainText).join("")
-  if (typeof node === "object" && node !== null && "props" in node) {
-    if (node.props?.children) return toPlainText(node.props.children)
-  }
-  return ""
-}
-
 export function escXml(s) {
   return s
     .replaceAll("&", "&amp;")

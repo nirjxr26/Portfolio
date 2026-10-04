@@ -1,4 +1,5 @@
-import { ProductionRail, ProjectsRail, Seo } from "../common"
+import { ProductionRail, ProjectsRail } from "../common"
+import { RouteSeo } from "../common/SEO"
 import { PageHero, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
 import { createBreadcrumbs } from "@/utils/helpers"
@@ -8,29 +9,21 @@ export function WorksClient() {
     <PageShell
       headerPath="/works"
       seo={
-        <Seo
-          title={ROUTE_META["/works"].title}
-          description={ROUTE_META["/works"].description}
-          canonicalUrl={ROUTE_META["/works"].canonical}
-          includeDefaultSchemas={false}
-          breadcrumbs={createBreadcrumbs([
-            { name: "Works", url: "/works" },
-          ])}
+        <RouteSeo
+          meta={ROUTE_META["/works"]}
+          breadcrumbs={createBreadcrumbs([{ name: "Works", url: "/works" }])}
         />
       }
     >
-        {/* Hero Header */}
-        <PageHero
-          title="Works."
-          subhead="A record of what I've actually designed, built and shipped."
-          compact
-        />
+      <PageHero
+        title="Works."
+        subhead="A record of what I've actually designed, built and shipped."
+        compact
+      />
 
-        {/* Reusable Featured Works & More Works Carousels */}
-        <ProjectsRail id="featured-works" bgClass="bg-surface-alt" cardBgClass="bg-card" />
+      <ProjectsRail id="featured-works" bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
-        {/* Reusable How I engineer Section */}
-        <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
+      <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
     </PageShell>
   )
 }

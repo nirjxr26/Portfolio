@@ -2,12 +2,14 @@ import crypto from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { cspProd, inlineScriptHash } from "./lib/headers.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const projectRoot = path.resolve(__dirname, "..")
 
-const CSP_FILES = ["vite.config.ts", "vercel.json", "public/_headers"]
+const GENERATED_MANIFESTS = ["vercel.json", "public/_headers"]
+
 const NON_EXECUTABLE_TYPES = new Set([
   "application/ld+json",
   "application/json",
@@ -47,38 +49,22 @@ export function verifyCsp() {
 
   const expected = scripts.map(hashInlineScript)
 
-  const found = new Map()
-  for (const rel of CSP_FILES) {
-    const full = path.resolve(projectRoot, rel)
-    const content = fs.readFileSync(full, "utf-8")
-    const hashes = [...content.matchAll(/sha256-([A-Za-z0-9+/=]+)/g)].map((m) => `sha256-${m[1]}`)
-    found.set(rel, hashes)
-  }
-
-  const allHashes = [...found.values()].flat()
-  const uniqueHashes = [...new Set(allHashes)]
-
-  let failed = false
-
-  if (allHashes.length === 0 || uniqueHashes.length !== 1) {
+  const missingFromSource = expected.filter((want) => !cspProd.includes(want))
+  if (missingFromSource.length > 0) {
     console.error(
-      `verify-csp: expected exactly 1 unique CSP hash across ${CSP_FILES.join(", ")}, found ${uniqueHashes.length}: ${uniqueHashes.join(", ") || "(none)"}`,
+      `verify-csp: scripts/lib/headers.js is missing ${missingFromSource.join(", ")} (currently ${inlineScriptHash}). index.html inline script changed without updating the CSP.`,
     )
-    failed = true
+    process.exit(1)
+  }
+  const stale = []
+  for (const rel of GENERATED_MANIFESTS) {
+    const content = fs.readFileSync(path.resolve(projectRoot, rel), "utf-8")
+    if (!content.includes(inlineScriptHash)) stale.push(rel)
   }
 
-  for (const [rel, hashes] of found) {
-    for (const want of expected) {
-      if (!hashes.includes(want)) {
-        console.error(`verify-csp: ${rel} is missing ${want}`)
-        failed = true
-      }
-    }
-  }
-
-  if (failed) {
+  if (stale.length > 0) {
     console.error(
-      `\nFix: copy the hash above into the script-src of ${CSP_FILES.join(", ")}. index.html inline script changed without updating CSP.`,
+      `verify-csp: ${stale.join(", ")} do not carry ${inlineScriptHash}. Run \`npm run sync:headers\`.`,
     )
     process.exit(1)
   }
