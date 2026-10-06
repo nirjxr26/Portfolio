@@ -20,13 +20,13 @@ export function LayeredPreview({
   fgWidthClass = "w-[88%]",
   maxWidthClass = "max-w-4xl lg:max-w-5xl xl:max-w-[1020px]",
   mobileHeightClass = "h-[450px] min-[375px]:h-[470px] min-[390px]:h-[500px] min-[430px]:h-[530px] sm:h-auto",
-  mobilePaddingClass = "top-6 bottom-6 left-6 min-[375px]:top-7 min-[375px]:bottom-7 min-[375px]:left-7 min-[390px]:top-8 min-[390px]:bottom-8 min-[390px]:left-8 min-[430px]:top-9 min-[430px]:bottom-9 min-[430px]:left-9",
+  mobilePaddingClass = "top-4 bottom-4 left-4 min-[375px]:top-5 min-[375px]:bottom-5 min-[375px]:left-5 min-[390px]:top-6 min-[390px]:bottom-6 min-[390px]:left-6 min-[430px]:top-7 min-[430px]:bottom-7 min-[430px]:left-7",
   className = "",
   children,
 }: Readonly<LayeredPreviewProps>) {
   return (
     <div
-      className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden squircle sm:rounded-none sm:overflow-visible ${mobileHeightClass} border border-white/[0.08] sm:border-transparent ${className}`.trim()}
+      className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden isolate rounded-[20px] squircle sm:rounded-none sm:overflow-visible ${mobileHeightClass} border border-white/[0.08] sm:border-transparent ${className}`.trim()}
     >
       <img
         src={bgSrc}

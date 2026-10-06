@@ -68,7 +68,7 @@ export function InstallSnippet({
 
   return (
     <div className={`hidden sm:block w-fit max-w-full mx-auto text-left ${className}`.trim()}>
-      <div className="w-full max-w-full border border-hairline squircle bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
+      <div className="w-full max-w-full border border-hairline rounded-[20px] squircle bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
         <div className="flex items-center justify-between gap-4 px-2.5 py-1.5 mb-2">
           <div className="flex items-center gap-4 sm:gap-6">
             {commands.map((cmd, idx) => {
@@ -113,7 +113,7 @@ export function InstallSnippet({
           </button>
         </div>
 
-        <div className="border border-hairline squircle bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
+        <div className="border border-hairline rounded-[14px] bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
           <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-text">
             {renderCommandTokens(current.command)}
           </code>

@@ -44,8 +44,13 @@
     scrollbar-width: none;
   }
 
+  .squircle {
+    border-radius: 20px;
+  }
+
   @supports (corner-shape: squircle) {
     .squircle {
+      corner-shape: squircle;
       border-radius: 30px;
     }
   }
