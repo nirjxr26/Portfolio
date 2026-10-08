@@ -20,6 +20,7 @@ export default defineConfig(({ command }) => ({
   },
   build: {
     target: "esnext",
+    assetsDir: "_assets",
     cssCodeSplit: true,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {

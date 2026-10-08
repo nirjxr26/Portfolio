@@ -63,7 +63,8 @@ const immutable = IMMUTABLE_CACHE
 const revalidate = REVALIDATE_CACHE
 
 export const CACHE_RULES = [
-  { path: "/assets/*", vercelPath: "/assets/(.*)", cacheControl: immutable },
+  { path: "/_assets/*", vercelPath: "/_assets/(.*)", cacheControl: immutable },
+  { path: "/assets/*", vercelPath: "/assets/(.*)", cacheControl: revalidate },
   { path: "/", vercelPath: "/", cacheControl: revalidate },
   { path: "/works", vercelPath: "/works", cacheControl: revalidate },
   { path: "/articles", vercelPath: "/articles", cacheControl: revalidate },
