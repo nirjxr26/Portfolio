@@ -149,8 +149,8 @@ export const traceData: CaseStudyData = {
       desc: "Not just for people. Every action returns clean output — so an agent gets the same proof a human would.",
       centeredHeader: true,
       layeredAsset: {
-        bgSrc: "/assets/trace/agents_bg.svg",
-        fgSrc: "/assets/trace/agents_content.svg",
+        bgSrc: "/assets/trace/agents_bg.svg?v=2",
+        fgSrc: "/assets/trace/agents_content.svg?v=2",
         bgAlt: "Trace agent environment background",
         fgAlt: "Trace agent console and output preview",
         bgWidth: 788,
