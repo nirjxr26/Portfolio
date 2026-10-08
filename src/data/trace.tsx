@@ -175,7 +175,7 @@ export const traceData: CaseStudyData = {
     action: "View on GitHub",
     url: "https://github.com/nirjxr26/Trace",
     secondaryAction: {
-      label: "View its changelog",
+      label: "View changelog",
       url: "https://github.com/nirjxr26/Trace/releases",
     },
     installCommands: [

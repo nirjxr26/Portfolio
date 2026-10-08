@@ -12,6 +12,7 @@ interface CTASectionProps {
   secondaryAction?: {
     label: string
     url: string
+    arrow?: boolean | "right" | "up-right"
   }
   installCommands?: InstallCommand[]
   bgClass?: string
@@ -42,7 +43,7 @@ export function CTASection({
             label: secondaryAction.label,
             url: secondaryAction.url,
             type: "secondary" as const,
-            arrow: true as const,
+            arrow: secondaryAction.arrow ?? (true as const),
           },
         ]
       : []),

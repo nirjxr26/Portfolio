@@ -77,7 +77,10 @@ export function InstallSnippet({
                 <button
                   type="button"
                   key={cmd.label}
-                  onClick={() => setActiveTab(idx)}
+                  onClick={() => {
+                    setActiveTab(idx)
+                    void copy(cmd.command)
+                  }}
                   className={`text-xs sm:text-[13px] font-medium transition-colors cursor-pointer ${
                     isActive
                       ? "text-ink dark:text-white font-semibold"
@@ -85,6 +88,7 @@ export function InstallSnippet({
                   }`}
                   aria-selected={isActive}
                   role="tab"
+                  title={`Select and copy ${cmd.label} command`}
                 >
                   {cmd.label}
                 </button>
@@ -113,8 +117,12 @@ export function InstallSnippet({
           </button>
         </div>
 
-        <div className="border border-hairline rounded-[14px] bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full">
-          <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-text">
+        <div
+          onClick={() => void copy(current.command)}
+          className="border border-hairline rounded-[14px] bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full cursor-pointer"
+          title="Click to copy command"
+        >
+          <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-pointer">
             {renderCommandTokens(current.command)}
           </code>
         </div>
