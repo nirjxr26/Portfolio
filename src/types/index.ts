@@ -69,6 +69,7 @@ export interface CaseStudyData {
     secondaryAction?: {
       label: string
       url: string
+      arrow?: boolean | "right" | "up-right"
     }
     installCommands?: InstallCommand[]
   }

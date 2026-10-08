@@ -15,7 +15,7 @@
     cursor: pointer;
     text-decoration: none;
     user-select: none;
-    border: none;
+    border: 1px solid transparent;
     background: none;
     box-shadow: none;
     transition: transform 0.15s ease;
@@ -40,7 +40,7 @@
   .btn-primary {
     background: var(--accent);
     color: #ffffff;
-    border: none;
+    border-color: transparent;
   }
 
   .btn-primary:hover {
@@ -50,13 +50,13 @@
   .btn-ghost {
     background: var(--surface-alt);
     color: var(--ink);
-    border: none;
+    border-color: var(--hairline);
   }
 
   .dark .btn-ghost {
     background: #1c1c1e;
     color: #ffffff;
-    border: none;
+    border-color: var(--hairline);
   }
 
   .flow-arrow {

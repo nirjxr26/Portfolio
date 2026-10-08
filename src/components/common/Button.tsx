@@ -104,7 +104,7 @@ export function AppLink({ href, className, children, ...rest }: Readonly<AppLink
 }
 
 export const HERO_BUTTON_CLASS =
-  "w-full min-[360px]:flex-1 sm:flex-initial min-[360px]:max-w-[185px] sm:max-w-none sm:w-auto justify-center text-center whitespace-nowrap px-5 sm:px-7"
+  "w-full min-[360px]:flex-1 sm:flex-initial min-[360px]:max-w-[185px] sm:max-w-none sm:w-auto sm:min-w-[185px] justify-center text-center whitespace-nowrap px-5 sm:px-7"
 
 export function ActionGroup({
   className = "",
