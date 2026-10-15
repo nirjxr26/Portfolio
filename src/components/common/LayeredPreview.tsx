@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import type { LayeredAsset } from "@/types"
+import { withAssetHash } from "@/utils/helpers"
 
 export interface LayeredPreviewProps extends Partial<LayeredAsset> {
   bgSrc: string
@@ -29,7 +30,7 @@ export function LayeredPreview({
       className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden isolate rounded-[20px] squircle sm:rounded-none sm:overflow-visible ${mobileHeightClass} border border-white/[0.08] sm:border-transparent ${className}`.trim()}
     >
       <img
-        src={bgSrc}
+        src={withAssetHash(bgSrc)}
         alt={bgAlt}
         width={bgWidth}
         height={bgHeight}
@@ -40,7 +41,7 @@ export function LayeredPreview({
       />
       <div className={`absolute ${mobilePaddingClass} sm:inset-0 sm:top-0 sm:bottom-0 sm:left-0 flex items-center justify-start sm:justify-center w-auto sm:w-full pointer-events-none`}>
         <img
-          src={fgSrc}
+          src={withAssetHash(fgSrc)}
           alt={fgAlt}
           width={fgWidth}
           height={fgHeight}
