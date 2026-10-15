@@ -9,12 +9,22 @@ interface CaseStudyPageProps {
   data: CaseStudyData
 }
 
+/** One flat surface for the whole page: canvas behind, surface-alt in front. */
+const MONO_SURFACES = { section: "bg-canvas", card: "bg-surface-alt" }
+
 export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
   const { hero, sections, cta, seoTitle } = data
   const canonicalUrl = `${SITE_URL}/works/${slug}`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
-  const ctaBgClass = alternateSurfaces(sections.length).section
-  const footerBgClass = alternateSurfaces(sections.length + 1).section
+  // The first section keeps the alternating rhythm so the page still opens on a
+  // contrast band; `mono` flattens everything after it.
+  const surfaces = (index: number) =>
+    data.surfaceMode === "mono" && index > 0 ? MONO_SURFACES : alternateSurfaces(index)
+  // A mono page runs flat all the way down, so the CTA takes the contrasting
+  // surface instead. Ending on the same band the rest of the page sits on makes
+  // the close read as an accident rather than a decision.
+  const ctaBgClass = data.surfaceMode === "mono" ? MONO_SURFACES.card : surfaces(sections.length).section
+  const footerBgClass = surfaces(sections.length + 1).section
   const hasHeroContent = Boolean(
     (hero.installCommands && hero.installCommands.length > 0) || hero.heroAsset
   )
@@ -64,7 +74,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
 
         {/* Feature Sections */}
         {sections.map((section, idx) => {
-          const { section: sectionBgClass, card: cardBgClass } = alternateSurfaces(idx)
+          const { section: sectionBgClass, card: cardBgClass } = surfaces(idx)
 
           return (
             <CarouselSection

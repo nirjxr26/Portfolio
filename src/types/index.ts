@@ -6,6 +6,8 @@ export interface CardItem {
   tag?: string
   wide?: boolean
   centered?: boolean
+  /** Optional product preview rendered beneath the copy. Grows the card. */
+  image?: HeroAsset
 }
 
 export interface SectionItem {
@@ -51,8 +53,13 @@ export interface LayeredAsset {
   mobilePaddingClass?: string
 }
 
+export type SurfaceMode = "alternate" | "mono"
+
 export interface CaseStudyData {
   seoTitle?: string
+  /** `mono` keeps every section after the first on the canvas colour with its
+   *  cards on the surface colour, instead of alternating the pair. */
+  surfaceMode?: SurfaceMode
   hero: {
     title: string
     headline: ReactNode | string
