@@ -17,7 +17,7 @@ export function LayeredPreview({
   bgWidth = 1039,
   bgHeight = 676,
   fgWidth = 851,
-  fgHeight = 586,
+  fgHeight = 582,
   fgWidthClass = "w-[88%]",
   maxWidthClass = "max-w-4xl lg:max-w-5xl xl:max-w-[1020px]",
   mobileHeightClass = "h-[450px] min-[375px]:h-[470px] min-[390px]:h-[500px] min-[430px]:h-[530px] sm:h-auto",
@@ -48,7 +48,7 @@ export function LayeredPreview({
           loading="lazy"
           decoding="async"
           draggable={false}
-          className={`block h-full sm:h-auto w-auto ${fgWidthClass} max-w-none sm:max-w-full select-none pointer-events-none`.trim()}
+          className={`block h-full sm:h-auto w-auto ${fgWidthClass} max-w-none sm:max-w-[88%] sm:max-h-full select-none pointer-events-none`.trim()}
         />
       </div>
 

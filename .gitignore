@@ -3,17 +3,24 @@ node_modules/
 
 # Production build outputs
 dist/
+dev-dist/
+*.local
 public/rss.xml
 public/sitemap.xml
 
 # Local cache & temporary files
 .vite/
 .vercel/
+.cache/
 
 # Environment files
-.env
-.env.local
-.env.*.local
+.env*
+!.env.example
+
+# Tooling scratch output
+.playwright-mcp/
+*.tsbuildinfo
+coverage/
 
 # Logs
 *.log
@@ -23,7 +30,24 @@ pnpm-debug.log*
 
 # OS system files
 .DS_Store
+._*
 Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Merge & patch leftovers
+*.orig
+*.rej
+
+# Editor backups
+*.bak
+*~
+
+# Editor directories
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 
 # Files
 DESIGN-apple.md

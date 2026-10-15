@@ -1,7 +1,14 @@
+import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
+import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
+// The recorded module walkthrough is retired in favour of the coded animation
+// above. Both are kept — uncomment this import and the `media` block on the
+// "Update in one command." section to switch back.
+// import { withAssetHash } from "@/utils/helpers"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
   seoTitle: "Trace | Digital Forensics & Incident Response",
+  surfaceMode: "mono",
   hero: {
     title: "Trace",
     headline: (
@@ -10,7 +17,7 @@ export const traceData: CaseStudyData = {
       </>
     ),
     subhead:
-      "Case management, tamper-proof records, and safe updates — all in one local-first CLI tool.",
+      "Case management, device acquisition, and tamper-proof records, all in one local-first CLI tool.",
     heroAsset: {
       src: "/assets/trace/cli_hero.svg",
       alt: "Trace CLI forensic case management terminal interface",
@@ -31,8 +38,8 @@ export const traceData: CaseStudyData = {
           headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
         },
         {
-          tag: "Updates",
-          headline: "Verified, staged, and health-checked before going live. Failures roll back.",
+          tag: "Devices",
+          headline: "Every drive listed, every observation kept. Nothing lost between cases.",
         },
       ],
     },
@@ -54,7 +61,7 @@ export const traceData: CaseStudyData = {
       },
     },
     {
-      title: "Cases.",
+      title: "Know where every case stands.",
       cards: [
         {
           headline: "Never lose track.",
@@ -79,6 +86,48 @@ export const traceData: CaseStudyData = {
       ],
     },
     {
+      tag: "Evidence",
+      title: (
+        <>
+          Log every drive.
+        </>
+      ),
+      titleClassName: "t-hero-headline",
+      desc: "Trace logs every inspection and check as a permanent record, so you can show what you did to each drive and when.",
+      centeredHeader: true,
+      layeredAsset: {
+        bgSrc: "/assets/trace/update_bg.svg",
+        fgSrc: "/assets/trace/update_tui.svg",
+        bgAlt: "Trace update environment background",
+        fgAlt: "Trace TUI update console",
+      },
+    },
+    {
+      title: "Every drive, from bag to case.",
+      cards: [
+        {
+          headline: "Identity outlives hardware.",
+          body: "Unplug a disk and its record stays. Model and size come from the newest observation.",
+        },
+        {
+          headline: "Consent before contact.",
+          body: "Anything touching a physical drive asks first, naming the exact node.",
+        },
+        {
+          headline: "Tag first, inspect later.",
+          body: "File a bagged drive under a case without imaging it first.",
+        },
+        {
+          headline: "Hostile input, sanitized.",
+          body: "Serials and firmware strings are cleaned and clamped, so they can't break the layout.",
+        },
+        {
+          headline: "Write protection, proven.",
+          body: "Each check shows the verdict, cause, platform, and a per-check evidence table.",
+        },
+      ],
+    },
+    {
       tag: "Tamper-evident by design",
       title: "Verify. Instantly.",
       titleClassName: "t-hero-headline",
@@ -92,7 +141,7 @@ export const traceData: CaseStudyData = {
       },
     },
     {
-      title: "Audit trail.",
+      title: "Nothing happens off the record.",
       cards: [
         {
           headline: "Recorded, automatically.",
@@ -109,57 +158,87 @@ export const traceData: CaseStudyData = {
       ],
     },
     {
-      tag: "Safe updates",
-      title: (
-        <>
-          Never interrupts. <br /> Never breaks things.
-        </>
-      ),
-      titleClassName: "t-hero-headline",
-      desc: "Trace installs only when you're idle, verifies every release before it runs, and rolls back automatically if anything fails.",
-      centeredHeader: true,
-      layeredAsset: {
-        bgSrc: "/assets/trace/update_bg.svg",
-        fgSrc: "/assets/trace/update_tui.svg",
-        bgAlt: "Trace update environment background",
-        fgAlt: "Trace TUI update console",
-      },
-    },
-    {
-      title: "Updates.",
-      cards: [
-        {
-          headline: "Waits for the right moment.",
-          body: "Active work in progress? Trace holds off installing anything new.",
-        },
-        {
-          headline: "Verified before install.",
-          body: "Every release is checked for authenticity before it ever runs.",
-        },
-        {
-          headline: "Never stuck broken.",
-          body: "A failed update rolls back automatically, restoring things exactly as they were.",
-        },
-      ],
-    },
-    {
       tag: "Not just for humans",
       title: "Built for agents too.",
       titleClassName: "t-hero-headline",
       desc: "Not just for people. Every action returns clean output — so an agent gets the same proof a human would.",
       centeredHeader: true,
       layeredAsset: {
-        bgSrc: "/assets/trace/agents_bg.svg?v=2",
-        fgSrc: "/assets/trace/agents_content.svg?v=2",
+        bgSrc: "/assets/trace/agents_bg.svg",
+        fgSrc: "/assets/trace/agents_content.svg",
         bgAlt: "Trace agent environment background",
         fgAlt: "Trace agent console and output preview",
         bgWidth: 788,
         bgHeight: 694,
         fgWidth: 667,
-        fgHeight: 541,
+        fgHeight: 553,
         fgWidthClass: "w-[88%]",
         maxWidthClass: "max-w-2xl lg:max-w-3xl xl:max-w-[788px]",
       },
+    },
+    {
+      tag: "Safe updates",
+      title: "Update in one command.",
+      titleClassName: "t-hero-headline",
+      centeredHeader: true,
+      media: (
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
+          <TraceUpdateAnimation />
+
+          <ul className="space-y-8">
+            <li>
+              <CardHeadline className="sm:text-xl">Waits for the right moment.</CardHeadline>
+              <CardBody>
+                If you&apos;re in the middle of something, Trace won&apos;t install anything. It
+                waits until you&apos;re done.
+              </CardBody>
+            </li>
+            <li>
+              <CardHeadline className="sm:text-xl">Checked before it runs.</CardHeadline>
+              <CardBody>
+                Every release is verified as genuine before it&apos;s installed, so you only run
+                what&apos;s really from the source.
+              </CardBody>
+            </li>
+            <li>
+              <CardHeadline className="sm:text-xl">A bad update can&apos;t break you.</CardHeadline>
+              <CardBody>
+                If an update fails, Trace puts everything back exactly as it was.
+              </CardBody>
+            </li>
+          </ul>
+        </div>
+      ),
+      // media: (
+      //   <div className="relative mx-auto w-full max-w-[680px] overflow-hidden rounded-[20px] squircle bg-[#0c0c0e]">
+      //     <img
+      //       src={withAssetHash("/assets/trace/agents_bg.svg")}
+      //       alt=""
+      //       aria-hidden="true"
+      //       width={788}
+      //       height={694}
+      //       loading="lazy"
+      //       decoding="async"
+      //       draggable={false}
+      //       className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center select-none"
+      //     />
+      //
+      //     <div className="relative flex items-center justify-center p-5 sm:p-7">
+      //       <video
+      //         aria-hidden="true"
+      //         className="block h-auto w-full max-w-[560px] rounded-[16px] bg-[#0c0c0e]"
+      //         src={withAssetHash("/assets/trace/update_module.mp4")}
+      //         width={1920}
+      //         height={1080}
+      //         autoPlay
+      //         loop
+      //         muted
+      //         playsInline
+      //         preload="metadata"
+      //       />
+      //     </div>
+      //   </div>
+      // ),
     },
   ],
   cta: {
@@ -192,7 +271,7 @@ export const traceData: CaseStudyData = {
   softwareSchema: {
     name: "Trace",
     description:
-      "Case management, tamper-proof records, and safe updates — all in one local-first CLI tool.",
+      "Case management, device acquisition, and tamper-proof records, all in one local-first CLI tool.",
     applicationCategory: "SecurityApplication",
     operatingSystem: "Windows, macOS, Linux",
     programmingLanguage: "Python / Textual / PostgreSQL",
