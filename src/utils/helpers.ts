@@ -1,9 +1,29 @@
 import type { BreadcrumbItem } from "@/types"
+import assetHashes from "virtual:asset-hashes"
 
 export const THEME_STORAGE_KEY = "theme"
 export const THEME_DARK_CLASS = "dark"
 
 const STATIC_FILE_PATTERN = /\.(pdf|png|jpg|jpeg|svg|webp|xml|txt|json|zip)$/i
+
+/**
+ * Appends the build-time content hash as a query parameter (e.g. ?v=029dbd43)
+ * if the path corresponds to a static asset in public/assets.
+ * This guarantees permanent cache-busting when SVGs or assets change without manual edits.
+ */
+export function withAssetHash(src: string): string {
+  if (!src) return src
+  const [cleanPath, query] = src.split("?")
+  const hash = assetHashes[cleanPath]
+  if (!hash) return src
+  // If an existing custom query exists, append or replace v parameter
+  if (query) {
+    const params = new URLSearchParams(query)
+    params.set("v", hash)
+    return `${cleanPath}?${params.toString()}`
+  }
+  return `${cleanPath}?v=${hash}`
+}
 
 export function isStaticAsset(href: string) {
   return STATIC_FILE_PATTERN.test(href) || href.startsWith("/assets/")

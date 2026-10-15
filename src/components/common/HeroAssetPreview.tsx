@@ -1,4 +1,5 @@
 import type { HeroAsset, InstallCommand } from "@/types"
+import { withAssetHash } from "@/utils/helpers"
 import { InstallSnippet } from "./InstallSnippet"
 
 export interface HeroAssetPreviewProps {
@@ -17,7 +18,7 @@ export function HeroAssetPreview({
       className={`relative w-full ${maxWidth} mx-auto overflow-hidden aspect-[1808/793] aspect-hero-65 min-h-0 animate-device-rise ${className}`.trim()}
     >
       <img
-        src={asset.src}
+        src={withAssetHash(asset.src)}
         alt={asset.alt ?? "Hero visual preview"}
         width={asset.width ?? 904}
         height={asset.height ?? 610}
