@@ -50,7 +50,10 @@ export function CTASection({
   ]
 
   return (
-    <section className={`${bgClass} py-18 sm:py-24 reveal-on-scroll`}>
+    // `pt-17` (68px) matches the padding a preceding mockup section carries, so the
+    // band change between the two lands in the middle of the gap rather than
+    // hugging the mockup. The bottom keeps the roomier CTA rhythm.
+    <section className={`${bgClass} pt-17 pb-18 sm:pb-24 reveal-on-scroll`}>
       <Container className="text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="t-hero text-ink">{headline}</h2>

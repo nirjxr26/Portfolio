@@ -16,6 +16,7 @@ interface CarouselSectionProps {
   media?: ReactNode
   layeredAsset?: LayeredAsset
   bgClass?: string
+  padClass?: string
   headerClassName?: string
   trackWrapperClassName?: string
   trackCentered?: boolean
@@ -34,6 +35,7 @@ export function CarouselSection({
   media,
   layeredAsset,
   bgClass = "bg-canvas",
+  padClass,
   headerClassName,
   trackWrapperClassName = "",
   trackCentered = false,
@@ -45,8 +47,15 @@ export function CarouselSection({
   const headerClass = headerClassName ?? defaultHeaderClass
   const resolvedMedia = media ?? (layeredAsset ? <LayeredPreview {...layeredAsset} /> : null)
 
+  // A mockup already carries its own generous margin, so the section's bottom
+  // padding is on top of that. Stacking the full `py-14 sm:py-18` under a
+  // painting leaves ~144px of dead air before whatever follows it; only the
+  // bottom edge is tightened so the gap *above* the mockup is unchanged.
+  const resolvedPadClass =
+    padClass ?? (resolvedMedia ? "pt-14 sm:pt-18 pb-6 sm:pb-10" : undefined)
+
   return (
-    <Section id={id} bgClass={bgClass}>
+    <Section id={id} bgClass={bgClass} padClass={resolvedPadClass}>
       <SectionHeader
         tag={tag}
         tagClassName={tagClassName}

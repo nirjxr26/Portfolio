@@ -1,8 +1,8 @@
-import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
-import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
-// The recorded module walkthrough is retired in favour of the coded animation
-// above. Both are kept — uncomment this import and the `media` block on the
-// "Update in one command." section to switch back.
+// The update section's content is commented out for now. Its imports are
+// commented with it — an unused import fails `tsc --noEmit`. Uncomment both
+// blocks to bring it back.
+// import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
+// import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
 // import { withAssetHash } from "@/utils/helpers"
 import type { CaseStudyData } from "@/types"
 
@@ -17,7 +17,7 @@ export const traceData: CaseStudyData = {
       </>
     ),
     subhead:
-      "Case management, device acquisition, and tamper-proof records, all in one local-first CLI tool.",
+      "Case management, evidence tracking, and tamper-proof records, all in one local-first forensic CLI.",
     heroAsset: {
       src: "/assets/trace/cli_hero.svg",
       alt: "Trace CLI forensic case management terminal interface",
@@ -34,24 +34,24 @@ export const traceData: CaseStudyData = {
           headline: "Every case, organized from start to close. Easy to find, safe to store.",
         },
         {
-          tag: "Audit trail",
-          headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
+          tag: "Evidence",
+          headline: "Every drive logged, every check kept. Nothing lost between cases.",
         },
         {
-          tag: "Devices",
-          headline: "Every drive listed, every observation kept. Nothing lost between cases.",
-        },
+          tag: "Audit trail",
+          headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
+        }
       ],
     },
     {
       tag: "Beyond Terminal",
       title: (
         <>
-          One console. <br /> Everything in view.
+          One console. <br /> Every case in view.
         </>
       ),
       titleClassName: "t-hero-headline",
-      desc: "Cases, audit trail and updates, now in one dark full-screen console. Built for long sessions. No new syntax, no mouse.",
+      desc: "Browse, search, and open every case in one dark full-screen console. Built for long sessions. No new syntax, no mouse.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
@@ -93,7 +93,7 @@ export const traceData: CaseStudyData = {
         </>
       ),
       titleClassName: "t-hero-headline",
-      desc: "Trace logs every inspection and check as a permanent record, so you can show what you did to each drive and when.",
+      desc: "Every inspection and check becomes a permanent record, so you can show what you did to each drive, and when.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/update_bg.svg",
@@ -145,7 +145,7 @@ export const traceData: CaseStudyData = {
       cards: [
         {
           headline: "Recorded, automatically.",
-          body: "Every case action is logged the instant it happens — no way to skip it.",
+          body: "Every case action is logged the instant it happens. No way to skip it.",
         },
         {
           headline: "Broken chains don't hide.",
@@ -153,7 +153,7 @@ export const traceData: CaseStudyData = {
         },
         {
           headline: "Sealed for transport.",
-          body: "Exports can be encrypted, so evidence stays private once it leaves the system.",
+          body: "Exports can be encrypted, so evidence stays private when it leaves the workstation.",
         },
       ],
     },
@@ -161,7 +161,7 @@ export const traceData: CaseStudyData = {
       tag: "Not just for humans",
       title: "Built for agents too.",
       titleClassName: "t-hero-headline",
-      desc: "Not just for people. Every action returns clean output — so an agent gets the same proof a human would.",
+      desc: "Any agent that can run a command can use Trace, with the same proof a person would leave.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/agents_bg.svg",
@@ -176,39 +176,43 @@ export const traceData: CaseStudyData = {
         maxWidthClass: "max-w-2xl lg:max-w-3xl xl:max-w-[788px]",
       },
     },
-    {
-      tag: "Safe updates",
-      title: "Update in one command.",
-      titleClassName: "t-hero-headline",
-      centeredHeader: true,
-      media: (
-        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
-          <TraceUpdateAnimation />
-
-          <ul className="space-y-8">
-            <li>
-              <CardHeadline className="sm:text-xl">Waits for the right moment.</CardHeadline>
-              <CardBody>
-                If you&apos;re in the middle of something, Trace won&apos;t install anything. It
-                waits until you&apos;re done.
-              </CardBody>
-            </li>
-            <li>
-              <CardHeadline className="sm:text-xl">Checked before it runs.</CardHeadline>
-              <CardBody>
-                Every release is verified as genuine before it&apos;s installed, so you only run
-                what&apos;s really from the source.
-              </CardBody>
-            </li>
-            <li>
-              <CardHeadline className="sm:text-xl">A bad update can&apos;t break you.</CardHeadline>
-              <CardBody>
-                If an update fails, Trace puts everything back exactly as it was.
-              </CardBody>
-            </li>
-          </ul>
-        </div>
-      ),
+    // The "Update in one command." section is retired for now. Every line of
+    // the block is commented, not just the body — `title` is required on a
+    // section, so commenting the heading alone would leave an invalid object.
+    // Uncomment the whole block (and the imports at the top) to bring it back.
+    // {
+    //   tag: "Safe updates",
+    //   title: "Update in one command.",
+    //   titleClassName: "t-hero-headline",
+    //   centeredHeader: true,
+      // media: (
+      //   <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
+      //     <TraceUpdateAnimation />
+      //
+      //     <ul className="space-y-8">
+      //       <li>
+      //         <CardHeadline className="sm:text-xl">Waits for the right moment.</CardHeadline>
+      //         <CardBody>
+      //           If you&apos;re in the middle of something, Trace won&apos;t install anything. It
+      //           waits until you&apos;re done.
+      //         </CardBody>
+      //       </li>
+      //       <li>
+      //         <CardHeadline className="sm:text-xl">Checked before it runs.</CardHeadline>
+      //         <CardBody>
+      //           Every release is verified as genuine before it&apos;s installed, so you only run
+      //           what&apos;s really from the source.
+      //         </CardBody>
+      //       </li>
+      //       <li>
+      //         <CardHeadline className="sm:text-xl">A bad update can&apos;t break you.</CardHeadline>
+      //         <CardBody>
+      //           If an update fails, Trace puts everything back exactly as it was.
+      //         </CardBody>
+      //       </li>
+      //     </ul>
+      //   </div>
+      // ),
       // media: (
       //   <div className="relative mx-auto w-full max-w-[680px] overflow-hidden rounded-[20px] squircle bg-[#0c0c0e]">
       //     <img
@@ -239,7 +243,7 @@ export const traceData: CaseStudyData = {
       //     </div>
       //   </div>
       // ),
-    },
+    // },
   ],
   cta: {
     headline: "Try Trace today.",

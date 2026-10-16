@@ -88,6 +88,15 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
               media={section.media}
               layeredAsset={section.layeredAsset}
               bgClass={sectionBgClass}
+              // The final section is followed by the CTA, which carries its own
+              // padding. Matching it keeps the band change centred in the gap;
+              // every other mockup keeps the tighter default from
+              // CarouselSection so it sits close to the content beneath it.
+              padClass={
+                idx === sections.length - 1 && (section.layeredAsset || section.media)
+                  ? "pt-14 sm:pt-18 pb-17"
+                  : undefined
+              }
               centeredHeader={Boolean(section.centeredHeader)}
             >
               {section.cards?.map((card) => (

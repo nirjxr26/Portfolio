@@ -5,6 +5,13 @@ interface SectionProps {
   id?: string
   bgClass?: string
   className?: string
+  /**
+   * Vertical padding. Passed whole rather than merged with the default so a
+   * caller can tighten one edge without depending on which utility wins the
+   * cascade — `pb-*` and `py-*` are both `padding` utilities and the winner
+   * depends on stylesheet order.
+   */
+  padClass?: string
   children: ReactNode
 }
 
@@ -12,9 +19,18 @@ interface SectionProps {
  * Single section shell — `scroll-mt-12 overflow-hidden py-14 sm:py-18`.
  * Exact classes previously duplicated in CarouselSection + ProjectsRail.
  */
-export function Section({ id, bgClass = "bg-canvas", className = "", children }: Readonly<SectionProps>) {
+export function Section({
+  id,
+  bgClass = "bg-canvas",
+  className = "",
+  padClass = "py-14 sm:py-18",
+  children,
+}: Readonly<SectionProps>) {
   return (
-    <section id={id} className={`scroll-mt-12 overflow-hidden py-14 sm:py-18 ${bgClass} ${className}`.trim()}>
+    <section
+      id={id}
+      className={`scroll-mt-12 overflow-hidden ${padClass} ${bgClass} ${className}`.trim()}
+    >
       {children}
     </section>
   )
