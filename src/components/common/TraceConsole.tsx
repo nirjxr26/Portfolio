@@ -262,7 +262,7 @@ const CHANGES = [
 function CasesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search cases ..." />
@@ -348,7 +348,7 @@ function CasesView() {
 function DevicesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search devices.." />
@@ -432,7 +432,7 @@ function DevicesView() {
 function AuditView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search audits.." />
@@ -532,6 +532,9 @@ const CYCLE_MS = DWELL_MS * VIEWS.length
  * a filled pill. The underline is one element measured against the active
  * label, so a step slides it across instead of blinking it from one tab to the
  * next; `SLIDE` and `TINT` are the same motion the interface switcher uses.
+ *
+ * The row's height is what sets how far the rule and the underline sit below
+ * the labels; the panels row compensates so nothing under the rule moves.
  */
 function TabBar({ active }: Readonly<{ active: number }>) {
   const rowRef = useRef<HTMLDivElement>(null)
@@ -561,7 +564,7 @@ function TabBar({ active }: Readonly<{ active: number }>) {
   return (
     <div
       ref={rowRef}
-      className="relative flex h-[45em] shrink-0 items-start gap-[30em] px-[24em] pt-[20em]"
+      className="relative flex h-[40em] shrink-0 items-start gap-[30em] px-[24em] pt-[20em]"
     >
       <Rule heightClass="h-[2em]" className="bottom-0 left-[24em] right-[24em]" />
       {VIEWS.map((view, index) => (
@@ -576,7 +579,7 @@ function TabBar({ active }: Readonly<{ active: number }>) {
       <span
         aria-hidden="true"
         style={{ transform: `translateX(${underline.left}px)`, width: underline.width }}
-        className={`pointer-events-none absolute left-0 top-[43em] h-[4em] bg-[#f0f6fc] ${SLIDE}`}
+        className={`pointer-events-none absolute left-0 top-[37em] h-[4em] bg-[#f0f6fc] ${SLIDE}`}
       />
     </div>
   )
