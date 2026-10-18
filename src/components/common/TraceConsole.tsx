@@ -225,14 +225,6 @@ const CASES = [
   { id: "2026-CR-0118", status: "OPEN", statusClass: GREEN },
   { id: "2026-CR-0104", status: "OPEN", statusClass: GREEN },
   { id: "2026-CR-0091", status: "ARCHIVED", statusClass: DIM },
-  { id: "2026-CR-0086", status: "CLOSED", statusClass: VIOLET },
-  { id: "2026-CR-0079", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0073", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0068", status: "ARCHIVED", statusClass: DIM },
-  { id: "2026-CR-0061", status: "CLOSED", statusClass: VIOLET },
-  { id: "2026-CR-0055", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0048", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0042", status: "ARCHIVED", statusClass: DIM },
 ]
 
 /** A drive on the bench, and what it holds. */
@@ -243,40 +235,27 @@ const DEVICES = [
   { name: "Kingston IronKey", size: "64 GB" },
   { name: "Seagate BarraCuda", size: "2 TB" },
   { name: "Sabrent Rocket", size: "512 GB" },
-  { name: "Intel 660p", size: "1 TB" },
-  { name: "Corsair MP600", size: "2 TB" },
-  { name: "Toshiba X300", size: "6 TB" },
-  { name: "SanDisk Extreme", size: "1 TB" },
-  { name: "Lexar NM620", size: "512 GB" },
-  { name: "PNY CS900", size: "480 GB" },
-  { name: "ADATA SU800", size: "256 GB" },
-  { name: "Transcend 220S", size: "1 TB" },
 ]
 
 /** A step of the audit trail, newest first. */
 const EVENTS = [
-  { seq: "14", event: "Case Reopened", selected: true },
-  { seq: "13", event: "Case Archived" },
-  { seq: "12", event: "Device Unlinked" },
-  { seq: "11", event: "Evidence Verified" },
-  { seq: "10", event: "Device Registered" },
-  { seq: "9", event: "Case Exported" },
-  { seq: "8", event: "Chain Validated" },
-  { seq: "7", event: "Case Closed" },
-  { seq: "6", event: "Device Linked" },
-  { seq: "5", event: "Evidence Sealed" },
-  { seq: "4", event: "Device Gate Checked" },
-  { seq: "3", event: "Chain Sealed" },
-  { seq: "2", event: "Case Closed" },
+  { seq: "9", event: "Case Edited", selected: true },
+  { seq: "8", event: "Case Purged" },
+  { seq: "7", event: "Device Inspected" },
+  { seq: "6", event: "Gate Checked" },
+  { seq: "5", event: "Device Linked" },
+  { seq: "4", event: "Case Updated" },
+  { seq: "3", event: "Case Closed" },
+  { seq: "2", event: "Case Archived" },
   { seq: "1", event: "Case Created" },
 ]
 
 /** What one audited change altered, and to what. `from` is absent on a creation. */
 const CHANGES = [
-  { field: "status", from: "CLOSED", to: "OPEN" },
+  { field: "title", from: "Staging Host", to: "Staging Server" },
   { field: "priority", from: "Low", to: "High" },
-  { field: "tags", from: "#archive", to: "#archive, #reopened" },
-  { field: "reason", from: "", to: "New evidence submitted" },
+  { field: "tags", from: "#server", to: "#server, #memory" },
+  { field: "reason", from: "", to: "Host role corrected" },
 ]
 
 /** Cases: the case list, and the record of the selected case. */
@@ -292,7 +271,7 @@ function CasesView() {
           <ListHeader className="pt-[20em] pb-[14em]">
             <Text className={WHITE}>Case #</Text>
             <div className="ml-auto flex w-[85em] shrink-0 justify-start">
-              <Text className={WHITE}>Status · 14</Text>
+              <Text className={WHITE}>Status · 6</Text>
             </div>
           </ListHeader>
 
@@ -384,7 +363,7 @@ function DevicesView() {
           </div>
 
           <ListHeader className="pt-[8em] pb-[13em]">
-            <Text className={WHITE}>Device · 14</Text>
+            <Text className={WHITE}>Device · 6</Text>
             <div className="ml-auto flex">
               <Text className={WHITE}>Size</Text>
             </div>
@@ -425,18 +404,11 @@ function DevicesView() {
             <MetaRow label="Observed" value="08-10-2026 11:14:32 AM IST" />
           </Block>
 
-          <Block height="h-[138em]">
+          <Block height="h-[90em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>CASES LINKED</Text>
             </div>
-            {[
-              "2026-CR-0142",
-              "2026-CR-0137",
-              "2026-CR-0118",
-              "2026-CR-0091",
-              "2026-CR-0061",
-              "2026-CR-0042",
-            ].map((id) => (
+            {["2026-CR-0142", "2026-CR-0118", "2026-CR-0091"].map((id) => (
               <div key={id} className="flex h-[16em] items-center pl-[17em]">
                 <Text className={WHITE}>{id}</Text>
               </div>
@@ -472,7 +444,7 @@ function AuditView() {
             <span className="w-[90em] shrink-0">
               <Text className={WHITE}>Seq #</Text>
             </span>
-            <Text className={WHITE}>Events · 14</Text>
+            <Text className={WHITE}>Events · 9</Text>
           </ListHeader>
 
           <div className="shrink-0 px-[24em] pt-[19em]">
@@ -490,8 +462,8 @@ function AuditView() {
         <Panel widthClass="w-[502em]">
           <div className="shrink-0 px-[24em] pt-[24em] pb-[5em]">
             <div className="flex h-[22em] items-center gap-[7em]">
-              <Text className={BLUE}>#14</Text>
-              <Text className={WHITE}>Case Reopened</Text>
+              <Text className={BLUE}>#9</Text>
+              <Text className={WHITE}>Case Edited</Text>
             </div>
           </div>
 
@@ -499,7 +471,7 @@ function AuditView() {
             <MetaRow label="Case" value="2026-CR-0118" />
             <MetaRow label="Actor" value="Nirjar Goswami" />
             <MetaRow label="Timestamp" value="06-10-2026 02:07:44 PM IST" />
-            <MetaRow label="Event" value="CASE_REOPENED" />
+            <MetaRow label="Event" value="CASE_EDITED" />
           </Block>
 
           <Block height="h-[202em]">
