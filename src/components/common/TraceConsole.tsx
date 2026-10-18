@@ -71,7 +71,7 @@ function Panel({
 }: Readonly<{ widthClass: string; className?: string; children: ReactNode }>) {
   return (
     <div
-      className={`flex h-[467em] ${widthClass} shrink-0 flex-col rounded-[8em] border-[1em] ${PANEL_EDGE} ${className}`.trim()}
+      className={`flex h-[472em] ${widthClass} shrink-0 flex-col rounded-[8em] border-[1em] ${PANEL_EDGE} ${className}`.trim()}
     >
       {children}
     </div>
@@ -262,7 +262,7 @@ const CHANGES = [
 function CasesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search cases ..." />
@@ -348,7 +348,7 @@ function CasesView() {
 function DevicesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search devices.." />
@@ -432,7 +432,7 @@ function DevicesView() {
 function AuditView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[29em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search audits.." />
