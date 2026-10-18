@@ -210,10 +210,16 @@ function FooterKey({ keyName, action }: Readonly<{ keyName: string; action: stri
   )
 }
 
-/** The band of key hints every view ends with, which differ per view. */
+/**
+ * The band of key hints every view ends with, which differ per view. The hints
+ * sit centred across the console rather than aligned to the panels' inset, so
+ * the band reads as the console's own status line.
+ */
 function Footer({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="flex h-[46em] shrink-0 items-start gap-[27em] px-[24em] pt-[10em]">{children}</div>
+    <div className="flex h-[46em] shrink-0 items-start justify-center gap-[27em] px-[24em] pt-[10em]">
+      {children}
+    </div>
   )
 }
 
