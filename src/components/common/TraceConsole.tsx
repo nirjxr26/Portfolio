@@ -54,13 +54,12 @@ const DWELL_MS = 4000
  * keeps reading the artwork's numbers.
  */
 function Text({
+  sizeClass = "text-[12.5em]",
   className = "",
   children,
-}: Readonly<{ className?: string; children: ReactNode }>) {
+}: Readonly<{ sizeClass?: string; className?: string; children: ReactNode }>) {
   return (
-    <span className={`text-[12.5em] leading-none whitespace-pre ${className}`.trim()}>
-      {children}
-    </span>
+    <span className={`${sizeClass} leading-none whitespace-pre ${className}`.trim()}>{children}</span>
   )
 }
 
@@ -220,43 +219,43 @@ function Footer({ children }: Readonly<{ children: ReactNode }>) {
 
 /** A case in the list: its number, and where it stands. */
 const CASES = [
-  { id: "2026-CR-0006", status: "OPEN", statusClass: GREEN, selected: true },
-  { id: "2026-CR-0005", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0004", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0003", status: "CLOSED", statusClass: VIOLET },
-  { id: "2026-CR-0002", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0001", status: "ARCHIVED", statusClass: DIM },
+  { id: "2026-CR-0142", status: "OPEN", statusClass: GREEN, selected: true },
+  { id: "2026-CR-0137", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0129", status: "CLOSED", statusClass: VIOLET },
+  { id: "2026-CR-0118", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0104", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0091", status: "ARCHIVED", statusClass: DIM },
 ]
 
 /** A drive on the bench, and what it holds. */
 const DEVICES = [
-  { name: "NVMe Micron", size: "476.9 GB", selected: true },
-  { name: "SATA USB Card", size: "1.8 TB" },
-  { name: "Samsung SSD 870 EVO", size: "931.5 GB" },
-  { name: "Kingston DataTraveler", size: "2 TB" },
-  { name: "Samsung T7 Shield", size: "1.8 TB" },
-  { name: "WD Blue SN570", size: "500 GB" },
+  { name: "Samsung 980 PRO", size: "931.5 GB", selected: true },
+  { name: "Crucial MX500", size: "1 TB" },
+  { name: "WD Elements SE", size: "4 TB" },
+  { name: "Kingston IronKey", size: "64 GB" },
+  { name: "Seagate BarraCuda", size: "2 TB" },
+  { name: "Sabrent Rocket", size: "512 GB" },
 ]
 
 /** A step of the audit trail, newest first. */
 const EVENTS = [
-  { seq: "9", event: "Case Updated", selected: true },
+  { seq: "9", event: "Case Reopened", selected: true },
   { seq: "8", event: "Case Archived" },
-  { seq: "7", event: "Device Inspected" },
-  { seq: "6", event: "Case Purged" },
-  { seq: "5", event: "Device Linked" },
-  { seq: "4", event: "Device Gate Checked" },
-  { seq: "3", event: "Case Closed" },
+  { seq: "7", event: "Device Unlinked" },
+  { seq: "6", event: "Evidence Verified" },
+  { seq: "5", event: "Device Registered" },
+  { seq: "4", event: "Case Exported" },
+  { seq: "3", event: "Chain Validated" },
   { seq: "2", event: "Case Closed" },
   { seq: "1", event: "Case Created" },
 ]
 
 /** What one audited change altered, and to what. `from` is absent on a creation. */
 const CHANGES = [
-  { field: "title", from: "USB Evidence Case", to: "USB Evidence Case 01" },
-  { field: "tags", from: "#USB", to: "#USB, #Evidence01" },
-  { field: "description", from: "USB device investigation", to: "USB acquisition investigation" },
-  { field: "reason", from: "", to: "Evidence acquisition completed" },
+  { field: "status", from: "CLOSED", to: "OPEN" },
+  { field: "priority", from: "Low", to: "High" },
+  { field: "tags", from: "#archive", to: "#archive, #reopened" },
+  { field: "reason", from: "", to: "New evidence submitted" },
 ]
 
 /** Cases: the case list, and the record of the selected case. */
@@ -295,10 +294,10 @@ function CasesView() {
         <Panel widthClass="w-[502em]">
           <div className="h-[94.5em] shrink-0 px-[24em] pt-[24em]">
             <div className="flex h-[22em] items-center">
-              <Text className={BLUE}>2026-CR-0024</Text>
+              <Text className={BLUE}>2026-CR-0142</Text>
             </div>
             <div className="flex h-[22em] items-center">
-              <Text className={WHITE}>Compromised Workstation</Text>
+              <Text className={WHITE}>Exfiltration Staging Host</Text>
             </div>
             <div className="flex h-[22em] items-center">
               <Text className={GREEN}>● OPEN</Text>
@@ -308,21 +307,21 @@ function CasesView() {
           <Block height="h-[51em]">
             <MetaRow label="Lead Examiner" value="Nirjar Goswami" />
             <div className="flex h-[16em] items-center">
-              <Text className={MUTED}>#disk-image #workstation #malware</Text>
+              <Text className={MUTED}>#memory-dump #server #ransomware</Text>
             </div>
           </Block>
 
           <Block height="h-[51em]">
-            <MetaRow label="Opened" value="25-09-2026 07:03:27 PM IST" />
-            <MetaRow label="Updated" value="25-09-2026 07:03:27 PM IST" />
+            <MetaRow label="Opened" value="02-10-2026 09:41:12 AM IST" />
+            <MetaRow label="Updated" value="05-10-2026 04:18:55 PM IST" />
           </Block>
 
           <Field label="DESCRIPTION" height="h-[62em]">
-            <Text className={WHITE}>Forensic examination of a workstation image collected.</Text>
+            <Text className={WHITE}>Memory capture of the staging host before shutdown.</Text>
           </Field>
 
           <Field label="LINKED DEVICE" height="h-[62em]">
-            <Text className={WHITE}>Micron_2400_MTFDKBA512QFM · 476.9 GB</Text>
+            <Text className={WHITE}>Samsung_980_PRO_1TB · 931.5 GB</Text>
           </Field>
 
           <Field label="INTEGRITY" height="h-[64em]" indent={false}>
@@ -334,8 +333,8 @@ function CasesView() {
               <Text className={BLUE}>HISTORY · 2 events</Text>
             </div>
             <div className="mt-[7em] pl-[17em]">
-              <HistoryRow at="27-09 12:03 PM" event="Device Linked" />
-              <HistoryRow at="25-09 07:03 PM" event="Created" />
+              <HistoryRow at="05-10 04:18 PM" event="Device Linked" />
+              <HistoryRow at="02-10 09:41 AM" event="Created" />
             </div>
           </Block>
         </Panel>
@@ -387,32 +386,32 @@ function DevicesView() {
         <Panel widthClass="w-[502em]">
           <div className="shrink-0 px-[24em] pt-[24em] pb-[5em]">
             <div className="flex h-[22em] items-center">
-              <Text className={BLUE}>NVMe Micron</Text>
+              <Text className={BLUE}>Samsung 980 PRO</Text>
             </div>
           </div>
 
           <Block height="h-[84em]">
-            <MetaRow label="Node" value="Drive01" />
-            <MetaRow label="Kind" value="OS" />
-            <MetaRow label="Size" value="476.9 GB" />
-            <MetaRow label="Model" value="NVMe Micron_2400_MTFDKBA512QFM" />
+            <MetaRow label="Node" value="Drive04" />
+            <MetaRow label="Kind" value="Data" />
+            <MetaRow label="Size" value="931.5 GB" />
+            <MetaRow label="Model" value="Samsung SSD 980 PRO 1TB" />
           </Block>
 
           <Block height="h-[106em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>FINGERPRINT</Text>
             </div>
-            <MetaRow label="Serial" value="0000_0000_0000_0001_00A0_7523_411D_5C04" />
+            <MetaRow label="Serial" value="5F0A_11C4_8E70_0000_009B_2D6F_1A83_4C77" />
             <MetaRow label="Interface" value="NVMe" />
-            <MetaRow label="Firmware" value="V2MB006" />
-            <MetaRow label="Observed" value="13-10-2026 10:28:10 AM IST" />
+            <MetaRow label="Firmware" value="2B4QFXO7" />
+            <MetaRow label="Observed" value="08-10-2026 11:14:32 AM IST" />
           </Block>
 
           <Block height="h-[90em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>CASES LINKED</Text>
             </div>
-            {["2026-CR-0005", "2026-CR-0012", "2026-CR-0052"].map((id) => (
+            {["2026-CR-0142", "2026-CR-0118", "2026-CR-0091"].map((id) => (
               <div key={id} className="flex h-[16em] items-center pl-[17em]">
                 <Text className={WHITE}>{id}</Text>
               </div>
@@ -448,7 +447,7 @@ function AuditView() {
             <span className="w-[90em] shrink-0">
               <Text className={WHITE}>Seq #</Text>
             </span>
-            <Text className={WHITE}>Events · 4</Text>
+            <Text className={WHITE}>Events · 9</Text>
           </ListHeader>
 
           <div className="shrink-0 px-[24em] pt-[19em]">
@@ -467,15 +466,15 @@ function AuditView() {
           <div className="shrink-0 px-[24em] pt-[24em] pb-[5em]">
             <div className="flex h-[22em] items-center gap-[7em]">
               <Text className={BLUE}>#9</Text>
-              <Text className={WHITE}>Case Update</Text>
+              <Text className={WHITE}>Case Reopened</Text>
             </div>
           </div>
 
           <Block height="h-[84em]">
-            <MetaRow label="Case" value="2026-CR-004" />
+            <MetaRow label="Case" value="2026-CR-0118" />
             <MetaRow label="Actor" value="Nirjar Goswami" />
-            <MetaRow label="Timestamp" value="20-09-2026 06:56:38 PM IST" />
-            <MetaRow label="Event" value="CASE_UPDATED" />
+            <MetaRow label="Timestamp" value="06-10-2026 02:07:44 PM IST" />
+            <MetaRow label="Event" value="CASE_REOPENED" />
           </Block>
 
           <Block height="h-[202em]">
@@ -576,7 +575,7 @@ function TabBar({ active }: Readonly<{ active: number }>) {
           data-tab
           className={`${index === active ? WHITE : MUTED} ${TINT}`}
         >
-          <Text>{view.label}</Text>
+          <Text sizeClass="text-[15em]">{view.label}</Text>
         </span>
       ))}
       <span
