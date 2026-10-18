@@ -534,7 +534,9 @@ const CYCLE_MS = DWELL_MS * VIEWS.length
  * next; `SLIDE` and `TINT` are the same motion the interface switcher uses.
  *
  * The row's height is what sets how far the rule and the underline sit below
- * the labels; the panels row compensates so nothing under the rule moves.
+ * the labels; the panels row compensates so nothing under the rule moves. The
+ * gap between the labels is the same 24 units the row is inset by, so the tabs
+ * read as one evenly spaced row rather than a run of words.
  */
 function TabBar({ active }: Readonly<{ active: number }>) {
   const rowRef = useRef<HTMLDivElement>(null)
@@ -564,7 +566,7 @@ function TabBar({ active }: Readonly<{ active: number }>) {
   return (
     <div
       ref={rowRef}
-      className="relative flex h-[40em] shrink-0 items-start gap-[30em] px-[24em] pt-[20em]"
+      className="relative flex h-[40em] shrink-0 items-start gap-[24em] px-[24em] pt-[20em]"
     >
       <Rule heightClass="h-[2em]" className="bottom-0 left-[24em] right-[24em]" />
       {VIEWS.map((view, index) => (
