@@ -87,7 +87,17 @@ function Rule({
   return <span aria-hidden="true" className={`absolute ${heightClass} ${HAIRLINE} ${className}`.trim()} />
 }
 
-/** A block of a record, ruled off from the block above it. */
+/**
+ * A block of a record, ruled off from the block above it.
+ *
+ * Each block draws its own rule, inset to the content, so no rule is shared
+ * with a neighbour or runs into the panel's edge.
+ *
+ * A block's height also leaves about ten units past its last row, the same
+ * slack the record's blocks carry. Without it the next block's rule lands on
+ * top of the text above and reads as an underline on that row rather than as a
+ * divider between two blocks.
+ */
 function Block({
   height,
   className = "",
@@ -375,20 +385,20 @@ function DevicesView() {
         </Panel>
 
         <Panel widthClass="w-[502em]">
-          <div className="h-[46em] shrink-0 px-[24em] pt-[24em]">
+          <div className="shrink-0 px-[24em] pt-[24em] pb-[5em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>NVMe Micron</Text>
             </div>
           </div>
 
-          <Block height="h-[75em]">
+          <Block height="h-[84em]">
             <MetaRow label="Node" value="Drive01" />
             <MetaRow label="Kind" value="OS" />
             <MetaRow label="Size" value="476.9 GB" />
             <MetaRow label="Model" value="NVMe Micron_2400_MTFDKBA512QFM" />
           </Block>
 
-          <Block height="h-[97em]">
+          <Block height="h-[106em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>FINGERPRINT</Text>
             </div>
@@ -398,7 +408,7 @@ function DevicesView() {
             <MetaRow label="Observed" value="13-10-2026 10:28:10 AM IST" />
           </Block>
 
-          <Block height="h-[81em]">
+          <Block height="h-[90em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>CASES LINKED</Text>
             </div>
@@ -454,21 +464,21 @@ function AuditView() {
         </Panel>
 
         <Panel widthClass="w-[502em]">
-          <div className="h-[46em] shrink-0 px-[24em] pt-[24em]">
+          <div className="shrink-0 px-[24em] pt-[24em] pb-[5em]">
             <div className="flex h-[22em] items-center gap-[7em]">
               <Text className={BLUE}>#9</Text>
               <Text className={WHITE}>Case Update</Text>
             </div>
           </div>
 
-          <Block height="h-[75em]">
+          <Block height="h-[84em]">
             <MetaRow label="Case" value="2026-CR-004" />
             <MetaRow label="Actor" value="Nirjar Goswami" />
             <MetaRow label="Timestamp" value="20-09-2026 06:56:38 PM IST" />
             <MetaRow label="Event" value="CASE_UPDATED" />
           </Block>
 
-          <Block height="h-[241em]">
+          <Block height="h-[250em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>CHANGES · 4</Text>
             </div>
@@ -490,7 +500,7 @@ function AuditView() {
             ))}
           </Block>
 
-          <Field label="INTEGRITY" height="h-[55em]">
+          <Field label="INTEGRITY" height="h-[64em]">
             <Text className={GREEN}>● Verified</Text>
           </Field>
 
