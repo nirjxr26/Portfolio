@@ -478,16 +478,16 @@ function AuditView() {
             <MetaRow label="Event" value="CASE_UPDATED" />
           </Block>
 
-          <Block height="h-[250em]">
+          <Block height="h-[202em]">
             <div className="flex h-[22em] items-center">
               <Text className={BLUE}>CHANGES · 4</Text>
             </div>
             {CHANGES.map((change) => (
               <div key={change.field}>
-                <div className="flex h-[26em] items-center">
+                <div className="flex h-[18em] items-center">
                   <Text className={MUTED}>{change.field}</Text>
                 </div>
-                <div className="flex h-[26em] items-center gap-[10em] pl-[17em]">
+                <div className="flex h-[22em] items-center gap-[10em] pl-[17em]">
                   {change.from ? (
                     <>
                       <Text className={RED}>{change.from}</Text>
