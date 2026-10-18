@@ -4,6 +4,10 @@
 // import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
 // import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
 // import { withAssetHash } from "@/utils/helpers"
+import { SegmentedTabs } from "@/components/common/SegmentedTabs"
+import { TraceConsole } from "@/components/common/TraceConsole"
+import { Container } from "@/components/layout/Container"
+import { SectionHeader } from "@/components/layout/Section"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
@@ -42,16 +46,43 @@ export const traceData: CaseStudyData = {
           headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
         }
       ],
+      afterCards: (
+        <div className="pt-24 sm:pt-32">
+          <SectionHeader
+            tag="Two ways in"
+            title="Pick your view."
+            titleClassName="t-hero-headline"
+            desc="Use the full-screen console or the command line. Both read and write the same cases, audit trail, and records."
+            centered
+          />
+          <Container className="reveal-on-scroll">
+            <SegmentedTabs
+              label="Trace interface"
+              tabs={[
+              {
+                label: "Console",
+                desc: "Everything in view. Switch between Cases, Devices, and Audit, with the list on the left and the full record beside it. Use the arrow keys, press / to search. No mouse needed.",
+                preview: <TraceConsole />,
+              },
+              {
+                label: "Command line",
+                desc: "Fast and scriptable. Commands autocomplete as you type, and any case can be output as JSON. Run it by hand, in a script, or through an agent. Every action is recorded.",
+              },
+              ]}
+            />
+          </Container>
+        </div>
+      ),
     },
     {
-      tag: "Beyond Terminal",
+      tag: "Case files, organized",
       title: (
         <>
-          One console. <br /> Every case in view.
+          Every case in view.
         </>
       ),
       titleClassName: "t-hero-headline",
-      desc: "Browse, search, and open every case in one dark full-screen console. Built for long sessions. No new syntax, no mouse.",
+      desc: "From intake to sealed, every case keeps its examiner, linked device, evidence, and history.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
@@ -172,7 +203,6 @@ export const traceData: CaseStudyData = {
         bgHeight: 694,
         fgWidth: 667,
         fgHeight: 553,
-        fgWidthClass: "w-[88%]",
         maxWidthClass: "max-w-2xl lg:max-w-3xl xl:max-w-[788px]",
       },
     },

@@ -21,6 +21,7 @@ interface CarouselSectionProps {
   trackWrapperClassName?: string
   trackCentered?: boolean
   centeredHeader?: boolean
+  afterCards?: ReactNode
   children?: ReactNode
 }
 
@@ -40,6 +41,7 @@ export function CarouselSection({
   trackWrapperClassName = "",
   trackCentered = false,
   centeredHeader = false,
+  afterCards,
   children,
 }: Readonly<CarouselSectionProps>) {
   const hasChildren = Boolean(children && (!Array.isArray(children) || children.length > 0))
@@ -80,6 +82,8 @@ export function CarouselSection({
           <CarouselTrack centered={trackCentered}>{children}</CarouselTrack>
         </div>
       ) : null}
+
+      {afterCards}
     </Section>
   )
 }

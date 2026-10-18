@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { BODY_MUTED_CLASS } from "../common/textStyles"
 import { Container } from "./Container"
 
 interface SectionProps {
@@ -62,8 +63,7 @@ export function SectionHeader({
 }: Readonly<SectionHeaderProps>) {
   const defaultTagClass = "text-accent text-sm sm:text-base font-semibold tracking-wide mb-2 sm:mb-3"
   const defaultTitleClass = "t-display text-ink"
-  const defaultDescClass =
-    "t-body text-muted text-sm sm:text-base font-normal leading-relaxed mt-3 sm:mt-4 max-w-lg text-pretty"
+  const defaultDescClass = `${BODY_MUTED_CLASS} mt-3 sm:mt-4 max-w-lg text-pretty`
   const titleClass = titleClassName
     ? `font-display font-semibold text-ink ${titleClassName}`
     : defaultTitleClass

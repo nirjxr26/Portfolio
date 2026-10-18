@@ -50,3 +50,27 @@ export function alternateSurfaces(index: number) {
 export function createBreadcrumbs(items: { name: string; url: string }[]): BreadcrumbItem[] {
   return [{ name: "Home", url: "/" }, ...items]
 }
+
+/**
+ * Where a key press lands inside a tablist, or null when the key does not move
+ * the selection. Movement wraps and Home / End jump to the ends, which is what
+ * the WAI-ARIA tabs pattern expects of any tablist.
+ */
+export function nextTabIndex(key: string, index: number, count: number): number | null {
+  if (count <= 0) return null
+
+  switch (key) {
+    case "ArrowRight":
+    case "ArrowDown":
+      return (index + 1) % count
+    case "ArrowLeft":
+    case "ArrowUp":
+      return (index - 1 + count) % count
+    case "Home":
+      return 0
+    case "End":
+      return count - 1
+    default:
+      return null
+  }
+}

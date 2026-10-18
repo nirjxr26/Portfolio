@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { ArticleMoreCard, ShareButton, Seo } from "../common"
+import { ArticleMoreCard, ArticleToc, ShareButton, Seo } from "../common"
 import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
@@ -165,20 +165,12 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
             </div>
           </div>
 
-          <aside className="hidden xl:block absolute top-24 bottom-8 sm:bottom-12 w-52 left-[max(1rem,calc(25%-294px))]" aria-label="On this page">
+          <aside
+            className="hidden xl:block absolute top-24 bottom-8 sm:bottom-12 w-52 left-[max(1rem,calc(25%-294px))]"
+            aria-label="On this page"
+          >
             <div className="sticky top-28">
-              <ul className="space-y-4">
-                {toc.map((entry) => (
-                  <li key={entry.id}>
-                    <a
-                      href={`#${entry.id}`}
-                      className="block text-sm text-muted hover:text-accent transition-colors leading-snug"
-                    >
-                      {entry.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <ArticleToc entries={toc} />
             </div>
           </aside>
         </article>

@@ -44,6 +44,46 @@
     }
   }
 
+  /* Directional ticks for the article "On this page" rail. Both keyframes wipe
+     in from scaleX(0); which end they grow from is set per-tick via
+     transform-origin, so the marker reads as travelling the way the reader is. */
+  @keyframes tocTickForward {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @keyframes tocTickBack {
+    from {
+      transform: scaleX(0);
+    }
+
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .toc-tick-forward {
+    animation: tocTickForward 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .toc-tick-back {
+    animation: tocTickBack 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .toc-tick-forward,
+    .toc-tick-back {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
   body,
   header,
   article,

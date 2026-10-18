@@ -98,6 +98,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
                   : undefined
               }
               centeredHeader={Boolean(section.centeredHeader)}
+              afterCards={section.afterCards}
             >
               {section.cards?.map((card) => (
                 <FeatureCard

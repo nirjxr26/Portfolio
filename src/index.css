@@ -70,6 +70,21 @@
   .aspect-hero-65 {
     aspect-ratio: 1808 / 793;
   }
+
+  /*
+   * A mockup drawn at one fixed size and scaled by its own width. The frame is
+   * the container; the screen inside it turns `1em` into one design unit of the
+   * 851 units the console is drawn in, so a box, a hairline and a row can each
+   * be written with the number the artwork gives it and the whole interface
+   * scales as one piece inside whatever frame it lands in.
+   */
+  .console-frame {
+    container-type: inline-size;
+  }
+
+  .console-screen {
+    font-size: calc(100cqw / 851);
+  }
 }
 @layer components {
 

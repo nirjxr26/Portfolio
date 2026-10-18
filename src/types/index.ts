@@ -23,6 +23,11 @@ export interface SectionItem {
   wideCards?: boolean
   centeredHeader?: boolean
   centeredCards?: boolean
+  /**
+   * Rendered past the card rail, still inside the section — for content that
+   * belongs to the same section without being a card.
+   */
+  afterCards?: ReactNode
 }
 
 export interface InstallCommand {
@@ -47,7 +52,6 @@ export interface LayeredAsset {
   bgHeight?: number
   fgWidth?: number
   fgHeight?: number
-  fgWidthClass?: string
   maxWidthClass?: string
   mobileHeightClass?: string
   mobilePaddingClass?: string
