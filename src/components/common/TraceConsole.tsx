@@ -38,8 +38,12 @@ const BLUE = "text-[#4bb3fd]"
 const VIOLET = "text-[#b388ff]"
 const RED = "text-[#ff7b72]"
 
-/** Hairlines inside a panel and between blocks, and the panel's own edge. */
-const RULE = "border-[#21262d]"
+/**
+ * Hairlines and panel edges. A rule is drawn as its own element rather than as
+ * a border, because a border spans the whole box: the artwork insets every rule
+ * to the content, so it stops short of the panel's edges on both sides.
+ */
+const HAIRLINE = "bg-[#21262d]"
 const PANEL_EDGE = "border-[#1e2a3a]/70"
 
 /** How long each view holds before the console steps to the next one. */
@@ -75,6 +79,14 @@ function Panel({
   )
 }
 
+/** A rule, inset to the content so it stops at the padding rather than the edge. */
+function Rule({
+  heightClass = "h-[1em]",
+  className = "",
+}: Readonly<{ heightClass?: string; className?: string }>) {
+  return <span aria-hidden="true" className={`absolute ${heightClass} ${HAIRLINE} ${className}`.trim()} />
+}
+
 /** A block of a record, ruled off from the block above it. */
 function Block({
   height,
@@ -83,8 +95,9 @@ function Block({
 }: Readonly<{ height?: string; className?: string; children: ReactNode }>) {
   return (
     <div
-      className={`${height ? `${height} shrink-0` : "flex-1"} border-t-[1em] ${RULE} px-[24em] pt-[10em] ${className}`.trim()}
+      className={`relative ${height ? `${height} shrink-0` : "flex-1"} px-[24em] pt-[10em] ${className}`.trim()}
     >
+      <Rule className="left-[24em] right-[24em] top-0" />
       {children}
     </div>
   )
@@ -164,6 +177,20 @@ function ListRow({
   )
 }
 
+/** A list's column header: the same gutter the rows beneath it use. */
+function ListHeader({
+  className = "",
+  children,
+}: Readonly<{ className?: string; children: ReactNode }>) {
+  return (
+    <div className={`relative flex shrink-0 items-center px-[24em] ${className}`.trim()}>
+      <Rule className="bottom-0 left-[24em] right-[24em]" />
+      <span className="w-[12em] shrink-0" />
+      {children}
+    </div>
+  )
+}
+
 /** One key hint in the footer: the key, then what it does. */
 function FooterKey({ keyName, action }: Readonly<{ keyName: string; action: string }>) {
   return (
@@ -232,15 +259,12 @@ function CasesView() {
             <SearchField value="Search cases ..." />
           </div>
 
-          <div
-            className={`flex shrink-0 items-center border-b-[1em] ${RULE} px-[24em] pt-[20em] pb-[13em]`}
-          >
-            <span className="w-[12em] shrink-0" />
+          <ListHeader className="pt-[20em] pb-[14em]">
             <Text className={WHITE}>Case #</Text>
             <div className="ml-auto flex w-[85em] shrink-0 justify-start">
               <Text className={WHITE}>Status · 6</Text>
             </div>
-          </div>
+          </ListHeader>
 
           <div className="shrink-0 px-[24em] pt-[19em]">
             {CASES.map((row) => (
@@ -332,15 +356,12 @@ function DevicesView() {
             </div>
           </div>
 
-          <div
-            className={`flex shrink-0 items-center border-b-[1em] ${RULE} px-[24em] pt-[8em] pb-[12em]`}
-          >
-            <span className="w-[12em] shrink-0" />
+          <ListHeader className="pt-[8em] pb-[13em]">
             <Text className={WHITE}>Device · 6</Text>
             <div className="ml-auto flex">
               <Text className={WHITE}>Size</Text>
             </div>
-          </div>
+          </ListHeader>
 
           <div className="shrink-0 px-[24em] pt-[19em]">
             {DEVICES.map((row) => (
@@ -413,15 +434,12 @@ function AuditView() {
             <SearchField value="Search audits.." />
           </div>
 
-          <div
-            className={`flex shrink-0 items-center border-b-[1em] ${RULE} px-[24em] pt-[20em] pb-[13em]`}
-          >
-            <span className="w-[12em] shrink-0" />
+          <ListHeader className="pt-[20em] pb-[14em]">
             <span className="w-[90em] shrink-0">
               <Text className={WHITE}>Seq #</Text>
             </span>
             <Text className={WHITE}>Events · 4</Text>
-          </div>
+          </ListHeader>
 
           <div className="shrink-0 px-[24em] pt-[19em]">
             {EVENTS.map((row) => (
@@ -539,8 +557,9 @@ function TabBar({ active }: Readonly<{ active: number }>) {
   return (
     <div
       ref={rowRef}
-      className={`relative flex h-[45em] shrink-0 items-start gap-[30em] border-b-[2em] ${RULE} px-[24em] pt-[20em]`}
+      className="relative flex h-[45em] shrink-0 items-start gap-[30em] px-[24em] pt-[20em]"
     >
+      <Rule heightClass="h-[2em]" className="bottom-0 left-[24em] right-[24em]" />
       {VIEWS.map((view, index) => (
         <span
           key={view.label}
