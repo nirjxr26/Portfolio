@@ -303,9 +303,7 @@ function CasesView() {
 
           <Block height="h-[51em]">
             <MetaRow label="Lead Examiner" value="Nirjar Goswami" />
-            <div className="flex h-[16em] items-center">
-              <Text className={MUTED}>#memory-dump #server #ransomware</Text>
-            </div>
+            <MetaRow label="Tags" value="#memory-dump #server #ransomware" />
           </Block>
 
           <Block height="h-[51em]">
