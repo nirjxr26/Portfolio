@@ -2,6 +2,7 @@ import { useId, useLayoutEffect, useRef, useState } from "react"
 import type { KeyboardEvent, ReactNode } from "react"
 import { nextTabIndex } from "@/utils/helpers"
 import { PREVIEW_FRAME_CLASS, PREVIEW_MAX_WIDTH, PREVIEW_MOBILE_HEIGHT } from "./LayeredPreview"
+import { fadeLayerClass, SLIDE, SLIDE_COUNTER } from "./motionStyles"
 import { BODY_MUTED_CLASS } from "./textStyles"
 
 export interface SegmentedTab {
@@ -28,27 +29,8 @@ export interface SegmentedTab {
  */
 const PLACEHOLDER_CLASS = `w-full ${PREVIEW_MAX_WIDTH} mx-auto rounded-[20px] squircle bg-ink/10 ${PREVIEW_MOBILE_HEIGHT} ${PREVIEW_FRAME_CLASS}`
 
-/**
- * The pill and the counter-shifted label row inside it must animate on the
- * exact same curve, or the inverted labels drift away from the labels
- * underneath them for the length of the slide.
- */
-const SLIDE = "transition-[transform,width] duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-const SLIDE_COUNTER = "transition-transform duration-[500ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-
 /** Shape shared by a real button and its inverted twin, so they measure the same. */
 const LABEL = "px-4 py-2 text-sm font-medium whitespace-nowrap sm:px-5 sm:text-base"
-
-/**
- * Sequential fade for one layer of a stack — the outgoing layer clears before
- * the incoming one lands, so two descriptions never ghost over each other.
- */
-const fadeClass = (isActive: boolean) =>
-  `col-start-1 row-start-1 w-full transition-opacity ease-[cubic-bezier(0.16,1,0.3,1)] ${
-    isActive
-      ? "duration-[350ms] delay-150 opacity-100"
-      : "pointer-events-none opacity-0 duration-150"
-  }`
 
 /**
  * Opens a description with its first sentence carrying the emphasis. Done here
@@ -140,7 +122,7 @@ export function SegmentedTabs({
           <div
             key={tab.label}
             aria-hidden={index !== active}
-            className={fadeClass(index === active)}
+            className={fadeLayerClass(index === active)}
           >
             {tab.preview ?? (
               <div className={PLACEHOLDER_CLASS}>
@@ -207,7 +189,7 @@ export function SegmentedTabs({
               role="tabpanel"
               aria-labelledby={`${baseId}-tab-${index}`}
               aria-hidden={!isActive}
-              className={fadeClass(isActive)}
+              className={fadeLayerClass(isActive)}
             >
               <p className={`${BODY_MUTED_CLASS} mx-auto max-w-2xl text-center text-pretty`}>
                 <LeadSentence desc={tab.desc} />
