@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, useState } from "react"
-import type { ReactNode } from "react"
+import type { ReactNode, Ref } from "react"
 import { useLoopingTimeline } from "@/utils/useLoopingTimeline"
+import { withAssetHash } from "@/utils/helpers"
 import {
   PREVIEW_FRAME_CLASS,
-  PREVIEW_MAX_WIDTH,
   PREVIEW_MOBILE_HEIGHT,
   PREVIEW_MOBILE_PADDING,
 } from "./LayeredPreview"
@@ -46,14 +46,38 @@ const RED = "text-[#ff7b72]"
 const HAIRLINE = "bg-[#21262d]"
 const PANEL_EDGE = "border-[#1e2a3a]/70"
 
+/**
+ * The sequence column in the audit list: the header's own label — `Seq #`, five
+ * monospaced characters — plus the gap that separates the two columns.
+ *
+ * Sized to the label rather than to the digits, because a column has to fit its
+ * widest cell: the digits only ever fill a sixth of it, and the empty rest is
+ * what the eye reads as the column's gap. The header and the rows share it, so
+ * the events line up under the events.
+ */
+const COL_SEQ = "w-[64em] shrink-0"
+
+/**
+ * How wide the console's panel is allowed to get.
+ *
+ * Wider than the artwork previews elsewhere on the site: a console is a working
+ * interface with four columns of real content, and at the narrower preview width
+ * it is cropping the case record's own text. `LayeredPreview`'s width is left
+ * alone — those previews are pictures, and this is not.
+ */
+const CONSOLE_MAX_WIDTH = "max-w-5xl lg:max-w-6xl"
+
 /** How long each view holds before the console steps to the next one. */
 const DWELL_MS = 4000
+
+/** The painting the preview sits on, behind the console in both of its tabs. */
+const OVERVIEW_BACKDROP = "/assets/trace/overview_bg.svg"
 
 /**
  * One run of console type. Floors at one design unit, so the geometry above it
  * keeps reading the artwork's numbers.
  */
-function Text({
+export function Text({
   sizeClass = "text-[12.5em]",
   className = "",
   children,
@@ -63,7 +87,13 @@ function Text({
   )
 }
 
-/** Both case panels: one height, one radius, one border. */
+/**
+ * Both case panels: one height, one radius, one border.
+ *
+ * The height is the console's fixed vertical budget — the views above and below
+ * them take what is left — so every panel is the same height whatever it holds,
+ * and the views whose content nearly fills it are the ones that set the number.
+ */
 function Panel({
   widthClass,
   className = "",
@@ -71,19 +101,26 @@ function Panel({
 }: Readonly<{ widthClass: string; className?: string; children: ReactNode }>) {
   return (
     <div
-      className={`flex h-[472em] ${widthClass} shrink-0 flex-col rounded-[8em] border-[1em] ${PANEL_EDGE} ${className}`.trim()}
+      className={`flex h-[434em] ${widthClass} shrink-0 flex-col rounded-[8em] border-[1em] ${PANEL_EDGE} ${className}`.trim()}
     >
       {children}
     </div>
   )
 }
 
-/** A rule, inset to the content so it stops at the padding rather than the edge. */
-function Rule({
-  heightClass = "h-[1em]",
-  className = "",
-}: Readonly<{ heightClass?: string; className?: string }>) {
-  return <span aria-hidden="true" className={`absolute ${heightClass} ${HAIRLINE} ${className}`.trim()} />
+/**
+ * A rule, inset to the content so it stops at the padding rather than the edge.
+ *
+ * One CSS pixel, not one design unit. In units the line lands at whatever
+ * `851` units divide into — 1.35px at a 1152px panel, 0.41px on a phone — and
+ * the browser then spreads that over however many device pixels it lands on:
+ * two rules at the same nominal height come out visibly different weights, one
+ * sharper and darker, the next softer and lighter, because one fell on a pixel
+ * boundary and the other did not. A CSS pixel is the same line every time, and
+ * it is what borders everywhere else on the page already are.
+ */
+function Rule({ className = "" }: Readonly<{ className?: string }>) {
+  return <span aria-hidden="true" className={`absolute h-px ${HAIRLINE} ${className}`.trim()} />
 }
 
 /**
@@ -112,6 +149,19 @@ function Block({
   )
 }
 
+/**
+ * A block's heading, on the same row height as the label/value rows beneath it.
+ *
+ * It is shorter than a row of content on purpose. A heading names what follows
+ * it, so the space that matters is the one above it — where the block's rule
+ * separates it from the block before — and the one below should be the tightest
+ * gap in the block. At a content row's height the heading floated halfway
+ * between its own rule and its own value, reading as neither's.
+ */
+function BlockTitle({ children }: Readonly<{ children: ReactNode }>) {
+  return <div className="flex h-[16em] items-center">{children}</div>
+}
+
 /** A ruled block that opens with a label and then prints one value row. */
 function Field({
   label,
@@ -121,9 +171,9 @@ function Field({
 }: Readonly<{ label: string; height: string; indent?: boolean; children: ReactNode }>) {
   return (
     <Block height={height}>
-      <div className="flex h-[22em] items-center">
+      <BlockTitle>
         <Text className={BLUE}>{label}</Text>
-      </div>
+      </BlockTitle>
       <div className={`flex h-[22em] items-center ${indent ? "pl-[17em]" : ""}`.trim()}>
         {children}
       </div>
@@ -217,18 +267,24 @@ function FooterKey({ keyName, action }: Readonly<{ keyName: string; action: stri
  */
 function Footer({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="flex h-[46em] shrink-0 items-center gap-[27em] px-[24em]">{children}</div>
+    <div className="flex h-[40em] shrink-0 items-center gap-[27em] px-[24em]">{children}</div>
   )
 }
 
 /** A case in the list: its number, and where it stands. */
-const CASES = [
-  { id: "2026-CR-0142", status: "OPEN", statusClass: GREEN, selected: true },
-  { id: "2026-CR-0137", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0129", status: "CLOSED", statusClass: VIOLET },
-  { id: "2026-CR-0118", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0104", status: "OPEN", statusClass: GREEN },
-  { id: "2026-CR-0091", status: "ARCHIVED", statusClass: DIM },
+/**
+ * The case list, in the order the console shows it. Exported because the CLI
+ * preview prints the same cases as a table: one list, so the two mockups can
+ * never disagree about what a case is called or what state it is in. `title`
+ * and `examiner` are the columns the console's own narrow list has no room for.
+ */
+export const CASES = [
+  { id: "2026-CR-0142", title: "Exfiltration Host", examiner: "Nirjar Goswami", status: "OPEN", statusClass: GREEN, selected: true },
+  { id: "2026-CR-0137", title: "Ransom Note Found", examiner: "Priya Sharma", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0129", title: "Workstation Imaging", examiner: "Aditya Verma", status: "CLOSED", statusClass: VIOLET },
+  { id: "2026-CR-0118", title: "Staging Server Sweep", examiner: "Meera Krishnan", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0104", title: "Memory Dump Triage", examiner: "Ravi Menon", status: "OPEN", statusClass: GREEN },
+  { id: "2026-CR-0091", title: "Archive Verification", examiner: "Kavya Iyer", status: "ARCHIVED", statusClass: DIM },
 ]
 
 /** A drive on the bench, and what it holds. */
@@ -254,19 +310,25 @@ const EVENTS = [
   { seq: "1", event: "Case Created" },
 ]
 
-/** What one audited change altered, and to what. `from` is absent on a creation. */
+/**
+ * What one audited change altered, and to what. `from` is absent on a creation.
+ *
+ * The values are the case's own: the title it now carries in the list beside,
+ * the tags its record prints, and a description of what was actually imaged.
+ * An audit that renames a case to something the list has never shown is an
+ * audit of nothing.
+ */
 const CHANGES = [
-  { field: "title", from: "Staging Host", to: "Staging Server" },
-  { field: "priority", from: "Low", to: "High" },
-  { field: "tags", from: "#server", to: "#server, #memory" },
-  { field: "reason", from: "", to: "Host role corrected" },
+  { field: "title", from: "Staging Server", to: "Staging Server Sweep" },
+  { field: "tags", from: "#server", to: "#server, #memory-dump" },
+  { field: "desc", from: "", to: "Disk images of three staging servers, SHA-256 verified" },
 ]
 
 /** Cases: the case list, and the record of the selected case. */
 function CasesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[20em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search cases ..." />
@@ -305,32 +367,32 @@ function CasesView() {
             </div>
           </div>
 
-          <Block height="h-[51em]">
+          <Block height="h-[46em]">
             <MetaRow label="Lead Examiner" value="Nirjar Goswami" />
             <MetaRow label="Tags" value="#memory-dump #server #ransomware" />
           </Block>
 
-          <Block height="h-[51em]">
+          <Block height="h-[46em]">
             <MetaRow label="Opened" value="02-10-2026 09:41:12 AM IST" />
             <MetaRow label="Updated" value="05-10-2026 04:18:55 PM IST" />
           </Block>
 
-          <Field label="DESCRIPTION" height="h-[62em]">
+          <Field label="DESCRIPTION" height="h-[56em]">
             <Text className={WHITE}>Memory capture of the staging host before shutdown.</Text>
           </Field>
 
-          <Field label="LINKED DEVICE" height="h-[62em]">
+          <Field label="LINKED DEVICE" height="h-[56em]">
             <Text className={WHITE}>Samsung_980_PRO_1TB · 931.5 GB</Text>
           </Field>
 
-          <Field label="INTEGRITY" height="h-[64em]" indent={false}>
+          <Field label="INTEGRITY" height="h-[57em]" indent={false}>
             <Text className={GREEN}>● Verified</Text>
           </Field>
 
           <Block>
-            <div className="flex h-[22em] items-center">
+            <BlockTitle>
               <Text className={BLUE}>HISTORY · 2 events</Text>
-            </div>
+            </BlockTitle>
             <div className="mt-[7em] pl-[17em]">
               <HistoryRow at="05-10 04:18 PM" event="Device Linked" />
               <HistoryRow at="02-10 09:41 AM" event="Created" />
@@ -348,11 +410,77 @@ function CasesView() {
   )
 }
 
+/**
+ * Settings: the preferences the console keeps, and nothing else.
+ *
+ * It is a real tab — a person can open it and read it — but the demo does not
+ * step into it on its own. A cycle that wanders into a page of preferences is
+ * showing something that is not the point, so `CYCLED` stops short of it.
+ */
+function SettingsView() {
+  return (
+    <>
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[20em]">
+        <Panel widthClass="w-[502em]">
+          <div className="shrink-0 px-[24em] pt-[24em]">
+            <div className="flex h-[22em] items-center">
+              <Text className={BLUE}>Preferences</Text>
+            </div>
+          </div>
+
+          <Block height="h-[120em]">
+            <MetaRow label="Theme" value="Auto" />
+            <MetaRow label="Timezone" value="Asia/Kolkata" />
+            <MetaRow label="Hashing" value="SHA-256" />
+          </Block>
+
+          <Block height="h-[96em]">
+            <MetaRow label="Imaging" value="Write-protected" />
+            <MetaRow label="Evidence" value="Append only" />
+          </Block>
+
+          <Block height="h-[120em]">
+            <Text className={MUTED}>Logging</Text>
+            <MetaRow label="Level" value="Info" />
+            <MetaRow label="Retention" value="30 days" />
+          </Block>
+        </Panel>
+
+        <Panel widthClass="w-[290em]">
+          <div className="shrink-0 px-[24em] pt-[24em]">
+            <div className="flex h-[22em] items-center">
+              <Text className={WHITE}>Version</Text>
+            </div>
+          </div>
+
+          <Block height="h-[130em]">
+            <MetaRow label="Trace" value="0.3.4" />
+            <MetaRow label="Channel" value="stable" />
+            <MetaRow label="Build" value="029dbd43" />
+          </Block>
+
+          <Block height="h-[200em]">
+            <Text className={MUTED}>Licence</Text>
+            <MetaRow label="Seats" value="1 of 1" />
+            <MetaRow label="Renews" value="01-10-2026" />
+          </Block>
+        </Panel>
+      </div>
+
+      <Footer>
+        <FooterKey keyName="↑↓" action="Navigate" />
+        <FooterKey keyName="⏎" action="Change" />
+        <FooterKey keyName="?" action="Help" />
+      </Footer>
+    </>
+  )
+}
+
 /** Devices: the registry of drives, and the fingerprint of the selected one. */
 function DevicesView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[20em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search devices.." />
@@ -397,9 +525,9 @@ function DevicesView() {
           </Block>
 
           <Block height="h-[106em]">
-            <div className="flex h-[22em] items-center">
+            <BlockTitle>
               <Text className={BLUE}>FINGERPRINT</Text>
-            </div>
+            </BlockTitle>
             <MetaRow label="Serial" value="5F0A_11C4_8E70_0000_009B_2D6F_1A83_4C77" />
             <MetaRow label="Interface" value="NVMe" />
             <MetaRow label="Firmware" value="2B4QFXO7" />
@@ -407,9 +535,9 @@ function DevicesView() {
           </Block>
 
           <Block height="h-[90em]">
-            <div className="flex h-[22em] items-center">
+            <BlockTitle>
               <Text className={BLUE}>CASES LINKED</Text>
-            </div>
+            </BlockTitle>
             {["2026-CR-0142", "2026-CR-0118", "2026-CR-0091"].map((id) => (
               <div key={id} className="flex h-[16em] items-center pl-[17em]">
                 <Text className={WHITE}>{id}</Text>
@@ -436,14 +564,14 @@ function DevicesView() {
 function AuditView() {
   return (
     <>
-      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[24em]">
+      <div className="flex shrink-0 gap-[11em] px-[24em] pt-[20em]">
         <Panel widthClass="w-[290em]">
           <div className="shrink-0 px-[24em] pt-[24em]">
             <SearchField value="Search audits.." />
           </div>
 
           <ListHeader className="pt-[20em] pb-[14em]">
-            <span className="w-[90em] shrink-0">
+            <span className={COL_SEQ}>
               <Text className={WHITE}>Seq #</Text>
             </span>
             <Text className={WHITE}>Events · 9</Text>
@@ -452,7 +580,7 @@ function AuditView() {
           <div className="shrink-0 px-[24em] pt-[19em]">
             {EVENTS.map((row) => (
               <ListRow key={row.seq} marker={row.selected}>
-                <span className="w-[90em] shrink-0">
+                <span className={COL_SEQ}>
                   <Text className={row.selected ? WHITE : MUTED}>{row.seq}</Text>
                 </span>
                 <Text className={row.selected ? WHITE : MUTED}>{row.event}</Text>
@@ -476,10 +604,10 @@ function AuditView() {
             <MetaRow label="Event" value="CASE_EDITED" />
           </Block>
 
-          <Block height="h-[202em]">
-            <div className="flex h-[22em] items-center">
-              <Text className={BLUE}>CHANGES · 4</Text>
-            </div>
+          <Block height="h-[162em]">
+            <BlockTitle>
+              <Text className={BLUE}>CHANGES · {CHANGES.length}</Text>
+            </BlockTitle>
             {CHANGES.map((change) => (
               <div key={change.field}>
                 <div className="flex h-[18em] items-center">
@@ -527,9 +655,21 @@ const VIEWS = [
   { label: "Cases", view: <CasesView /> },
   { label: "Devices", view: <DevicesView /> },
   { label: "Audit", view: <AuditView /> },
+  { label: "Settings", view: <SettingsView /> },
 ]
 
-const CYCLE_MS = DWELL_MS * VIEWS.length
+/**
+ * How many of them the demo steps through on its own.
+ *
+ * Settings is a real tab with a real view, but it is not part of the tour: a
+ * cycle that wanders into a page of preferences is showing something that is
+ * not the point. The count is stated here rather than read off `VIEWS`, so
+ * adding a tab cannot quietly pull it into the cycle — the next one joins the
+ * tour by raising this number on purpose.
+ */
+const CYCLED = 3
+
+const CYCLE_MS = DWELL_MS * CYCLED
 
 /**
  * The console's own tabs, with the selection marked by an underline rather than
@@ -572,25 +712,144 @@ function TabBar({ active }: Readonly<{ active: number }>) {
   return (
     <div
       ref={rowRef}
-      className="relative flex h-[40em] shrink-0 items-start gap-[24em] px-[24em] pt-[15em]"
+      className="relative flex h-[33em] shrink-0 items-start gap-[24em] px-[24em] pt-[10em]"
     >
-      <Rule heightClass="h-[2em]" className="bottom-0 left-[24em] right-[24em]" />
+      <Rule className="bottom-0 left-[24em] right-[24em]" />
       {VIEWS.map((view, index) => (
         <span
           key={view.label}
           data-tab
           className={`${index === active ? WHITE : MUTED} ${TINT}`}
         >
-          <Text sizeClass="text-[15em]">{view.label}</Text>
+          <Text sizeClass="text-[12em]">{view.label}</Text>
         </span>
       ))}
       <span
         aria-hidden="true"
         style={{ transform: `translateX(${underline.left}px)`, width: underline.width }}
-        className={`pointer-events-none absolute left-0 top-[37em] h-[4em] bg-[#f0f6fc] ${SLIDE}`}
+        className={`pointer-events-none absolute bottom-0 left-0 h-[2em] bg-[#f0f6fc] ${SLIDE}`}
       />
     </div>
   )
+}
+
+/**
+ * The console sits a little inside its frame, centred on it.
+ *
+ * Scaling rather than rebuilding keeps every row, rule and inset at the
+ * artwork's proportions: the height, the type and everything between them come
+ * down together.
+ */
+const SCREEN_SCALE = "absolute inset-0 flex items-center justify-center"
+
+/**
+ * The height of either mockup's screen, in the console's units: the 33-unit tab
+ * bar, the 20 the views leave under it, the 434-unit panels and the 40-unit
+ * footer — 527, one unit short of the 528 the frame allows. The screen is the
+ * frame: the panel's height is set by this number, not the other way round, so
+ * the console has no landscape showing through it and the panel's own padding is
+ * the only margin around it.
+ *
+ * The panels are what fix the total: they are the one part of the console with a
+ * height of its own, and every view's content is sized to sit inside them.
+ *
+ * Exported because the terminal is the same size of interface: it is drawn in
+ * the same units at the same scale, and the two tabs are meant to be read as one
+ * program seen two ways.
+ */
+export const SCREEN_HEIGHT = "h-[528em]"
+
+/** The console's own screen: its tabs, and all the views stacked in one cell. */
+function ConsoleScreen({ active }: Readonly<{ active: number }>) {
+  return (
+    <div className={SCREEN_SCALE}>
+      <div
+        className={`console-screen relative w-full shrink-0 scale-95 overflow-hidden rounded-[15em] bg-[#0c0c0c] font-mono text-[#f0f6fc] ${SCREEN_HEIGHT} flex flex-col`}
+      >
+        <TabBar active={active} />
+
+        <div className="grid flex-1">
+          {VIEWS.map((view, index) => (
+            <div key={view.label} className={fadeLayerClass(index === active)}>
+              {view.view}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * The panel a Trace mockup sits in, and the frame inside it.
+ *
+ * The box, its mobile height ladder, the frame and the mobile inset are the
+ * ones `LayeredPreview` reserved, taken from it so no two previews can disagree
+ * about the space they hold. Below `sm` the crop is the artwork's as well: the
+ * mockup keeps its full size and the panel stops showing the part that no
+ * longer fits, anchored left.
+ *
+ * The frame is also the container the mockup measures itself against — whatever
+ * lands inside it can be written in the artwork's own units. Its proportions are
+ * this panel's own: `528` of the `851` units wide is the console's height, so the
+ * panel is exactly as tall as the screen it holds.
+ *
+ * It carries an image role and a label rather than exposing its own text,
+ * matching how the artwork previews read to assistive tech: a mockup is a
+ * picture of an interface, and the panel's description is what says what it
+ * does.
+ */
+export function ConsolePreviewBox({
+  ariaLabel,
+  rootRef,
+  children,
+}: Readonly<{ ariaLabel: string; rootRef?: Ref<HTMLDivElement>; children: ReactNode }>) {
+  return (
+    <div
+      ref={rootRef}
+      className={`relative w-full select-none ${CONSOLE_MAX_WIDTH} mx-auto overflow-hidden rounded-[20px] squircle bg-ink/10 ${PREVIEW_MOBILE_HEIGHT}`}
+    >
+      {/*
+       * The painting the console sits on. It is the panel's own backdrop, so it
+       * shows in the frame's inset on either side of the screen rather than
+       * behind it, and the mockup reads as a window laid over a landscape
+       * rather than a screenshot on a grey card.
+       *
+       * The `bg-ink/10` above stays: it is what shows for the moment before the
+       * image arrives, and the panel keeps a surface whichever way the section
+       * behind it is painted.
+       */}
+      <img
+        src={withAssetHash(OVERVIEW_BACKDROP)}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+        className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-[50%_45%]"
+      />
+
+      <div
+        className={`absolute ${PREVIEW_MOBILE_PADDING} pointer-events-none flex w-auto items-center justify-start sm:relative sm:inset-auto sm:block sm:w-full ${PREVIEW_FRAME_CLASS}`}
+      >
+        <div
+          role="img"
+          aria-label={ariaLabel}
+          className="console-frame relative aspect-[851/528] h-full w-auto shrink-0 sm:h-auto sm:w-full"
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * The console's own cycle: attach the returned ref to the mockup's root and
+ * read back the view it is showing.
+ */
+function useConsoleCycle() {
+  const { ref, elapsed } = useLoopingTimeline<HTMLDivElement>(CYCLE_MS)
+  return { ref, active: Math.floor(elapsed / DWELL_MS) % VIEWS.length }
 }
 
 /**
@@ -598,46 +857,18 @@ function TabBar({ active }: Readonly<{ active: number }>) {
  * reserved box holds, with the console inside it at the artwork's size instead
  * of a background scene behind it.
  *
- * The box, its mobile height ladder, the frame and the mobile inset are the
- * ones `LayeredPreview` reserved, taken from it so the two tabs cannot disagree
- * about the space. The crop below `sm` is the artwork's as well: the console
- * keeps its full size and the panel stops showing the part that no longer fits.
- *
- * It carries an image role and a label rather than exposing its own text,
- * matching how the artwork previews read to assistive tech — the console is a
- * picture of an interface, and the panel's description is what says what it
- * does. The cycle is decoration on top of that picture.
+ * The console also demonstrates itself. The cycle is decoration on top of the
+ * picture the panel describes.
  */
 export function TraceConsole() {
-  const { ref, elapsed } = useLoopingTimeline<HTMLDivElement>(CYCLE_MS)
-  const active = Math.floor(elapsed / DWELL_MS) % VIEWS.length
+  const { ref, active } = useConsoleCycle()
 
   return (
-    <div
-      ref={ref}
-      className={`relative w-full select-none ${PREVIEW_MAX_WIDTH} mx-auto overflow-hidden rounded-[20px] squircle bg-ink/10 ${PREVIEW_MOBILE_HEIGHT}`}
+    <ConsolePreviewBox
+      rootRef={ref}
+      ariaLabel="Trace console cycling through the case list, the device registry, and the audit trail"
     >
-      <div
-        className={`absolute ${PREVIEW_MOBILE_PADDING} pointer-events-none flex w-auto items-center justify-start sm:relative sm:inset-auto sm:block sm:w-full ${PREVIEW_FRAME_CLASS}`}
-      >
-        <div
-          role="img"
-          aria-label="Trace console cycling through the case list, the device registry, and the audit trail"
-          className="console-frame relative aspect-[851/582] h-full w-auto shrink-0 sm:h-auto sm:w-full"
-        >
-          <div className="console-screen absolute inset-0 flex flex-col overflow-hidden rounded-[15em] bg-[#0c0c0c] font-mono text-[#f0f6fc]">
-            <TabBar active={active} />
-
-            <div className="grid flex-1">
-              {VIEWS.map((view, index) => (
-                <div key={view.label} className={fadeLayerClass(index === active)}>
-                  {view.view}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <ConsoleScreen active={active} />
+    </ConsolePreviewBox>
   )
 }

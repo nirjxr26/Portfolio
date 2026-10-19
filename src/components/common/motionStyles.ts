@@ -29,3 +29,15 @@ export const fadeLayerClass = (isActive: boolean) =>
       ? "duration-[350ms] delay-150 opacity-100"
       : "pointer-events-none opacity-0 duration-150"
   }`
+
+/**
+ * The same layer, without the fade.
+ *
+ * The switcher uses this for the box it hands over. Both of its previews are
+ * mockups of the same console, so fading one through the other shows two
+ * consoles at two sizes ghosting over each other. The box swaps outright, and
+ * the motion stays inside it where it still reads: the pill sliding across the
+ * labels above it, and the console's own views stepping between each other.
+ */
+export const swapLayerClass = (isActive: boolean) =>
+  `col-start-1 row-start-1 w-full ${isActive ? "opacity-100" : "pointer-events-none opacity-0"}`

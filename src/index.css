@@ -85,6 +85,30 @@
   .console-screen {
     font-size: calc(100cqw / 851);
   }
+
+  /*
+   * A block cursor, blinking on CSS rather than from a clock.
+   *
+   * The terminal mockup's playback stops when the session finishes, and a caret
+   * driven by that clock would freeze mid-blink at the prompt. CSS keeps
+   * running afterwards for free, and costs nothing while nothing is on screen.
+   * `steps` makes it a hard on/off rather than a fade — a cursor dims and
+   * lights, it does not cross-fade.
+   */
+  @keyframes caret-blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .animate-caret {
+    animation: caret-blink 1.04s steps(1, end) infinite;
+  }
 }
 @layer components {
 
