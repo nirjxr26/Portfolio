@@ -59,6 +59,15 @@ const LOGO = String.raw`   _____ ____      _    ____ _____
 const ROW = "h-[18em]"
 const LINE = "text-[12.5em]"
 
+/**
+ * The row's height in the console's units — the same 18 the class above uses.
+ * The keyboard scrolls by a row, and the row is measured in pixels from the
+ * viewport's own font-size, which is one console unit: the mockup scales, and
+ * a fixed number of pixels would scroll a different number of lines at every
+ * width.
+ */
+const ROW_UNITS = 18
+
 /** The wordmark, on the leading the CLI's own banner is drawn at. */
 const BANNER = "text-[12.5em] leading-[1.37]"
 
@@ -574,6 +583,11 @@ function Splash({ elapsed }: Readonly<{ elapsed: number }>) {
 function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
   const phase = resolvePhase(elapsed)
   const viewport = useRef<HTMLDivElement>(null)
+  /**
+   * Whether the view still belongs to the playback. A reader who scrolls away
+   * from the bottom takes it; reaching the bottom again gives it back.
+   */
+  const follow = useRef(true)
 
   const printed =
     HEADER_ROWS +
@@ -599,7 +613,8 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
     if (!node) return
 
     if (finished) {
-      node.scrollTop = node.scrollHeight
+      // The last snap, but only if the reader never took the view.
+      if (follow.current) node.scrollTop = node.scrollHeight
       return
     }
 
@@ -611,14 +626,26 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
     let resting = 0
 
     const step = () => {
-      const distance = node.scrollHeight - node.scrollTop
-      if (distance < 0.5) {
+      const distance = node.scrollHeight - node.scrollTop - node.clientHeight
+
+      if (distance < 2) {
+        // The reader is at the bottom again, or the chase has caught up: either
+        // way the view belongs to the playback again.
+        follow.current = true
         resting += 1
         // Two settled frames: the row is down and the view is with it.
         if (resting > 1) return
       } else {
         resting = 0
       }
+
+      if (!follow.current) {
+        // The reader scrolled away. Leave the view where they put it and keep
+        // watching, so scrolling back to the bottom resumes the follow.
+        raf = requestAnimationFrame(step)
+        return
+      }
+
       node.scrollTop += distance * 0.25
       raf = requestAnimationFrame(step)
     }
@@ -627,8 +654,67 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
     return () => cancelAnimationFrame(raf)
   }, [printed, finished])
 
+  /** The reader's own scrolling takes the view away from the playback. */
+  const onWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (event.deltaY < 0) follow.current = false
+  }
+
+  const onTouchMove = () => {
+    follow.current = false
+  }
+
+  /**
+   * The viewport is a scrollable region, so it takes the keyboard too: a
+   * window that can only be scrolled with a pointer is a window some people
+   * cannot read.
+   */
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const node = viewport.current
+    if (!node) return
+
+    const fontSize = parseFloat(getComputedStyle(node).fontSize) || 1
+    const row = fontSize * ROW_UNITS
+    const page = node.clientHeight
+
+    switch (event.key) {
+      case "ArrowUp":
+        node.scrollTop -= row
+        break
+      case "ArrowDown":
+        node.scrollTop += row
+        break
+      case "PageUp":
+        node.scrollTop -= page
+        break
+      case "PageDown":
+        node.scrollTop += page
+        break
+      case "Home":
+        node.scrollTop = 0
+        break
+      case "End":
+        node.scrollTop = node.scrollHeight
+        follow.current = true
+        break
+      default:
+        return
+    }
+
+    event.preventDefault()
+    if (event.key !== "End") follow.current = false
+  }
+
   return (
-    <div ref={viewport} className={VIEWPORT}>
+    <div
+      ref={viewport}
+      className={VIEWPORT}
+      role="region"
+      aria-label="Terminal output"
+      tabIndex={0}
+      onWheel={onWheel}
+      onTouchMove={onTouchMove}
+      onKeyDown={onKeyDown}
+    >
       <Splash elapsed={elapsed} />
     </div>
   )
@@ -673,12 +759,16 @@ const WINDOW_INSET = "px-[32em]"
  * The top is the tighter of the two: a terminal's margin under its own chrome
  * is a line of breathing room, not a paragraph.
  *
- * The scrollbar is hidden because this is a picture of a terminal: a chunky bar
- * along its right edge would read as page furniture. The screen still scrolls
- * with a wheel, a trackpad or a drag — only the indicator is gone.
+ * The scrollbar is shown, thin and in the terminal's own greys. Hiding it was
+ * tidier and useless: a window that holds more than it shows has to say so
+ * somehow, and a scrollbar is how a terminal says it. It is the one piece of
+ * chrome that answers "is there more?" and answers "drag me" as well.
  */
 const VIEWPORT =
-  `h-[502em] overflow-y-auto pt-[24em] pb-[28em] ${WINDOW_INSET} [scrollbar-width:none] [&::-webkit-scrollbar]::hidden`
+  `h-[502em] overflow-y-auto pt-[24em] pb-[28em] ${WINDOW_INSET} ` +
+  `[scrollbar-width:thin] [scrollbar-color:#3f4750_transparent] ` +
+  `[&::-webkit-scrollbar]:w-[4em] [&::-webkit-scrollbar-track]:bg-transparent ` +
+  `[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#3f4750]`
 
 /**
  * The screen's title bar. Only the dots sit on it.
