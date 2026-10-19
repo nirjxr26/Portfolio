@@ -1,8 +1,8 @@
-import { useId, useLayoutEffect, useRef, useState } from "react"
+import { createContext, useContext, useId, useLayoutEffect, useRef, useState } from "react"
 import type { KeyboardEvent, ReactNode } from "react"
 import { nextTabIndex } from "@/utils/helpers"
 import { PREVIEW_FRAME_CLASS, PREVIEW_MAX_WIDTH, PREVIEW_MOBILE_HEIGHT } from "./LayeredPreview"
-import { fadeLayerClass, SLIDE, SLIDE_COUNTER } from "./motionStyles"
+import { fadeLayerClass, SLIDE, SLIDE_COUNTER, swapLayerClass } from "./motionStyles"
 import { BODY_MUTED_CLASS } from "./textStyles"
 
 export interface SegmentedTab {
@@ -13,6 +13,22 @@ export interface SegmentedTab {
    * palette-filled box holds the same space instead.
    */
   preview?: ReactNode
+}
+
+/**
+ * Which tab is showing, for a preview that needs to know.
+ *
+ * Every preview stays mounted so switching costs nothing, which means a preview
+ * cannot infer from the DOM whether anyone is looking at it. A playback that
+ * should start when its tab is selected — and only then — has to be told, and
+ * context is the smallest way to say that without threading a prop through the
+ * `preview` field and every call site that builds one.
+ */
+const ActiveTabContext = createContext("")
+
+/** True while `label`'s tab is the one on screen. */
+export function useIsTabActive(label: string) {
+  return useContext(ActiveTabContext) === label
 }
 
 /**
@@ -117,12 +133,13 @@ export function SegmentedTabs({
 
   return (
     <div className="w-full">
-      <div className="grid w-full">
+      <ActiveTabContext value={tabs[active]?.label ?? ""}>
+        <div className="grid w-full">
         {tabs.map((tab, index) => (
           <div
             key={tab.label}
             aria-hidden={index !== active}
-            className={fadeLayerClass(index === active)}
+            className={swapLayerClass(index === active)}
           >
             {tab.preview ?? (
               <div className={PLACEHOLDER_CLASS}>
@@ -131,14 +148,14 @@ export function SegmentedTabs({
             )}
           </div>
         ))}
-      </div>
+        </div>
 
-      <div
-        ref={listRef}
-        role="tablist"
-        aria-label={label}
-        className="relative mx-auto mt-8 flex w-fit items-center gap-1 rounded-full bg-canvas p-1 sm:mt-10"
-      >
+        <div
+          ref={listRef}
+          role="tablist"
+          aria-label={label}
+          className="relative mx-auto mt-8 flex w-fit items-center gap-1 rounded-full bg-canvas p-1 sm:mt-10"
+        >
         {tabs.map((tab, index) => {
           const isActive = index === active
 
@@ -197,7 +214,8 @@ export function SegmentedTabs({
             </div>
           )
         })}
-      </div>
+        </div>
+      </ActiveTabContext>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
   spinnerAt,
 } from "./terminalTokens"
 import { useLoopingTimeline } from "@/utils/useLoopingTimeline"
+import { typedCount } from "@/utils/typewriter"
 import { withAssetHash } from "@/utils/helpers"
 
 /**
@@ -178,7 +179,7 @@ function resolvePhase(
   if (cycle < script.typingMs) {
     return {
       ...TYPING_PHASE,
-      typed: Math.floor((cycle / script.typingMs) * script.command.length),
+      typed: typedCount(cycle, script.command, script.typingMs),
     }
   }
 

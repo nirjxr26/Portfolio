@@ -5,6 +5,7 @@
 // import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
 // import { withAssetHash } from "@/utils/helpers"
 import { SegmentedTabs } from "@/components/common/SegmentedTabs"
+import { TraceCommandLine } from "@/components/common/TraceCommandLine"
 import { TraceConsole } from "@/components/common/TraceConsole"
 import { Container } from "@/components/layout/Container"
 import { SectionHeader } from "@/components/layout/Section"
@@ -67,6 +68,7 @@ export const traceData: CaseStudyData = {
               {
                 label: "Command line",
                 desc: "Fast and scriptable. Commands autocomplete as you type, and any case can be output as JSON. Run it by hand, in a script, or through an agent. Every action is recorded.",
+                preview: <TraceCommandLine />,
               },
               ]}
             />
