@@ -84,7 +84,7 @@ export const projects: Project[] = [
     category: "Digital Forensics & Incident Response",
     year: "2026",
     description:
-      "It is a local-first CLI case management tool with a built-in, tamper-evident audit trail — so every change to an investigation is recorded, verifiable, and provably untouched.",
+      "A local-first forensic CLI and console for managing cases and evidence. Every action is recorded in a tamper-evident audit trail, so every change is verifiable and provably untouched.",
     link: "https://github.com/nirjxr26/Trace",
     projectLink: "/works/trace",
   },

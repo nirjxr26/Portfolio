@@ -84,7 +84,7 @@ export const traceData: CaseStudyData = {
         </>
       ),
       titleClassName: "t-hero-headline",
-      desc: "From intake to sealed, every case keeps its examiner, linked device, evidence, and history.",
+      desc: "From intake to sealed, every case keeps its examiner, its evidence, and a full history of what was done and when.",
       centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
