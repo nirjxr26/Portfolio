@@ -59,8 +59,10 @@
 @theme {
   --color-tile-dark: #272729;
   --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
-  --font-text: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  --font-text: "Univers LT Std", "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-univers: "Univers LT Std", "Inter", sans-serif;
+  --font-univers-condensed: "Univers LT Std Condensed", "Inter", sans-serif;
   --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

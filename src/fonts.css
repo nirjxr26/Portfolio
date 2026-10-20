@@ -99,6 +99,72 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/*
+ * Univers LT Std — the site's text face.
+ *
+ * Inter sits behind it in the stack and is still declared in full, so a section
+ * that wants a neutral grotesque can ask for it by name rather than by undoing
+ * this.
+ *
+ * The weights are the ones the fonts themselves declare: the Roman is 400, the
+ * Oblique 400, the Bold 700. The cuts are named by the family they come from —
+ * 55 is the Roman, 45 the Light, 65 the Bold, 57 the Condensed, 67 the Bold
+ * Condensed.
+ *
+ * The Light, the Extended and the Black cuts are not here: nothing on the site
+ * asks for them yet, and each one is another file to ship.
+ *
+ * The condensed cuts are a family of their own, so they can be asked for by
+ * name without changing how the text above them is set.
+ */
+@font-face {
+  font-family: "Univers LT Std";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Univers LT Std";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Univers LT Std";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Univers LT Std";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-700-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Univers LT Std Condensed";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-condensed-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Univers LT Std Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/univers-lt-std-condensed-700.woff2") format("woff2");
+}
+
 @font-face {
   font-family: "Manrope";
   font-style: normal;
