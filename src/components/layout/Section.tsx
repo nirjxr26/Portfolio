@@ -61,7 +61,7 @@ export function SectionHeader({
   centered = false,
   descClassName,
 }: Readonly<SectionHeaderProps>) {
-  const defaultTagClass = "text-accent text-sm sm:text-base font-semibold tracking-wide mb-2 sm:mb-3"
+  const defaultTagClass = "text-accent text-sm sm:text-base font-normal tracking-wide mb-2 sm:mb-3"
   const defaultTitleClass = "t-display text-ink"
   const defaultDescClass = `${BODY_MUTED_CLASS} mt-3 sm:mt-4 max-w-lg text-pretty`
   const titleClass = titleClassName

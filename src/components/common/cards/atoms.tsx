@@ -5,7 +5,7 @@ import { BODY_MUTED_CLASS } from "../textStyles"
 export function CardEyebrow({ tone, children }: Readonly<{ tone: "accent" | "muted"; children: ReactNode }>) {
   return (
     <p
-      className={`t-caption-strong card-tag text-xs min-[375px]:text-sm ${tone === "accent" ? "font-semibold tracking-wide text-accent" : "text-muted"}`}
+      className={`t-caption-strong card-tag text-xs min-[375px]:text-sm font-normal ${tone === "accent" ? "tracking-wide text-accent" : "text-muted"}`}
     >
       {children}
     </p>
