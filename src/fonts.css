@@ -100,7 +100,7 @@
 }
 
 /*
- * Univers LT Std — the site's text face.
+ * Univers LT Pro — the site's text face.
  *
  * Inter sits behind it in the stack and is still declared in full, so a section
  * that wants a neutral grotesque can ask for it by name rather than by undoing
@@ -108,61 +108,54 @@
  *
  * The weights are the ones the fonts themselves declare: the Roman is 400, the
  * Oblique 400, the Bold 700. The cuts are named by the family they come from —
- * 55 is the Roman, 45 the Light, 65 the Bold, 57 the Condensed, 67 the Bold
- * Condensed.
+ * 55 is the Roman, 65 the Bold, 57 the Condensed, 67 the Bold Condensed.
  *
  * The Light, the Extended and the Black cuts are not here: nothing on the site
- * asks for them yet, and each one is another file to ship.
+ * asks for them yet, and each one is another file to ship. The Bold Oblique is
+ * not either — the sources do not carry it, and nothing sets a bold italic, so
+ * that one weight falls back to Inter rather than to a synthesised slant.
  *
  * The condensed cuts are a family of their own, so they can be asked for by
  * name without changing how the text above them is set.
  */
 @font-face {
-  font-family: "Univers LT Std";
+  font-family: "Univers LT Pro";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/univers-lt-std-400.woff2") format("woff2");
+  src: url("/fonts/univers-lt-pro-400.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Univers LT Std";
+  font-family: "Univers LT Pro";
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/univers-lt-std-400-italic.woff2") format("woff2");
+  src: url("/fonts/univers-lt-pro-400-italic.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Univers LT Std";
+  font-family: "Univers LT Pro";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/univers-lt-std-700.woff2") format("woff2");
+  src: url("/fonts/univers-lt-pro-700.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Univers LT Std";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/univers-lt-std-700-italic.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Univers LT Std Condensed";
+  font-family: "Univers LT Pro Condensed";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/univers-lt-std-condensed-400.woff2") format("woff2");
+  src: url("/fonts/univers-lt-pro-condensed-400.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "Univers LT Std Condensed";
+  font-family: "Univers LT Pro Condensed";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("/fonts/univers-lt-std-condensed-700.woff2") format("woff2");
+  src: url("/fonts/univers-lt-pro-condensed-700.woff2") format("woff2");
 }
 
 @font-face {
