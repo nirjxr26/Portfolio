@@ -16,6 +16,36 @@ export type BlogArticle = {
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
+    slug: "allow-remote-postgresql-without-opening-it-to-the-world",
+    title: "How to allow remote PostgreSQL connections without opening it to the world",
+    description:
+      "Allow remote access to PostgreSQL using listen_addresses, pg_hba.conf, verified TLS and a scoped firewall rule, instead of 0.0.0.0/0.",
+    updated: "October 27, 2026",
+    readTime: "6 min",
+    category: "Security",
+    cardDate: "Oct 27, 2026",
+    cardDesc: "Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows.",
+    cardReadTime: "6 min read",
+    keywords: "PostgreSQL, remote access, listen_addresses, pg_hba.conf, TLS, sslmode, verify-full, UFW, firewall, scram-sha-256, pg_authid, pg_hba_file_rules, Docker, security",
+    sections: [
+      {
+        subtitle: "Why the quick fix is wrong",
+        content:
+          "By default, PostgreSQL on Debian and Ubuntu only listens on `localhost`. When your app server or laptop needs to connect from another machine, every quick-fix answer says the same thing: set `listen_addresses = '*'`, add `0.0.0.0/0` to `pg_hba.conf`, and restart. It works, and it puts your database on the public internet, where bots find port 5432 within hours.\n\nThere are three ways to allow remote access. Options 1 and 2 are not ideal.\n\n1. **`listen_addresses = '*'` plus `host all all 0.0.0.0/0 scram-sha-256` in `pg_hba.conf`.** Anyone on the internet can now attempt to log in as any user on any database. Your only protection is a password, and the `postgres` superuser is a known target. The connection is also not guaranteed to be encrypted.\n\n2. **Open the port in the firewall and rely on the firewall alone.** This is better, but it leaves PostgreSQL listening on every interface, so a single firewall mistake (or a Docker-published port bypassing UFW) exposes it. It also gives you no per-user, per-database control.",
+      },
+      {
+        subtitle: "Proper way",
+        content:
+          "Think of it as three independent locks: **where PostgreSQL listens**, **who is allowed to connect** (`pg_hba.conf`), and **what the firewall lets through**. Set each one as narrowly as you can, so a mistake in one doesn't expose the database. Then *test* that the other connections are refused instead of assuming it.\n\nIn the examples below, `203.0.113.10` is a documentation-only example address for your client, `10.0.0.5` is the server's private address, and `db.example.com` is the server's DNS name. Replace all three with your own. Paths are for Debian/Ubuntu with PostgreSQL 16 (`/etc/postgresql/16/main/`). Adjust the version and cluster name to match yours.\n\n1. **Make PostgreSQL listen only on the address it needs.** First, check that the address really exists on the server:\n\n```bash\nip -br addr\n```\n\n   On many cloud VMs the public IP is NAT'd and is *not* assigned to any interface, so bind to the private or VPN address instead. Then edit `postgresql.conf`:\n\n```conf\n# Not '*'. Localhost plus the one private (or VPN) address:\nlisten_addresses = 'localhost, 10.0.0.5'\n```\n\n   Changing `listen_addresses` requires a **restart**, not just a reload. If the address isn't assigned to an interface when PostgreSQL starts, it fails to bind and the service won't come up, so check the PostgreSQL log if that happens.\n\n2. **Create a dedicated role and database instead of using `postgres` remotely.** Remote connections should never use the superuser. Set the password from inside `psql` with `\\password`, which keeps it out of your shell history and the server logs:\n\n```sql\nSHOW password_encryption;\nCREATE ROLE appuser WITH LOGIN;\n\\password appuser\nCREATE DATABASE appdb OWNER appuser;\n```\n\n   Modern PostgreSQL versions default to `scram-sha-256` for newly set passwords, but existing passwords keep whatever hash they were stored with until they are reset. This matters because a `scram-sha-256` rule in `pg_hba.conf` only works for passwords stored as SCRAM. If `SHOW password_encryption;` doesn't say `scram-sha-256`, run `SET password_encryption = 'scram-sha-256';` before setting the password. Afterwards, check the stored hash as a superuser:\n\n```sql\nSELECT rolname, left(rolpassword, 14) AS hash_prefix\nFROM pg_authid WHERE rolname = 'appuser';\n-- expect: SCRAM-SHA-256$\n```\n\n3. **Allow exactly one user, one database and one address in `pg_hba.conf`.** Add this line:\n\n```conf\n# TYPE    DATABASE  USER      ADDRESS           METHOD\nhostssl   appdb     appuser   203.0.113.10/32   scram-sha-256\n```\n\n   Here is what each part does:\n\n   - `hostssl` accepts only encrypted connections. A plain `host` line would also allow unencrypted ones.\n   - `/32` means a single IPv4 address. Use something like `/24` only if you really mean a whole subnet. IPv6 clients need their own line.\n   - `scram-sha-256` is the password method. Never use `trust` for anything that isn't a local socket.\n   - Rules are read top to bottom and the **first match wins**. If a connection matches a rule and authentication fails, PostgreSQL does *not* try the next rule. So a broad rule above your narrow one will override it, and your new line is only as safe as everything above it.\n\n4. **Set up TLS properly.** `ssl = on` gives you encryption, but encryption alone doesn't prove you are talking to *your* server. First, see what the cluster is currently using:\n\n```sql\nSHOW ssl;\nSHOW ssl_cert_file;\n```\n\n   Depending on how it was installed, a cluster may be using a self-signed \"snakeoil\" certificate, which clients cannot verify. For anything real, use a certificate whose name matches how clients connect: the DNS name (`db.example.com`) as a subject alternative name, or an IP address SAN if clients connect by IP. Then point PostgreSQL at it in `postgresql.conf`:\n\n```conf\nssl = on\nssl_cert_file = '/etc/postgresql/ssl/server.crt'\nssl_key_file  = '/etc/postgresql/ssl/server.key'\n```\n\n   The private key must not be readable by group or others. If the key is owned by the `postgres` user, `chmod 600` is the right permission.\n\n5. **Apply the changes and check them.** `listen_addresses` and the TLS settings need a restart, and `pg_hba.conf` alone needs only a reload:\n\n```bash\nsudo systemctl restart postgresql\n```\n\n   Then check that PostgreSQL parsed your rules without errors, and read the **whole** list from top to bottom:\n\n```sql\nSELECT line_number, type, database, user_name, address, auth_method, error\nFROM pg_hba_file_rules;\n```\n\n   If the `error` column has anything in it, fix that line first. Then look for older lines that are broader than yours: a `host all all 0.0.0.0/0 ...` rule, any `trust` method, or a wide subnet. Those matter more than the line you just added.\n\n6. **Add the firewall rule last, scoped to the same address:**\n\n```bash\nsudo ufw allow from 203.0.113.10 to any port 5432 proto tcp\n```\n\n   Now you have three layers. If PostgreSQL runs in Docker, though, these host-level settings are not enough on their own. What is exposed depends on how the port is published (`-p 127.0.0.1:5432:5432` versus `-p 5432:5432`), on the container's own `listen_addresses` and `pg_hba.conf` (the official image is typically configured to accept connections from any address inside the container network), on which Docker firewall backend you use, and on any cloud firewall in front. Docker-published ports also bypass UFW, so use the `DOCKER-USER` approach from the previous post instead of relying on this rule.\n\n7. **Test from the client with certificate verification:**\n\n```bash\npsql \"host=db.example.com dbname=appdb user=appuser sslmode=verify-full sslrootcert=/path/to/ca.crt\"\n```\n\n   `verify-full` checks that the certificate was issued by a CA the client trusts *and* that its name matches the host you connected to, which protects against someone impersonating the server. The name you connect with must resolve to the intended server and match the certificate. By comparison, `sslmode=require` encrypts the connection but does not reliably verify who is on the other end, so use it only for a quick first test.\n\n   Then confirm the session really is encrypted:\n\n```sql\nSELECT ssl, version, cipher FROM pg_stat_ssl WHERE pid = pg_backend_pid();\n```\n\n8. **Confirm other connections are refused. Don't just assume it.** From a machine that is not on your allow list:\n\n```bash\nnmap -Pn -p 5432 your.server.ip\n```\n\n   The port should show as filtered or closed. From the *allowed* address, also try a different role or database. You should get an error like `no pg_hba.conf entry for host ...` instead of a login prompt. On the server, `ss -tlnp | grep 5432` should list only the addresses you chose, not `0.0.0.0` or `[::]`.\n\nYou now have a narrowly scoped configuration. PostgreSQL listens on the interfaces you chose, the intended client is authorized for one database and one role, TLS is required and verified, and the firewall restricts access to the permitted source address. Before you conclude that everything else is blocked, make sure you have read the full `pg_hba.conf` rule list and checked every firewall layer in front of the server, including any cloud security group.\n\nUnrelated but make sure you never test remote access by temporarily setting `host all all 0.0.0.0/0 trust` \"just to see if it works.\" Temporary rules like that are the ones that get forgotten and end up in production.",
+      },
+      {
+        subtitle: "Reference",
+        content:
+          "- [PostgreSQL docs: The pg_hba.conf file](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)\n- [PostgreSQL docs: Connections and authentication](https://www.postgresql.org/docs/current/runtime-config-connection.html)\n- [PostgreSQL docs: Password authentication](https://www.postgresql.org/docs/current/auth-password.html)\n- [PostgreSQL docs: Secure TCP/IP connections with SSL](https://www.postgresql.org/docs/current/ssl-tcp.html)",
+      },
+    ],
+  },
+  {
     slug: "context-engineering-why-agents-md-beats-a-better-model",
     title: "Context engineering: why AGENTS.md beats a better model",
     description:
@@ -83,61 +113,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "why-ai-cant-just-rewrite-windows",
-    title: "Why AI can't just rewrite Windows",
-    description:
-      "Why rewriting Windows with AI is not primarily a code-generation problem, but a problem of scale, complexity, backward compatibility, and decades of accumulated dependencies.",
-    updated: "June 4, 2026",
-    readTime: "6 min",
-    category: "Artificial Intelligence",
-    cardDate: "Jun 4, 2026",
-    cardDesc: "50M lines. 41 years and decades of decisions. ",
-    cardReadTime: "4 min read",
-    keywords: "AI, Windows, code generation, scale, complexity, backward compatibility, dependencies, Microsoft, 50 million lines, Git, context window, Gemini, Claude, Veracode, Brooks Law, multi-agent, .NET Runtime, operating system, rewrite",
-    sections: [
-      {
-        subtitle: "The scale is hard to actually picture",
-        content:
-          "4,000 engineers. 1,760 daily builds across 440 branches. A git repository so large that Microsoft had to invent a custom file system just to manage it because standard Git couldn't handle it.\n\n50 million lines of code. 3.5 million files. Close to 300 GB. Built, broken, patched, and shipped for 41 years without stopping, since Windows 1.0 in 1985.\n\nI work on things that feel complex to me. AegisMesh, the IAM platform I've been building, has RBAC, a full DevSecOps pipeline, observability. It still feels manageable because I can hold most of it in my head on a decent day.\n\nNobody holds Windows in their head. I don't think any single team does either.",
-      },
-      {
-        subtitle: "The problem isn't the code. It's everything the code is touching.",
-        content:
-          "Complexity in software doesn't scale the way people expect.\n\n5 components means 10 possible interactions. 100 components is nearly 5,000. Windows, with millions of components, has interactions that are for practical purposes impossible to fully account for.\n\nFred Brooks put it directly in No Silver Bullet (1986): \"The elements interact with each other in some nonlinear fashion, and the complexity of the whole increases much more than linearly.\"\n\nAnd you can't test your way out of it either. Some bugs only appear at production scale, with real users doing things nobody anticipated. No test suite can replicate 41 years of that.",
-      },
-      {
-        subtitle: "AI can't even read Windows, let alone rewrite it",
-        content:
-          "Models work within a context window. Working memory, basically. Code averages about 18 tokens per line. 50 million lines means roughly 900 million tokens.\n\nGemini 3 Pro, currently the largest available context window, handles around 10 million tokens. Claude Opus 4.6 handles around 1 million. That makes the Windows codebase 90x to 900x larger than what any AI can process at once.\n\nAny AI working on Windows is always working blind to most of it. It sees one street, not the city. It can write something that looks completely correct locally and silently break something three subsystems away.\n\nI hit a smaller version of this while building DeployLens. An AI tool suggested a change that made total sense in isolation. It broke a GitHub Actions integration because the AI had no idea that dependency existed. On a 900 million token codebase, that problem doesn't just scale, it multiplies in ways that are genuinely hard to reason about.",
-      },
-      {
-        subtitle: "AI already struggles at large codebases",
-        content:
-          "The numbers on this aren't great. According to a Veracode study, 45% of AI-generated code has security vulnerabilities. XSS failure rate in AI-generated code sits at 86%. In large, mature codebases, fewer than 44% of AI suggestions even get accepted. A METR study found that experienced developers are actually 19% slower on real tasks in large codebases when using AI tools.\n\nAI can't reliably understand dependency graphs, build systems, or architectural conventions. It moves a file and breaks every import pointing to the old location. Now imagine that at 50 million lines of scale.",
-      },
-      {
-        subtitle: "Backward compatibility is the thing nobody wants to deal with",
-        content:
-          "Say AI wrote perfect code. Every function, every module, exactly right.\n\nStill not done.\n\nControl Panel still exists in Windows because drivers from 2012 call its functions. Windows has to run software from decades ago, drivers from manufacturers that don't exist anymore, enterprise apps embedded in hospital systems, bank infrastructure, and government workflows that nobody fully understands anymore.\n\nWhen Microsoft ships an update, they're also quietly guaranteeing that every DLL, every registry interaction, every weird edge case from 1998 still behaves the same way. Some behaviors exist specifically because an app from 2003 depended on a bug. Fixing the bug breaks the app. So the bug stays. That's not a failure, that's the deal made with the ecosystem over 40 years.\n\nAn AI rewriting from scratch can't know any of that unless someone wrote it down. Most of it wasn't.",
-      },
-      {
-        subtitle: "\"Just run thousands of agents\" doesn't fix it",
-        content:
-          "Multi-agent failure rates range from 41% to 87% in practice. Coordination breakdowns alone account for 37% of all failures. Anthropic found that putting Claude in a multi-agent setup dropped performance by 35%. At 1 step, you're looking at around 95% success rate. At 10 steps, 60%. At 20 steps, 36%.\n\nThis is Brooks's Law reborn. Adding more people to a late software project makes it later. Adding more agents to a complex codebase makes it worse. At some point your job becomes building and managing the infrastructure that coordinates the agents, not writing the actual code.",
-      },
-      {
-        subtitle: "Microsoft already tried",
-        content:
-          "Galen Hunt, a Microsoft Distinguished Engineer, said publicly: \"My goal is to eliminate every line of C and C++ from Microsoft by 2030. One engineer, one month, one million lines of code.\"\n\nAfter community pushback, Microsoft clarified this was a research project, not a product roadmap. They explicitly denied plans to rewrite Windows 11 using AI.\n\nTheir actual progress on the .NET Runtime, a much simpler codebase than the Windows kernel: 878 Copilot PRs over 10 months, 535 merged, 126,000 lines touched. Windows has 50 million. At that rate, it would take over 330 years to rewrite Windows. And again, this was the easy part.",
-      },
-      {
-        subtitle: "Where this is going",
-        content:
-          "AI tools make me faster at the boring parts, which frees me up for the parts that actually need thinking. That's the real value, augmentation, not replacement.\n\nBut \"just rewrite it\" gets code generation and software engineering mixed up. Windows isn't slow to fix because the code is badly written. It's slow because the problem itself is irreducibly complex. 50 million lines of code. 41 years of decisions. Billions of devices. Millions of third-party applications. An entire global economy running on it.\n\nAI is powerful. But this isn't a problem you can brute-force with a bigger model.",
-      },
-    ],
-  },
-  {
     slug: "making-technical-debt-visible-with-sonarqube",
     title: "Making technical debt visible with SonarQube",
     description:
@@ -189,51 +164,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
         subtitle: "Final thought",
         content:
           "SonarQube didn't fix anything on its own. It made problems impossible to ignore — vulnerability counts, duplication percentages, complexity scores, failed quality gates. Once the numbers were visible, the work became obvious.",
-      },
-    ],
-  },
-  {
-    slug: "bastions-path-from-docker-to-kubernetes",
-    title: "Bastion's path from Docker to Kubernetes",
-    description:
-      "The practical lessons from containerizing AegisMesh, moving it into Kubernetes, and building a Jenkins pipeline, including startup ordering, Prisma, Node versions, plugins, configuration, and build hygiene.",
-    updated: "April 30, 2026",
-    readTime: "3 min",
-    category: "DevOps",
-    cardDate: "Mar 22, 2026",
-    cardDesc: "How Bastion ships as a single container and scales on Kubernetes without leaking host trust.",
-    cardReadTime: "6 min read",
-    hideFromHome: true,
-    keywords: "Docker, Kubernetes, Jenkins, Prisma, dumb-init, Nginx, Vite, healthcheck, ConfigMap, Secret, .dockerignore, Node.js, CI/CD, containerization, AegisMesh, DevOps",
-    sections: [
-      {
-        subtitle: "Starting with Docker",
-        content:
-          "The backend Dockerfile is three stages because of Prisma. It needs to generate a client at build time and needs a DATABASE_URL for that, even though nothing actually connects. One stage for prod dependencies, one for prisma generate with a placeholder URL, one final stage that combines both.\n\ndumb-init was an afterthought. npm start as PID 1 doesn't forward signals, so docker stop would hang indefinitely. Annoying to debug, obvious in hindsight.\n\nThe frontend was straightforward. Vite builds, Nginx serves. Separate dev Dockerfile that skips the build and runs the dev server directly.",
-      },
-      {
-        subtitle: "Startup Order",
-        content:
-          "The backend kept dying because Postgres wasn't ready. The container being up and the database being ready aren't the same thing — took me longer than it should have to work that out. Added a healthcheck so the backend actually waits for connections.\n\nThe dev setup had one thing I missed until it broke. The host was overwriting files inside the container with no warning. One line to isolate them.",
-      },
-      {
-        subtitle: "Moving to Kubernetes",
-        content:
-          "Didn't touch Kubernetes until Docker was stable.\n\nSame problem, different tool. You can run tasks before the main container starts — one waits for the database, one runs migrations. The app doesn't deal with any of it.\n\nDecide where config lives before writing anything. I changed my mind halfway through and lost time I didn't need to lose.",
-      },
-      {
-        subtitle: "Jenkins",
-        content:
-          "I thought it would take a few hours. It took most of a week.\n\nFirst: npm not found. Jenkins had no Node on PATH. Then Prisma rejected the Node version — added a validation stage that fails immediately if it's not 20.19+, 22.12+, or 24+.\n\nThen lint ran for the first time. 20+ errors. Bad setState in effects, stale references, broken hook dependencies — none of it was new, it had just never been checked. Fixed all of it.\n\nThe thing that ate the most time wasn't any of that. A plugin I didn't install and didn't know about was breaking the entire run. Found it by reading console output until one line looked wrong.",
-      },
-      {
-        subtitle: "What I'd Do Differently",
-        content:
-          "Set up .dockerignore before writing anything. I was pulling things into the build context that had no reason to be there. Builds were slower than they should've been and I only caught it later.\n\nDecide the ConfigMap and Secret split before touching any manifests. Changing it halfway through means revisiting files you already considered done. Not hard, just annoying.\n\nGive Jenkins environment setup more time than you think it needs. The Jenkinsfile is the easy part. Node not being on PATH, the wrong Node version failing Prisma, a plugin you never installed quietly breaking the entire run — that's where the time actually goes.",
-      },
-      {
-        subtitle: "Final Thoughts",
-        content: "Docker felt like overhead until it wasn't. Kubernetes made me think about things Compose lets you ignore. Jenkins was a bad week and I'd do it again.",
       },
     ],
   },
@@ -333,47 +263,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     ],
   },
   {
-    slug: "deploylens-finding-my-deployment-blind-spots",
-    title: "DeployLens: finding my deployment blind spots",
-    description:
-      "What building DeployLens revealed about CI/CD security, excessive pipeline permissions, long-lived AWS credentials, CodeQL findings, and the importance of knowing exactly what version is running in production.",
-    updated: "April 8, 2026",
-    readTime: "4 min",
-    category: "DevOps",
-    cardDate: "Feb 18, 2026",
-    cardDesc: "GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap.",
-    cardReadTime: "5 min read",
-    hideFromHome: true,
-    keywords: "DeployLens, CI/CD, pipeline, GitHub Actions, AWS, IAM, OIDC, CodeQL, SAST, ECS, SHA, deployment, visibility, security, secrets, CodeDeploy",
-    sections: [
-      {
-        subtitle: "Your pipeline has permissions. Real ones.",
-        content:
-          "CI/CD tutorials frame it as a speed thing. Push code, tests run, it deploys. What they skip: your pipeline can push container images, update infrastructure, write to S3, call AWS APIs. In most early setups, mine included, those permissions are wide open.\n\nThat's what started bothering me while building DeployLens. I kept noticing how much access my GitHub Actions workflows quietly assumed. Nobody hacked me, nothing broke, but I kept asking: if someone pushed a malicious commit right now, what could the pipeline actually do with its current permissions?\n\nI didn't love where that question went.",
-      },
-      {
-        subtitle: "The secrets problem",
-        content:
-          "Early on I had AWS credentials in GitHub Actions secrets. AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, injected as env vars. Standard setup, everyone does it.\n\nThen I started reading about what goes wrong. Workflows that run on PRs from forks. Compromised dependencies that exfiltrate env vars. A workflow that accidentally logs env to stdout and now your keys are in a public build log. These aren't hypothetical.\n\nI switched to OIDC. GitHub Actions can assume an IAM role directly, no stored credentials, short-lived token that expires after the job. Maybe 30 minutes of setup total. I wouldn't have touched it if DeployLens hadn't forced me to actually look at how my pipeline was talking to AWS.",
-      },
-      {
-        subtitle: "What CodeQL found",
-        content:
-          "I added CodeQL to AegisMesh mostly because it looked good. Security scanning, SAST, sure.\n\nThen it flagged something. User input passing through without proper sanitization. Not catastrophic, but the kind of pattern that becomes catastrophic when the code around it changes. Fixed it in 10 minutes.\n\nThe part I keep thinking about: I wrote that code. I reviewed it. I didn't see it.\n\nStatic analysis catches a specific class of problems that humans miss not because we're careless but because we read for logic. We're checking if it does what we want, not whether it could be exploited. CodeQL doesn't read for intent. It just looks for patterns. That's exactly why it caught something I didn't.",
-      },
-      {
-        subtitle: "The actual problem is visibility",
-        content:
-          "Security issues in CI/CD are usually not dramatic. It's just that nobody knows the real state of what's running. The SHA that passed CI and the container image actually serving traffic — same thing? Did the last deploy finish? Did it roll back without telling anyone?\n\nIf you can't answer those questions, you can't answer whether a vulnerable version is deployed right now.\n\nDeployLens matched commit SHAs from GitHub against ECS task definitions on the AWS side. Simple idea, genuinely annoying to implement because AWS doesn't expose that data in any obvious way. But building it changed how I think about pipelines. Less \"automation tube\" and more \"system with its own state, access, and history that nobody's watching.\"",
-      },
-      {
-        subtitle: "What I'd tell myself at the start",
-        content:
-          "Don't save security for a cleanup pass. OIDC takes less time to set up than rotating leaked credentials later. Branch protection is five minutes. CodeQL is a checkbox in GitHub's UI.\n\nThe hard part was never the implementation. It was noticing the gap existed. And I only noticed because I was building something that forced me to look.",
-      },
-    ],
-  },
-  {
     slug: "ai-agents-have-permissions-now-but-whos-in-control",
     title: "AI agents have permissions now — but who's in control?",
     description:
@@ -439,7 +328,7 @@ export function getBlogArticle(slug: string) {
   return BLOG_ARTICLES.find((a) => a.slug === slug)
 }
 
-export const ARTICLE_CATEGORIES = ["Artificial Intelligence", "DevOps", "Practice", "Security"] as const
+export const ARTICLE_CATEGORIES = ["Artificial Intelligence", "Practice", "Security"] as const
 
 export function getAdjacentArticles(slug: string) {
   const ordered = [...BLOG_ARTICLES].sort((a, b) => Date.parse(b.cardDate) - Date.parse(a.cardDate))

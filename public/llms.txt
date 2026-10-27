@@ -73,11 +73,9 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
 
 ## Technical Articles & Writing
+- "How to allow remote PostgreSQL connections without opening it to the world": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
 - "Context engineering: why AGENTS.md beats a better model": Why a rules file can matter more than which AI you're using to write code. (https://nirjar.me/articles/context-engineering-why-agents-md-beats-a-better-model).
 - "AI agents have permissions now — but who's in control?": A chatbot lies to you. An agent acts on it — why that's an authorization problem. (https://nirjar.me/articles/ai-agents-have-permissions-now-but-whos-in-control).
-- "Why AI can't just rewrite Windows": 50M lines. 41 years and decades of decisions. (https://nirjar.me/articles/why-ai-cant-just-rewrite-windows).
 - "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
-- "Bastion's path from Docker to Kubernetes": How Bastion ships as a single container and scales on Kubernetes without leaking host trust. (https://nirjar.me/articles/bastions-path-from-docker-to-kubernetes).
 - "Rethinking my Git workflow": Not just a code host. A place that quietly reshaped how I build. (https://nirjar.me/articles/rethinking-my-git-workflow).
 - "How VaultLock reliably fetches brand logos": Getting the right brand logo, every time, without breaking the UI. (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).
-- "DeployLens: finding my deployment blind spots": GitHub Actions said green, CodeDeploy said otherwise — DeployLens finally showed the gap. (https://nirjar.me/articles/deploylens-finding-my-deployment-blind-spots).
