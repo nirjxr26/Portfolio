@@ -78,12 +78,30 @@ export function ArrowRight({ className = "", width = 14, height = 14, strokeWidt
   )
 }
 
-export function ChevronDown({ className = "", width = 16, height = 16, strokeWidth = 2 }: Readonly<IconProps>) {
+const CHEVRON_PATHS = {
+  down: "m6 9 6 6 6-6",
+  left: "m15 18-6-6 6-6",
+  right: "m9 18 6-6-6-6",
+} as const
+
+function Chevron({ direction, ...props }: Readonly<IconProps & { direction: keyof typeof CHEVRON_PATHS }>) {
   return (
-    <StrokeIcon className={className} width={width} height={height} strokeWidth={strokeWidth}>
-      <path d="m6 9 6 6 6-6" />
+    <StrokeIcon {...props}>
+      <path d={CHEVRON_PATHS[direction]} />
     </StrokeIcon>
   )
+}
+
+export function ChevronDown(props: Readonly<IconProps>) {
+  return <Chevron {...props} direction="down" />
+}
+
+export function ChevronLeft(props: Readonly<IconProps>) {
+  return <Chevron {...props} direction="left" />
+}
+
+export function ChevronRight(props: Readonly<IconProps>) {
+  return <Chevron {...props} direction="right" />
 }
 
 export function HomeIcon({ className = "", width = 16, height = 16 }: Readonly<IconProps>) {
