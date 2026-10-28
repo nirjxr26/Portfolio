@@ -4,7 +4,9 @@
  * Plain content (no markers) renders exactly as before, as <p><span>…</p>.
  */
 
-import type { ReactNode } from "react"
+import { useRef, type ReactNode } from "react"
+import { CopySwapIcon } from "../components/common/Icons"
+import { useCopy } from "./useCopy"
 
 export function InlineCode({ children }: Readonly<{ children: string }>) {
   return (
@@ -69,17 +71,52 @@ function renderInline(text: string, key: string): ReactNode[] {
 }
 
 function CodeBlock({ code, lang }: Readonly<{ code: string; lang: string }>) {
+  const { copied, copy } = useCopy(1600)
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  /**
+   * Selecting inside the panel copies the selection: a single line stays a
+   * single line, a drag across several copies exactly those. Clipboard writes
+   * need a user gesture, which mouseup/keyup provide; a plain click (collapsed
+   * caret) or a selection that starts outside the panel is ignored.
+   */
+  const copySelection = () => {
+    const selection = window.getSelection()
+    const panel = panelRef.current
+    if (!selection || selection.isCollapsed || !panel) return
+    if (!panel.contains(selection.anchorNode) || !panel.contains(selection.focusNode)) return
+
+    const text = selection.toString()
+    if (!text.trim()) return
+    void copy(text)
+  }
+
   return (
     <div className="py-2">
-      <div className="overflow-hidden rounded-[14px] border border-hairline bg-surface-alt">
+      <div
+        ref={panelRef}
+        onMouseUp={copySelection}
+        onKeyUp={copySelection}
+        className="relative overflow-hidden rounded-[14px] border border-hairline/60 bg-surface-alt"
+      >
         {lang ? (
-          <div className="border-b border-hairline px-4 py-2.5 font-mono text-[11px] leading-none font-medium uppercase tracking-[0.14em] text-muted">
-            {lang}
+          <div className="flex items-center justify-between gap-3 border-b border-hairline/60 px-4 py-2.5 font-mono text-[11px] leading-none font-medium uppercase tracking-[0.14em] text-muted">
+            <span>{lang}</span>
+            <span
+              aria-hidden="true"
+              className={`flex items-center gap-1.5 font-text text-[11px] leading-none font-medium normal-case tracking-normal text-ink transition-opacity duration-150 ${copied ? "opacity-100" : "opacity-0"}`}
+            >
+              <CopySwapIcon copied={copied} width={12} height={12} className="[&_svg]:block" />
+              Copied!
+            </span>
           </div>
         ) : null}
         <pre className="whitespace-pre-wrap break-words px-4 py-4 font-mono text-[12.5px] leading-relaxed tracking-normal text-ink sm:py-5 sm:text-[13px]">
           <code>{code}</code>
         </pre>
+        <span className="sr-only" aria-live="polite">
+          {copied ? "Copied" : ""}
+        </span>
       </div>
     </div>
   )

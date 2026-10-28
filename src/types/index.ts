@@ -53,6 +53,8 @@ export interface LayeredAsset {
   fgWidth?: number
   fgHeight?: number
   maxWidthClass?: string
+  /** Caps the console itself, so growing the panel does not grow the artwork. */
+  fgMaxWidthClass?: string
   mobileHeightClass?: string
   mobilePaddingClass?: string
 }

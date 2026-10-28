@@ -10,7 +10,7 @@ export function RailGroup({
   return (
     <div className={spaced ? "mt-12 sm:mt-16 w-full reveal-on-scroll" : "w-full reveal-on-scroll"}>
       <Container className="mb-6 sm:mb-8">
-        <h3 className="t-caption-strong text-ink tracking-normal text-lg min-[375px]:text-xl sm:text-2xl font-medium">
+        <h3 className="t-caption-strong font-display text-ink tracking-normal text-lg min-[375px]:text-xl sm:text-2xl">
           {title}
         </h3>
       </Container>

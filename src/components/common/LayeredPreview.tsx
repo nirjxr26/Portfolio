@@ -71,6 +71,7 @@ export function LayeredPreview({
   fgWidth = 851,
   fgHeight = 582,
   maxWidthClass = PREVIEW_MAX_WIDTH,
+  fgMaxWidthClass = "",
   mobileHeightClass = PREVIEW_MOBILE_HEIGHT,
   mobilePaddingClass = PREVIEW_MOBILE_PADDING,
   className = "",
@@ -101,7 +102,7 @@ export function LayeredPreview({
           loading="lazy"
           decoding="async"
           draggable={false}
-          className="block h-full w-auto max-w-none select-none pointer-events-none sm:h-auto sm:w-full"
+          className={`block h-full w-auto max-w-none select-none pointer-events-none sm:mx-auto sm:h-auto sm:w-full ${fgMaxWidthClass}`.trim()}
         />
       </div>
 
