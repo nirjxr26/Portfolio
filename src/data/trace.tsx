@@ -4,11 +4,14 @@
 // import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
 // import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
 // import { withAssetHash } from "@/utils/helpers"
-import { SegmentedTabs } from "@/components/common/SegmentedTabs"
-import { TraceCommandLine } from "@/components/common/TraceCommandLine"
-import { TraceConsole } from "@/components/common/TraceConsole"
-import { Container } from "@/components/layout/Container"
-import { SectionHeader } from "@/components/layout/Section"
+// The "Two ways in" section is detached for now. Its imports are commented
+// with it — an unused import fails `tsc --noEmit`. Uncomment both blocks to
+// bring it back.
+// import { SegmentedTabs } from "@/components/common/SegmentedTabs"
+// import { TraceCommandLine } from "@/components/common/TraceCommandLine"
+// import { TraceConsole } from "@/components/common/TraceConsole"
+// import { Container } from "@/components/layout/Container"
+// import { SectionHeader } from "@/components/layout/Section"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
@@ -47,6 +50,9 @@ export const traceData: CaseStudyData = {
           headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
         }
       ],
+      // The "Two ways in" section is detached, along with the console and
+      // command-line animations it mounts. Uncomment to bring it back.
+      /*
       afterCards: (
         <div className="pt-24 sm:pt-32">
           <SectionHeader
@@ -75,6 +81,7 @@ export const traceData: CaseStudyData = {
           </Container>
         </div>
       ),
+      */
     },
     {
       tag: "Case files, organized",
@@ -205,7 +212,9 @@ export const traceData: CaseStudyData = {
         bgHeight: 694,
         fgWidth: 667,
         fgHeight: 553,
-        maxWidthClass: "max-w-2xl lg:max-w-3xl xl:max-w-[788px]",
+        // The panel now matches the other mockups, but the console inside keeps
+        // the width it had when this section was capped at 788px (88% of it).
+        fgMaxWidthClass: "sm:max-w-[694px]",
       },
     },
     // The "Update in one command." section is retired for now. Every line of
