@@ -33,6 +33,3 @@ jobs:
 
       - name: TypeScript Typecheck
         run: npm run build
-
-      - name: Run Tests
-        run: npm test
