@@ -1,5 +1,10 @@
 const INLINE_SCRIPT_HASH = "sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c="
 
+// Umami Cloud serves the tracker from one origin and ingests events on another,
+// so both directives need their own host — not one shared one.
+const ANALYTICS_SCRIPT_ORIGIN = "https://cloud.umami.is"
+const ANALYTICS_INGEST_ORIGIN = "https://gateway.umami.is"
+
 export const cspProd = [
   "default-src 'none'",
   "base-uri 'self'",
@@ -7,12 +12,12 @@ export const cspProd = [
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   "object-src 'none'",
-  `script-src 'self' '${INLINE_SCRIPT_HASH}'`,
+  `script-src 'self' '${INLINE_SCRIPT_HASH}' ${ANALYTICS_SCRIPT_ORIGIN}`,
   "style-src 'self'",
   "font-src 'self'",
   "img-src 'self' data:",
   "media-src 'self'",
-  "connect-src 'self'",
+  `connect-src 'self' ${ANALYTICS_INGEST_ORIGIN}`,
   "worker-src 'self'",
   "upgrade-insecure-requests",
   "block-all-mixed-content",
@@ -25,12 +30,12 @@ export const cspDev = [
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   "object-src 'none'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${ANALYTICS_SCRIPT_ORIGIN}`,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data:",
   "media-src 'self'",
-  "connect-src 'self' ws:",
+  `connect-src 'self' ws: ${ANALYTICS_INGEST_ORIGIN}`,
   "worker-src 'self'",
   "upgrade-insecure-requests",
   "block-all-mixed-content",
