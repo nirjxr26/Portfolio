@@ -3,6 +3,10 @@
 
 <head>
   <script>try{var t=localStorage.getItem("theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}else{document.documentElement.classList.remove("dark")}}catch(e){}</script>
+  <!-- Umami Cloud analytics. data-domains keeps localhost and Vercel previews out
+       of the stats, and data-exclude-hash stops TOC anchor clicks — which go
+       through history.replaceState — from registering as extra pageviews. -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="dd8a090e-7a7f-4438-b9bf-bca07e1ef44b" data-domains="nirjar.me" data-exclude-hash="true"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nirjar Goswami | Cloud &amp; Security Engineer</title>
