@@ -47,7 +47,7 @@ export const PREVIEW_FRAME_CLASS = "sm:p-[6%]"
  * artwork crops itself the same way.
  */
 export const PREVIEW_MOBILE_PADDING =
-  "top-4 bottom-4 left-4 min-[375px]:top-5 min-[375px]:bottom-5 min-[375px]:left-5 min-[390px]:top-6 min-[390px]:bottom-6 min-[390px]:left-6 min-[430px]:top-7 min-[430px]:bottom-7 min-[430px]:left-7"
+  "top-5 bottom-5 left-5 min-[375px]:top-6 min-[375px]:bottom-6 min-[375px]:left-6 min-[390px]:top-7 min-[390px]:bottom-7 min-[390px]:left-7 min-[430px]:top-8 min-[430px]:bottom-8 min-[430px]:left-8"
 
 /**
  * A console mockup sitting in its environment artwork.
