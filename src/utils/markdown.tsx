@@ -39,7 +39,7 @@ function renderInline(text: string, key: string): ReactNode[] {
           href={link[2]}
           className="text-ink underline decoration-muted/40 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
         >
-          {link[1]}
+          {renderInline(link[1], `${partKey}-label`)}
         </a>,
       )
       return
@@ -315,14 +315,14 @@ function renderNode(node: MdNode, key: string): ReactNode {
 
   if (node.kind === "table") {
     return (
-      <table key={key} className="w-full border-collapse text-left text-[14px]">
+      <table key={key} className="w-full border-collapse text-center text-[14px]">
         <thead>
           <tr>
             {node.head.map((cell, i) => (
               <th
                 key={`${key}-h${i}`}
                 scope="col"
-                className="border-b border-hairline py-3 pr-5 align-top font-semibold text-ink last:pr-0"
+                className="border-b border-hairline px-4 py-3 align-top font-semibold text-ink"
               >
                 {renderInline(cell, `${key}-h${i}`)}
               </th>
@@ -333,7 +333,7 @@ function renderNode(node: MdNode, key: string): ReactNode {
           {node.rows.map((row, r) => (
             <tr key={`${key}-r${r}`} className="border-b border-hairline/60">
               {row.map((cell, c) => (
-                <td key={`${key}-r${r}c${c}`} className="py-3 pr-5 align-top last:pr-0">
+                <td key={`${key}-r${r}c${c}`} className="px-4 py-3 align-top">
                   {renderInline(cell, `${key}-r${r}c${c}`)}
                 </td>
               ))}
