@@ -128,6 +128,8 @@ type MdNode =
   | { kind: "para"; text: string }
   | { kind: "code"; lang: string; code: string }
   | { kind: "list"; ordered: boolean; items: Item[] }
+  | { kind: "quote"; paragraphs: string[] }
+  | { kind: "table"; head: string[]; rows: string[][] }
 
 type Block = { kind: "code"; lang: string; code: string } | { kind: "text"; text: string }
 
@@ -148,6 +150,37 @@ function parseBlocks(content: string): Block[] {
 
   return blocks
 }
+
+/* A blockquote is a run of `>` lines; blank `>` lines separate its paragraphs. */
+function parseQuote(lines: string[]): string[] {
+  const paragraphs: string[] = []
+  let current: string[] = []
+
+  for (const line of lines) {
+    const text = line.replace(/^>\s?/, "").trim()
+    if (!text) {
+      if (current.length) {
+        paragraphs.push(current.join(" "))
+        current = []
+      }
+      continue
+    }
+    current.push(text)
+  }
+
+  if (current.length) paragraphs.push(current.join(" "))
+  return paragraphs
+}
+
+function parseRow(line: string) {
+  return line
+    .replace(/^\||\|$/g, "")
+    .split("|")
+    .map((cell) => cell.trim())
+}
+
+/* The last line of a quote holding a link is its source, not part of it. */
+const QUOTE_SOURCE = /\[[^\]]+\]\([^)\s]+\)/
 
 function parseContent(content: string): MdNode[] {
   const nodes: MdNode[] = []
@@ -175,6 +208,38 @@ function parseContent(content: string): MdNode[] {
         .split("\n")
         .map((line) => line.trim())
         .filter(Boolean)
+
+      const quoteLines = lines.filter((line) => line.startsWith(">"))
+      if (!indented && quoteLines.length > 0 && quoteLines.length === lines.length) {
+        flushList()
+        nodes.push({ kind: "quote", paragraphs: parseQuote(text.split("\n")) })
+        continue
+      }
+
+      const separator = lines[1] ?? ""
+      const isTable =
+        !indented &&
+        lines.length >= 3 &&
+        lines.every((line) => line.startsWith("|")) &&
+        /^\|[\s:|-]+\|$/.test(separator)
+      if (isTable) {
+        flushList()
+        nodes.push({ kind: "table", head: parseRow(lines[0]), rows: lines.slice(2).map(parseRow) })
+        continue
+      }
+
+      // A chunk of consecutive `1.`…`5.` lines is several items, not one.
+      const steps = indented ? [] : lines.map((line) => /^(\d+)\.\s+([\s\S]+)$/.exec(line))
+      if (steps.length > 1 && steps.every(Boolean)) {
+        const items: Item[] = steps.map((match) => ({ text: match![2], blocks: [] }))
+        if (list?.ordered && Number(steps[0]![1]) === list.items.length + 1) {
+          list.items.push(...items)
+        } else {
+          flushList()
+          list = { ordered: true, items }
+        }
+        continue
+      }
 
       const step = indented ? null : /^(\d+)\.\s+([\s\S]+)$/.exec(text)
       if (step) {
@@ -224,6 +289,59 @@ function renderNode(node: MdNode, key: string): ReactNode {
 
   if (node.kind === "code") {
     return <CodeBlock key={key} code={node.code} lang={node.lang} />
+  }
+
+  if (node.kind === "quote") {
+    // A closing line that carries a link is the citation itself.
+    const paragraphs = [...node.paragraphs]
+    const last = paragraphs[paragraphs.length - 1] ?? ""
+    const source = paragraphs.length > 1 && QUOTE_SOURCE.test(last) ? paragraphs.pop() : undefined
+
+    return (
+      <blockquote key={key} className="border-l-2 border-accent/40 pl-5 sm:pl-6">
+        {paragraphs.map((text, i) => (
+          <p key={`${key}-p${i}`} className={i > 0 ? "mt-4" : undefined}>
+            {renderInline(text, `${key}-p${i}`)}
+          </p>
+        ))}
+        {source ? (
+          <footer className="mt-4 font-text text-[13px] leading-relaxed text-muted">
+            {renderInline(source, `${key}-source`)}
+          </footer>
+        ) : null}
+      </blockquote>
+    )
+  }
+
+  if (node.kind === "table") {
+    return (
+      <table key={key} className="w-full border-collapse text-left text-[14px]">
+        <thead>
+          <tr>
+            {node.head.map((cell, i) => (
+              <th
+                key={`${key}-h${i}`}
+                scope="col"
+                className="border-b border-hairline py-3 pr-5 align-top font-semibold text-ink last:pr-0"
+              >
+                {renderInline(cell, `${key}-h${i}`)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {node.rows.map((row, r) => (
+            <tr key={`${key}-r${r}`} className="border-b border-hairline/60">
+              {row.map((cell, c) => (
+                <td key={`${key}-r${r}c${c}`} className="py-3 pr-5 align-top last:pr-0">
+                  {renderInline(cell, `${key}-r${r}c${c}`)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
   }
 
   const items = node.items.map((item, i) => (
