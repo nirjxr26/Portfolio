@@ -73,9 +73,8 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
 
 ## Technical Articles & Writing
+- "Programming is taught wrong, and AI made it obvious": The exam tested loops. The job tests judgement — and AI made the difference impossible to ignore. (https://nirjar.me/articles/programming-is-taught-wrong-and-ai-made-it-obvious).
 - "How to allow remote PostgreSQL connections without opening it to the world": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
-- "Context engineering: why AGENTS.md beats a better model": Why a rules file can matter more than which AI you're using to write code. (https://nirjar.me/articles/context-engineering-why-agents-md-beats-a-better-model).
-- "AI agents have permissions now — but who's in control?": A chatbot lies to you. An agent acts on it — why that's an authorization problem. (https://nirjar.me/articles/ai-agents-have-permissions-now-but-whos-in-control).
 - "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
 - "Rethinking my Git workflow": Not just a code host. A place that quietly reshaped how I build. (https://nirjar.me/articles/rethinking-my-git-workflow).
 - "How VaultLock reliably fetches brand logos": Getting the right brand logo, every time, without breaking the UI. (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).

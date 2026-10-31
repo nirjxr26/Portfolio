@@ -5,11 +5,6 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "source": "/articles/ai-agents-have-permissions-who-controls-them",
-      "destination": "/articles/ai-agents-have-permissions-now-but-whos-in-control",
-      "permanent": true
-    },
-    {
       "source": "/articles/872-issues-30-days-sonarqube",
       "destination": "/articles/making-technical-debt-visible-with-sonarqube",
       "permanent": true

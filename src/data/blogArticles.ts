@@ -16,6 +16,212 @@ export type BlogArticle = {
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
+    slug: "programming-is-taught-wrong-and-ai-made-it-obvious",
+    title: "Programming is taught wrong, and AI made it obvious",
+    description:
+      "Programming education still stops at loops and prime checkers. What AI changes about that, and what a syllabus worth teaching would look like.",
+    updated: "October 31, 2026",
+    readTime: "10 min",
+    category: "Artificial Intelligence",
+    cardDate: "Oct 31, 2026",
+    cardDesc: "The exam tested loops. The job tests judgement — and AI made the difference impossible to ignore.",
+    cardReadTime: "10 min read",
+    keywords:
+      "programming education, software engineering, computer science curriculum, AI coding agents, code review, secure coding, SQL injection, XSS, DevOps, India, employability, Stack Overflow Developer Survey 2026, METR, Veracode",
+    sections: [
+      {
+        subtitle: "",
+        content: `I recently sat a Python and shell scripting exam, and somewhere in the middle I realized I could pass it half asleep, and that passing would prove almost nothing.
+
+The questions were the usual ones. Reverse a string. Check if a number is prime. Print a pattern of stars. As far as I can tell, the same programs were in the exam a decade ago.
+
+These exercises aren't useless. A beginner has to understand loops and conditionals before anything else makes sense, and I'd teach them first too. The trouble is that they've become the finish line. Students memorize the answers, collect the marks, and believe they've learned to code. I believed that too, until I tried to build a real project and opened a production codebase, and found that most of what I had memorized didn't help.`,
+      },
+      {
+        subtitle: "Why college leaves you stuck",
+        content: `The gap is between two different jobs.
+
+| Programming | Software engineering |
+| --- | --- |
+| Writing code | Designing systems |
+| Implementing functions | Structuring applications |
+| Solving one problem | Managing complexity across a whole system |
+| Producing the right output | Keeping it correct and reliable |
+| Running a program | Testing and maintaining it |
+| Writing an implementation | Securing and operating it |
+
+A student can finish a degree living entirely in the left column. As far as I can tell, most of the job happens in the right one, and it adds things the left column never mentions: trade-offs between a fast solution and one the next person can maintain, logs and metrics so you can tell what broke at 2am, reliability as traffic grows, and a team all editing the same files.
+
+Nobody ships a prime number checker. Real code is a service with endpoints, a database, and config that changes per environment. Try building one using only what's taught in class and you hit a wall almost immediately, because isolated snippets don't show you how to structure a project, connect a database, or handle a request.
+
+Here is the same gap in exam form.
+
+> Today's question: Write a program to check whether a number is prime.
+>
+>
+> A real-job question: Here is a 60-line API endpoint that takes a username and returns that user's records. It works. Find what's wrong with it, explain how someone could abuse it, and fix it.
+
+The first tests whether you memorized a loop. The second tests whether you can think.
+
+This isn't a new complaint. In 2001, a working group tested 216 first-year students at four universities on a programming task, and the average score was 22.89 out of 110. Three years later, another group tested over 500 students from seven countries on reading and understanding code, and most did poorly. Neither study was in India, and both predate AI, so I'd treat them as background. Still, reading code was already the weak spot long before anyone asked an agent to write it for us.`,
+      },
+      {
+        subtitle: "When an agent writes the code",
+        content: `A lot of code is now written with AI. In Stack Overflow's 2026 developer survey, 65.9% of respondents used coding assistants or agents, and only 17.2% said they used no AI tools. You can sit with an agent, plan a project from top to bottom, and have a working prototype far faster than you could type it. [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai/data/ai-select) — AI usage data.
+
+I want to be careful about what that means. AI cuts the effort of typing out an implementation. It doesn't remove architectural decisions, verification, security review, integration, or the responsibility of running the thing in production. For a small project like a college assignment, I'd guess the speedup is large (I haven't measured it). For big mature codebases the picture is murkier: in a randomized trial, METR found that experienced open-source developers took 19% longer with AI tools on their own repositories. That study used early-2025 tools, so it's a data point, not a verdict.
+
+> Three randomized field experiments at Microsoft, Accenture, and a Fortune 100 company examined AI coding-assistant use across 4,867 developers. Access to an assistant that suggested code completions was associated with 26.08% more completed tasks (standard error: 10.3%). Less experienced developers adopted the tool more and saw larger gains. The experiments measured code-completion assistance, not autonomous agents, and the estimates are noisy.
+>
+>
+> [Cui et al. (2026)](https://doi.org/10.1287/mnsc.2025.00535), *Management Science*
+
+Read alongside METR's randomized study, which found experienced open-source developers took 19% longer with early-2025 AI tools on their own repositories, the findings suggest that productivity depends on the developer, task, tools, and codebase—not that one study cancels out the other. [METR (2025)](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/).
+
+What I keep coming back to is that the ability to generate software and the ability to understand it are becoming separate skills. A student who doesn't know advanced coding concepts can now build a working tool, and still be unable to find the smallest bug in it, or read it well enough to explain it. That has nothing to do with being less smart or not being a topper. They were never exposed to the patterns real code is built on. It's like being handed a calculator without knowing arithmetic: when the answer comes out wrong by a factor of ten, you have no way to notice.
+
+Recent programming-education studies give this concern some empirical support.
+
+> Kohen-Vacs, Usher, and Jansen (2025) found that students perceived generative AI as useful, but had significantly more difficulty correcting LLM-generated code than completing traditional instructor-designed programming tasks.
+>
+>
+> [Kohen-Vacs et al. (2025)](https://doi.org/10.1007/s40593-025-00496-4)
+
+> A 2026 randomized trial with 275 students in a single introductory programming course at the Technical University of Munich found that AI-supported students scored higher on the exercise, but neither AI group showed greater knowledge gains or better code-comprehension results than the no-AI group. The study covered one course and one 90-minute concurrency exercise, so it should not be generalized to every programming course.
+>
+>
+> [Bassner et al. (2026)](https://doi.org/10.1016/j.caeai.2025.100537)
+
+Together, the studies distinguish completing a task from learning how to understand and repair the code.
+
+Working developers seem to know this already. In the same 2026 survey, nearly half said they trust AI output when they can verify it, and only 6.6% would trust it with an important decision. Verifying is the job now, and verifying needs exactly the knowledge the syllabus skips.
+
+The survey's verification question was answered by 13,162 respondents: 76.5% said they run AI-generated output locally, 63.9% compare it against their codebase, 53.0% inspect tests or security implications, and 9.6% use it as-is. These are self-reported actions from an optional survey question; they do not measure whether the checks were effective. The 6.6% trust figure should also be read against the survey's exact wording—it refers to trust across many tasks, including important work decisions, rather than a standalone question asking whether someone would delegate one important decision. [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai/data) — verification data and AI trust data.
+
+It wasn't always like this. People used to pick up production-level coding on the job, because there was no agent to build a project in hours. They spent a long time researching how to structure a project and wire its parts together. A bachelor's project was usually a management system with a website and a handful of features, and the real engineering knowledge came later, at work. Now, with free quotas and holiday credits, people build "vibe" projects without knowing what an API is. The tools are there and the understanding isn't.
+
+My point is this. If implementation got cheaper, the teaching time spent on it should shrink too. A prototype that once took a team of six or seven and months of work can now be scaffolded by one student in far less time (a rough guess, but I doubt it's off by an order of magnitude). We can spend the freed time on structure, trade-offs, and review.`,
+      },
+      {
+        subtitle: "What the India numbers show, and what they don't",
+        content: `Here is what the data supports. AICTE figures show about 14.1 lakh BTech enrolments in 2021-22, against roughly 25.4 lakh seats. ThePrint's reading of AICTE data for 2019-20 to 2022-23 is that close to half of engineering graduates struggled to land campus placements. NASSCOM has flagged an employability gap in engineering graduates and said the education system isn't building strong enough foundational and professional skills, and has pointed out that the gap forces IT companies to spend more time and money training freshers. The India Skills Report 2026 has computer science and IT engineers at about 80% employability, while BE/BTech overall slipped from 71.5% to 70.15%. The report's employability measure is based on candidates scoring above its Global Employability Test benchmark; it is not a count of people actually employed or placed. [India Skills Report 2026](https://wheebox.com/assets/pdf/ISR_Report_2026.pdf).
+
+Here is what it doesn't show: that outdated programming syllabi cause any of this. Placement depends on the job market, the tier of the college, communication skills, and a lot else, and employability scores measure what their test measures. The evidence establishes a skills gap that industry partly attributes to education. Pinning a large share of it on how programming is taught is my interpretation, based on the exams and projects I've seen around me.
+
+A broader labour-market picture comes from Azim Premji University's *State of Working India 2026*.
+
+> The report describes a widening gap between the number of graduates and the growth in graduate employment. It estimates graduate unemployment at nearly 40% among people aged 15–25 and 20% among those aged 25–29.
+>
+>
+> [State of Working India 2026](https://azimpremjiuniversity.edu.in/publications/2026/report/swi-2026)
+
+This is evidence of a wider education-to-employment problem, not evidence that computer science curricula alone cause it; the report covers graduates across disciplines and highlights labour demand as part of the issue.
+
+I also haven't tested how many students can review AI-generated code, and I don't know of a study that has. I suspect it's fewer than should, but that's a suspicion, and somebody should run the experiment.`,
+      },
+      {
+        subtitle: "Tools nobody hands you",
+        content: `DevOps gets listed with tools, but it's really a set of practices: short feedback loops, automation, and shared ownership of what runs in production. Git, CI/CD pipelines, containers, and deployment systems are the tools that make those practices possible. Working engineers also live in pull requests and code reviews, a Linux command line, API testing, dependency management, observability, and documentation.
+
+Most students finish a degree without touching any of this. We learn how to write code and almost never how it's organized, maintained, tested, and delivered. We don't see how a change travels from a laptop to a running system: built, checked, packaged, and deployed so real users can reach it.
+
+None of it needs a semester each. Most needs a few weeks and a project. And everything else leans on it. Without version control, a team can't work on the same code. Without tests, nobody knows whether a change broke something. Without a pipeline, nothing reliably reaches users. These should be core subjects from the first year, graded like everything else.`,
+      },
+      {
+        subtitle: "Pick a track",
+        content: `Teaching should give students the exposure they'd otherwise get only after joining a company, not just a CGPA. Those numbers matter far less than what a student can do.
+
+From the bachelor's level, students should be able to pick a niche: mobile app development, DevOps, cybersecurity, software engineering, QA testing, cloud architecture or cloud security, and more. They'd learn the work before the pressure of a real job arrives, instead of a little of everything and depth in nothing.
+
+I don't have a full curriculum design, but I can see where the hard parts are.
+
+On timing, I'd specialize after a shared first year, since nobody can choose a track they've never seen. On what stays compulsory, I'd keep programming, data structures, databases, networks, operating systems, and the engineering tools above as a shared base. On switching, if the base is the same, changing tracks should cost a few track-specific credits and not a lost year. The real constraint is faculty and labs. A college can't staff seven tracks well. Offering two or three properly, and sharing the rest through industry-taught or online modules that count for credit, seems more realistic than offering all of them badly.`,
+      },
+      {
+        subtitle: "What should we write instead?",
+        content: `Once students have a track and the tools, the next question is what they should write. The basics stay, as a way into the code real software is built with. I'd group the rest into five areas:
+
+1. Application development (APIs with routes, input checks, login tokens, and error responses; async code; typed code with TypeScript or Python type hints)
+2. Software architecture (project structure with layers and modules and config kept separate; design patterns like factory, strategy, and dependency injection; OOP and functional style, including interfaces, composition, closures, and decorators)
+3. Data and infrastructure (databases, queries, an ORM, transactions, and caching)
+4. Testing and reliability (unit and integration tests, mocking, custom errors, retries, timeouts, and searchable logs)
+5. Performance (picking the right data structure, profiling, and fixing slow code)
+
+> A note on depth: every area above goes much deeper than a bachelor's course can cover, and each is a field of its own. The goal is for students to implement them at a basic to intermediate level, at most. They should leave knowing what each one is, why it exists, and how to use it in a working project. Depth comes later, in the track they choose.`,
+      },
+      {
+        subtitle: "A real exam question, taken apart",
+        content: `Here's a typical programming paper, and it looks reasonable at first glance.
+
+*[Insert the screenshot of the "Develop a Student Management System" paper here]*
+
+The task is to build a Student Management System in Python using classes, lists, dictionaries, and nested data structures. Each student has an ID, name, age, department, and marks. The program has to add, display, search, update, and delete records, find the highest and lowest marks, and sort students by average.
+
+As a first assignment, it's fine. A terminal-based record manager teaches classes, dictionaries, and basic logic, and I wouldn't throw it out. What bothers me is that nothing comes after it. The paper never asks for:
+
+- Persistent storage. Close the program and every record is gone.
+- Input validation. Nothing stops an age of -5, marks of 900, or two students with the same ID.
+- Authentication and authorization. Anyone can delete any record.
+- Application structure. One file and one class, so nobody has to think about how the code is split.
+- Error handling. What happens when you delete a student who doesn't exist?
+- Tests. The only proof it works is running it and looking.
+- An interface other systems can use. It's a terminal menu, not an API.
+
+The fix doesn't need a new topic. The same assignment could grow in steps: save the records to a database, validate the input, expose it as an API, add a login, and write tests for it. Five steps in the same domain, and each one teaches a skill the paper skips. The exam shouldn't be a different question each year. It should be the same project, one level further.`,
+      },
+      {
+        subtitle: "Security belongs in the code",
+        content: `If students are going to build APIs, databases, and login systems, they need to know how those get attacked. Right now security is mostly a separate subject for the cybersecurity track, taught as theory. But anyone writing a web app is writing something an attacker can poke at, and AI-generated code raises the stakes. Veracode's 2026 report puts the average security pass rate of AI-generated code at 56%, barely changed since last year. Their 2025 report found that models failed to defend against cross-site scripting in 86% of the relevant cases. (Veracode sells security tools, so read the numbers with that in mind.) And in a Stanford user study, participants with an AI assistant wrote significantly less secure code, and were more likely to believe it was secure.
+
+Code that looks clean and runs fine is exactly the code nobody questions. So the basics of secure coding should go to every student, as code they write. Here is what I'd put in the syllabus.
+
+> Veracode's 2026 benchmark reports a 56% average security pass rate across the models it tested, based on its own set of 80 tasks across four programming languages and more than 100 models across the report's snapshots. This is a controlled benchmark result, not a pass rate for all AI-generated code in real-world use. Veracode sells application-security products, so the vendor context matters.
+>
+>
+> [Veracode](https://www.veracode.com/resources/analyst-reports/2026-genai-code-security-report), *GenAI Code Security Report 2026*
+
+SQL injection. Build a query from raw user input and an attacker can read or delete the whole database. The fix is parameterized queries.
+
+Vulnerable, because the input is pasted straight into the query:
+
+\`\`\`python
+db.execute(f"SELECT * FROM users WHERE name = '{name}'")
+\`\`\`
+
+Safe, because the input travels separately from the query:
+
+\`\`\`python
+db.execute("SELECT * FROM users WHERE name = ?", (name,))
+\`\`\`
+
+Cross-site scripting (XSS). Unescaped user input in a page can run an attacker's script in someone else's browser. Input validation and output encoding are different defenses. Validation decides what you accept. Encoding decides how you display it, and what's safe depends on where the data lands (an HTML page, an attribute, a script, a URL). Checking a name field doesn't make it safe to drop into HTML. Teach both, and prefer frameworks that escape by default.
+
+The rest of the list:
+
+- Passwords and authentication: never store passwords in plain text. Hash them with something like bcrypt or argon2, set token expiry, and don't trust a token you haven't verified.
+- Secrets and configuration: API keys, database passwords, and secret keys belong in environment variables or a secrets manager, never in the code or a public Git repo.
+- Authorization: logging in isn't enough. The code has to check that this user may access this record, or anyone can read anyone else's data by changing an ID in the URL.
+- Input validation: treat every input as untrusted and check its type, length, and range.
+- Safe error messages: users should see "something went wrong," not a stack trace that shows an attacker how the system is built.
+- CSRF, rate limiting, and HTTPS: know what each one protects against and how to switch it on.
+- Dependencies: every package you install is code someone else wrote, so check for known vulnerabilities and keep them updated.
+
+> A note on depth: this isn't a full cybersecurity course. Students should learn to recognize each of these issues and apply the standard fix at a basic to intermediate level. Penetration testing, cryptography, and threat modeling are what the cybersecurity track is for.
+
+The exam can test this the same way as everything else: give them a short piece of code and ask what's wrong and how to fix it.`,
+      },
+      {
+        subtitle: "Where this leaves us",
+        content: `I'd want programming education to produce engineers who understand what they build, can evaluate it, and take responsibility for what they ship. Writing code unassisted was always a means to that, and it's a cheaper means now than it was.
+
+If agents keep improving, I'd expect typing code to get cheaper every year and judging it to get more valuable. The 2026 survey already points that way: developers trust AI output when they can check it, and rarely otherwise. A student who can read a generated function and spot the injection in it will probably be fine whatever tool shows up next.
+
+What I'd like to see is one Indian university run the experiment. Take a cohort, swap half the loop exercises for the build-and-review projects above, and compare them with a normal cohort after a year. I'd read that paper.`,
+      },
+    ],
+  },
+
+  {
     slug: "allow-remote-postgresql-without-opening-it-to-the-world",
     title: "How to allow remote PostgreSQL connections without opening it to the world",
     description:
@@ -42,73 +248,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
         subtitle: "Reference",
         content:
           "- [PostgreSQL docs: The pg_hba.conf file](https://www.postgresql.org/docs/current/auth-pg-hba-conf.html)\n- [PostgreSQL docs: Connections and authentication](https://www.postgresql.org/docs/current/runtime-config-connection.html)\n- [PostgreSQL docs: Password authentication](https://www.postgresql.org/docs/current/auth-password.html)\n- [PostgreSQL docs: Secure TCP/IP connections with SSL](https://www.postgresql.org/docs/current/ssl-tcp.html)",
-      },
-    ],
-  },
-  {
-    slug: "context-engineering-why-agents-md-beats-a-better-model",
-    title: "Context engineering: why AGENTS.md beats a better model",
-    description:
-      "Why repository-level rules and project context can matter more for AI-generated code quality than simply switching to a stronger model.",
-    updated: "September 16, 2026",
-    readTime: "5 min",
-    category: "Artificial Intelligence",
-    cardDate: "Sep 16, 2026",
-    cardDesc:
-      "Why a rules file can matter more than which AI you're using to write code.",
-    cardReadTime: "5 min read",
-    keywords:
-      "Context engineering, AGENTS.md, CLAUDE.md, AI coding agents, AI coding, code quality, repository context, software engineering, coding assistants, developer tools",
-    sections: [
-      {
-        subtitle: "Why rules matter more than the model",
-        content:
-          "I keep seeing the same debate play out: which model writes the best code. Claude versus GPT versus whatever shipped this week. People benchmark them on leaderboards, argue about which one \"feels smarter,\" and treat the model choice like it's the deciding factor.\n\nIt isn't, and I want to be specific about what I mean before this turns into another \"prompt better\" post.\n\nI'm not talking about which model makes better decisions. A stronger model will still reason through an ambiguous problem better than a weaker one, and no amount of documentation fixes that gap. I'm talking about code quality: how easy it is to understand, maintain, reuse, and keep consistent. Most of the time, when a small problem comes up, you won't always hand that task to AI. Sometimes you'll handle it yourself. And with today's tools to make the codebase more understandable and reusable, why not keep the codebase consistent?\n\nI've seen AI write separate and multiple coding patterns for different things across a backend or website simply because it didn't have enough context. In my own repos, I've repeatedly gotten cleaner, more reusable, easier-to-maintain, and more understandable code from a mid-tier model with a real rules file than from a frontier model working from a blank context.",
-      },
-      {
-        subtitle: "The thing almost nobody sets up",
-        content:
-          "Most AI coding agents support a repo-level instructions file. Claude Code reads CLAUDE.md. Other agents read AGENTS.md or their own variant. The idea is simple: instead of repeating your conventions in every prompt, you write them once and the agent reads them automatically at the start of a session.\n\nPlenty of teams still aren't doing this. They'll pay for the most expensive model tier available and then hand it a blank context window every single time, as if the agent is supposed to guess their branch naming scheme or figure out on its own that a particular directory is legacy code nobody wants touched.\n\nA rules file isn't optional polish. It's the difference between an agent that writes code matching your project and one that writes code matching whatever the internet trained it on.",
-      },
-      {
-        subtitle: "What actually goes in one",
-        content:
-          "This isn't a generic checklist you copy-paste into every repo. That's the mistake I see most often, someone finds a template on GitHub, drops it in unchanged, and wonders why the output still feels off. The file has to reflect the actual codebase in front of it. That said, here's roughly what I cover, grouped by what each part is actually doing.",
-      },
-      {
-        subtitle: "The baseline",
-        content:
-          "The facts an agent can't infer from the code alone, no matter how well it reads.\n\n- Stack and versions. Exact framework versions, not \"React.\" I've had agents suggest patterns from three major versions ago because nothing told them otherwise.\n\n- File and folder conventions. Where new components live, how modules are named, what the test file naming pattern is. Agents will invent their own scheme if you don't give them one, and it usually won't match yours.\n\n- Existing utilities and abstractions. A running list of \"we already have a function for this, don't write a new one.\" This is probably the single highest-value section, and the one people skip most.",
-      },
-      {
-        subtitle: "The guardrails",
-        content:
-          "The parts that stop an agent from doing technically-reasonable things you don't actually want.\n\n- What not to touch. Legacy modules, generated files, anything mid-migration. This one saves more time than almost anything else on the list.\n\n- Security constraints. Anything touching auth, secrets, or user data gets flagged explicitly, because this is the category where I want zero improvisation.\n\n- Scope discipline. What counts as in scope for a given change and what doesn't. Without this, an agent will \"improve\" formatting in a file it was never asked to touch, and your diff triples in size for no reason.\n\n- Solution sizing. A cap on how big a fix should be relative to the problem. Left alone, a model will reach for a new abstraction layer or config system when a two-line change would do.",
-      },
-      {
-        subtitle: "The process",
-        content:
-          "How work gets done, not just what it should look like when it's finished.\n\n- Testing requirements. Whether tests are mandatory for new code, which framework, and what coverage actually matters versus what's just noise.\n\n- Error handling patterns. How your codebase actually handles failures, not the generic try/catch the model defaults to.\n\n- Commit and PR conventions. Message format, branch naming, whether commits should be atomic or squashed.\n\n- A required sequence. Understand, plan, implement, verify, review, spelled out explicitly rather than assumed. Left to itself, an agent will implement first and verify never, or call something done without running the tests it claims to have run.\n\nNone of this is exotic. It's the stuff a competent new hire would ask about in their first week. The difference is the agent won't ask. It'll just guess, and the guess will look plausible enough that you might not catch it in review.",
-      },
-      {
-        subtitle: "Domain rules aren't style rules",
-        content:
-          "Everything above keeps the code looking consistent. It doesn't keep it correct, and those are different problems.\n\nIn one of my forensic-tooling projects, closed cases can never transition back to open. Case IDs are immutable once assigned. Every mutation has to travel through the application service rather than touching the ORM directly from a CLI layer, no shortcuts. None of that is a formatting preference. It's a business rule the codebase depends on, and it's exactly the kind of thing an agent will violate without hesitation if you don't spell it out, because \"add a quick fix that reopens a case\" reads as a completely reasonable request until you know it isn't.\n\nIf a project has hard invariants like this, they get their own section, separate from general style. Burying \"cases can never reopen\" in the same list as \"we use camelCase\" means it gets read with the same weight as a formatting preference, and it's not one. It's the one rule in the whole file you genuinely can't afford to have ignored.",
-      },
-      {
-        subtitle: "Different models, different files",
-        content:
-          "One thing I've had to adjust: the same rules file doesn't perform identically across models. Some agents follow terse, bulleted instructions well. Others need more explicit examples of the pattern you want, a before-and-after, not just a description of it. \n\nOn one project, \"reuse the existing service layer\" was enough for one agent to consistently find and extend the right service. Another agent read the same line and still wrote a parallel implementation, and only stopped once I added a concrete example showing which service to reuse and which pattern not to reintroduce. I've ended up keeping model-specific variants for a couple of projects rather than one universal file, because instructions tuned for one agent produced noticeably worse adherence on another. It's annoying to maintain, but it's less annoying than fixing the output afterward.",
-      },
-      {
-        subtitle: "The part people skip: making the codebase legible to a new agent",
-        content:
-          "Rules files handle behavior. They don't handle context, and a repo of any real size has a lot of it that isn't visible from the code alone. Why a particular service is structured the way it is. Which parts are being actively migrated. What broke last time someone touched the payment logic without reading the three-year-old comment explaining why.\n\n### Building the index\n\nI keep this in a separate notes system, Obsidian in my case, though Notion works the same way. Not as a replacement for code comments, but as an index: what each major component does, why certain decisions were made, what's currently in flux. When I bring a new AI agent into an unfamiliar part of the codebase, pointing it at that index gets it oriented faster than letting it infer the architecture from file names and hope for the best.\n\nThink about onboarding a new engineer. You wouldn't hand them the repo and nothing else. You'd walk them through the architecture, or at least point them at a doc that does. AI agents need the same thing, and most people don't bother because it feels excessive to write documentation for something that isn't human. It isn't excessive. It's the same onboarding problem, just with a different kind of new hire.",
-      },
-      {
-        subtitle: "Where this actually lands",
-        content:
-          "None of this makes a weak model outreason a strong one. It won't fix bad architectural decisions or catch a subtle logic error the model wasn't capable of spotting in the first place. What it does is close the gap on everything downstream of the decision: the actual code that gets written, how well it fits what's already there, how much cleanup you're doing afterward.\n\nA better model gives you better reasoning. Better repository context gives that reasoning somewhere useful to land.",
       },
     ],
   },
@@ -259,66 +398,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
         subtitle: "UI isolation",
         content:
           "VaultLock UI doesn’t fetch, validate, or guess, it never sees any of this logo fetching process.\n\nThats why VaultLock is reliable.",
-      },
-    ],
-  },
-  {
-    slug: "ai-agents-have-permissions-now-but-whos-in-control",
-    title: "AI agents have permissions now — but who's in control?",
-    description:
-      "A chatbot gives you bad information. An agent takes bad actions. Why agent security is an authorization problem, not a model-quality problem — and what to actually do about it.",
-    updated: "September 15, 2026",
-    readTime: "9 min",
-    category: "Artificial Intelligence",
-    cardDate: "Sep 15, 2026",
-    cardDesc: "A chatbot lies to you. An agent acts on it — why that's an authorization problem.",
-    cardReadTime: "9 min read",
-    keywords: "AI agents, IAM, authorization, least privilege, OAuth, non-human identity, prompt injection, insider threat, short-lived credentials, infrastructure as code, AegisMesh, deployment security",
-    sections: [
-      {
-        subtitle: "A chatbot can lie to you. An agent can act on it.",
-        content:
-          "A chatbot gives you bad information. You read it, you're annoyed, you move on.\n\nAn agent takes a bad action. It merges the PR. It deletes the table. It sends the wire.\n\nThat's the whole gap this post is about. Everyone's already built around the fact that LLMs get things wrong — review steps, guardrails, fallback logic. Nobody's finished figuring out what happens once that same, still-fallible system has a login.\n\nBecause it already does. Somewhere in your stack right now, there's probably an agent holding a GitHub token, an AWS role, read access to a database, maybe a Slack bot token or an inbox it can send from. Some of them touch Kubernetes. A few touch production directly.\n\nI work in identity and access management, so I'll say my bias up front: most of the industry is treating this as a model-quality problem when it's really an authorization problem. You don't fix bad access control by making the thing asking for access smarter. You fix it by not giving it access it doesn't need.",
-      },
-      {
-        subtitle: "The ladder nobody drew on purpose",
-        content:
-          "Nobody designed this progression on purpose. Each step just looked like a small, reasonable move up from the last one.\n\nA chatbot answers questions and does nothing. An AI assistant drafts things and still does nothing on its own. An AI agent takes actions and needs tool access. An agent with tools calls APIs, reads and writes real systems. An agent with identity authenticates as something and holds credentials. An agent with production access can change the state of the business.\n\n`Let it draft the PR` becomes `let it open the PR`. That becomes `let it merge small PRs`. Eighteen months later, nobody quite remembers agreeing to any of it, but there's a bot account with write access to main and a Slack channel full of its commits.\n\nAccess always drifts this way, human or not. It gets granted under pressure and rarely revoked, because nobody wants to be the one who breaks the demo by tightening the scope.\n\nAgents just move through that drift faster. Provisioning one is a config change, not a ticket to IT.",
-      },
-      {
-        subtitle: "The token question that doesn't have a clean answer",
-        content:
-          "Here's the one that actually gets to me: if an agent is holding an OAuth token, whose identity is that token?\n\nNot really the user's. The user isn't the one calling the API at 3 a.m. while the agent chews through a backlog.\n\nNot really the agent's either, since `the agent` isn't a stable thing. It's a process that spins up, does something, and disappears — sometimes running a different model version or a different prompt than the one that fetched the token in the first place.\n\nTraditional IAM has a clean answer for the human case: the token represents a person, that person is accountable, you can ask them what happened. Service accounts stretched that model already, but they still represented one fixed, well-understood job. An agent breaks it further, because it reasons — it decides at runtime which tool to call and why. What it does is a function of the prompt, the context, and whatever it decided made sense in the moment, not a role you can point to on a diagram.\n\nA 2026 Cloud Security Alliance survey found that 68% of organizations can't reliably tell an AI agent's activity apart from a human's in their own logs. That's not a future risk. That's the current state of visibility at most companies running agents today.",
-      },
-      {
-        subtitle: "So who's responsible when it breaks something",
-        content:
-          "This is the question every security team gets cornered into answering — usually right after an incident, the worst possible time to be figuring out policy for the first time.\n\nIs it the developer who wrote the system prompt? The team that granted the IAM role? The vendor whose model ran `DROP TABLE` because it misread the instruction? The company that deployed it with no human approval gate on destructive actions?\n\nMy honest answer: the org that granted the access is accountable, full stop. Same as you're accountable for a junior engineer's mistakes if you hand them prod credentials on day one with no review process. `The AI did it` isn't a liability shield — it's an admission that nobody scoped the blast radius before flipping it on.\n\nThe fix isn't a better model. It's the boring IAM work most teams were already planning to get to eventually.",
-      },
-      {
-        subtitle: "Should an agent be allowed to create infrastructure?",
-        content:
-          "I go back and forth on this one more than anything else here.\n\nThe case for yes: agents are genuinely good at infrastructure-as-code. Terraform, CloudFormation — structured, pattern-heavy work is exactly where LLMs are strong, and letting an agent stand up a dev environment on request is a real productivity win.\n\nThe case for no, at least not yet: infrastructure creation can quietly cost you money, open a network path, or leave a resource nobody remembers to tear down — and it can do all three without tripping anything that looks like an incident. A confused agent with `terraform apply` access isn't just a data risk. It's a standing invitation to run up your cloud bill or open a door you find in an audit eighteen months later.\n\nWhere I've landed, for anything touching a real environment: agents generate the plan. A human approves the apply. Not because the code is usually wrong — half the time it's fine. Because `fine most of the time` is a bad bar for anything with a real cost and a real blast radius attached to it.",
-      },
-      {
-        subtitle: "Permanent credentials are the mistake we already know not to make",
-        content:
-          "We learned this with humans a decade ago. Now everyone's relearning it with agents.\n\nA recent industry report on non-human identity management put the share of non-human credentials that never get rotated on any recommended schedule at 71%. Only about 20% of organizations have a real process for offboarding or revoking API keys once they're no longer needed.\n\nEstimates of the non-human-to-human identity ratio vary by source — CyberArk has cited 80:1, the Cloud Security Alliance a more conservative 45:1. Every count agrees on the direction. It's growing, and agents are the fastest-growing slice of it.\n\nI think about this constantly on AegisMesh, the IAM platform I've been building. The whole deny-first design exists because a static, long-lived credential is a liability from the moment it's created — the only question is when it gets used against you, not if.\n\nFor anything with real-world write access, an agent shouldn't hold a permanent secret. Short-lived, scoped, automatically expiring credentials, reissued per task, are what actually survive a compromised prompt or a misbehaving tool call. There are narrower cases — a sandboxed agent with no real write access — where a longer-lived credential is a defensible trade-off. But as a default, permanent credentials are the same mistake we already made with service accounts, just moving faster this time.",
-      },
-      {
-        subtitle: "What this looks like when it goes wrong",
-        content:
-          "All of this is easy to wave off as theoretical until you walk through one concrete path. Say a developer types something completely ordinary into a deployment agent: `Deploy the latest version to production.`\n\nUnder the hood that turns into a chain: the agent reads the GitHub repo, generates the Terraform or deployment config, calls the AWS API, assumes an IAM role — and production changes.\n\nEvery arrow in that chain is a place this can go wrong. None of them require anything as dramatic as a hack.\n\nWhat if the repository contains a prompt injection? A README comment, a commit message, a config file the agent reads for context — any of it can carry text crafted to look like an instruction. The agent isn't separating `content I'm reading` from `commands I should follow` as cleanly as we'd like. If that hidden text says to also update the payments webhook URL, a capable agent may just do it, as part of the job it thinks it was asked to do.\n\nWhat if the agent interprets `latest version` incorrectly? Latest merged commit, latest tagged release, latest commit on a long-lived release branch — a human on the deploy team catches that ambiguity instantly. An agent that guesses wrong doesn't throw an error. It deploys, confidently, and the first sign of trouble is a production incident.\n\nWhat if the deployment tool has broader permissions than the agent actually needs? This is the one that turns a small mistake into a big one. If the IAM role behind that Terraform call has write access to the whole account instead of one service, every failure above inherits that same wide blast radius. The agent didn't need admin access to do its job. It had admin access because scoping the role precisely was more work than attaching AdministratorAccess and moving on — which is how most human IAM messes start too.\n\nNone of these require the agent to be hacked. Each one is the agent doing exactly what it was built to do, with one link in the chain slightly wrong. There's often no exploit to point to afterward. Just a permission that was wider than it needed to be, and an action taken faster than anyone could review it.",
-      },
-      {
-        subtitle: "The insider threat framing is right, and it's worse than it sounds",
-        content:
-          "CyberArk's VP of cyber research, Lavi Lazarovitz, has described AI agents as a new class of digital coworker — one that reasons and acts autonomously instead of following a fixed script. Security researchers writing about agent identity have started calling this exactly what it is: a new insider threat.\n\nThat's the right frame. An insider threat is dangerous specifically because it already has legitimate access. The damage doesn't come from breaking in — it comes from what a trusted identity does once it's inside. That's the shape of an overprivileged agent: no breach required, just a normal, authenticated action that happened to be the wrong one, at machine speed.\n\nAnd it's not staying single-agent. As multi-agent setups become normal — a coding agent handing off to a deployment agent, a support agent pulling context from a data agent — you get a new failure mode: agents manipulating or exploiting other agents. Prompt injection isn't just a way to fool a person's chatbot anymore. It's a way to pivot from one compromised agent into whatever the next one in the chain is trusted to touch. Lateral movement, wearing an AI costume. Most agent architectures have zero segmentation between agents the way we'd expect between network zones.",
-      },
-      {
-        subtitle: "What this actually means if you're building with agents right now",
-        content:
-          "Not a grand theory. Just what I'd actually do.\n\nGive every agent a named human owner. If nobody can explain why an agent has an identity, it shouldn't have one.\n\nScope permissions to the task, not the team. `Reads the customer table` isn't a scope. `Reads order status for the ticket it's currently handling` is closer.\n\nDefault to no permanent credentials for anything with real write access. If your framework doesn't support short-lived tokens per task, that's a gap to close before you scale usage.\n\nPut a human approval gate on anything destructive or irreversible — prod deploys, infra creation, moving money, deleting data.\n\nLog agent actions as agent actions. Don't let them blend into human audit trails where nobody can tell the difference later.\n\nTreat agent-to-agent calls as a trust boundary, not an internal detail. You wouldn't let one microservice call another with no auth check. Don't let one agent hand off to another with no check on what it's allowed to ask for.\n\nNone of this is exotic. It's the same deny-first, least-privilege thinking IAM has preached for years, applied to an identity type that reasons about what it wants before it asks for it.\n\nThe chatbot era asked whether you could trust what it says. The agent era is asking whether you can trust what it's allowed to do. That's the harder question, and it's the one that actually matters now.",
       },
     ],
   },

@@ -109,22 +109,24 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
             <hr className="border-hairline" />
             <div className="mt-10 space-y-10 sm:mt-14 sm:space-y-12">
               {article.sections.map((section, idx) => {
-                const id = slugify(section.subtitle)
+                const id = slugify(section.subtitle) || `section-${idx + 1}`
                 const isLast = idx === article.sections.length - 1
                 return (
                   <div key={id}>
                     <section id={id} className="scroll-mt-28 reveal-on-scroll">
-                      <h2 className="t-section-title tracking-normal text-ink group flex items-center gap-2">
-                        <span>{section.subtitle}</span>
-                        <a
-                          href={`#${id}`}
-                          aria-label={`Link to section: ${section.subtitle}`}
-                          className="text-[0.8em] font-normal text-muted no-underline opacity-0 transition-opacity hover:text-accent focus-visible:opacity-100 group-hover:opacity-100"
-                        >
-                          #
-                        </a>
-                      </h2>
-                      <div className="mt-6 space-y-5 t-body leading-relaxed text-muted sm:text-[16px]">
+                      {section.subtitle ? (
+                        <h2 className="t-section-title tracking-normal text-ink group flex items-center gap-2">
+                          <span>{section.subtitle}</span>
+                          <a
+                            href={`#${id}`}
+                            aria-label={`Link to section: ${section.subtitle}`}
+                            className="text-[0.8em] font-normal text-muted no-underline opacity-0 transition-opacity hover:text-accent focus-visible:opacity-100 group-hover:opacity-100"
+                          >
+                            #
+                          </a>
+                        </h2>
+                      ) : null}
+                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-5 t-body leading-relaxed text-muted sm:text-[16px]`}>
                         {renderContent(section.content)}
                       </div>
                     </section>
