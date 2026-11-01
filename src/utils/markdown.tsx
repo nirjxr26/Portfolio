@@ -6,6 +6,7 @@
 
 import { useRef, type ReactNode } from "react"
 import { CopySwapIcon } from "../components/common/Icons"
+import { withAssetHash } from "./helpers"
 import { useCopy } from "./useCopy"
 
 export function InlineCode({ children }: Readonly<{ children: string }>) {
@@ -37,7 +38,7 @@ function renderInline(text: string, key: string): ReactNode[] {
         <a
           key={partKey}
           href={link[2]}
-          className="text-ink underline decoration-muted/40 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+          className="text-ink underline decoration-ink/50 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
         >
           {renderInline(link[1], `${partKey}-label`)}
         </a>,
@@ -130,6 +131,7 @@ type MdNode =
   | { kind: "list"; ordered: boolean; items: Item[] }
   | { kind: "quote"; paragraphs: string[] }
   | { kind: "table"; head: string[]; rows: string[][] }
+  | { kind: "image"; src: string; alt: string }
 
 type Block = { kind: "code"; lang: string; code: string } | { kind: "text"; text: string }
 
@@ -182,6 +184,9 @@ function parseRow(line: string) {
 /* The last line of a quote holding a link is its source, not part of it. */
 const QUOTE_SOURCE = /\[[^\]]+\]\([^)\s]+\)/
 
+/* A block that is only an image renders as a figure, not a paragraph. */
+const IMAGE = /^!\[([^\]]*)\]\(([^)\s]+)\)$/
+
 function parseContent(content: string): MdNode[] {
   const nodes: MdNode[] = []
   let list: { ordered: boolean; items: Item[] } | null = null
@@ -213,6 +218,13 @@ function parseContent(content: string): MdNode[] {
       if (!indented && quoteLines.length > 0 && quoteLines.length === lines.length) {
         flushList()
         nodes.push({ kind: "quote", paragraphs: parseQuote(text.split("\n")) })
+        continue
+      }
+
+      const image = indented ? null : IMAGE.exec(text)
+      if (image) {
+        flushList()
+        nodes.push({ kind: "image", src: image[2], alt: image[1] })
         continue
       }
 
@@ -284,7 +296,13 @@ function parseContent(content: string): MdNode[] {
 
 function renderNode(node: MdNode, key: string): ReactNode {
   if (node.kind === "para") {
-    return <p key={key}>{renderInline(node.text, key)}</p>
+    // A paragraph that is only bold text is a subhead: Manrope, equal space above and below.
+    const isSubhead = /^\*\*[^*]+\*\*$/.test(node.text)
+    return (
+      <p key={key} className={isSubhead ? "my-6 font-manrope text-base leading-snug" : undefined}>
+        {renderInline(node.text, key)}
+      </p>
+    )
   }
 
   if (node.kind === "code") {
@@ -298,7 +316,7 @@ function renderNode(node: MdNode, key: string): ReactNode {
     const source = paragraphs.length > 1 && QUOTE_SOURCE.test(last) ? paragraphs.pop() : undefined
 
     return (
-      <blockquote key={key} className="border-l-2 border-accent/40 pl-5 sm:pl-6">
+      <blockquote key={key} className="border-l-[3px] border-accent/40 pl-5 sm:pl-6">
         {paragraphs.map((text, i) => (
           <p key={`${key}-p${i}`} className={i > 0 ? "mt-4" : undefined}>
             {renderInline(text, `${key}-p${i}`)}
@@ -313,9 +331,24 @@ function renderNode(node: MdNode, key: string): ReactNode {
     )
   }
 
+  if (node.kind === "image") {
+    return (
+      <figure key={key} className="py-2">
+        <img
+          src={withAssetHash(node.src)}
+          alt={node.alt}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="mx-auto block h-auto w-full select-none rounded-[14px] border border-hairline/60 bg-surface-alt"
+        />
+      </figure>
+    )
+  }
+
   if (node.kind === "table") {
     return (
-      <table key={key} className="w-full border-collapse text-center text-[14px]">
+      <table key={key} className="mx-auto w-full border-collapse text-left text-[14px]">
         <thead>
           <tr>
             {node.head.map((cell, i) => (
@@ -345,7 +378,7 @@ function renderNode(node: MdNode, key: string): ReactNode {
   }
 
   const items = node.items.map((item, i) => (
-    <li key={`${key}-${i}`} className="[&>*+*]:mt-5">
+    <li key={`${key}-${i}`} className="[&>*+*]:mt-3">
       {renderInline(item.text, `${key}-${i}`)}
       {item.blocks.map((child, j) => renderNode(child, `${key}-${i}-${j}`))}
     </li>
@@ -353,14 +386,14 @@ function renderNode(node: MdNode, key: string): ReactNode {
 
   if (node.ordered) {
     return (
-      <ol key={key} className="list-decimal space-y-7 pl-5 marker:text-muted">
+      <ol key={key} className="list-decimal space-y-4 pl-5 marker:text-muted">
         {items}
       </ol>
     )
   }
 
   return (
-    <ul key={key} className="list-disc space-y-4 pl-5 marker:text-muted">
+    <ul key={key} className="list-disc space-y-2 pl-5 marker:text-muted">
       {items}
     </ul>
   )

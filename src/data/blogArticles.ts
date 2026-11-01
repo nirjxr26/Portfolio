@@ -12,12 +12,14 @@ export type BlogArticle = {
   cardReadTime: string
   hideFromHome?: boolean
   keywords: string
+  leadImage?: { src: string; alt: string; width: number; height: number }
+  disclaimer?: string
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
-    slug: "programming-is-taught-wrong-and-ai-made-it-obvious",
-    title: "Programming is taught wrong, and AI made it obvious",
+    slug: "coding-is-taught-wrong-and-ai-exposed-it",
+    title: "Coding is taught wrong, and AI exposed it",
     description:
       "Programming education still stops at loops and prime checkers. What AI changes about that, and what a syllabus worth teaching would look like.",
     updated: "October 31, 2026",
@@ -28,175 +30,163 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     cardReadTime: "9 min read",
     keywords:
       "programming education, software engineering, computer science curriculum, AI coding agents, code review, secure coding, SQL injection, XSS, DevOps, India, employability, Stack Overflow Developer Survey 2026, METR, Veracode",
+    leadImage: {
+      src: "/assets/article/coding_wrong.png",
+      alt: "Abstract illustration of a structured geometric form on the left and fragmented shapes on the right.",
+      width: 1107,
+      height: 1064,
+    },
+    disclaimer:
+      "The views and opinions expressed in this article are my own and are intended for educational and informational purposes. The arguments and recommendations reflect my personal perspective and interpretation of the cited research. They do not represent the views of any institution, organization, or affiliated entity. Nothing in this article is intended to defame, misrepresent, or infringe upon the rights of any individual or institution.",
     sections: [
       {
         subtitle: "",
-        content: `I recently sat a Python and shell scripting exam, and somewhere in the middle I realized I could pass it half asleep, and that passing would prove almost nothing.
+        content: `Colleges still grade whether students can memorize ten-line loops from a decade ago, while the industry—and the age of AI—demands engineers who can architect APIs, audit machine-generated code, and secure real systems.
 
-The questions were the usual ones. Reverse a string. Check if a number is prime. Print a pattern of stars. As far as I can tell, the same programs were in the exam a decade ago.
+I recently sat a university Python and shell scripting exam. Somewhere in the middle of the paper, I realized two things at once: I could pass this exam half asleep, and passing it would prove almost nothing about my ability to build software.
 
-These exercises aren't useless. A beginner has to understand loops and conditionals before anything else makes sense, and I'd teach them first too. The trouble is that they've become the finish line. Students memorize the answers, collect the marks, and believe they've learned to code. I believed that too, until I tried to build a real project and opened a production codebase, and found that most of what I had memorized didn't help.`,
+The questions were the exact same relics that have circulated in Indian university exams for over a decade. Reverse a string. Check if a number is prime. Print a pyramid of asterisks or write a basic in-memory CRUD script in yet another language.
+
+Because students are drilled endlessly on loops, if-else blocks, and predefined functions, they walk out of the exam hall believing they know how to program. I believed that too—until I tried to build a real project. That is when you hit a wall. You realize that the current study structure takes a shortcut around real software engineering standards. You cannot build a working application using classroom coding standards, and you certainly cannot read or understand the code running inside real production systems. The actual game of software engineering is entirely different from the one colleges are scoring.
+
+I am writing this from inside the system—as a cybersecurity postgraduate student looking back at what undergraduate computer science teaches, for the students stuck memorizing syntax and the faculty who set the papers.`,
       },
       {
         subtitle: "Why college leaves you stuck",
-        content: `The gap is between two different jobs.
+        content: `The core failure of computer science education is that it confuses typing syntax with engineering software. A student can complete a three- or four-year degree living entirely inside a single file that runs top to bottom, never once encountering what real software looks like.
 
-| Programming | Software engineering |
+Nobody ships a prime number checker to production. Real software is a web service with API endpoints, a persistent database behind it, environment-specific configurations, authentication middleware, automated deployment pipelines, and structured logs you read when a service goes down.
+
+| **Classroom Programming** | **Production Software Engineering** |
 | --- | --- |
-| Writing code | Designing systems |
-| Implementing functions | Structuring applications |
-| Solving one problem | Managing complexity across a whole system |
-| Producing the right output | Keeping it correct and reliable |
-| Running a program | Testing and maintaining it |
-| Writing an implementation | Securing and operating it |
+| Writing isolated scripts in a single file | Structuring multi-layered applications and APIs |
+| Assuming clean, predictable user input | Validating, sanitizing, and authenticating every request |
+| Keeping data in temporary memory (lists/dicts) | Managing persistent databases, transactions, and state |
+| Running a program once to show the teacher | Testing, containerizing, deploying, and monitoring continuously |
+| Writing every line from scratch in isolation | Reading, reviewing, and debugging code across a shared Git repo |
 
-A student can finish a degree living entirely in the left column. As far as I can tell, most of the job happens in the right one, and it adds things the left column never mentions: trade-offs between a fast solution and one the next person can maintain, logs and metrics so you can tell what broke at 2am, reliability as traffic grows, and a team all editing the same files.
+Consider how this gap looks on an exam paper.
 
-Nobody ships a prime number checker. Real code is a service with endpoints, a database, and config that changes per environment. Try building one using only what's taught in class and you hit a wall almost immediately, because isolated snippets don't show you how to structure a project, connect a database, or handle a request.
+- **Today's exam question:** Write a menu-driven Python program to add, search, and delete books in a library.
+- **A real-world exam question:** Below is a 60-line API endpoint that accepts a username and returns that user's financial records. It runs without syntax errors. Identify the architectural and security flaws in this code, explain how a malicious user could exploit them, and rewrite the endpoint safely.
 
-Here is the same gap in exam form.
+The first question tests whether you memorized a for loop. The second tests whether you can think like an engineer.
 
-> Today's question: Write a program to check whether a number is prime.
->
-> A real-job question: Here is a 60-line API endpoint that takes a username and returns that user's records. It works. Find what's wrong with it, explain how someone could abuse it, and fix it.
-
-The first tests whether you memorized a loop. The second tests whether you can think.
-
-This isn't a new complaint. Earlier studies of programming students also found that reading and understanding code was a weak spot, long before anyone asked an agent to write it for us.`,
+Decades before AI existed, researchers had already identified that being able to write basic syntax does not mean a student can read, trace, or comprehend how a program actually works ([Xie et al., 2019](https://doi.org/10.1080/08993408.2019.1565235); [Fowler et al., 2022](https://doi.org/10.1080/08993408.2022.2079866)). The problem of understanding code existed long before AI arrived—AI just turned that comprehension gap into a crisis.`,
       },
       {
         subtitle: "When an agent writes the code",
-        content: `A lot of code is now written with AI. In Stack Overflow's 2026 developer survey, 65.9% of respondents used coding assistants or agents, and only 17.2% said they used no AI tools. You can sit with an agent, plan a project from top to bottom, and have a working prototype far faster than you could type it. [Stack Overflow Developer Survey 2026 — AI usage data](https://survey.stackoverflow.co/2026/ai/data).
+        content: `Code has become cheap to generate. According to the [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/), the vast majority of professional developers now use AI coding assistants or autonomous agents in their daily workflow. A student today can sit down with an AI agent, describe an application, and scaffold a working prototype in hours rather than months.
 
-I want to be careful about what that means. AI cuts the effort of typing out an implementation. It doesn't remove architectural decisions, verification, security review, integration, or the responsibility of running the thing in production. For a small project like a college assignment, I'd guess the speedup is large (I haven't measured it). For big mature codebases the picture is murkier: in a randomized trial, METR found that experienced open-source developers took 19% longer with AI tools on their own repositories. That study used early-2025 tools, so it's a data point, not a verdict.
+That shift changes the economics of software—and it has quietly broken the entry-level job market. Analysis cited by [SignalFire's 2025 talent report](https://www.signalfire.com/blog/signalfire-state-of-talent-report-2025) shows that junior developer job postings have fallen sharply from their 2022 peak, with new-grad hiring at major tech firms down by more than half compared to pre-AI baselines. The industry did not stop needing engineers; it stopped needing "order-takers." The junior developer whose only skill was reading a narrow ticket and typing out a basic function has been automated away.
 
-Research on AI-assisted development points in different directions. Three field experiments involving 4,867 developers found that coding assistants were associated with 26% more completed tasks, particularly among less experienced developers ([Cui et al., 2026](https://doi.org/10.1287/mnsc.2025.00535)). But METR found that experienced open-source developers took 19% longer when using early-2025 AI tools on their own repositories ([METR, 2025](https://arxiv.org/abs/2507.09089)). The takeaway isn't that AI always makes developers faster or slower; the result depends on the task, tools, and codebase.
-
-What I keep coming back to is that the ability to generate software and the ability to understand it are becoming separate skills. A student who doesn't know advanced coding concepts can now build a working tool, and still be unable to find the smallest bug in it, or read it well enough to explain it. That has nothing to do with being less smart or not being a topper. They were never exposed to the patterns real code is built on. It's like being handed a calculator without knowing arithmetic: when the answer comes out wrong by a factor of ten, you have no way to notice.
-
-Programming-education research points to the same distinction. One study found that students had more difficulty correcting AI-generated code than completing traditional programming tasks ([Kohen-Vacs et al., 2025](https://doi.org/10.1007/s40593-025-00496-4)). Another, involving 275 students, found that AI support improved exercise performance but did not produce better code comprehension or knowledge gains ([Bassner et al., 2026](https://doi.org/10.1016/j.caeai.2025.100537)). In other words, completing a task is not the same as understanding the code.
-
-Working developers seem to know this already. In the same 2026 survey, nearly half said they trust AI output when they can verify it, and only 6.6% would trust it with an important decision. Verifying is the job now, and verifying needs exactly the knowledge the syllabus skips.
-
-The same survey found that developers commonly check AI output against their local environment, existing code, tests, and security requirements; only 9.6% said they use it as-is. These are self-reported habits, but they reinforce the point: verification is now part of the job. [Stack Overflow Developer Survey 2026](https://survey.stackoverflow.co/2026/ai/data/ai-work-next).
-
-It wasn't always like this. People used to pick up production-level coding on the job, because there was no agent to build a project in hours. They spent a long time researching how to structure a project and wire its parts together. A bachelor's project was usually a management system with a website and a handful of features, and the real engineering knowledge came later, at work. Now, with free quotas and holiday credits, people build "vibe" projects without knowing what an API is. The tools are there and the understanding isn't.
-
-My point is this. If implementation got cheaper, the teaching time spent on it should shrink too. A prototype that once took a team of six or seven and months of work can now be scaffolded by one student in far less time (a rough guess, but I doubt it's off by an order of magnitude). We can spend the freed time on structure, trade-offs, and review.`,
+What AI cuts is the friction of typing out an implementation. What it cannot replace is architectural judgment, verification, security auditing, and operational responsibility.`,
       },
       {
-        subtitle: "What the India numbers show, and what they don't",
-        content: `The numbers point to a wider skills and employment challenge. The India Skills Report 2026 estimates employability at about 80% for computer science and IT candidates, while the overall BE/BTech figure fell from 71.5% to 70.15%. These scores reflect performance against the report's employability test, not actual placement rates ([India Skills Report 2026](https://wheebox.com/assets/pdf/ISR_Report_2026.pdf)). Azim Premji University's *State of Working India 2026* also highlights the widening gap between graduate numbers and graduate employment ([report](https://azimpremjiuniversity.edu.in/publications/2026/report/swi-2026)).
+        subtitle: "The gap between generating code and understanding it",
+        content: `The bigger problem is that generating software and understanding it are becoming two separate skills. A student can now build a functioning application without understanding its architecture, APIs, database transactions, or even how its components communicate. They can generate hundreds of lines of code but struggle to identify a simple bug, explain the implementation, or maintain it.
 
-These figures don't prove that outdated programming syllabi cause unemployment. Placement also depends on the job market, college, communication skills, and labour demand. They do, however, provide context for the skills gap that industry has repeatedly raised. Connecting that gap to how programming is taught is my interpretation, based on the exams and projects I've seen around me.
+Research supports this concern. A 2025 study ([Kohen-Vacs et al.](https://link.springer.com/article/10.1007/s40593-025-00496-4)) found that undergraduates struggled more with correcting LLM-generated code than with ordinary examination tasks. Similarly, a [randomized trial at TU Munich](https://portal.fis.tum.de/en/publications/less-stress-better-scores-same-learning-the-dissociation-of-perfo/) found that students using AI achieved better exercise scores without corresponding improvements in underlying knowledge or code comprehension.
 
-I also haven't tested how many students can review AI-generated code, and I don't know of a study that has. I suspect it's fewer than should, but that's a suspicion, and somebody should run the experiment.`,
+Today, with free API credits and coding agents, students routinely spin up "vibe-coded" projects without knowing what an HTTP request, a database transaction, or an API actually is. It is the equivalent of handing a calculator to someone who does not understand arithmetic: when the machine's output is off by an order of magnitude, they have no mental model to notice the error.
+
+Professional developers already treat AI output as untrusted drafts—running, testing, and rewriting what the model hands them. If generating basic code is now nearly free, spending four years of university teaching students to manually write legacy loops is educational malpractice. That classroom time must shift to system architecture, API design, code review, and debugging.`,
       },
       {
-        subtitle: "Tools nobody hands you",
-        content: `DevOps gets listed with tools, but it's really a set of practices: short feedback loops, automation, and shared ownership of what runs in production. Git, CI/CD pipelines, containers, and deployment systems are the tools that make those practices possible. Working engineers also live in pull requests and code reviews, a Linux command line, API testing, dependency management, observability, and documentation.
+        subtitle: "Anatomy of a bogus assignment",
+        content: `To see how Indian universities keep students trapped in the past, look at standard second-year programming syllabi or standard AICTE-affiliated curricula across thousands of colleges. They are still covering variables, conditionals, loops, functions, lists, dictionaries, and basic file handling in different languages.
 
-Most students finish a degree without touching any of this. We learn how to write code and almost never how it's organized, maintained, tested, and delivered. We don't see how a change travels from a laptop to a running system: built, checked, packaged, and deployed so real users can reach it.
+As an introductory six-week module for the first year, that is fine. Every beginner needs to write basic control flow by hand to build a mental model of how a computer executes instructions. The tragedy is that the curriculum treats this starting line as the finish line.
 
-None of it needs a semester each. Most needs a few weeks and a project. And everything else leans on it. Without version control, a team can't work on the same code. Without tests, nobody knows whether a change broke something. Without a pipeline, nothing reliably reaches users. These should be core subjects from the first year, graded like everything else.`,
+At the end of the semester, students are handed a practical paper that looks like this:
+
+> *Develop a Student Management System in Python using classes, lists, and dictionaries. Each student record contains an ID, Name, Age, Department, and Marks. Implement a menu-driven terminal program to add, display, search, update, and delete records, and sort students by average marks.*
+
+Students build a single-file terminal script, show the output to an external examiner for thirty seconds, collect their marks, and never touch the code again.
+
+Why does this assignment fail to produce engineers? Because it actively rewards habits that would get code rejected in any real engineering team:
+
+- **No persistent storage:** Every student record lives in a temporary in-memory list; close the terminal window and all data vanishes.
+- **Zero input validation:** Nothing stops a user from entering an age of \`5\`, marks of \`900\`, or ten different students with the exact same ID.
+- **No authentication or authorization:** Anyone sitting at the keyboard can delete or modify any student's record.
+- **Single-file spaghetti:** Routing, calculation logic, and storage are dumped into one file, teaching nothing about modular architecture.
+- **No automated testing or API interface:** The only proof it works is typing two fake names into a terminal menu—no other service can communicate with it, and no test suite verifies that a change didn't break existing logic.`,
       },
       {
-        subtitle: "Pick a track",
-        content: `Teaching should give students the exposure they'd otherwise get only after joining a company, not just a CGPA. Those numbers matter far less than what a student can do.
+        subtitle: "Teach the actual job",
+        content: `Instead of padding the syllabus with four different programming languages that repeat the same introductory syntax, universities must use the second semester of a bachelor's degree to transition students from basic coding into foundational-to-intermediate software engineering.
 
-From the bachelor's level, students should be able to pick a niche: mobile app development, DevOps, cybersecurity, software engineering, QA testing, cloud architecture or cloud security, and more. They'd learn the work before the pressure of a real job arrives, instead of a little of everything and depth in nothing.
+Once a student understands loops, conditionals, and functions in Semester 1, legacy terminal scripts should be retired forever. From Semester 2 through the final semester, coursework and exams should require students to build, structure, secure, and review real software across five core areas:
 
-I don't have a full curriculum design, but I can see where the hard parts are.
+**1. Application development**
 
-On timing, I'd specialize after a shared first year, since nobody can choose a track they've never seen. On what stays compulsory, I'd keep programming, data structures, databases, networks, operating systems, and the engineering tools above as a shared base. On switching, if the base is the same, changing tracks should cost a few track-specific credits and not a lost year. The real constraint is faculty and labs. A college can't staff seven tracks well. Offering two or three properly, and sharing the rest through industry-taught or online modules that count for credit, seems more realistic than offering all of them badly.`,
-      },
-      {
-        subtitle: "What should we write instead?",
-        content: `Once students have a track and the tools, the next question is what they should write. The basics stay, as a way into the code real software is built with. I'd group the rest into five areas:
+- Stop grading terminal menus. Teach students to build APIs with proper routing, strict input validation checks, login tokens, and structured error responses.
+- Introduce asynchronous programming so they understand how modern services handle concurrent requests, and enforce statically typed code using TypeScript or Python type hints so they learn how production teams prevent data-shape bugs before code ever runs.
 
-1. **Application development:** APIs with routes, input checks, login tokens, and error responses; async code; typed code with TypeScript or Python type hints.
-2. **Software architecture:** project structure with layers and modules and config kept separate; design patterns like factory, strategy, and dependency injection; OOP and functional style, including interfaces, composition, closures, and decorators.
-3. **Data and infrastructure:** databases, queries, an ORM, transactions, and caching.
-4. **Testing and reliability:** unit and integration tests, mocking, custom errors, retries, timeouts, and searchable logs.
-5. **Performance:** picking the right data structure, profiling, and fixing slow code.
+**2. Software architecture**
 
-> A note on depth: every area above goes much deeper than a bachelor's course can cover, and each is a field of its own. The goal is for students to implement them at a basic to intermediate level, at most. They should leave knowing what each one is, why it exists, and how to use it in a working project. Depth comes later, in the track they choose.`,
-      },
-      {
-        subtitle: "A real exam question, taken apart",
-        content: `Here's a typical programming paper, and it looks reasonable at first glance.
+- Force students out of the single-file habit. Teach project structure where routing, business logic, data access, and environment configurations are kept strictly separate across layers and modules.
+- Have them implement foundational design patterns—such as Factory, Strategy, and Dependency Injection—and blend Object-Oriented and functional programming styles in practice using interfaces, composition, closures, and decorators.
 
-*[Insert the screenshot of the "Develop a Student Management System" paper here]*
+**3. Data and infrastructure**
 
-The task is to build a Student Management System in Python using classes, lists, dictionaries, and nested data structures. Each student has an ID, name, age, department, and marks. The program has to add, display, search, update, and delete records, find the highest and lowest marks, and sort students by average.
+- Retire temporary in-memory lists as a storage mechanism.
+- Teach students how to connect applications to real databases, write efficient queries, use an ORM (mapping database tables to code objects while understanding the SQL underneath), manage atomic transactions so partial failures do not corrupt data, and implement caching to reduce database load.
 
-As a first assignment, it's fine. A terminal-based record manager teaches classes, dictionaries, and basic logic, and I wouldn't throw it out. What bothers me is that nothing comes after it. The paper never asks for:
+**4. Testing and reliability**
 
-- **Persistent storage.** Close the program and every record is gone.
-- **Input validation.** Nothing stops an age of -5, marks of 900, or two students with the same ID.
-- **Authentication and authorization.** Anyone can delete any record.
-- **Application structure.** One file and one class, so nobody has to think about how the code is split.
-- **Error handling.** What happens when you delete a student who doesn't exist?
-- **Tests.** The only proof it works is running it and looking.
-- **An interface other systems can use.** It's a terminal menu, not an API.
+- Change the definition of "working code." Require students to write unit and integration tests using mocking for external services, and grade their code against automated test suites.
+- Teach them to engineer for failure by implementing custom error hierarchies, network retries, request timeouts, and structured, searchable logs so a developer can diagnose exactly what broke in production.
 
-The fix doesn't need a new topic. The same assignment could grow in steps: save the records to a database, validate the input, expose it as an API, add a login, and write tests for it. Five steps in the same domain, and each one teaches a skill the paper skips. The exam shouldn't be a different question each year. It should be the same project, one level further.`,
+**5. Performance and code quality**
+
+- Move beyond theoretical Big-O notation on paper to applied performance engineering: picking the right data structure for real workloads, profiling running code to find bottlenecks, and refactoring slow queries or memory leaks.
+- Pair this with mandatory Git version control, pull requests, and CI/CD pipelines so students learn how code is reviewed, tested, and deployed across shared repositories.
+
+**A critical note on depth:** Every single area above is vast enough to be a career of its own, going far deeper than an undergraduate course can cover. The goal is not to turn second-year undergraduates into senior architects overnight. The goal is for students to implement these five pillars at a basic to intermediate level. Every student should leave their core semesters knowing what each concept is, why it exists, and how to wire it together inside a working project.
+
+True depth comes later, in the specialized track they choose—whether that is Cybersecurity, Cloud & DevOps, Backend Engineering, Mobile Development, or QA Automation.`,
       },
       {
         subtitle: "Security belongs in the code",
-        content: `If students are going to build APIs, databases, and login systems, they need to know how those get attacked. Right now security is mostly a separate subject for the cybersecurity track, taught as theory. But anyone writing a web app is writing something an attacker can poke at, and AI-generated code raises the stakes. Veracode's 2026 benchmark found that the models it tested passed an average of 56% of its security tasks ([GenAI Code Security Report 2026](https://view.ceros.com/veracode/genai-code-security-report2026)). A Stanford user study also found that participants using an AI assistant wrote less secure code and were more likely to believe it was secure.
+        content: `When students start building real APIs, databases, and login systems in Semester 2, they immediately face a reality that legacy programs hide: anything connected to a network gets attacked.
 
-Code that looks clean and runs fine is exactly the code nobody questions. So the basics of secure coding should go to every student, as code they write. Here is what I'd put in the syllabus.
+Right now, universities lock security inside a separate elective or reserve it for cybersecurity majors, usually taught as dry textbook theory. That is a massive blind spot. Anyone writing a backend service or web application is building the exact surface an attacker pokes at—and AI coding assistants pour fuel on the fire. [Veracode's 2026 GenAI Code Security Report](https://www.veracode.com/resources/analyst-reports/2026-genai-code-security-report) found an average security pass rate of approximately 56% across the AI models it tested on controlled security tasks. In other words, a significant proportion of generated outputs contained detectable security weaknesses. Similarly, a [Stanford study (Perry et al.)](https://arxiv.org/abs/2211.03622) demonstrated that developers using AI assistants wrote significantly less secure code than those working alone, while simultaneously feeling more confident that their code was safe. This does not mean that all AI-generated code shipped to production is vulnerable, but it demonstrates why functional correctness cannot replace security review.
 
-SQL injection. Build a query from raw user input and an attacker can read or delete the whole database. The fix is parameterized queries.
+Code that looks tidy and passes basic functional checks is the exact code nobody questions during a rushed review. Secure coding at a basic-to-intermediate level must be built directly into every student's programming rubric across both web services and core application logic:
 
-Vulnerable, because the input is pasted straight into the query:
+**Web and API security**
 
-\`\`\`python
-db.execute(f"SELECT * FROM users WHERE name = '{name}'")
-\`\`\`
-
-Safe, because the input travels separately from the query:
+- **SQL Injection:** Building a database query by concatenating raw user input lets an attacker read, modify, or wipe the entire database. Any assignment that pastes strings into SQL should automatically fail the rubric in favor of parameterized queries:
 
 \`\`\`python
-db.execute("SELECT * FROM users WHERE name = ?", (name,))
+# Vulnerable: raw user input is pasted directly into the SQL command
+db.execute(f"SELECT * FROM students WHERE name = '{user_input}'")
+
+# Safe: input is passed separately as a parameter, neutralizing injection
+db.execute("SELECT * FROM students WHERE name = ?", (user_input,))
 \`\`\`
 
-Cross-site scripting (XSS). Unescaped user input in a page can run an attacker's script in someone else's browser. Input validation and output encoding are different defenses. Validation decides what you accept. Encoding decides how you display it, and what's safe depends on where the data lands (an HTML page, an attribute, a script, a URL). Checking a name field doesn't make it safe to drop into HTML. Teach both, and prefer frameworks that escape by default.
+- **Cross-Site Scripting (XSS):** Rendering unescaped user input in a browser allows attackers to inject malicious scripts into other users' sessions. Students must learn the difference between input validation (strictly checking what data your API accepts) and context-aware output encoding (safely escaping data depending on whether it lands in HTML body text, an attribute, a script tag, or a URL), alongside using modern frameworks that escape output by default.
+- **Broken Object-Level Authorization:** Logging a user in is only half the battle. Students must learn to verify on every single request that the logged-in user actually has permission to view or modify the specific record ID they asked for—preventing attackers from stealing data simply by incrementing an ID number in the URL.
+- **Traffic and Transport Defenses:** Every student building an API should know what HTTPS, Cross-Site Request Forgery (CSRF) tokens, and rate limiting protect against, and how to enable them in their framework.
 
-The rest of the list:
+**Core application and system security**
 
-- **Passwords and authentication:** never store passwords in plain text. Hash them with something like bcrypt or argon2, set token expiry, and don't trust a token you haven't verified.
-- **Secrets and configuration:** API keys, database passwords, and secret keys belong in environment variables or a secrets manager, never in the code or a public Git repo.
-- **Authorization:** logging in isn't enough. The code has to check that this user may access this record, or anyone can read anyone else's data by changing an ID in the URL.
-- **Input validation:** treat every input as untrusted and check its type, length, and range.
-- **Safe error messages:** users should see "something went wrong," not a stack trace that shows an attacker how the system is built.
-- **CSRF, rate limiting, and HTTPS:** know what each one protects against and how to switch it on.
-- **Dependencies:** every package you install is code someone else wrote, so check for known vulnerabilities and keep them updated.
+- **Passwords and Authentication:** Never store passwords in plain text or weak hashes like MD5. Teach students to hash passwords properly using \`bcrypt\` or \`Argon2\`, set strict expiration times on session tokens or JWTs, and verify token signatures on every protected route.
+- **Secrets Management:** API keys, database passwords, and cryptographic signing keys belong in environment variables or a secrets manager—never hardcoded in source files or pushed to a public GitHub repository.
+- **Safe Error Handling:** When an application fails, the user should see a clean, generic message (\`"Unable to process request"\`), while the detailed stack trace goes privately to the server logs. Dumping raw stack traces to the screen hands attackers a blueprint of your database schema, library versions, and file paths.
+- **Dependency Hygiene:** Modern apps are 80% third-party packages. Students need to know that \`npm install\` or \`pip install\` pulls strangers' code into their project, and learn to scan dependencies for known vulnerabilities.
 
-> A note on depth: this isn't a full cybersecurity course. Students should learn to recognize each of these issues and apply the standard fix at a basic to intermediate level. Penetration testing, cryptography, and threat modeling are what the cybersecurity track is for.
-
-The exam can test this the same way as everything else: give them a short piece of code and ask what's wrong and how to fix it.`,
+Again, this is not a full cybersecurity degree. Deep penetration testing, cryptography math, reverse engineering, and formal threat modeling belong in the specialized cybersecurity track. But every software graduate should be able to look at a 30-line login function—whether written by a classmate or generated by an AI—spot the SQL injection or hardcoded secret, and fix it.`,
       },
       {
         subtitle: "Where this leaves us",
-        content: `I'd want programming education to produce engineers who understand what they build, can evaluate it, and take responsibility for what they ship. Writing code unassisted was always a means to that, and it's a cheaper means now than it was.
+        content: `The economics of software have shifted permanently: generating syntax is now virtually free, while verifying, securing, and architecting systems carries all the value. Major tech companies have already cut entry-level "order-taker" roles by more than half since 2022, and over 40% of AI-generated code in benchmark tests still contains exploitable security flaws. Continuing to spend three or four years grading handwritten loops and disposable terminal menus does not prepare students for the industry—it sets them up for obsolescence.
 
-If agents keep improving, I'd expect typing code to get cheaper every year and judging it to get more valuable. The 2026 survey already points that way: developers trust AI output when they can check it, and rarely otherwise. A student who can read a generated function and spot the injection in it will probably be fine whatever tool shows up next.
+Universities do not need to invent a new degree to fix this; they only need to stop treating Semester 1 syntax as a four-year finish line. Retiring repetitive language drills after the first semester to teach APIs, multi-layered architecture, database transactions, automated testing, and secure coding turns students from passive code typists into engineers capable of auditing both human and machine output.
 
-What I'd like to see is one Indian university run the experiment. Take a cohort, swap half the loop exercises for the build-and-review projects above, and compare them with a normal cohort after a year. I'd read that paper.`,
-      },
-      {
-        subtitle: "Research and source links",
-        content: `- [Stack Overflow Developer Survey 2026 — AI usage](https://survey.stackoverflow.co/2026/ai/data)
-- [Stack Overflow Developer Survey 2026 — AI verification](https://survey.stackoverflow.co/2026/ai/data/ai-work-next)
-- [Cui et al. (2026), *Management Science*](https://doi.org/10.1287/mnsc.2025.00535)
-- [METR (2025) — AI tools and experienced open-source developers](https://arxiv.org/abs/2507.09089)
-- [Kohen-Vacs et al. (2025) — students correcting AI-generated code](https://doi.org/10.1007/s40593-025-00496-4)
-- [Bassner et al. (2026) — randomized study of AI-supported programming education](https://doi.org/10.1016/j.caeai.2025.100537)
-- [India Skills Report 2026](https://wheebox.com/assets/pdf/ISR_Report_2026.pdf)
-- [Azim Premji University — State of Working India 2026](https://azimpremjiuniversity.edu.in/publications/2026/report/swi-2026)
-- [Veracode — GenAI Code Security Report 2026](https://view.ceros.com/veracode/genai-code-security-report2026)`,
+Syllabi move slowly, so students should not wait for a board of studies to rescue their careers. Take that legacy classroom script you built this semester and push it through a real production pipeline yourself: put it in Git, back it with a database, expose it via an authenticated API, write automated tests, and patch its security holes. And for the faculty and universities setting the papers: take a single cohort, replace half the memorized loop exams with code-audit and system-build assessments, and measure the difference after one year. The industry has already moved on. It is time the exam hall caught up.`,
       },
     ],
   },
@@ -298,6 +288,12 @@ What I'd like to see is one Indian university run the experiment. Take a cohort,
     cardDesc: "Not just a code host. A place that quietly reshaped how I build.",
     cardReadTime: "3 min read",
     keywords: "Git, GitHub, workflow, version control, commit, branch, README, portfolio, collaboration, green squares, staging, push, clone",
+    leadImage: {
+      src: "/assets/article/From Chaos to Structured Git History.png",
+      alt: "From Chaos to Structured Git History: transition from messy unmanaged files to structured branches and commits.",
+      width: 1536,
+      height: 1024,
+    },
     sections: [
       {
         subtitle: "Before GitHub",

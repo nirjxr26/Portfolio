@@ -18,6 +18,11 @@
       "source": "/articles/building-deploylens-exposed-my-deployment-blind-spots",
       "destination": "/articles/deploylens-finding-my-deployment-blind-spots",
       "permanent": true
+    },
+    {
+      "source": "/articles/programming-is-taught-wrong-and-ai-made-it-obvious",
+      "destination": "/articles/coding-is-taught-wrong-and-ai-exposed-it",
+      "permanent": true
     }
   ],
   "headers": [
