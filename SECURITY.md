@@ -1,14 +1,17 @@
 # Security Policy
 
-_Last updated: 2026-09-16_
+_Last updated: 2026-11-01_
 
 ## Scope
 
 This policy covers the `nirjar.me` website and the repository that builds it
-(`portfolio`). The site is a fully static frontend — React + Vite, pre-rendered
-to static HTML at build time and served from a CDN host. There is no backend,
-no database, no authentication, no user accounts, no cookies, and no
-analytics or user input accepted anywhere on the site.
+(`portfolio`). The site is a fully static frontend — React + Vite, with
+per-route head metadata pre-rendered at build time and body content hydrated
+client-side, served from a CDN host. There is no backend, no database, no
+authentication, no user accounts, no cookies, and no user input accepted
+anywhere on the site. The only third-party request is a cookieless,
+domain-restricted Umami Cloud analytics script; it is described under
+"Application surface" below.
 
 **Out of scope:** vulnerabilities in third-party infrastructure the site
 happens to run on (Vercel, GitHub, the CDN, DNS registrar) — report those
@@ -48,17 +51,19 @@ violations, data destruction, and service disruption. Specifically:
 Every response carries:
 
 - `Content-Security-Policy` starting from `default-src 'none'`, with no
-  `unsafe-inline` and no third-party hosts. Scripts and styles load
-  same-origin only. The single inline `<script>` (a pre-paint theme setter) is
-  allowlisted by exact SHA-256 hash, so any tampered or injected inline
-  script is blocked by the browser. Local development uses a documented,
-  relaxed policy because the Vite dev server legitimately requires inline
-  execution — that policy never ships to production.
+  `unsafe-inline`. Scripts and styles are same-origin except for the Umami
+  analytics origins (`cloud.umami.is` for the tracker and `gateway.umami.is`
+  for ingestion). The single executable inline `<script>` (a pre-paint theme
+  setter) is allowlisted by exact SHA-256 hash, so any tampered or injected
+  inline script is blocked by the browser. Local development uses a
+  documented, relaxed policy because the Vite dev server legitimately
+  requires inline execution — that policy never ships to production.
 - `frame-ancestors 'none'` plus `X-Frame-Options: DENY` (clickjacking
   protection).
 - `X-Content-Type-Options: nosniff` and
   `Referrer-Policy: strict-origin-when-cross-origin`.
 - `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`.
+  The domain is preload-ready; submission to the HSTS preload list is pending.
 - `Cross-Origin-Opener-Policy: same-origin`,
   `Cross-Origin-Resource-Policy: same-origin`,
   `Cross-Origin-Embedder-Policy: credentialless`,
@@ -73,20 +78,25 @@ headers ship alongside it.
 
 ### Transport
 
-HTTPS everywhere with HSTS preloading. Because HSTS is set with
+HTTPS everywhere with the HSTS `preload` directive. Because HSTS is set with
 `includeSubDomains`, every subdomain (including the blog host) must keep
 valid HTTPS before the preload entry is submitted or renewed — a lapse would
-break the whole domain, not just the subdomain in question.
+break the whole domain, not just the subdomain in question. Preload
+submission is pending, so do not treat the domain as preloaded yet.
 
 ### Application surface
 
-- No executable inline scripts and no inline styles ship in production
-  output (verified against the build artifacts, not just the source).
+- No inline styles and no executable inline scripts ship in production
+  output other than the hash-allowlisted theme setter (verified against the
+  build artifacts, not just the source).
 - No `dangerouslySetInnerHTML`, `eval`, or dynamic code loading; all rendered
   strings are either static content or React-escaped.
 - Error paths render a generic message with no stack traces or internals.
-- Fonts are self-hosted (`/fonts`, immutable caching), so page loads contact
-  no third party at all — no trackers, pixels, or beacons of any kind.
+- Fonts are self-hosted (`/fonts`, immutable caching). The only third-party
+  request is Umami Cloud analytics: it is cookieless, restricted to
+  `nirjar.me` and `www.nirjar.me` via `data-domains`, and sends pageviews to
+  `gateway.umami.is`. There are no trackers, pixels, ad networks, or other
+  beacons.
 
 ### Supply chain
 
@@ -103,10 +113,10 @@ break the whole domain, not just the subdomain in question.
 
 ### Content integrity and routing
 
-- All routes are pre-rendered at build time with per-route canonical URLs,
-  Open Graph/Twitter metadata, and JSON-LD structured data generated from a
-  single shared schema library, so crawler-facing metadata cannot drift from
-  the app's runtime output.
+- All routes ship build-time-rendered head metadata with per-route canonical
+  URLs, Open Graph/Twitter metadata, and JSON-LD structured data generated
+  from a single shared schema library, so crawler-facing metadata cannot
+  drift from the app's runtime output. Body content is hydrated client-side.
 - Renamed article URLs keep permanent (301) redirects. `sitemap.xml` is
   regenerated every build with source-file timestamps. `robots.txt` allows
   crawling, including major AI indexers, and declares the sitemap.
