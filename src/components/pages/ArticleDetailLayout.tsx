@@ -7,7 +7,7 @@ import { renderContent, slugify } from "@/utils/markdown"
 import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
 import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
 import { SITE_URL } from "@/data/site"
-import { createBreadcrumbs } from "@/utils/helpers"
+import { createBreadcrumbs, withAssetHash } from "@/utils/helpers"
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
@@ -105,8 +105,24 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
         </section>
 
         <article className="relative bg-canvas pb-8 sm:pb-12">
+          {article.leadImage ? (
+            <div className="mx-auto w-full max-w-[1040px] px-4 min-[414px]:px-6 sm:px-8">
+              <div className="aspect-[2/1] overflow-hidden rounded-[20px] squircle">
+                <img
+                  src={withAssetHash(article.leadImage.src)}
+                  alt={article.leadImage.alt}
+                  width={article.leadImage.width}
+                  height={article.leadImage.height}
+                  loading="eager"
+                  decoding="async"
+                  draggable={false}
+                  className="block h-full w-full select-none object-cover object-center"
+                />
+              </div>
+            </div>
+          ) : null}
           <div className="mx-auto w-full max-w-[720px] px-4 min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
-            <hr className="border-hairline" />
+            {!article.leadImage ? <hr className="border-hairline" /> : null}
             <div className="mt-10 space-y-10 sm:mt-14 sm:space-y-12">
               {article.sections.map((section, idx) => {
                 const id = slugify(section.subtitle) || `section-${idx + 1}`
@@ -126,7 +142,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                           </a>
                         </h2>
                       ) : null}
-                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-5 t-body leading-relaxed text-muted sm:text-[16px]`}>
+                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body leading-relaxed text-muted sm:text-[16px]`}>
                         {renderContent(section.content)}
                       </div>
                     </section>
@@ -134,6 +150,15 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                   </div>
                 )
               })}
+              {article.disclaimer ? (
+                <aside
+                  aria-label="Disclaimer"
+                  className="border-t border-hairline pt-6 text-[13px] leading-relaxed text-ink sm:text-sm"
+                >
+                  <p className="font-semibold">Disclaimer</p>
+                  <p className="mt-2">{article.disclaimer}</p>
+                </aside>
+              ) : null}
             </div>
 
             <div className="mt-12 flex flex-row flex-wrap items-center justify-between gap-6 border-t border-hairline pt-8 sm:mt-14">
