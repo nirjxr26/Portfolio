@@ -64,5 +64,6 @@
   --font-inter: "Inter", sans-serif;
   --font-univers: "Univers LT Pro", "Inter", sans-serif;
   --font-univers-condensed: "Univers LT Pro Condensed", "Inter", sans-serif;
+  --font-eurostile: "Eurostile Extended", "Univers LT Pro", sans-serif;
   --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }

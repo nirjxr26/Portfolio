@@ -3,6 +3,7 @@ import { Container } from "./Container"
 
 interface PageHeroProps {
   badge?: string
+  badgeClassName?: string
   title: ReactNode
   subhead: string
   compact?: boolean
@@ -13,6 +14,7 @@ interface PageHeroProps {
 
 export function PageHero({
   badge,
+  badgeClassName = "",
   title,
   subhead,
   compact = false,
@@ -29,7 +31,7 @@ export function PageHero({
     <section className={`bg-canvas ${sectionPadding}`}>
       <Container className="text-center">
         {badge && (
-          <p className="font-bold tracking-normal text-accent text-lg min-[375px]:text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-3 animate-hero-1">
+          <p className={`font-bold tracking-normal text-accent text-sm min-[375px]:text-base sm:text-lg md:text-xl mb-2 sm:mb-3 animate-hero-1 ${badgeClassName}`.trim()}>
             {badge}
           </p>
         )}

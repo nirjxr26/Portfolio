@@ -61,6 +61,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
         {/* Hero Header */}
         <PageHero
           badge={hero.title}
+          badgeClassName="font-eurostile uppercase"
           title={hero.headline}
           subhead={hero.subhead}
           bottomFlush={Boolean(hero.heroAsset)}
