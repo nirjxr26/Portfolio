@@ -193,7 +193,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
 
   {
     slug: "allow-remote-postgresql-without-opening-it-to-the-world",
-    title: "How to allow remote PostgreSQL connections without opening it to the world",
+    title: "How to allow remote PostgreSQL connection with security",
     description:
       "Allow remote access to PostgreSQL using listen_addresses, pg_hba.conf, verified TLS and a scoped firewall rule, instead of 0.0.0.0/0.",
     updated: "October 27, 2026",

@@ -74,7 +74,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 
 ## Technical Articles & Writing
 - "Coding is taught wrong, and AI exposed it": The exam tested loops. The job tests judgement — and AI made the difference impossible to ignore. (https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it).
-- "How to allow remote PostgreSQL connections without opening it to the world": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
+- "How to allow remote PostgreSQL connection with security": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
 - "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
 - "Rethinking my Git workflow": Not just a code host. A place that quietly reshaped how I build. (https://nirjar.me/articles/rethinking-my-git-workflow).
 - "How VaultLock reliably fetches brand logos": Getting the right brand logo, every time, without breaking the UI. (https://nirjar.me/articles/how-vaultlock-reliably-fetches-brand-logos).
