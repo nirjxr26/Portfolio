@@ -224,4 +224,50 @@
     transform: scale(1);
     transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
   }
+
+  /* Mac dock icon hover magnification effect */
+  .dock-stack {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  .dock-item {
+    position: relative;
+    transform-origin: center center;
+    transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.22s ease, background-color 0.2s ease;
+    will-change: transform;
+    z-index: 1;
+  }
+
+  /* Direct hover: prominent magnification and lift */
+  .dock-item:hover {
+    transform: translateY(-0.16em) scale(1.4);
+    box-shadow: 0 10px 22px -2px rgba(0, 0, 0, 0.38);
+    z-index: 30;
+  }
+
+  /* Immediate left neighbor */
+  .dock-item:has(+ .dock-item:hover) {
+    transform: translateY(-0.07em) scale(1.18);
+    box-shadow: 0 6px 14px -2px rgba(0, 0, 0, 0.24);
+    z-index: 20;
+  }
+
+  /* Immediate right neighbor */
+  .dock-item:hover + .dock-item {
+    transform: translateY(-0.07em) scale(1.18);
+    box-shadow: 0 6px 14px -2px rgba(0, 0, 0, 0.24);
+    z-index: 20;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dock-item,
+    .dock-item:hover,
+    .dock-item:has(+ .dock-item:hover),
+    .dock-item:hover + .dock-item {
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 }
