@@ -14,9 +14,9 @@ export interface LayeredPreviewProps extends Partial<LayeredAsset> {
  * stand-in can hold exactly the same space while the artwork is being made
  * instead of re-typing the geometry and letting the two drift apart.
  */
-export const PREVIEW_MAX_WIDTH = "max-w-4xl lg:max-w-6xl"
+export const PREVIEW_MAX_WIDTH = "max-w-4xl lg:max-w-5xl"
 export const PREVIEW_MOBILE_HEIGHT =
-  "h-[450px] min-[375px]:h-[470px] min-[390px]:h-[500px] min-[430px]:h-[530px] sm:h-auto"
+  "h-[360px] min-[375px]:h-[390px] min-[390px]:h-[420px] min-[430px]:h-[450px] sm:h-auto"
 
 /**
  * The frame between the console and the edge of its panel.

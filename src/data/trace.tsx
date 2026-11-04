@@ -3,7 +3,7 @@
 // blocks to bring it back.
 // import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
 // import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
-// import { withAssetHash } from "@/utils/helpers"
+import { withAssetHash } from "@/utils/helpers"
 // The "Two ways in" section is detached for now. Its imports are commented
 // with it — an unused import fails `tsc --noEmit`. Uncomment both blocks to
 // bring it back.
@@ -199,7 +199,50 @@ export const traceData: CaseStudyData = {
     },
     {
       tag: "Not just for humans",
-      title: "Built for agents too.",
+      title: (
+        <>
+          Built for{" "}
+          <span className="dock-stack mx-1 sm:mx-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
+            <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black dark:bg-white shadow-sm shrink-0 cursor-pointer">
+              <img
+                src={withAssetHash("/assets/trace/codex-icon.svg")}
+                alt="Codex"
+                width={512}
+                height={512}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover select-none"
+                draggable={false}
+              />
+            </span>
+            <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-[#D77655] shadow-sm shrink-0 cursor-pointer">
+              <img
+                src={withAssetHash("/assets/trace/claude-ai-icon.svg")}
+                alt="Claude"
+                width={512}
+                height={510}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover select-none"
+                draggable={false}
+              />
+            </span>
+            <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black shadow-sm shrink-0 cursor-pointer">
+              <img
+                src={withAssetHash("/assets/trace/cursor_icon.png")}
+                alt="Cursor"
+                width={1024}
+                height={1024}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover select-none"
+                draggable={false}
+              />
+            </span>
+          </span>{" "}
+          agents too.
+        </>
+      ),
       titleClassName: "t-hero-headline",
       desc: "Any agent that can run a command can use Trace, with the same proof a person would leave.",
       centeredHeader: true,
