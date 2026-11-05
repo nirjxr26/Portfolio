@@ -57,6 +57,7 @@ export interface LayeredAsset {
   fgMaxWidthClass?: string
   mobileHeightClass?: string
   mobilePaddingClass?: string
+  frameClass?: string
 }
 
 export type SurfaceMode = "alternate" | "mono"

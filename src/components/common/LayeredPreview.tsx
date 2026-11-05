@@ -5,6 +5,7 @@ import { withAssetHash } from "@/utils/helpers"
 export interface LayeredPreviewProps extends Partial<LayeredAsset> {
   bgSrc: string
   fgSrc: string
+  frameClass?: string
   className?: string
   children?: ReactNode
 }
@@ -74,6 +75,7 @@ export function LayeredPreview({
   fgMaxWidthClass = "",
   mobileHeightClass = PREVIEW_MOBILE_HEIGHT,
   mobilePaddingClass = PREVIEW_MOBILE_PADDING,
+  frameClass,
   className = "",
   children,
 }: Readonly<LayeredPreviewProps>) {
@@ -92,7 +94,7 @@ export function LayeredPreview({
         className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
       />
       <div
-        className={`absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${PREVIEW_FRAME_CLASS}`}
+        className={`absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${frameClass ?? PREVIEW_FRAME_CLASS}`}
       >
         <img
           src={withAssetHash(fgSrc)}
