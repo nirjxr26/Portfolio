@@ -6,11 +6,7 @@ export const traceData: CaseStudyData = {
   surfaceMode: "mono",
   hero: {
     title: "Trace",
-    headline: (
-      <>
-        Recorded. <br className="sm:hidden" />Proven. Sealed.
-      </>
-    ),
+    headline: "Recorded. Proven. Sealed.",
     subhead:
       "Case management, evidence tracking, and tamper-proof records, all in one local-first forensic CLI.",
     heroAsset: {
@@ -30,10 +26,9 @@ export const traceData: CaseStudyData = {
   },
   sections: [
     {
-      tag: "Case files, organized",
-      title: "Every case in view.",
+      title: "Cases",
       titleClassName: "t-hero-headline",
-      desc: "Open, under review, or closed, every case shows exactly where it stands. IDs never collide, filing a case away never changes its status, and everything can be exported as JSON.",
+      desc: "Open, under review, or closed, every case shows exactly where it stands, with collision-free IDs and JSON export.",
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
         fgSrc: "/assets/trace/intro_tui.svg",
@@ -43,10 +38,9 @@ export const traceData: CaseStudyData = {
       },
     },
     {
-      tag: "Evidence",
-      title: "Log every drive.",
+      title: "Drives",
       titleClassName: "t-hero-headline",
-      desc: "A drive’s record outlives the hardware, so you can tag a bagged drive to a case before imaging it. Anything that touches a physical drive asks for consent first, hardware strings are sanitized, and each write-protection check comes with its evidence.",
+      desc: "Records outlive the hardware, every touch asks for consent first, and each write-protection check comes with evidence.",
       layeredAsset: {
         bgSrc: "/assets/trace/update_bg.svg",
         fgSrc: "/assets/trace/update_tui.svg",
@@ -56,10 +50,9 @@ export const traceData: CaseStudyData = {
       },
     },
     {
-      tag: "Tamper-evident by design",
-      title: "Verify. Instantly.",
+      title: "Audit",
       titleClassName: "t-hero-headline",
-      desc: "Every case action is logged automatically as it happens, and each entry is chained to the last, so any edit shows as a break. Exports can be encrypted before they leave the workstation.",
+      desc: "Every action is logged automatically and chained to the last, so edits show. Exports can be encrypted.",
       layeredAsset: {
         bgSrc: "/assets/trace/audit_intro_bg.svg",
         fgSrc: "/assets/trace/audit_tui.svg",
@@ -69,11 +62,10 @@ export const traceData: CaseStudyData = {
       },
     },
     {
-      tag: "Not just for humans",
       title: (
         <>
-          Built for{" "}
-          <span className="dock-stack mx-1 sm:mx-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
+          Built for <br />
+          <span className="dock-stack inline-flex items-center mr-1 sm:mr-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
             <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black dark:bg-white shadow-sm shrink-0 cursor-pointer">
               <img
                 src={withAssetHash("/assets/trace/codex-icon.svg")}
@@ -110,8 +102,8 @@ export const traceData: CaseStudyData = {
                 draggable={false}
               />
             </span>
-          </span>{" "}
-          agents too.
+          </span>
+          agents.
         </>
       ),
       titleClassName: "t-hero-headline",

@@ -8,8 +8,8 @@ interface TracePageProps {
   data: CaseStudyData
 }
 
-const DIVIDER_COLOR = "border-[#e0e0e0] dark:border-[#333336]"
-const COLUMN_CONTAINER = `relative w-full max-w-[1360px] mx-auto border-x ${DIVIDER_COLOR} bg-white dark:bg-black`
+const DIVIDER_COLOR = "border-hairline"
+const COLUMN_CONTAINER = `relative w-full max-w-[1140px] mx-auto border-x ${DIVIDER_COLOR} bg-canvas`
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 const TITLE_TRACKING = "tracking-[0.015em]"
 const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
@@ -87,11 +87,11 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
                 </span>
               )}
 
-              <h1 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4 sm:mb-6`}>
+              <h1 className={`text-[28px] min-[400px]:text-[32px] sm:text-[clamp(32px,4.5vw,52px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4 sm:mb-6 whitespace-nowrap`}>
                 {hero.headline}
               </h1>
 
-              <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed text-pretty`}>
+              <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed tracking-normal text-pretty`}>
                 {hero.subhead}
               </p>
             </div>
@@ -109,50 +109,46 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         </div>
       </div>
 
-      {/* The 4 Feature Sections: Cases -> Devices -> Audit -> AI Agent */}
+      {/* The 4 Feature Sections: Cases -> Drives -> Audit -> AI Agent */}
       {sections.map((section, idx) => (
         <div
           key={typeof section.title === "string" ? section.title : idx}
           className={`w-full border-b ${DIVIDER_COLOR}`}
         >
           <div className={COLUMN_CONTAINER}>
-            <section className="p-8 sm:p-12 md:p-16 lg:p-20 reveal-on-scroll">
-              {/* Two-Column Header: Title on Left, Description on Right (aligned with title at 24px) */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-start mb-10 sm:mb-14 md:mb-16">
-                {/* Left Column: Tag and Title */}
-                <div className="text-left">
-                  {section.tag && (
-                    <p className="font-mono text-xs sm:text-sm tracking-wider uppercase text-accent mb-2 sm:mb-3">
-                      {section.tag}
-                    </p>
-                  )}
+            <section className="p-6 sm:p-10 md:p-12 lg:p-14">
+              <div className="reveal-on-scroll">
+                {/* Two-Column Header: Title on Left, Description on Right (vertically centered along horizontal axis) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center mb-8 sm:mb-12 md:mb-14">
+                  {/* Left Column: Title vertically centered */}
+                  <div className="flex flex-col justify-center text-left">
+                    <h2 className={`text-[30px] sm:text-4xl md:text-[46px] lg:text-[50px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white text-left leading-[1.12]`}>
+                      {section.title}
+                    </h2>
+                  </div>
 
-                  <h2 className={`text-[30px] sm:text-4xl md:text-5xl lg:text-[54px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white text-left leading-[1.12]`}>
-                    {section.title}
-                  </h2>
+                  {/* Right Column: Description aligned with the title, 20px font size, tightened leading, normal tracking */}
+                  <div className="flex flex-col justify-center text-left">
+                    {section.desc && (
+                      <p className={`text-[17px] sm:text-[18px] lg:text-[20px] font-normal tracking-normal ${INTER_FONT} ${DESC_COLOR} text-left leading-[1.4] text-pretty`}>
+                        {section.desc}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
-                {/* Right Column: Description aligned with the title, 24px font size */}
-                <div className="text-left lg:pt-1">
-                  {section.desc && (
-                    <p className={`text-[18px] sm:text-[20px] lg:text-[24px] font-normal ${INTER_FONT} ${DESC_COLOR} text-left leading-relaxed text-pretty`}>
-                      {section.desc}
-                    </p>
-                  )}
-                </div>
+                {/* Visual below: background covers full width and aligns to the content with added height */}
+                {section.layeredAsset && (
+                  <div className="w-full text-left">
+                    <LayeredPreview
+                      {...section.layeredAsset}
+                      maxWidthClass="w-full max-w-full"
+                      frameClass="py-10 sm:py-14 md:py-18 lg:py-20 px-4 sm:px-8 md:px-12"
+                      className="shadow-2xl ring-1 ring-black/5 dark:ring-white/10"
+                    />
+                  </div>
+                )}
               </div>
-
-              {/* Visual below: background covers full width and aligns to the content with added height */}
-              {section.layeredAsset && (
-                <div className="w-full text-left">
-                  <LayeredPreview
-                    {...section.layeredAsset}
-                    maxWidthClass="w-full max-w-full"
-                    frameClass="py-10 sm:py-14 md:py-18 lg:py-20 px-4 sm:px-8 md:px-12"
-                    className="shadow-2xl ring-1 ring-black/5 dark:ring-white/10"
-                  />
-                </div>
-              )}
             </section>
           </div>
         </div>
@@ -162,27 +158,29 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       <div className={`w-full border-b ${DIVIDER_COLOR}`}>
         <div className={COLUMN_CONTAINER}>
           <section
-            className="py-16 sm:py-24 md:py-28 px-6 sm:px-12 text-center reveal-on-scroll"
+            className="py-16 sm:py-24 md:py-28 px-6 sm:px-12 text-center"
             aria-label={`View ${hero.title} on GitHub`}
           >
-            <div className="max-w-2xl mx-auto">
-              <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4`}>
-                {cta.headline}
-              </h2>
-              <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-xl mx-auto mb-8 leading-relaxed`}>
-                {cta.body}
-              </p>
-            </div>
-
-            <ActionGroup className="mt-8">
-              <ActionButtons actions={ctaActions} />
-            </ActionGroup>
-
-            {cta.installCommands && cta.installCommands.length > 0 && (
-              <div className="hidden sm:flex mt-10 justify-center w-full">
-                <InstallSnippet commands={cta.installCommands} />
+            <div className="reveal-on-scroll">
+              <div className="max-w-2xl mx-auto">
+                <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4`}>
+                  {cta.headline}
+                </h2>
+                <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-xl mx-auto mb-8 leading-relaxed`}>
+                  {cta.body}
+                </p>
               </div>
-            )}
+
+              <ActionGroup className="mt-8">
+                <ActionButtons actions={ctaActions} />
+              </ActionGroup>
+
+              {cta.installCommands && cta.installCommands.length > 0 && (
+                <div className="hidden sm:flex mt-10 justify-center w-full">
+                  <InstallSnippet commands={cta.installCommands} />
+                </div>
+              )}
+            </div>
           </section>
         </div>
       </div>
