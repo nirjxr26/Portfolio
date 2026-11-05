@@ -12,6 +12,7 @@ const DIVIDER_BORDER = "border-neutral-200 dark:border-neutral-800"
 const COLUMN_CONTAINER = `relative w-full max-w-[1360px] mx-auto border-x ${DIVIDER_BORDER} bg-white dark:bg-black`
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 const TITLE_TRACKING = "tracking-[0.015em]"
+const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
 
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
@@ -74,6 +75,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         across the screen. The central column has vertical guide lines (border-x).
         Horizontal and vertical lines share identical color and opacity (border-neutral-200 dark:border-neutral-800).
         All titles and descriptions use Inter Variable font with relaxed letter-spacing.
+        Descriptions use #B8B8BD in dark mode matching the site design token.
       */}
 
       {/* Hero Row: Top installation script removed; visual half visible and bottom attached */}
@@ -90,7 +92,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
               {hero.headline}
             </h1>
 
-            <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed text-pretty`}>
+            <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed text-pretty`}>
               {hero.subhead}
             </p>
           </div>
@@ -127,19 +129,19 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
               </h2>
 
               {section.desc && (
-                <p className={`text-base sm:text-lg font-normal ${INTER_FONT} text-neutral-600 dark:text-neutral-400 max-w-2xl text-left leading-relaxed text-pretty`}>
+                <p className={`text-base sm:text-lg font-normal ${INTER_FONT} ${DESC_COLOR} max-w-2xl text-left leading-relaxed text-pretty`}>
                   {section.desc}
                 </p>
               )}
             </div>
 
-            {/* Visual below: background covers full width and aligns to the content; inner SVG slightly increased */}
+            {/* Visual below: background covers full width and aligns to the content with added height */}
             {section.layeredAsset && (
               <div className="w-full text-left">
                 <LayeredPreview
                   {...section.layeredAsset}
                   maxWidthClass="w-full max-w-full"
-                  frameClass="p-3 sm:p-[4%] md:p-[3.5%]"
+                  frameClass="py-10 sm:py-14 md:py-18 lg:py-20 px-4 sm:px-8 md:px-12"
                   className="shadow-2xl ring-1 ring-black/5 dark:ring-white/10"
                 />
               </div>
@@ -158,7 +160,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4`}>
               {cta.headline}
             </h2>
-            <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto mb-8 leading-relaxed`}>
+            <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-xl mx-auto mb-8 leading-relaxed`}>
               {cta.body}
             </p>
           </div>

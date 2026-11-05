@@ -1,4 +1,4 @@
-﻿import { withAssetHash } from "@/utils/helpers"
+import { withAssetHash } from "@/utils/helpers"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
@@ -39,6 +39,7 @@ export const traceData: CaseStudyData = {
         fgSrc: "/assets/trace/intro_tui.svg",
         bgAlt: "Trace TUI environment background",
         fgAlt: "Trace TUI console showing cases, audit trail, and updates",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
@@ -51,6 +52,7 @@ export const traceData: CaseStudyData = {
         fgSrc: "/assets/trace/audit_tui.svg",
         bgAlt: "Trace audit verification environment background",
         fgAlt: "Trace TUI audit verification console",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
@@ -63,6 +65,7 @@ export const traceData: CaseStudyData = {
         fgSrc: "/assets/trace/update_tui.svg",
         bgAlt: "Trace update environment background",
         fgAlt: "Trace TUI update console",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
