@@ -11,6 +11,7 @@ interface TracePageProps {
 const DIVIDER_BORDER = "border-neutral-200 dark:border-neutral-800"
 const COLUMN_CONTAINER = `relative w-full max-w-[1360px] mx-auto border-x ${DIVIDER_BORDER} bg-white dark:bg-black`
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
+const TITLE_TRACKING = "tracking-[0.015em]"
 
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
@@ -72,7 +73,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         Each row is full-width with a horizontal divider (border-b) extending 
         across the screen. The central column has vertical guide lines (border-x).
         Horizontal and vertical lines share identical color and opacity (border-neutral-200 dark:border-neutral-800).
-        All titles and descriptions use Inter Variable font.
+        All titles and descriptions use Inter Variable font with relaxed letter-spacing.
       */}
 
       {/* Hero Row: Top installation script removed; visual half visible and bottom attached */}
@@ -85,7 +86,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
               </span>
             )}
 
-            <h1 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-black dark:text-white tracking-tight leading-[1.12] mb-4 sm:mb-6`}>
+            <h1 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4 sm:mb-6`}>
               {hero.headline}
             </h1>
 
@@ -121,7 +122,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
                 </p>
               )}
 
-              <h2 className={`text-[30px] sm:text-4xl md:text-5xl lg:text-[54px] font-semibold ${INTER_FONT} text-black dark:text-white tracking-tight mb-3 sm:mb-4 text-left leading-tight`}>
+              <h2 className={`text-[30px] sm:text-4xl md:text-5xl lg:text-[54px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white mb-3 sm:mb-4 text-left leading-tight`}>
                 {section.title}
               </h2>
 
@@ -154,7 +155,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
           aria-label={`View ${hero.title} on GitHub`}
         >
           <div className="max-w-2xl mx-auto">
-            <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-black dark:text-white tracking-tight leading-[1.12] mb-4`}>
+            <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-black dark:text-white leading-[1.12] mb-4`}>
               {cta.headline}
             </h2>
             <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} text-neutral-600 dark:text-neutral-400 max-w-xl mx-auto mb-8 leading-relaxed`}>
