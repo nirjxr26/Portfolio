@@ -8,8 +8,8 @@ interface TracePageProps {
   data: CaseStudyData
 }
 
-const DIVIDER_COLOR = "border-hairline"
-const COLUMN_CONTAINER = `relative w-full max-w-[1360px] mx-auto border-x ${DIVIDER_COLOR} bg-canvas`
+const DIVIDER_COLOR = "border-[#d0d0d0] dark:border-[#3a3a3e]"
+const COLUMN_CONTAINER = `w-full max-w-[1240px] mx-auto border-x ${DIVIDER_COLOR}`
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 const TITLE_TRACKING = "tracking-[0.015em]"
 const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
