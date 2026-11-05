@@ -9,7 +9,7 @@ interface TracePageProps {
 }
 
 const DIVIDER_COLOR = "border-hairline"
-const COLUMN_CONTAINER = `relative w-full max-w-[1140px] mx-auto border-x ${DIVIDER_COLOR} bg-canvas`
+const COLUMN_CONTAINER = `relative w-full max-w-[1360px] mx-auto border-x ${DIVIDER_COLOR} bg-canvas`
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 const TITLE_TRACKING = "tracking-[0.015em]"
 const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
@@ -117,7 +117,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         >
           <div className={COLUMN_CONTAINER}>
             <section className="p-6 sm:p-10 md:p-12 lg:p-14">
-              <div className="reveal-on-scroll">
+              <div className="reveal-on-scroll max-w-[1028px] mx-auto">
                 {/* Two-Column Header: Title on Left, Description on Right (vertically centered along horizontal axis) */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center mb-8 sm:mb-12 md:mb-14">
                   {/* Left Column: Title vertically centered */}
