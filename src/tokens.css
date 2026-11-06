@@ -61,7 +61,7 @@
 
 @theme {
   --color-tile-dark: #272729;
-  --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  --font-display: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   --font-text: "Univers LT Pro", "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;

@@ -299,7 +299,7 @@ function renderNode(node: MdNode, key: string): ReactNode {
     // A paragraph that is only bold text is a subhead: Manrope, equal space above and below.
     const isSubhead = /^\*\*[^*]+\*\*$/.test(node.text)
     return (
-      <p key={key} className={isSubhead ? "my-6 font-manrope text-base leading-snug" : undefined}>
+      <p key={key} className={isSubhead ? "my-6 font-display text-base leading-snug" : undefined}>
         {renderInline(node.text, key)}
       </p>
     )
