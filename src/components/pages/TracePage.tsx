@@ -164,7 +164,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             <ActionGroup className="mt-8">
               <ActionButtons
                 actions={ctaActions}
-                className="w-full sm:w-[195px] h-[48px] px-6 py-3 text-center justify-center whitespace-nowrap"
+                className="w-full min-[360px]:w-[195px] sm:w-[195px] h-[48px] px-6 py-3 text-center justify-center whitespace-nowrap"
               />
             </ActionGroup>
 
