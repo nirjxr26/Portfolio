@@ -79,7 +79,7 @@
 
   .t-body {
     font-family: var(--font-text);
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     line-height: 1.47;
     letter-spacing: normal;
@@ -100,7 +100,7 @@
   }
 
   .t-caption-strong {
-    font-family: var(--font-text);
+    font-family: var(--font-openai-sans, "OpenAI Sans", sans-serif);
     font-weight: 600;
     font-size: 14px;
     line-height: 1.29;
@@ -113,6 +113,8 @@
     line-height: 1.5;
   }
   .card-tag {
+    font-family: var(--font-openai-sans, "OpenAI Sans", sans-serif);
+    font-weight: 600;
     @apply mb-3 sm:mb-4;
   }
 

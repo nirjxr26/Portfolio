@@ -5,6 +5,7 @@ import { withAssetHash } from "@/utils/helpers"
 export interface LayeredPreviewProps extends Partial<LayeredAsset> {
   bgSrc: string
   fgSrc: string
+  frameClass?: string
   className?: string
   children?: ReactNode
 }
@@ -16,7 +17,7 @@ export interface LayeredPreviewProps extends Partial<LayeredAsset> {
  */
 export const PREVIEW_MAX_WIDTH = "max-w-4xl lg:max-w-5xl"
 export const PREVIEW_MOBILE_HEIGHT =
-  "h-[360px] min-[375px]:h-[390px] min-[390px]:h-[420px] min-[430px]:h-[450px] sm:h-auto"
+  "h-[440px] min-[375px]:h-[485px] min-[390px]:h-[515px] min-[430px]:h-[550px] sm:h-auto"
 
 /**
  * The frame between the console and the edge of its panel.
@@ -47,7 +48,7 @@ export const PREVIEW_FRAME_CLASS = "sm:p-[6%]"
  * artwork crops itself the same way.
  */
 export const PREVIEW_MOBILE_PADDING =
-  "top-5 bottom-5 left-5 min-[375px]:top-6 min-[375px]:bottom-6 min-[375px]:left-6 min-[390px]:top-7 min-[390px]:bottom-7 min-[390px]:left-7 min-[430px]:top-8 min-[430px]:bottom-8 min-[430px]:left-8"
+  "top-2.5 bottom-2.5 left-2.5 min-[375px]:top-3 min-[375px]:bottom-3 min-[375px]:left-3 min-[390px]:top-3.5 min-[390px]:bottom-3.5 min-[390px]:left-3.5 min-[430px]:top-3.5 min-[430px]:bottom-3.5 min-[430px]:left-3.5"
 
 /**
  * A console mockup sitting in its environment artwork.
@@ -74,6 +75,7 @@ export function LayeredPreview({
   fgMaxWidthClass = "",
   mobileHeightClass = PREVIEW_MOBILE_HEIGHT,
   mobilePaddingClass = PREVIEW_MOBILE_PADDING,
+  frameClass,
   className = "",
   children,
 }: Readonly<LayeredPreviewProps>) {
@@ -92,7 +94,7 @@ export function LayeredPreview({
         className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
       />
       <div
-        className={`absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${PREVIEW_FRAME_CLASS}`}
+        className={`absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${frameClass ?? PREVIEW_FRAME_CLASS}`}
       >
         <img
           src={withAssetHash(fgSrc)}

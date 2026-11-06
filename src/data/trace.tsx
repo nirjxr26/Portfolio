@@ -1,17 +1,4 @@
-// The update section's content is commented out for now. Its imports are
-// commented with it — an unused import fails `tsc --noEmit`. Uncomment both
-// blocks to bring it back.
-// import { TraceUpdateAnimation } from "@/components/common/TraceUpdateAnimation"
-// import { CardBody, CardHeadline } from "@/components/common/cards/atoms"
 import { withAssetHash } from "@/utils/helpers"
-// The "Two ways in" section is detached for now. Its imports are commented
-// with it — an unused import fails `tsc --noEmit`. Uncomment both blocks to
-// bring it back.
-// import { SegmentedTabs } from "@/components/common/SegmentedTabs"
-// import { TraceCommandLine } from "@/components/common/TraceCommandLine"
-// import { TraceConsole } from "@/components/common/TraceConsole"
-// import { Container } from "@/components/layout/Container"
-// import { SectionHeader } from "@/components/layout/Section"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
@@ -30,179 +17,59 @@ export const traceData: CaseStudyData = {
       src: "/assets/trace/cli_hero.svg",
       alt: "Trace CLI forensic case management terminal interface",
     },
+    installCommands: [
+      {
+        label: "PowerShell",
+        command: "irm https://raw.githubusercontent.com/nirjxr26/Trace/main/install.ps1 | iex",
+      },
+      {
+        label: "Linux / macOS",
+        command: "curl -fsSL https://raw.githubusercontent.com/nirjxr26/Trace/main/install.sh | sh",
+      },
+    ],
   },
   sections: [
     {
-      title: "The chain of custody.",
-      wideCards: true,
-      centeredCards: true,
-      cards: [
-        {
-          tag: "Cases",
-          headline: "Every case, organized from start to close. Easy to find, safe to store.",
-        },
-        {
-          tag: "Evidence",
-          headline: "Every drive logged, every check kept. Nothing lost between cases.",
-        },
-        {
-          tag: "Audit trail",
-          headline: "Hash-chained and signed instantly. Tampering breaks the chain.",
-        }
-      ],
-      // The "Two ways in" section is detached, along with the console and
-      // command-line animations it mounts. Uncomment to bring it back.
-      /*
-      afterCards: (
-        <div className="pt-24 sm:pt-32">
-          <SectionHeader
-            tag="Two ways in"
-            title="Pick your view."
-            titleClassName="t-hero-headline"
-            desc="Use the full-screen console or the command line. Both read and write the same cases, audit trail, and records."
-            centered
-          />
-          <Container className="reveal-on-scroll">
-            <SegmentedTabs
-              label="Trace interface"
-              tabs={[
-              {
-                label: "Console",
-                desc: "Everything in view. Switch between Cases, Devices, and Audit, with the list on the left and the full record beside it. Use the arrow keys, press / to search. No mouse needed.",
-                preview: <TraceConsole />,
-              },
-              {
-                label: "Command line",
-                desc: "Fast and scriptable. Commands autocomplete as you type, and any case can be output as JSON. Run it by hand, in a script, or through an agent. Every action is recorded.",
-                preview: <TraceCommandLine />,
-              },
-              ]}
-            />
-          </Container>
-        </div>
-      ),
-      */
-    },
-    {
-      tag: "Case files, organized",
-      title: (
-        <>
-          Every case in view.
-        </>
-      ),
+      title: "Each case, tracked to seal.",
       titleClassName: "t-hero-headline",
-      desc: "From intake to sealed, every case keeps its examiner, its evidence, and a full history of what was done and when.",
-      centeredHeader: true,
+      desc: "Open, under review, or closed, every case shows exactly where it stands, with collision-free IDs and JSON export.",
       layeredAsset: {
         bgSrc: "/assets/trace/tui_intro_bg.svg",
         fgSrc: "/assets/trace/intro_tui.svg",
         bgAlt: "Trace TUI environment background",
         fgAlt: "Trace TUI console showing cases, audit trail, and updates",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
-      title: "Know where every case stands.",
-      cards: [
-        {
-          headline: "Never lose track.",
-          body: "Open, under review, or closed — every case shows exactly where it stands.",
-        },
-        {
-          headline: "No collisions, ever.",
-          body: "IDs are generated safely, even with multiple investigators working at once.",
-        },
-        {
-          headline: "Closing isn't deleting.",
-          body: "Filing a case away never changes whether it's open or closed.",
-        },
-        {
-          headline: "Suggests as you type.",
-          body: "Commands and flags autocomplete as you go — no docs, no memorizing syntax.",
-        },
-        {
-          headline: "Also speaks JSON.",
-          body: "Every case and dossier can be output as JSON — ready for scripts and automation.",
-        },
-      ],
-    },
-    {
-      tag: "Evidence",
-      title: (
-        <>
-          Log every drive.
-        </>
-      ),
+      title: "Each drive, logged and verified.",
       titleClassName: "t-hero-headline",
-      desc: "Every inspection and check becomes a permanent record, so you can show what you did to each drive, and when.",
-      centeredHeader: true,
+      desc: "Records outlive the hardware, every touch asks for consent first, and each write-protection check comes with evidence.",
       layeredAsset: {
         bgSrc: "/assets/trace/update_bg.svg",
         fgSrc: "/assets/trace/update_tui.svg",
         bgAlt: "Trace update environment background",
         fgAlt: "Trace TUI update console",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
-      title: "Every drive, from bag to case.",
-      cards: [
-        {
-          headline: "Identity outlives hardware.",
-          body: "Unplug a disk and its record stays. Model and size come from the newest observation.",
-        },
-        {
-          headline: "Consent before contact.",
-          body: "Anything touching a physical drive asks first, naming the exact node.",
-        },
-        {
-          headline: "Tag first, inspect later.",
-          body: "File a bagged drive under a case without imaging it first.",
-        },
-        {
-          headline: "Hostile input, sanitized.",
-          body: "Serials and firmware strings are cleaned and clamped, so they can't break the layout.",
-        },
-        {
-          headline: "Write protection, proven.",
-          body: "Each check shows the verdict, cause, platform, and a per-check evidence table.",
-        },
-      ],
-    },
-    {
-      tag: "Tamper-evident by design",
-      title: "Verify. Instantly.",
+      title: "Each action, logged for good.",
       titleClassName: "t-hero-headline",
-      desc: "One command checks every signature, hash, and sequence. If anything was ever touched, Trace shows you exactly where.",
-      centeredHeader: true,
+      desc: "Every action is logged automatically and chained to the last, so edits show. Exports can be encrypted.",
       layeredAsset: {
         bgSrc: "/assets/trace/audit_intro_bg.svg",
         fgSrc: "/assets/trace/audit_tui.svg",
         bgAlt: "Trace audit verification environment background",
         fgAlt: "Trace TUI audit verification console",
+        fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
       },
     },
     {
-      title: "Nothing happens off the record.",
-      cards: [
-        {
-          headline: "Recorded, automatically.",
-          body: "Every case action is logged the instant it happens. No way to skip it.",
-        },
-        {
-          headline: "Broken chains don't hide.",
-          body: "Each record links to the last. Edit one, and the break shows immediately.",
-        },
-        {
-          headline: "Sealed for transport.",
-          body: "Exports can be encrypted, so evidence stays private when it leaves the workstation.",
-        },
-      ],
-    },
-    {
-      tag: "Not just for humans",
       title: (
         <>
           Built for{" "}
-          <span className="dock-stack mx-1 sm:mx-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
+          <span className="dock-stack inline-flex items-center mx-1 sm:mx-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
             <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black dark:bg-white shadow-sm shrink-0 cursor-pointer">
               <img
                 src={withAssetHash("/assets/trace/codex-icon.svg")}
@@ -240,12 +107,11 @@ export const traceData: CaseStudyData = {
               />
             </span>
           </span>{" "}
-          agents too.
+          agents.
         </>
       ),
       titleClassName: "t-hero-headline",
       desc: "Any agent that can run a command can use Trace, with the same proof a person would leave.",
-      centeredHeader: true,
       layeredAsset: {
         bgSrc: "/assets/trace/agents_bg.svg",
         fgSrc: "/assets/trace/agents_content.svg",
@@ -255,79 +121,9 @@ export const traceData: CaseStudyData = {
         bgHeight: 694,
         fgWidth: 667,
         fgHeight: 553,
-        // The panel now matches the other mockups, but the console inside keeps
-        // the width it had when this section was capped at 788px (88% of it).
         fgMaxWidthClass: "sm:max-w-[694px]",
       },
     },
-    // The "Update in one command." section is retired for now. Every line of
-    // the block is commented, not just the body — `title` is required on a
-    // section, so commenting the heading alone would leave an invalid object.
-    // Uncomment the whole block (and the imports at the top) to bring it back.
-    // {
-    //   tag: "Safe updates",
-    //   title: "Update in one command.",
-    //   titleClassName: "t-hero-headline",
-    //   centeredHeader: true,
-      // media: (
-      //   <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
-      //     <TraceUpdateAnimation />
-      //
-      //     <ul className="space-y-8">
-      //       <li>
-      //         <CardHeadline className="sm:text-xl">Waits for the right moment.</CardHeadline>
-      //         <CardBody>
-      //           If you&apos;re in the middle of something, Trace won&apos;t install anything. It
-      //           waits until you&apos;re done.
-      //         </CardBody>
-      //       </li>
-      //       <li>
-      //         <CardHeadline className="sm:text-xl">Checked before it runs.</CardHeadline>
-      //         <CardBody>
-      //           Every release is verified as genuine before it&apos;s installed, so you only run
-      //           what&apos;s really from the source.
-      //         </CardBody>
-      //       </li>
-      //       <li>
-      //         <CardHeadline className="sm:text-xl">A bad update can&apos;t break you.</CardHeadline>
-      //         <CardBody>
-      //           If an update fails, Trace puts everything back exactly as it was.
-      //         </CardBody>
-      //       </li>
-      //     </ul>
-      //   </div>
-      // ),
-      // media: (
-      //   <div className="relative mx-auto w-full max-w-[680px] overflow-hidden rounded-[20px] squircle bg-[#0c0c0e]">
-      //     <img
-      //       src={withAssetHash("/assets/trace/agents_bg.svg")}
-      //       alt=""
-      //       aria-hidden="true"
-      //       width={788}
-      //       height={694}
-      //       loading="lazy"
-      //       decoding="async"
-      //       draggable={false}
-      //       className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center select-none"
-      //     />
-      //
-      //     <div className="relative flex items-center justify-center p-5 sm:p-7">
-      //       <video
-      //         aria-hidden="true"
-      //         className="block h-auto w-full max-w-[560px] rounded-[16px] bg-[#0c0c0e]"
-      //         src={withAssetHash("/assets/trace/update_module.mp4")}
-      //         width={1920}
-      //         height={1080}
-      //         autoPlay
-      //         loop
-      //         muted
-      //         playsInline
-      //         preload="metadata"
-      //       />
-      //     </div>
-      //   </div>
-      // ),
-    // },
   ],
   cta: {
     headline: "Try Trace today.",

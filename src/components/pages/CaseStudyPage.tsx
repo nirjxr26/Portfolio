@@ -3,6 +3,7 @@ import { SITE_URL } from "@/data/site"
 import { alternateSurfaces, createBreadcrumbs } from "@/utils/helpers"
 import { CaseStudyHeroMedia, FeatureCard, Seo } from "../common"
 import { CarouselSection, CTASection, PageHero, PageShell } from "../layout"
+import { TracePage } from "./TracePage"
 
 interface CaseStudyPageProps {
   slug: string
@@ -13,6 +14,10 @@ interface CaseStudyPageProps {
 const MONO_SURFACES = { section: "bg-canvas", card: "bg-surface-alt" }
 
 export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
+  if (slug === "trace") {
+    return <TracePage data={data} />
+  }
+
   const { hero, sections, cta, seoTitle } = data
   const canonicalUrl = `${SITE_URL}/works/${slug}`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
@@ -61,7 +66,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
         {/* Hero Header */}
         <PageHero
           badge={hero.title}
-          badgeClassName="font-eurostile uppercase"
+          badgeClassName="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase"
           title={hero.headline}
           subhead={hero.subhead}
           bottomFlush={Boolean(hero.heroAsset)}
