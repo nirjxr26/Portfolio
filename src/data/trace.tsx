@@ -6,7 +6,11 @@ export const traceData: CaseStudyData = {
   surfaceMode: "mono",
   hero: {
     title: "Trace",
-    headline: "Recorded. Proven. Sealed.",
+    headline: (
+      <>
+        Recorded. <br className="sm:hidden" />Proven. Sealed.
+      </>
+    ),
     subhead:
       "Case management, evidence tracking, and tamper-proof records, all in one local-first forensic CLI.",
     heroAsset: {

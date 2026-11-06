@@ -1,4 +1,4 @@
-﻿import type { CaseStudyData } from "@/types"
+import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
 import { alternateSurfaces, createBreadcrumbs } from "@/utils/helpers"
 import { CaseStudyHeroMedia, FeatureCard, Seo } from "../common"
@@ -66,7 +66,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
         {/* Hero Header */}
         <PageHero
           badge={hero.title}
-          badgeClassName="font-eurostile uppercase"
+          badgeClassName="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase"
           title={hero.headline}
           subhead={hero.subhead}
           bottomFlush={Boolean(hero.heroAsset)}
