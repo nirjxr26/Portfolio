@@ -10,6 +10,7 @@ interface TracePageProps {
 
 const CONTAINER = "w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10"
 const FEATURE_SECTION_SPACING = "py-8 sm:py-10 md:py-12 lg:py-14"
+const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
@@ -39,7 +40,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
   return (
     <PageShell
       headerPath="/works"
-      outerClassName="min-h-screen bg-canvas text-ink selection:bg-accent selection:text-white"
+      outerClassName={`min-h-screen bg-canvas text-ink ${INTER_FONT} selection:bg-accent selection:text-white`}
       footerBgClass="bg-surface-alt"
       seo={
         <Seo
@@ -75,11 +76,11 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             </span>
           )}
 
-          <h1 className="t-hero text-ink mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap">
+          <h1 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-[-0.005em]`}>
             {hero.headline}
           </h1>
 
-          <p className="t-lead text-muted max-w-2xl mx-auto mb-8 sm:mb-12 text-pretty">
+          <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed text-pretty`}>
             {hero.subhead}
           </p>
         </div>
@@ -99,7 +100,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
           <div className="reveal-on-scroll max-w-4xl text-left">
-            <p className="t-display text-ink text-left text-pretty !leading-[1.1]">
+            <p className={`text-[30px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left text-pretty leading-[1.1] tracking-[-0.005em]`}>
               <span className="text-ink">A forensic tool that does the paperwork.</span>{" "}
               <span className="text-muted">Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.</span>
             </p>
@@ -115,13 +116,13 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         >
           <div className={CONTAINER}>
             <div className="reveal-on-scroll w-full">
-              {/* Header: title with description stacked below, matching main website font size and weight */}
+              {/* Header: title with description stacked below, Inter font with main site font size and weight */}
               <div className="mb-6 sm:mb-8">
-                <h2 className="t-display text-ink text-left">
+                <h2 className={`text-[30px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left leading-[1.1] tracking-[-0.005em]`}>
                   {section.title}
                 </h2>
                 {section.desc && (
-                  <p className="t-body text-muted text-sm sm:text-base font-normal leading-relaxed mt-3 sm:mt-4 max-w-lg text-left text-pretty">
+                  <p className={`text-sm sm:text-base font-normal ${INTER_FONT} text-muted leading-relaxed mt-3 sm:mt-4 max-w-lg text-left text-pretty`}>
                     {section.desc}
                   </p>
                 )}
@@ -150,10 +151,10 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         <div className={CONTAINER}>
           <div className="reveal-on-scroll">
             <div className="max-w-2xl mx-auto">
-              <h2 className="t-hero text-ink mb-4">
+              <h2 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 tracking-[-0.005em]`}>
                 {cta.headline}
               </h2>
-              <p className="t-body text-muted text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+              <p className={`text-sm sm:text-base font-normal ${INTER_FONT} text-muted max-w-xl mx-auto mb-8 leading-relaxed`}>
                 {cta.body}
               </p>
             </div>
