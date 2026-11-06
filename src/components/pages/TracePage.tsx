@@ -99,7 +99,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       {/* Intro Section: Plain-language summary with theme-adaptive alternating surface background */}
       <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
-          <div className="reveal-on-scroll max-w-4xl text-left">
+          <div className="reveal-on-scroll w-full text-left">
             <p className={`text-[30px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left text-pretty leading-[1.1] tracking-[-0.005em]`}>
               <span className="text-ink">A forensic tool that does the paperwork.</span>{" "}
               <span className="text-muted">Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.</span>
