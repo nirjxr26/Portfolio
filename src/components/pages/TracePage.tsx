@@ -143,9 +143,9 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         </section>
       ))}
 
-      {/* Bottom CTA Section */}
+      {/* Bottom CTA Section: with theme-adaptive alternating surface background */}
       <section
-        className="w-full bg-canvas pt-14 sm:pt-18 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
+        className="w-full bg-surface-alt pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24 text-center border-b border-hairline"
         aria-label={`View ${hero.title} on GitHub`}
       >
         <div className={CONTAINER}>
