@@ -43,7 +43,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
     <PageShell
       headerPath="/works"
       outerClassName={`min-h-screen bg-canvas text-ink ${INTER_FONT} selection:bg-accent selection:text-white`}
-      footerBgClass="bg-canvas"
+      footerBgClass="bg-surface-alt"
       seo={
         <Seo
           title={pageTitle}
@@ -145,9 +145,9 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         </section>
       ))}
 
-      {/* Bottom CTA Section */}
+      {/* Bottom CTA Section: with theme-adaptive alternating surface background */}
       <section
-        className="w-full pt-14 sm:pt-18 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
+        className="w-full bg-surface-alt pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
         aria-label={`View ${hero.title} on GitHub`}
       >
         <div className={CONTAINER}>
@@ -162,7 +162,10 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             </div>
 
             <ActionGroup className="mt-8">
-              <ActionButtons actions={ctaActions} />
+              <ActionButtons
+                actions={ctaActions}
+                className="w-full sm:w-[195px] h-[48px] px-6 py-3 text-center justify-center whitespace-nowrap"
+              />
             </ActionGroup>
 
             {cta.installCommands && cta.installCommands.length > 0 && (
