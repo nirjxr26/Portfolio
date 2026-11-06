@@ -10,9 +10,6 @@ interface TracePageProps {
 
 const CONTAINER = "w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10"
 const FEATURE_SECTION_SPACING = "py-8 sm:py-10 md:py-12 lg:py-14"
-const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
-const TITLE_TRACKING = "tracking-[0.015em]"
-const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
 
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
@@ -42,7 +39,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
   return (
     <PageShell
       headerPath="/works"
-      outerClassName={`min-h-screen bg-canvas text-ink ${INTER_FONT} selection:bg-accent selection:text-white`}
+      outerClassName="min-h-screen bg-canvas text-ink selection:bg-accent selection:text-white"
       footerBgClass="bg-surface-alt"
       seo={
         <Seo
@@ -78,11 +75,11 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             </span>
           )}
 
-          <h1 className={`text-[28px] min-[400px]:text-[32px] sm:text-[clamp(32px,4.5vw,52px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap`}>
+          <h1 className="t-hero text-ink mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap">
             {hero.headline}
           </h1>
 
-          <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed tracking-[0.015em] text-pretty`}>
+          <p className="t-lead text-muted max-w-2xl mx-auto mb-8 sm:mb-12 text-pretty">
             {hero.subhead}
           </p>
         </div>
@@ -102,9 +99,9 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
           <div className="reveal-on-scroll max-w-4xl text-left">
-            <p className={`text-[26px] sm:text-[32px] md:text-[38px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} leading-[1.2] text-left text-pretty`}>
+            <p className="t-display text-ink text-left text-pretty !leading-[1.1]">
               <span className="text-ink">A forensic tool that does the paperwork.</span>{" "}
-              <span className={DESC_COLOR}>Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.</span>
+              <span className="text-muted">Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.</span>
             </p>
           </div>
         </div>
@@ -118,13 +115,13 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         >
           <div className={CONTAINER}>
             <div className="reveal-on-scroll w-full">
-              {/* Header: title with description stacked below, left-aligned */}
-              <div className="mb-8 sm:mb-10 md:mb-12">
-                <h2 className={`text-[30px] sm:text-4xl md:text-[46px] lg:text-[50px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-ink text-left leading-[1.12]`}>
+              {/* Header: title with description stacked below, matching main website font size and weight */}
+              <div className="mb-6 sm:mb-8">
+                <h2 className="t-display text-ink text-left">
                   {section.title}
                 </h2>
                 {section.desc && (
-                  <p className={`mt-4 sm:mt-5 max-w-2xl text-[17px] sm:text-[18px] lg:text-[20px] font-normal tracking-normal ${INTER_FONT} ${DESC_COLOR} text-left leading-[1.45] text-pretty`}>
+                  <p className="t-body text-muted text-sm sm:text-base font-normal leading-relaxed mt-3 sm:mt-4 max-w-lg text-left text-pretty">
                     {section.desc}
                   </p>
                 )}
@@ -145,18 +142,18 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         </section>
       ))}
 
-      {/* Bottom CTA Section: with theme-adaptive alternating surface background */}
+      {/* Bottom CTA Section */}
       <section
-        className="w-full bg-surface-alt pt-16 sm:pt-20 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
+        className="w-full bg-canvas pt-14 sm:pt-18 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
         aria-label={`View ${hero.title} on GitHub`}
       >
         <div className={CONTAINER}>
           <div className="reveal-on-scroll">
             <div className="max-w-2xl mx-auto">
-              <h2 className={`text-[34px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-ink leading-[1.12] mb-4`}>
+              <h2 className="t-hero text-ink mb-4">
                 {cta.headline}
               </h2>
-              <p className={`text-base sm:text-lg md:text-xl font-normal ${INTER_FONT} ${DESC_COLOR} max-w-xl mx-auto mb-8 leading-relaxed`}>
+              <p className="t-body text-muted text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
                 {cta.body}
               </p>
             </div>
