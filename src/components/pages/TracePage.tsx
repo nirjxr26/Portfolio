@@ -9,7 +9,7 @@ interface TracePageProps {
 }
 
 const CONTAINER = "w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10"
-const SECTION_SPACING = "py-20 sm:py-24 md:py-28 lg:py-32"
+const FEATURE_SECTION_SPACING = "py-8 sm:py-10 md:py-12 lg:py-14"
 const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
 const TITLE_TRACKING = "tracking-[0.015em]"
 const DESC_COLOR = "text-[#6E6E73] dark:text-[#B8B8BD]"
@@ -99,7 +99,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       </section>
 
       {/* Intro Section: Plain-language summary with theme-adaptive alternating surface background */}
-      <section className="w-full bg-surface-alt py-20 sm:py-24 md:py-28 lg:py-32">
+      <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
           <div className="reveal-on-scroll max-w-4xl text-left">
             <p className={`text-[26px] sm:text-[32px] md:text-[38px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} leading-[1.2] text-left text-pretty`}>
@@ -114,12 +114,12 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       {sections.map((section, idx) => (
         <section
           key={typeof section.title === "string" ? section.title : idx}
-          className={`w-full ${SECTION_SPACING}`}
+          className={`w-full ${FEATURE_SECTION_SPACING}`}
         >
           <div className={CONTAINER}>
             <div className="reveal-on-scroll w-full">
               {/* Header: title with description stacked below, left-aligned */}
-              <div className="mb-10 sm:mb-12 md:mb-14">
+              <div className="mb-8 sm:mb-10 md:mb-12">
                 <h2 className={`text-[30px] sm:text-4xl md:text-[46px] lg:text-[50px] font-semibold ${INTER_FONT} ${TITLE_TRACKING} text-ink text-left leading-[1.12]`}>
                   {section.title}
                 </h2>
@@ -147,7 +147,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
 
       {/* Bottom CTA Section */}
       <section
-        className={`w-full ${SECTION_SPACING} text-center`}
+        className="w-full pt-14 sm:pt-18 md:pt-24 pb-20 sm:pb-24 md:pb-28 text-center"
         aria-label={`View ${hero.title} on GitHub`}
       >
         <div className={CONTAINER}>
