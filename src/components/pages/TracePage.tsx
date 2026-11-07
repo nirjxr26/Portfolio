@@ -69,7 +69,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       }
     >
       {/* Hero Section: Centered header, MacBook CLI mockup attached to the bottom */}
-      <section className="pt-16 sm:pt-24 md:pt-32 pb-0 overflow-hidden flex flex-col items-center text-center">
+      <section className="pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0 overflow-hidden flex flex-col items-center text-center">
         <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-center">
           {hero.title && (
             <span className="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase text-accent mb-4 sm:mb-5 block select-none">

@@ -235,36 +235,53 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                   className="relative py-3 shrink-0"
                   onMouseEnter={() => setWorksDropdownOpen(true)}
                   onMouseLeave={() => setWorksDropdownOpen(false)}
+                  onFocus={() => setWorksDropdownOpen(true)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget)) {
+                      setWorksDropdownOpen(false)
+                    }
+                  }}
                 >
                   <WorksDropdown isWorks={isWorks} open={worksDropdownOpen} />
 
-                  {worksDropdownOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 z-50">
-                      <div className="rounded-2xl bg-card p-3 shadow-xl text-ink whitespace-normal">
-                        <div className="space-y-1">
-                          {WORK_ITEMS.map((item) => (
-                            <a
-                              key={item.name}
-                              href={item.href}
-                              className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
-                            >
-                              {item.name}
-                            </a>
-                          ))}
-                        </div>
-
-                        <div className="mt-2 pt-1">
+                  <div
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 z-50 transition-all duration-200 ease-out motion-reduce:transition-none ${
+                      worksDropdownOpen
+                        ? "opacity-100 pointer-events-auto visible"
+                        : "opacity-0 pointer-events-none invisible"
+                    }`}
+                    aria-hidden={!worksDropdownOpen}
+                  >
+                    <div
+                      className={`rounded-2xl bg-card p-3 shadow-2xl border border-hairline/80 dark:border-hairline/50 text-ink whitespace-normal transition-all duration-200 ease-out origin-top motion-reduce:transition-none motion-reduce:transform-none ${
+                        worksDropdownOpen
+                          ? "translate-y-0 scale-100"
+                          : "-translate-y-2 scale-[0.96]"
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        {WORK_ITEMS.map((item) => (
                           <a
-                            href="/works"
-                            className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-accent transition-colors hover:bg-surface-alt/60"
+                            key={item.name}
+                            href={item.href}
+                            className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
                           >
-                            <span>View All Works</span>
-                            <ArrowRight width={12} height={12} />
+                            {item.name}
                           </a>
-                        </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-2 pt-1 border-t border-hairline/50 dark:border-hairline/30">
+                        <a
+                          href="/works"
+                          className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-accent transition-opacity hover:opacity-80"
+                        >
+                          <span>View All Works</span>
+                          <ArrowRight width={12} height={12} />
+                        </a>
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               ) : (
                 <a
