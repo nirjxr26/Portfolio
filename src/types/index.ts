@@ -122,6 +122,11 @@ export interface Article {
   desc: string
   link: string
   hideFromHome?: boolean
+  slug?: string
+  poster?: {
+    light: string
+    dark: string
+  }
 }
 
 export interface ProductionCapability {

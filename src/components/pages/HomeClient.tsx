@@ -1,9 +1,9 @@
 import { articles, frames, hero, quote } from "@/data/home"
-import { ActionButtons, ActionGroup, ArticleCard, FeatureCard, LightButton, ProductionRail, ProjectsRail, Seo } from "../common"
+import { ActionButtons, ActionGroup, ArticlePosterCard, FeatureCard, LightButton, ProductionRail, ProjectsRail, Seo } from "../common"
 import { CarouselSection, Container, PageShell } from "../layout"
 
 export function HomeClient() {
-  const homeArticles = articles.filter((a) => !a.hideFromHome)
+  const homeArticles = articles.filter((a) => !a.hideFromHome && a.poster != null)
 
   return (
     <PageShell headerPath="/" footerBgClass="bg-canvas border-t border-hairline" seo={<Seo articles={articles} />}>
@@ -47,7 +47,11 @@ export function HomeClient() {
         trackWrapperClassName="mt-6 sm:mt-10"
       >
         {homeArticles.map((article) => (
-          <ArticleCard key={article.title} article={article} variant="standard" />
+          <ArticlePosterCard
+            key={article.title}
+            article={article}
+            className="shrink-0 snap-start"
+          />
         ))}
       </CarouselSection>
       <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">

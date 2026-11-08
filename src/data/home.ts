@@ -173,7 +173,9 @@ export function toCardArticle(a: BlogArticle): Article {
     readTime: a.cardReadTime,
     desc: a.cardDesc,
     link: `/articles/${a.slug}`,
+    slug: a.slug,
     hideFromHome: a.hideFromHome,
+    poster: a.poster,
   }
 }
 

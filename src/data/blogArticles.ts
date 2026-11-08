@@ -14,6 +14,10 @@ export type BlogArticle = {
   keywords: string
   leadImage?: { src: string; alt: string; width: number; height: number }
   disclaimer?: string
+  poster?: {
+    light: string
+    dark: string
+  }
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
@@ -30,11 +34,9 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     cardReadTime: "9 min read",
     keywords:
       "programming education, software engineering, computer science curriculum, AI coding agents, code review, secure coding, SQL injection, XSS, DevOps, India, employability, Stack Overflow Developer Survey 2026, METR, Veracode",
-    leadImage: {
-      src: "/assets/article/coding_wrong.png",
-      alt: "Abstract illustration of a structured geometric form on the left and fragmented shapes on the right.",
-      width: 1107,
-      height: 1064,
+    poster: {
+      light: "/assets/article_poster/coding_white.svg",
+      dark: "/assets/article_poster/coding_black.svg",
     },
     disclaimer:
       "The views and opinions expressed in this article are my own and are intended for educational and informational purposes. The arguments and recommendations reflect my personal perspective and interpretation of the cited research. They do not represent the views of any institution, organization, or affiliated entity. Nothing in this article is intended to defame, misrepresent, or infringe upon the rights of any individual or institution.",
@@ -203,6 +205,10 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
     cardDesc: "Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows.",
     cardReadTime: "6 min read",
     keywords: "PostgreSQL, remote access, listen_addresses, pg_hba.conf, TLS, sslmode, verify-full, UFW, firewall, scram-sha-256, pg_authid, pg_hba_file_rules, Docker, security",
+    poster: {
+      light: "/assets/article_poster/postgres_white.svg",
+      dark: "/assets/article_poster/postgres_black.svg",
+    },
     sections: [
       {
         subtitle: "Why the quick fix is wrong",
@@ -233,6 +239,10 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
     cardDesc: "872 hidden issues. One scan. 30 days to fix what I couldn't see before.",
     cardReadTime: "5 min read",
     keywords: "SonarQube, AegisMesh, code quality, technical debt, bugs, vulnerabilities, security hotspots, code smells, duplication, Quality Gates, React, cognitive complexity, JWT, regex, maintainability, reliability",
+    poster: {
+      light: "/assets/article_poster/sonarqube_white.svg",
+      dark: "/assets/article_poster/sonarqube_black.svg",
+    },
     sections: [
       {
         subtitle: "Why bother",
@@ -289,10 +299,14 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
     cardReadTime: "3 min read",
     keywords: "Git, GitHub, workflow, version control, commit, branch, README, portfolio, collaboration, green squares, staging, push, clone",
     leadImage: {
-      src: "/assets/article/From Chaos to Structured Git History.png",
+      src: "/assets/article_poster/From Chaos to Structured Git History.png",
       alt: "From Chaos to Structured Git History: transition from messy unmanaged files to structured branches and commits.",
       width: 1536,
       height: 1024,
+    },
+    poster: {
+      light: "/assets/article_poster/github_white.svg",
+      dark: "/assets/article_poster/github_black.svg",
     },
     sections: [
       {

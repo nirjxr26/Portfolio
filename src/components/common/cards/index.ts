@@ -1,5 +1,6 @@
 export * from "./ArticleCard"
 export * from "./ArticleMoreCard"
+export * from "./ArticlePosterCard"
 export * from "./FeatureCard"
 export * from "./ProjectCard"
 export * from "./atoms"
