@@ -1,6 +1,0 @@
-# RFC 9116 Security Contact Information
-Contact: mailto:nirjargoswami2626@gmail.com
-Expires: 2027-08-27T00:00:00.000Z
-Preferred-Languages: en
-Canonical: https://nirjar.me/security.txt
-Policy: https://github.com/nirjxr26/Portfolio/blob/main/SECURITY.md

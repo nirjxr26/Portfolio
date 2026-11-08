@@ -6,6 +6,9 @@ https://www.nirjar.me/* https://nirjar.me/:splat 301!
 http://www.nirjar.me/* https://nirjar.me/:splat 301!
 http://nirjar.me/* https://nirjar.me/:splat 301!
 
+# Legacy security.txt redirect (RFC 9116 Section 2.5.2)
+/security.txt /.well-known/security.txt 301
+
 # SPA Routing & Real 404 Fallback
 # Static prerendered pages (/works, /works/bastion, /works/kost, /works/hookdrop) are served directly by the static host.
 # Any genuinely nonexistent route falls back to 404.html with real HTTP 404 status.

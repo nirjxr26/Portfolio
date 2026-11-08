@@ -77,6 +77,12 @@ export const CACHE_RULES = [
   { path: "/articles/:slug", vercelPath: "/articles/:slug", cacheControl: revalidate },
   { path: "/404.html", vercelPath: "/404.html", cacheControl: revalidate },
   { path: "/fonts/*", vercelPath: "/fonts/(.*)", cacheControl: immutable },
+  {
+    path: "/.well-known/security.txt",
+    vercelPath: "/.well-known/security.txt",
+    cacheControl: revalidate,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  },
 ]
 
 export function renderHeadersFile(csp = cspProd) {
@@ -88,6 +94,11 @@ export function renderHeadersFile(csp = cspProd) {
   for (const rule of CACHE_RULES) {
     lines.push("", rule.path)
     lines.push(`  Cache-Control: ${rule.cacheControl}`)
+    if (rule.headers) {
+      for (const [name, val] of Object.entries(rule.headers)) {
+        lines.push(`  ${name}: ${val}`)
+      }
+    }
   }
   return `${lines.join("\n")}\n`
 }
@@ -98,9 +109,17 @@ export function renderVercelHeaders(csp = cspProd) {
       source: "/(.*)",
       headers: Object.entries(baseHeaders(csp)).map(([key, value]) => ({ key, value })),
     },
-    ...CACHE_RULES.map((rule) => ({
-      source: rule.vercelPath,
-      headers: [{ key: "Cache-Control", value: rule.cacheControl }],
-    })),
+    ...CACHE_RULES.map((rule) => {
+      const headers = [{ key: "Cache-Control", value: rule.cacheControl }]
+      if (rule.headers) {
+        for (const [key, value] of Object.entries(rule.headers)) {
+          headers.push({ key, value })
+        }
+      }
+      return {
+        source: rule.vercelPath,
+        headers,
+      }
+    }),
   ]
 }

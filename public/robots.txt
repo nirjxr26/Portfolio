@@ -1,33 +1,17 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt for https://nirjar.me
+
 User-agent: *
 Allow: /
 
-# Search Engine Crawlers
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-# AI Crawlers & LLM Indexers
+# AI training crawlers: opted out
 User-agent: GPTBot
-Allow: /
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: CCBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
+Disallow: /
 
-User-agent: Claude-Web
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Cohere-AI
-Allow: /
-
-# Host & Sitemap Directives
-Host: https://nirjar.me
 Sitemap: https://nirjar.me/sitemap.xml
