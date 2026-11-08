@@ -43,7 +43,6 @@ export function buildRssItems(articles) {
 export function buildRssXml(items, channelDescription) {
   return (
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
-    `<?xml-stylesheet type="text/xsl" href="/rss.xsl"?>\n` +
     `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n` +
     `<channel>\n` +
     `  <title>Nirjar Goswami — Articles</title>\n` +
