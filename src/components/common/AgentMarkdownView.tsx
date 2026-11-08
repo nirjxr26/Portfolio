@@ -60,7 +60,7 @@ function renderInlineMarkdown(text: string): ReactNode {
 function renderMarkdownLine(line: string, index: number): ReactNode {
   if (line === "---") {
     return (
-      <div key={index} className="text-muted/40 text-[10px] sm:text-xs py-0.5 sm:py-1 select-none font-mono">
+      <div key={index} className="text-muted/40 text-[9px] sm:text-xs py-0.5 sm:py-1 select-none font-mono">
         ---
       </div>
     )
@@ -68,7 +68,7 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
 
   if (line.startsWith("# ")) {
     return (
-      <div key={index} className="text-[15px] min-[375px]:text-base sm:text-2xl text-ink pt-2.5 sm:pt-4 pb-1 sm:pb-1.5 break-words" style={BOLD_MONO}>
+      <div key={index} className="text-[13px] min-[375px]:text-[14px] sm:text-2xl text-ink pt-2 sm:pt-4 pb-0.5 sm:pb-1.5 break-words" style={BOLD_MONO}>
         <span className="text-accent font-normal mr-1">#</span>
         <span className="font-bold">{line.slice(2)}</span>
       </div>
@@ -77,7 +77,7 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
 
   if (line.startsWith("## ")) {
     return (
-      <div key={index} className="text-[13px] min-[375px]:text-sm sm:text-xl text-ink pt-3 sm:pt-5 pb-1 sm:pb-1.5 break-words" style={BOLD_MONO}>
+      <div key={index} className="text-[11.5px] min-[375px]:text-xs sm:text-xl text-ink pt-2.5 sm:pt-5 pb-0.5 sm:pb-1.5 break-words" style={BOLD_MONO}>
         <span className="text-accent font-normal mr-1">##</span>
         <span className="font-bold">{line.slice(3)}</span>
       </div>
@@ -86,7 +86,7 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
 
   if (line.startsWith("### ")) {
     return (
-      <div key={index} className="text-[11.5px] min-[375px]:text-xs sm:text-base text-ink pt-2 sm:pt-3 pb-0.5 break-words" style={BOLD_MONO}>
+      <div key={index} className="text-[10.5px] min-[375px]:text-[11px] sm:text-base text-ink pt-1.5 sm:pt-3 pb-0.5 break-words" style={BOLD_MONO}>
         <span className="text-muted font-normal mr-1">###</span>
         <span className="font-bold">{line.slice(4)}</span>
       </div>
@@ -97,7 +97,7 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
     return (
       <div
         key={index}
-        className="border-l-2 border-accent pl-2.5 sm:pl-3.5 my-1 text-ink-soft bg-surface-alt/40 py-1 rounded-r-lg break-words text-[11px] min-[375px]:text-[11.5px] sm:text-[14px] leading-relaxed"
+        className="border-l-2 border-accent pl-2 sm:pl-3.5 my-1 text-ink-soft bg-surface-alt/40 py-1 rounded-r-lg break-words text-[9.5px] min-[375px]:text-[10px] sm:text-[14px] leading-relaxed"
       >
         <span className="text-muted mr-1.5 select-none">&gt;</span>
         {renderInlineMarkdown(line.slice(2))}
@@ -116,9 +116,9 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
       return (
         <div
           key={index}
-          className={`my-3 max-w-full overflow-hidden ${isLightOnly ? "dark:hidden block" : isDarkOnly ? "hidden dark:block" : "block"}`}
+          className={`my-2.5 sm:my-3 max-w-full overflow-hidden ${isLightOnly ? "dark:hidden block" : isDarkOnly ? "hidden dark:block" : "block"}`}
         >
-          <div className="text-[10px] sm:text-xs text-muted/70 mb-1.5 sm:mb-2 font-mono select-all break-all">
+          <div className="text-[9px] sm:text-xs text-muted/70 mb-1.5 sm:mb-2 font-mono select-all break-all">
             {line}
           </div>
           <img
@@ -133,11 +133,11 @@ function renderMarkdownLine(line: string, index: number): ReactNode {
   }
 
   if (line.trim() === "") {
-    return <div key={index} className="h-2 sm:h-3.5" aria-hidden="true" />
+    return <div key={index} className="h-1.5 sm:h-3.5" aria-hidden="true" />
   }
 
   return (
-    <div key={index} className="text-[11px] min-[375px]:text-[11.5px] sm:text-[14px] leading-relaxed text-ink-soft whitespace-pre-wrap break-words font-mono">
+    <div key={index} className="text-[9.5px] min-[375px]:text-[10px] sm:text-[14px] leading-relaxed text-ink-soft whitespace-pre-wrap break-words font-mono">
       {renderInlineMarkdown(line)}
     </div>
   )
