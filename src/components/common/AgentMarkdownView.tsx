@@ -155,8 +155,8 @@ export function AgentMarkdownView() {
 
   return (
     <div className="min-h-screen bg-canvas text-ink animate-agent-enter" style={REGULAR_MONO}>
-      {/* Top Navbar stuck to upper screen with distinct background color and matching header height */}
-      <header className="sticky top-0 z-50 w-full border-b border-hairline bg-surface-alt/95 dark:bg-[#121417]/95 backdrop-blur-md transition-colors">
+      {/* Top Navbar stuck to upper screen with alternate design surface color for both themes */}
+      <header className="sticky top-0 z-50 w-full border-b border-hairline bg-surface-alt/95 backdrop-blur-md transition-colors">
         <Container size="wide" className="max-w-[960px]">
           <div className="flex h-[var(--header-h)] items-center justify-between text-[11px] min-[360px]:text-xs sm:text-[13px]">
             {/* Left: Home | index.md */}
