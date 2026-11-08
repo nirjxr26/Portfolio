@@ -83,12 +83,6 @@ export const CACHE_RULES = [
     cacheControl: revalidate,
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   },
-  {
-    path: "/index.md",
-    vercelPath: "/index.md",
-    cacheControl: revalidate,
-    headers: { "Content-Type": "text/markdown; charset=utf-8" },
-  },
 ]
 
 export function renderHeadersFile(csp = cspProd) {

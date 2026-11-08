@@ -53,19 +53,17 @@ const vite = await createServer({
   logLevel: "silent",
 })
 
-let routesMod, navMod, blogMod, seoMod, routeSchemasMod, homeMdMod
+let routesMod, navMod, blogMod, seoMod, routeSchemasMod
 try {
   routesMod = await vite.ssrLoadModule("/src/data/routes.ts")
   navMod = await vite.ssrLoadModule("/src/data/navigation.ts")
   blogMod = await vite.ssrLoadModule("/src/data/blogArticles.ts")
   seoMod = await vite.ssrLoadModule("/src/data/seo.ts")
   routeSchemasMod = await vite.ssrLoadModule("/src/data/routeSchemas.ts")
-  homeMdMod = await vite.ssrLoadModule("/src/data/homeMarkdown.ts")
 } finally {
   await vite.close()
 }
 
-const { HOME_PAGE_MARKDOWN } = homeMdMod
 const { BLOG_ARTICLES } = blogMod
 const { ROUTE_META } = routesMod
 const { JSONLD_SCRIPT_ID } = seoMod
@@ -238,7 +236,3 @@ if (llmsOut !== null) {
   fs.writeFileSync(llmsPublicPath, llmsOut, "utf-8")
   fs.writeFileSync(path.resolve(distDir, "llms.txt"), llmsOut, "utf-8")
 }
-
-const indexMdOut = HOME_PAGE_MARKDOWN.endsWith("\n") ? HOME_PAGE_MARKDOWN : `${HOME_PAGE_MARKDOWN}\n`
-fs.writeFileSync(path.resolve(projectRoot, "public/index.md"), indexMdOut, "utf-8")
-fs.writeFileSync(path.resolve(distDir, "index.md"), indexMdOut, "utf-8")

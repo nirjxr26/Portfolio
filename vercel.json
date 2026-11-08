@@ -30,6 +30,12 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    {
+      "source": "/index.md",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -175,19 +181,6 @@
         {
           "key": "Content-Type",
           "value": "text/plain; charset=utf-8"
-        }
-      ]
-    },
-    {
-      "source": "/index.md",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        },
-        {
-          "key": "Content-Type",
-          "value": "text/markdown; charset=utf-8"
         }
       ]
     }
