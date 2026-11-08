@@ -3,8 +3,6 @@ import { CONTACT, FOOTER_CONNECT, FOOTER_RESOURCES } from "./navigation"
 import {
   SITE_DEFAULT_DESC,
   SITE_DEFAULT_TITLE,
-  SITE_NAME,
-  SITE_OG_IMAGE,
   SITE_URL,
 } from "./site"
 
@@ -13,10 +11,6 @@ export function generateHomeMarkdown(): string {
 title: "${SITE_DEFAULT_TITLE}"
 description: "${SITE_DEFAULT_DESC}"
 canonical: "${SITE_URL}"
-author: "${SITE_NAME}"
-image: "${SITE_OG_IMAGE}"
-language: "en"
-format: "text/markdown"
 ---`
 
   const resumeAction = `[View Resume](${SITE_URL}/assets/nirjar_resume.pdf)`
