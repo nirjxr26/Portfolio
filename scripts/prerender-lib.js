@@ -26,23 +26,12 @@ export function buildRssItems(articles) {
     .sort((a, b) => new Date(b.updated) - new Date(a.updated))
     .map((b) => {
       const link = `https://nirjar.me/articles/${b.slug}`
-      const bodyHtml = b.sections
-        .map(
-          (s) =>
-            `<h2>${escXml(s.subtitle)}</h2>` +
-            s.content
-              .split("\n\n")
-              .map((p) => `<p>${escXml(p).replaceAll("\n", "<br/>")}</p>`)
-              .join(""),
-        )
-        .join("")
       return [
         "  <item>",
         `    <title>${escXml(b.title)}</title>`,
         `    <link>${link}</link>`,
         `    <guid isPermaLink="true">${link}</guid>`,
         `    <description>${escXml(b.description)}</description>`,
-        `    <content:encoded>${escXml(bodyHtml)}</content:encoded>`,
         `    <category>${escXml(b.category)}</category>`,
         `    <pubDate>${rssPubDate(b.updated)}</pubDate>`,
         "  </item>",
@@ -54,7 +43,8 @@ export function buildRssItems(articles) {
 export function buildRssXml(items, channelDescription) {
   return (
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
-    `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">\n` +
+    `<?xml-stylesheet type="text/xsl" href="/rss.xsl"?>\n` +
+    `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n` +
     `<channel>\n` +
     `  <title>Nirjar Goswami — Articles</title>\n` +
     `  <link>https://nirjar.me/articles</link>\n` +

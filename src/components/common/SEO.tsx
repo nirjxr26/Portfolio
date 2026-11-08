@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import {
   SITE_DEFAULT_DESC,
   SITE_DEFAULT_TITLE,
+  SITE_KEYWORDS,
   SITE_OG_IMAGE,
   siteCanonical,
 } from "@/data/site"
@@ -21,6 +22,7 @@ interface SeoProps {
   canonicalUrl?: string
   ogImage?: string
   ogType?: string
+  keywords?: string
   publishedTime?: string
   modifiedTime?: string
   breadcrumbs?: BreadcrumbItem[]
@@ -54,6 +56,7 @@ export function Seo({
   canonicalUrl,
   ogImage = SITE_OG_IMAGE,
   ogType = "website",
+  keywords = SITE_KEYWORDS,
   publishedTime,
   modifiedTime,
   breadcrumbs,
@@ -67,6 +70,7 @@ export function Seo({
 
     if (document.title !== title) document.title = title
     setMeta("name", "description", description)
+    if (keywords) setMeta("name", "keywords", keywords)
     setMeta("property", "og:title", title)
     setMeta("property", "og:description", description)
     setMeta("property", "og:type", ogType)
@@ -80,6 +84,7 @@ export function Seo({
     if (publishedTime) setMeta("property", "article:published_time", publishedTime)
     if (modifiedTime) setMeta("property", "article:modified_time", modifiedTime)
     setMeta("name", "twitter:card", "summary_large_image")
+    setMeta("name", "twitter:url", canonical)
     setMeta("name", "twitter:title", title)
     setMeta("name", "twitter:description", description)
     setMeta("name", "twitter:image", ogImage)
@@ -131,6 +136,7 @@ export function RouteSeo({
       title={meta.title}
       description={meta.description}
       canonicalUrl={meta.canonical}
+      keywords={meta.keywords}
       includeDefaultSchemas={false}
       breadcrumbs={breadcrumbs}
     />

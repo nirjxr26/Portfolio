@@ -10,12 +10,12 @@ export function ArticleClient() {
 
   return (
     <PageShell
-      headerPath="/article"
+      headerPath="/articles"
       footerBgClass="bg-canvas"
       seo={
         <RouteSeo
           meta={ROUTE_META["/articles"]}
-          breadcrumbs={createBreadcrumbs([{ name: "Article", url: "/articles" }])}
+          breadcrumbs={createBreadcrumbs([{ name: "Articles", url: "/articles" }])}
         />
       }
     >

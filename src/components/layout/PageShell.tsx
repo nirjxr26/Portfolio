@@ -10,6 +10,8 @@ interface PageShellProps {
   outerClassName?: string
   mainClassName?: string
   seo?: ReactNode
+  hideHeader?: boolean
+  hideFooter?: boolean
 }
 
 /**
@@ -24,16 +26,18 @@ export function PageShell({
   outerClassName = "min-h-screen bg-canvas text-ink",
   mainClassName,
   seo,
+  hideHeader = false,
+  hideFooter = false,
 }: Readonly<PageShellProps>) {
   return (
     <div className={outerClassName}>
       {seo}
       <ScrollReveal />
-      <Header activePath={headerPath} />
+      {!hideHeader && <Header activePath={headerPath} />}
       <main id="main-content" className={mainClassName}>
         {children}
       </main>
-      {footerBgClass ? <Footer bgClass={footerBgClass} /> : <Footer />}
+      {!hideFooter && (footerBgClass ? <Footer bgClass={footerBgClass} /> : <Footer />)}
     </div>
   )
 }

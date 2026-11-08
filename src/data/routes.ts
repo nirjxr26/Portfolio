@@ -1,11 +1,18 @@
 import { BLOG_ARTICLES } from "./blogArticles"
 import { CASE_STUDIES } from "./caseStudies"
-import { SITE_DEFAULT_DESC, SITE_DEFAULT_TITLE, SITE_URL, stripTrailingSlashes } from "./site"
+import {
+  SITE_DEFAULT_DESC,
+  SITE_DEFAULT_TITLE,
+  SITE_KEYWORDS,
+  SITE_URL,
+  stripTrailingSlashes,
+} from "./site"
 
 export interface RouteMeta {
   title: string
   description: string
   canonical?: string
+  keywords?: string
 }
 
 export const ROUTE_META: Record<string, RouteMeta> = {
@@ -13,17 +20,21 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: SITE_DEFAULT_TITLE,
     description: SITE_DEFAULT_DESC,
     canonical: SITE_URL,
+    keywords: SITE_KEYWORDS,
   },
   "/works": {
     title: "Works | Nirjar Goswami",
     description:
       "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, HookDrop, and Trace.",
     canonical: `${SITE_URL}/works`,
+    keywords: `Works, Systems Architecture, Infrastructure, Bastion, Kost, HookDrop, Trace, ${SITE_KEYWORDS}`,
   },
   "/articles": {
     title: "Article | Nirjar Goswami",
-    description: "Writing about things I’ve experienced and worked on, not just ideas I’ve read about.",
+    description:
+      "Technical articles on systems architecture, cloud infrastructure, DevOps, and security by Nirjar Goswami. Writing about things experienced and worked on.",
     canonical: `${SITE_URL}/articles`,
+    keywords: `Articles, Engineering Blog, Systems Architecture, DevOps, Security, ${SITE_KEYWORDS}`,
   },
   "/404": {
     title: "Page Not Found | Nirjar Goswami",
@@ -40,7 +51,11 @@ export interface ResolvedRoute {
 }
 
 export function cleanPath(pathname: string) {
-  return stripTrailingSlashes(pathname) || "/"
+  const stripped = stripTrailingSlashes(pathname) || "/"
+  if (stripped === "/index.html" || stripped === "/index.md" || stripped === "/agent.md") {
+    return "/"
+  }
+  return stripped
 }
 
 export function resolveRoute(pathname: string): ResolvedRoute {
@@ -48,10 +63,12 @@ export function resolveRoute(pathname: string): ResolvedRoute {
 
   if (clean === "/" || clean === "/index.html") return { kind: "home" }
   if (clean === "/works") return { kind: "works" }
-  if (clean === "/articles") return { kind: "articles" }
+  if (clean === "/articles" || clean === "/article") return { kind: "articles" }
 
-  if (clean.startsWith("/articles/")) {
-    const slug = clean.slice("/articles/".length)
+  if (clean.startsWith("/articles/") || clean.startsWith("/article/")) {
+    const slug = clean.startsWith("/articles/")
+      ? clean.slice("/articles/".length)
+      : clean.slice("/article/".length)
     if (BLOG_ARTICLES.some((a) => a.slug === slug)) {
       return { kind: "article-detail", articleSlug: slug }
     }

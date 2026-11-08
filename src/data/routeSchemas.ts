@@ -4,6 +4,7 @@ import { articles } from "./home"
 import { ROUTE_META } from "./routes"
 import { SITE_KEYWORDS, SITE_OG_IMAGE, SITE_URL } from "./site"
 import {
+  absoluteUrl,
   buildArticleListElements,
   buildArticlesItemList,
   buildBreadcrumbSchema,
@@ -26,6 +27,8 @@ export interface StaticRoute {
   canonical: string
   priority: string
   changefreq: string
+  keywords?: string
+  image?: string
   ogType?: string
   publishedTime?: string
   modifiedTime?: string
@@ -41,11 +44,16 @@ function graph(...nodes: Record<string, unknown>[]): StaticRoute["schema"] {
 
 function prerenderMeta(path: "/" | "/works" | "/articles"): Pick<
   StaticRoute,
-  "title" | "description" | "canonical"
+  "title" | "description" | "canonical" | "keywords"
 > {
   const meta = ROUTE_META[path]
   if (!meta.canonical) throw new Error(`ROUTE_META["${path}"] is missing a canonical`)
-  return { title: meta.title, description: meta.description, canonical: meta.canonical }
+  return {
+    title: meta.title,
+    description: meta.description,
+    canonical: meta.canonical,
+    keywords: meta.keywords ?? SITE_KEYWORDS,
+  }
 }
 
 const articleCardItems = buildArticleListElements(articles)
@@ -75,6 +83,7 @@ function buildArticleRoute(blog: (typeof BLOG_ARTICLES)[number]): StaticRoute {
   const bodyText = blog.sections.map((s) => `${s.subtitle} ${s.content}`).join(" ")
   const wordCount = estimateWordCount(`${bodyText} ${blog.description}`)
   const keywords = blog.keywords || `${blog.category}, ${blog.title}, Nirjar Goswami, ${SITE_KEYWORDS}`
+  const articleImage = blog.leadImage ? absoluteUrl(blog.leadImage.src) : undefined
 
   return {
     path: `/articles/${blog.slug}`,
@@ -86,6 +95,8 @@ function buildArticleRoute(blog: (typeof BLOG_ARTICLES)[number]): StaticRoute {
     ogType: "article",
     publishedTime: isoDate,
     modifiedTime: isoDate,
+    keywords,
+    image: articleImage ?? SITE_OG_IMAGE,
     schema: graph(
       buildBreadcrumbSchema([
         { name: "Home", url: "/" },
@@ -102,6 +113,7 @@ function buildArticleRoute(blog: (typeof BLOG_ARTICLES)[number]): StaticRoute {
         dateModified: isoDate,
         wordCount,
         readTime: blog.readTime,
+        image: articleImage,
       }),
     ),
   }
@@ -120,6 +132,8 @@ function buildCaseStudyRoute(slug: string, data: (typeof CASE_STUDIES)[string]):
     canonical,
     priority: "0.8",
     changefreq: "monthly",
+    keywords,
+    image: SITE_OG_IMAGE,
     schema: graph(
       buildBreadcrumbSchema([
         { name: "Home", url: "/" },

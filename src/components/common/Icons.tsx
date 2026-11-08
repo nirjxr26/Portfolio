@@ -139,6 +139,18 @@ export function CheckIcon({ className = "", width = 14, height = 14, strokeWidth
   )
 }
 
+export function BotIcon({ className = "", width = 14, height = 14, strokeWidth = 1.8 }: Readonly<IconProps>) {
+  return (
+    <StrokeIcon className={className} width={width} height={height} strokeWidth={strokeWidth}>
+      <rect x="3" y="11" width="18" height="10" rx="2" />
+      <circle cx="12" cy="5" r="2" />
+      <path d="M12 7v4" />
+      <line x1="8" y1="16" x2="8" y2="16" />
+      <line x1="16" y1="16" x2="16" y2="16" />
+    </StrokeIcon>
+  )
+}
+
 export function MailIcon({ className = "", width = 16, height = 16, strokeWidth = 1.8 }: Readonly<IconProps>) {
   return (
     <StrokeIcon className={className} width={width} height={height} strokeWidth={strokeWidth}>

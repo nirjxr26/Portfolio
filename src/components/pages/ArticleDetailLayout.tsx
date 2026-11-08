@@ -4,9 +4,9 @@ import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
 import { renderContent, slugify } from "@/utils/markdown"
-import { buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
+import { absoluteUrl, buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
 import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
-import { SITE_URL } from "@/data/site"
+import { SITE_OG_IMAGE, SITE_URL } from "@/data/site"
 import { createBreadcrumbs, withAssetHash } from "@/utils/helpers"
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
@@ -17,6 +17,8 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
   const shareTitle = article.title
   const isoDate = toISODate(article.updated)
 
+  const articleImage = article.leadImage ? absoluteUrl(article.leadImage.src) : undefined
+
   const articleSchema = useMemo(() => {
     const bodyText = article.sections.map((s) => `${s.subtitle} ${s.content}`).join(" ")
     return buildTechArticleSchema({
@@ -24,13 +26,14 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
       description: article.description,
       canonical,
       category: article.category,
-      keywords: `${article.category}, ${article.title}`,
+      keywords: article.keywords,
       datePublished: isoDate,
       dateModified: isoDate,
-      wordCount: estimateWordCount(`${article.description} ${bodyText}`),
+      wordCount: estimateWordCount(`${bodyText} ${article.description}`),
       readTime: article.readTime,
+      image: articleImage,
     })
-  }, [article, canonical, isoDate])
+  }, [article, articleImage, canonical, isoDate])
 
   const neighbors = useMemo(() => {
     const { previous, next } = getAdjacentArticles(article.slug)
@@ -81,7 +84,9 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
           title={`${article.title} | Nirjar Goswami`}
           description={article.description}
           canonicalUrl={canonical}
+          ogImage={articleImage ?? SITE_OG_IMAGE}
           ogType="article"
+          keywords={article.keywords}
           publishedTime={isoDate}
           modifiedTime={isoDate}
           includeDefaultSchemas={false}

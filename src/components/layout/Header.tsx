@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { NAV_LINKS, WORK_ITEMS, type NavLink } from "@/data/navigation"
+import { AgentButton } from "../common/AgentButton"
 import { ArrowRight, ChevronDown, HomeIcon } from "../common/Icons"
 import { ThemeToggle } from "../common/ThemeToggle"
 import { Container } from "./Container"
@@ -296,7 +297,8 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
             )}
           </div>
 
-          <div className="flex items-center gap-3 ml-auto md:ml-0">
+          <div className="flex items-center gap-2 sm:gap-3 ml-auto md:ml-0">
+            <AgentButton />
             <ThemeToggle />
 
             <button

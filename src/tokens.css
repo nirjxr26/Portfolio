@@ -12,7 +12,7 @@
   --page-gutter: 1rem;
   --header-h: 2.75rem;
   --font-mono: "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-
+  --font-mono-bold: "TX-02-Data", "TX-02", "Berkeley Mono Variable", "Berkeley Mono", monospace;
 }
 
 :root.dark,

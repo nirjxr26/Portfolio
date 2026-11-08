@@ -3,7 +3,7 @@ export const SITE_OG_IMAGE = "https://nirjar.me/og-image.webp"
 export const SITE_NAME = "Nirjar Goswami"
 export const SITE_DEFAULT_TITLE = "Nirjar Goswami | Cloud & Security Engineer"
 export const SITE_DEFAULT_DESC =
-  "Cloud, Security & Systems Engineer specializing in cloud architecture, DevOps, cybersecurity, identity platforms, and resilient, cost-aware infrastructure."
+  "Generalist — Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure."
 
 export const SITE_KEYWORDS =
   "Nirjar Goswami, Cloud Engineer, Security Engineer, Cloud Architecture, DevOps, Kubernetes, Go, System Design, IAM, Cybersecurity, AegisMesh, Bastion, Kost, HookDrop, Trace, DeployLens, VaultLock"

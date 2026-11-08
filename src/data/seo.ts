@@ -135,8 +135,19 @@ export function buildArticleListElements(articles: Article[]): Record<string, un
       description: article.desc.trim(),
       url: absoluteUrl(article.link),
       image: SITE_OG_IMAGE,
-      author: { "@id": `${SITE_URL}/#person` },
-      publisher: { "@id": `${SITE_URL}/#person` },
+      author: {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: SITE_NAME,
+        url: SITE_URL,
+      },
+      publisher: {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: SITE_NAME,
+        url: SITE_URL,
+        logo: { "@type": "ImageObject", url: SITE_OG_IMAGE },
+      },
       datePublished: article.date ? toISODate(article.date) : undefined,
       dateModified: article.date ? toISODate(article.date) : undefined,
       mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(article.link) },
@@ -199,20 +210,29 @@ interface TechArticleInput {
   dateModified: string
   wordCount: number
   readTime: string
+  image?: string
 }
 
 export function buildTechArticleSchema(a: TechArticleInput): Record<string, unknown> {
+  const imageUrl = a.image ?? SITE_OG_IMAGE
   return {
     "@type": "TechArticle",
     "@id": `${a.canonical}#article`,
     headline: a.title,
     alternativeHeadline: a.title,
     description: a.description,
-    image: SITE_OG_IMAGE,
-    author: { "@id": `${SITE_URL}/#person` },
-    publisher: {
+    image: imageUrl,
+    author: {
+      "@type": "Person",
       "@id": `${SITE_URL}/#person`,
-      name: "Nirjar Goswami",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: SITE_NAME,
+      url: SITE_URL,
       logo: { "@type": "ImageObject", url: SITE_OG_IMAGE },
     },
     datePublished: a.datePublished,
@@ -225,8 +245,13 @@ export function buildTechArticleSchema(a: TechArticleInput): Record<string, unkn
     keywords: a.keywords,
     wordCount: a.wordCount,
     timeRequired: toISODuration(a.readTime),
-    thumbnailUrl: SITE_OG_IMAGE,
-    copyrightHolder: { "@id": `${SITE_URL}/#person` },
+    thumbnailUrl: imageUrl,
+    copyrightHolder: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
     isAccessibleForFree: true,
   }
 }

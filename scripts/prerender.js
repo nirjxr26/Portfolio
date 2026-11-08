@@ -95,6 +95,13 @@ function renderRouteHtml(route) {
     /<meta\s+name="description"\s+content=".*?"\s*\/?>/,
     `<meta name="description" content="${route.description}" />`,
   )
+  if (route.keywords) {
+    html = replaceHead(
+      html,
+      /<meta\s+name="keywords"\s+content=".*?"\s*\/?>/,
+      `<meta name="keywords" content="${route.keywords}" />`,
+    )
+  }
   html = replaceHead(
     html,
     /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/,
@@ -115,6 +122,18 @@ function renderRouteHtml(route) {
     /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/,
     `<meta property="og:url" content="${route.canonical}" />`,
   )
+  if (route.image) {
+    html = replaceHead(
+      html,
+      /<meta\s+property="og:image"\s+content=".*?"\s*\/?>/,
+      `<meta property="og:image" content="${route.image}" />`,
+    )
+    html = replaceHead(
+      html,
+      /<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/,
+      `<meta name="twitter:image" content="${route.image}" />`,
+    )
+  }
   html = replaceHead(
     html,
     /<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/,
@@ -124,6 +143,11 @@ function renderRouteHtml(route) {
     html,
     /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/,
     `<meta property="og:type" content="${ogType}" />`,
+  )
+  html = replaceHead(
+    html,
+    /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/,
+    `<meta name="twitter:url" content="${route.canonical}" />`,
   )
   html = replaceHead(
     html,
