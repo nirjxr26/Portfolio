@@ -26,9 +26,9 @@ export function ArticlePosterCard({
     <a
       href={href}
       aria-label={articleAriaLabel(article.title)}
-      className={`group flex flex-col justify-start w-[300px] sm:w-[400px] focus-visible:outline-2 focus-visible:outline-accent rounded-[16px] ${className}`.trim()}
+      className={`group flex flex-col justify-start w-[300px] sm:w-[400px] apple-card-hover focus-visible:outline-2 focus-visible:outline-accent rounded-[16px] ${className}`.trim()}
     >
-      <div className="w-[300px] h-[320px] sm:w-[400px] sm:h-[350px] overflow-hidden rounded-[15px] sm:rounded-[18px] transition-transform duration-300 ease-out group-hover:scale-[1.015] group-active:scale-[0.98]">
+      <div className="w-[300px] h-[320px] sm:w-[400px] sm:h-[350px] overflow-hidden rounded-[15px] sm:rounded-[18px]">
         <img
           src={withAssetHash(article.poster.light)}
           alt=""
