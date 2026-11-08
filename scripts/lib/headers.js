@@ -8,7 +8,7 @@ const ANALYTICS_INGEST_ORIGIN = "https://gateway.umami.is"
 export const cspProd = [
   "default-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'none'",
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   "object-src 'none'",
@@ -26,7 +26,7 @@ export const cspProd = [
 export const cspDev = [
   "default-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'none'",
   "frame-ancestors 'none'",
   "manifest-src 'self'",
   "object-src 'none'",
@@ -80,6 +80,12 @@ export const CACHE_RULES = [
   {
     path: "/.well-known/security.txt",
     vercelPath: "/.well-known/security.txt",
+    cacheControl: revalidate,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  },
+  {
+    path: "/humans.txt",
+    vercelPath: "/humans.txt",
     cacheControl: revalidate,
     headers: { "Content-Type": "text/plain; charset=utf-8" },
   },

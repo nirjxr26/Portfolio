@@ -1,0 +1,20 @@
+/* TEAM */
+  Developer & Designer: Nirjar Goswami
+  Site: https://nirjar.me
+  Contact: nirjargoswami2626@gmail.com
+  Location: Ahmedabad, Gujarat, India
+  GitHub: https://github.com/nirjxr26
+  LinkedIn: https://www.linkedin.com/in/nirjxr
+
+/* THANKS */
+  The open-source maintainers and communities behind React, Vite, Tailwind CSS, TypeScript, Vitest, and the tooling this site is built on.
+
+/* SITE */
+  Language: English
+  Standards: HTML5, CSS3, JSON-LD, Open Graph, RSS 2.0, RFC 9116, RFC 9309
+  Stack: React, TypeScript, Tailwind CSS, Vite
+  Hosting: Vercel
+  Analytics: Umami Cloud (cookieless)
+  Source: https://github.com/nirjxr26/Portfolio
+  Security policy: https://nirjar.me/.well-known/security.txt
+  RSS feed: https://nirjar.me/rss.xml

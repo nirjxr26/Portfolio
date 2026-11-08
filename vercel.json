@@ -86,7 +86,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c=' https://cloud.umami.is; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://gateway.umami.is; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content"
+          "value": "default-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; manifest-src 'self'; object-src 'none'; script-src 'self' 'sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c=' https://cloud.umami.is; style-src 'self'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://gateway.umami.is; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content"
         }
       ]
     },
@@ -173,6 +173,19 @@
     },
     {
       "source": "/.well-known/security.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/humans.txt",
       "headers": [
         {
           "key": "Cache-Control",
