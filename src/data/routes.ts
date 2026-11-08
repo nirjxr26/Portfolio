@@ -52,7 +52,7 @@ export interface ResolvedRoute {
 
 export function cleanPath(pathname: string) {
   const stripped = stripTrailingSlashes(pathname) || "/"
-  if (stripped === "/index.html" || stripped === "/index.md" || stripped === "/agent.md") {
+  if (stripped === "/index.html") {
     return "/"
   }
   return stripped
@@ -61,7 +61,7 @@ export function cleanPath(pathname: string) {
 export function resolveRoute(pathname: string): ResolvedRoute {
   const clean = cleanPath(pathname.split("#")[0] ?? "/")
 
-  if (clean === "/" || clean === "/index.html") return { kind: "home" }
+  if (clean === "/" || clean === "/index.html" || clean === "/index.md" || clean === "/agent.md") return { kind: "home" }
   if (clean === "/works") return { kind: "works" }
   if (clean === "/articles" || clean === "/article") return { kind: "articles" }
 

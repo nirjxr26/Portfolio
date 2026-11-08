@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { Container } from "../layout"
+import { CheckIcon, CopyIcon } from "./Icons"
 import { ThemeToggle } from "./ThemeToggle"
 import { HOME_PAGE_MARKDOWN } from "@/data/homeMarkdown"
 import { useAgentMode } from "@/utils/useAgentMode"
@@ -174,28 +175,20 @@ export function AgentMarkdownView() {
               </span>
             </div>
 
-            {/* Right: Copy Markdown | Exit | ThemeToggle */}
-            <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
+            {/* Right: Copy Icon + ThemeToggle */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               <button
                 type="button"
                 onClick={handleCopy}
-                className="text-muted hover:text-ink transition-colors cursor-pointer select-none hit-area font-normal whitespace-nowrap"
-                aria-label="Copy markdown content to clipboard"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-muted hover:text-ink hover:bg-surface-alt transition-colors cursor-pointer select-none hit-area active:scale-95"
+                aria-label={copied ? "Copied markdown to clipboard" : "Copy markdown to clipboard"}
+                title={copied ? "Copied to clipboard" : "Copy markdown"}
               >
                 {copied ? (
-                  <span className="text-accent font-semibold">Copied</span>
+                  <CheckIcon width={15} height={15} className="text-accent" />
                 ) : (
-                  "Copy Markdown"
+                  <CopyIcon width={15} height={15} />
                 )}
-              </button>
-              <span className="text-muted/40 select-none">|</span>
-              <button
-                type="button"
-                onClick={toggleAgentMode}
-                className="text-muted hover:text-ink transition-colors cursor-pointer select-none hit-area whitespace-nowrap"
-                aria-label="Exit raw markdown view"
-              >
-                Exit
               </button>
               <ThemeToggle />
             </div>
