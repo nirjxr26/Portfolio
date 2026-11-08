@@ -61,7 +61,10 @@ export function buildRssXml(items, channelDescription) {
 export function buildLlmsArticleLines(articles) {
   return [...articles]
     .sort((a, b) => new Date(b.updated) - new Date(a.updated))
-    .map((b) => `- "${b.title}": ${b.cardDesc.trim()} (https://nirjar.me/articles/${b.slug}).`)
+    .map(
+      (b) =>
+        `- "${b.title}": ${b.cardDesc.trim().replaceAll("—", "-")} (https://nirjar.me/articles/${b.slug}).`,
+    )
 }
 
 export function spliceLlmsSection(source, lines, header = "## Technical Articles & Writing") {

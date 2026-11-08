@@ -1,11 +1,11 @@
 # Nirjar Goswami
 
-> Generalist — Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure.
+> Generalist - Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure.
 > Building systems meant to be forgotten. Everyone's specializing, but Nirjar went wide instead, learning how most of the pieces connect rather than mastering just one.
-> Raw structured Markdown view available on site: https://nirjar.me/ (Switch to Agent mode / index.md).
+> Raw structured Markdown view available on site: https://nirjar.me/index.md
 
 ## About
-Nirjar Goswami is a systems and security engineer working across Cloud Architecture, DevOps, Cybersecurity, and System Design. His operating principle is that infrastructure should be boring to operate: secure by default, cheap to run, observable before launch, and recoverable by plan instead of by improvisation. Every project he ships solves a problem he actually ran into — each feature exists for a reason.
+Nirjar Goswami is a systems and security engineer working across Cloud Architecture, DevOps, Cybersecurity, and System Design. His operating principle is that infrastructure should be boring to operate: secure by default, cheap to run, observable before launch, and recoverable by plan instead of by improvisation. Every project he ships solves a problem he actually ran into - each feature exists for a reason.
 
 - Website: https://nirjar.me
 - Raw Markdown Index: https://nirjar.me/ (Agent Mode / index.md)
@@ -18,21 +18,21 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - RSS Feed: https://nirjar.me/rss.xml
 
 ## What He Does
-- CI/CD Pipelines: Ship faster, break less. Every change gets built, tested, and deployed automatically — no step depends on someone remembering it.
-- Vulnerability Patching: Fixed, not filed. Vulnerabilities get triaged by real severity and closed inside SLA — before they're exploited, not after.
-- Secure by default: Nothing left open. Access is scoped tight and secrets stay encrypted from the first commit — security isn't a later step.
+- CI/CD Pipelines: Ship faster, break less. Every change gets built, tested, and deployed automatically - no step depends on someone remembering it.
+- Vulnerability Patching: Fixed, not filed. Vulnerabilities get triaged by real severity and closed inside SLA - before they're exploited, not after.
+- Secure by default: Nothing left open. Access is scoped tight and secrets stay encrypted from the first commit - security isn't a later step.
 - Monitoring & Alerting: Know before it breaks. Systems are instrumented so problems surface on a dashboard, not from a user complaint.
-- Incident Response & Recovery: Fail loud, recover fast. Rollback paths and runbooks exist before something breaks — not improvised while it's on fire.
+- Incident Response & Recovery: Fail loud, recover fast. Rollback paths and runbooks exist before something breaks - not improvised while it's on fire.
 
 ## How He Thinks (Mental Models)
-- Systems Fluency: Where pieces connect. Built across frontend, backend, infra, and pipeline layers — enough to see how a change in one breaks another.
+- Systems Fluency: Where pieces connect. Built across frontend, backend, infra, and pipeline layers - enough to see how a change in one breaks another.
 - System Design: Whiteboard before code. Failure points get mapped on paper first. Cheaper to redesign a diagram than rewrite production code.
 - Cost Awareness: Efficient, not cheap. Systems sized to what they actually need to handle, not what looks impressive on a spec sheet.
-- Code Quality: Checked before it's seen. Style, types, and tests are enforced automatically — so review time goes to design decisions, not typos.
-- Fault Isolation: Small blast radius. Components are scoped so one failure doesn't cascade — and the cause is obvious immediately.
+- Code Quality: Checked before it's seen. Style, types, and tests are enforced automatically - so review time goes to design decisions, not typos.
+- Fault Isolation: Small blast radius. Components are scoped so one failure doesn't cascade - and the cause is obvious immediately.
 
 ## Operating Credo
-> "Production systems should be boring to operate. The work goes into the architecture, the automation, and the failure modes — so when things break, recovery is a script, not a panic."
+> "Production systems should be boring to operate. The work goes into the architecture, the automation, and the failure modes - so when things break, recovery is a script, not a panic."
 
 ## Core Systems & Featured Works
 
@@ -40,29 +40,29 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Type: Digital Forensics & Incident Response
 - Case Study: https://nirjar.me/works/trace
 - Repository: https://github.com/nirjxr26/Trace
-- Stack: Python, Textual, PostgreSQL, SHA-256 Chain of Custody
-- Architecture: A local-first CLI tool for managing forensic cases, proving nothing was tampered with, and updating itself without ever putting evidence at risk. Case management, tamper-proof records, and safe updates — all in one local-first CLI tool. Tracks cases from open to sealed, with cryptographic hash-chaining, tamper-evident audit logs, and isolated atomic updates with automatic rollback.
+- Stack: Python, Typer, Rich, Textual, SQLAlchemy, SQLite, PostgreSQL, CycloneDX SBOM
+- Architecture: A local-first CLI tool for managing forensic cases, proving nothing was tampered with, and updating itself without ever putting evidence at risk. Case management, tamper-proof records, and safe updates - all in one local-first CLI tool. Tracks cases from open to sealed, with cryptographic hash-chaining, tamper-evident audit logs, and isolated atomic updates with automatic rollback.
 
 ### Bastion
 - Type: Self-Hosted IAM Platform
 - Case Study: https://nirjar.me/works/bastion
 - Repository: https://github.com/nirjxr26/Bastion
-- Stack: Go, JWT, OAuth2 (Google/GitHub), MFA (TOTP), RBAC/ABAC, PostgreSQL
-- Architecture: Enterprise-grade access control without handing user data to a third party. Auth, policy enforcement, MFA, session control, and audit logging in one self-hosted stack — zero third-party data access, step-up verification, scoped API keys, policy simulation against live scenarios, filterable and exportable audit logs.
+- Stack: AWS EC2, TypeScript, Python, Node.js, Express, PostgreSQL, JWT, Docker, Kubernetes, Helm, Terraform, ArgoCD, Datadog, Prometheus, Grafana, Loki
+- Architecture: Enterprise-grade access control without handing user data to a third party. Auth, policy enforcement, MFA, session control, and audit logging in one self-hosted stack - zero third-party data access, step-up verification, scoped API keys, policy simulation against live scenarios, filterable and exportable audit logs.
 
 ### Kost
 - Type: Kubernetes Cluster Cost Optimizer
 - Case Study: https://nirjar.me/works/kost
 - Repository: https://github.com/nirjxr26/Kost
-- Stack: Go, Kubernetes API, Prometheus Metrics, GitHub Actions
-- Architecture: Compares requested CPU/memory against actual 95th-percentile utilization, outputs exact single-line kubectl patch commands, calculates dollar impact of wasted core-hours. Zero-CRD standalone binary with CI gate integration — no dashboard, no database, no bill.
+- Stack: Go, client-go, Prometheus, HTML, CSS, JavaScript, Slack Incoming Webhooks, Kubernetes, Docker
+- Architecture: Compares requested CPU/memory against actual 95th-percentile utilization, outputs exact single-line kubectl patch commands, calculates dollar impact of wasted core-hours. Zero-CRD standalone binary with CI gate integration - no dashboard, no database, no bill.
 
 ### HookDrop
 - Type: Real-Time Event & Webhook Ingestion Engine
 - Case Study: https://nirjar.me/works/hookdrop
 - Repository: https://github.com/nirjxr26/HookDrop
-- Stack: Go, eBPF Probes, Server-Sent Events (SSE), Docker, Kubernetes
-- Architecture: Mock webhook receiver in Go — POST to a bucket URL, it catches, stores, and streams live. Production-grade pipeline around it: containerization, hardening, GitOps delivery, sub-35ms delivery under load.
+- Stack:Go, net/http, Zerolog, OpenTelemetry, OTLP gRPC, Docker, Kubernetes, Helm, ArgoCD, Kyverno, Prometheus, Grafana, Loki, Tempo, OTel Collector, Trivy, Cosign, Renovate
+- Architecture: Mock webhook receiver in Go - POST to a bucket URL, it catches, stores, and streams live. Production-grade pipeline around it: containerization, hardening, GitOps delivery, sub-35ms delivery under load.
 
 ### More Works
 - DeployLens: Deployment Insights Timeline. Ties GitHub Actions and AWS CodeDeploy into a single timeline so a commit's full deployment story is visible on both sides instead of split across two dashboards. Repository: https://github.com/nirjxr26/DeployLens
@@ -73,13 +73,14 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - VaultLock: Offline Password Manager. AES-256 encrypted local credential vault with desktop UI that requires zero network access. Repository: https://github.com/nirjxr26/VaultLock-Password-Manager
 
 ## Technical Capabilities & Domains
-- Cloud & Infrastructure: AWS, Docker, Kubernetes, Helm, Terraform, Linux kernel administration, GitOps (ArgoCD).
-- Security & Compliance: Zero Trust architecture, RBAC, OAuth2/OIDC, CVE vulnerability triage (Trivy, Grype), least-privilege identity, policy-as-code.
-- DevOps & CI/CD: GitHub Actions, automated multi-stage builds, signed artifacts, automated rollout/rollback pipelines.
-- Observability: Prometheus, Grafana, OpenTelemetry, structured JSON logging, distributed audit trails.
+- Cloud & Infrastructure: EC2, ECR, IAM, S3, VPC, CloudWatch, CloudTrail, AWS Systems Manager, Terraform
+- DevOps: Linux, Git, Docker, Kubernetes, Helm, Argo CD, GitOps, automated multi-stage builds, signed artifacts, deployment and rollback automation
+- Security: Trivy, Cosign, Kyverno, Falco, Zero Trust Architecture, RBAC, OAuth 2.0/OIDC, least-privilege IAM, policy-as-code, CVE vulnerability triage (Trivy, Grype)
+- Observability: Prometheus, Grafana, Loki, Datadog, OpenTelemetry, structured JSON logging, distributed audit trails
+- Languages: Go, Rust, Python, Bash
 
 ## Technical Articles & Writing
-- "Coding is taught wrong, and AI exposed it": The exam tested loops. The job tests judgement — and AI made the difference impossible to ignore. (https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it).
+- "Coding is taught wrong, and AI exposed it": The exam tested loops. The job tests judgement - and AI made the difference impossible to ignore. (https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it).
 - "How to allow remote PostgreSQL connection with security": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
 - "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).
 - "Rethinking my Git workflow": Not just a code host. A place that quietly reshaped how I build. (https://nirjar.me/articles/rethinking-my-git-workflow).
