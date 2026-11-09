@@ -10,8 +10,8 @@ interface TracePageProps {
 
 const CONTAINER = "w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10"
 const FEATURE_SECTION_SPACING = "py-8 sm:py-10 md:py-12 lg:py-14"
-const INTER_FONT = "font-['Inter_Variable',Inter,sans-serif]"
-const OPENAI_SANS_FONT = "font-['OpenAI_Sans',sans-serif]"
+const INTER_FONT = "font-display"
+const UNIVERS_FONT = "font-univers"
 
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
@@ -81,7 +81,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             {hero.headline}
           </h1>
 
-          <p className={`text-[15px] sm:text-[24px] font-medium ${OPENAI_SANS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty`}>
+          <p className={`text-[15px] sm:text-[24px] font-normal ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty`}>
             {hero.subhead}
           </p>
         </div>
@@ -101,9 +101,11 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
           <div className="reveal-on-scroll w-full text-left">
-            <p className={`text-[20px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left text-pretty leading-[1.3] sm:leading-[1.1] tracking-[-0.005em]`}>
-              <span className="text-ink">A forensic tool that does the paperwork.</span>{" "}
-              <span className="text-muted">Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.</span>
+            <h2 className={`text-[24px] min-[375px]:text-[28px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left text-pretty leading-[1.2] sm:leading-[1.1] tracking-[-0.005em]`}>
+              A forensic tool that does the paperwork.
+            </h2>
+            <p className={`mt-3 sm:mt-4 text-base min-[375px]:text-[17px] sm:text-[19px] md:text-[20px] font-normal ${UNIVERS_FONT} text-muted text-left text-pretty leading-[1.5] max-w-2xl`}>
+              Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.
             </p>
           </div>
         </div>
@@ -123,7 +125,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
                   {section.title}
                 </h2>
                 {section.desc && (
-                  <p className={`text-sm sm:text-[18px] font-medium ${OPENAI_SANS_FONT} text-muted leading-[1.5] mt-3 sm:mt-4 max-w-lg text-left text-pretty`}>
+                  <p className={`text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted leading-[1.5] mt-3 sm:mt-4 max-w-lg text-left text-pretty`}>
                     {section.desc}
                   </p>
                 )}
@@ -155,7 +157,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
               <h2 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 tracking-[-0.005em]`}>
                 {cta.headline}
               </h2>
-              <p className={`text-sm sm:text-[18px] font-medium ${OPENAI_SANS_FONT} text-muted max-w-xl mx-auto mb-8 leading-[1.5]`}>
+              <p className={`text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted max-w-xl mx-auto mb-8 leading-[1.5]`}>
                 {cta.body}
               </p>
             </div>

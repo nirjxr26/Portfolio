@@ -72,7 +72,7 @@ export function HomeClient() {
               <ArticlePosterCard
                 key={article.title}
                 article={article}
-                className="shrink-0 snap-start"
+                className="w-[280px] min-[375px]:w-[320px] sm:w-[380px] md:w-[400px] shrink-0 snap-start"
               />
             ))}
           </CarouselSection>

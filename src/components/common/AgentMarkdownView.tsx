@@ -8,13 +8,13 @@ import { useCopy } from "@/utils/useCopy"
 
 const REGULAR_MONO = {
   fontFamily:
-    '"Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+    '"f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   fontWeight: 400,
 }
 
 const BOLD_MONO = {
   fontFamily:
-    '"TX-02-Data", "TX-02", "Berkeley Mono Variable", "Berkeley Mono", ui-monospace, SFMono-Regular, monospace',
+    '"f-mno-b", "f-mno", ui-monospace, SFMono-Regular, monospace',
   fontWeight: 700,
 }
 

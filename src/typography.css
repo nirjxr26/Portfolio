@@ -57,10 +57,10 @@
 
   .t-lead {
     font-family: var(--font-text);
-    font-weight: 500;
+    font-weight: 400;
     font-size: clamp(15px, 2.2vw, 24px);
     line-height: 1.5;
-    letter-spacing: normal;
+    letter-spacing: 0.2px;
   }
 
   .t-quote {
@@ -79,10 +79,10 @@
 
   .t-body {
     font-family: var(--font-text);
-    font-weight: 500;
+    font-weight: 400;
     font-size: 14px;
     line-height: 1.47;
-    letter-spacing: normal;
+    letter-spacing: 0.2px;
   }
 
   @media (min-width: 640px) {
@@ -96,25 +96,28 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 1.43;
-    letter-spacing: -0.016em;
+    letter-spacing: 0.2px;
   }
 
   .t-caption-strong {
-    font-family: var(--font-openai-sans, "OpenAI Sans", sans-serif);
+    font-family: var(--font-univers, "f-ui", sans-serif);
     font-weight: 600;
     font-size: 14px;
     line-height: 1.29;
+    letter-spacing: 0.2px;
   }
 
   .t-fine {
     font-family: var(--font-text);
-    font-weight: 500;
+    font-weight: 400;
     font-size: 12px;
     line-height: 1.5;
+    letter-spacing: 0.2px;
   }
   .card-tag {
-    font-family: var(--font-openai-sans, "OpenAI Sans", sans-serif);
+    font-family: var(--font-univers, "f-ui", sans-serif);
     font-weight: 600;
+    letter-spacing: 0.2px;
     @apply mb-3 sm:mb-4;
   }
 
