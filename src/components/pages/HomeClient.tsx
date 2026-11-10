@@ -45,8 +45,8 @@ export function HomeClient() {
           </section>
 
           <CarouselSection
-            id="what-i-do"
-            title="What I do."
+            id="services"
+            title="Services."
             bgClass="bg-surface-alt"
             afterCards={
               <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
