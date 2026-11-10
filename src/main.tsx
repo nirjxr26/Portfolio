@@ -8,6 +8,7 @@ import {
   ErrorBoundary,
   HomeClient,
   NotFoundClient,
+  SitemapClient,
   WorksClient,
 } from "@/components"
 import { getBlogArticle } from "@/data/blogArticles"
@@ -34,6 +35,8 @@ function App() {
     content = <WorksClient />
   } else if (route.kind === "articles") {
     content = <ArticleClient />
+  } else if (route.kind === "sitemap") {
+    content = <SitemapClient />
   } else if (route.kind === "article-detail" && route.articleSlug) {
     const article = getBlogArticle(route.articleSlug)
     if (article) {

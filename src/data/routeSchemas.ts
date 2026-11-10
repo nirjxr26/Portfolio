@@ -42,7 +42,7 @@ function graph(...nodes: Record<string, unknown>[]): StaticRoute["schema"] {
   return { "@context": SCHEMA_CONTEXT, "@graph": nodes }
 }
 
-function prerenderMeta(path: "/" | "/works" | "/articles"): Pick<
+function prerenderMeta(path: "/" | "/works" | "/articles" | "/sitemap"): Pick<
   StaticRoute,
   "title" | "description" | "canonical" | "keywords"
 > {
@@ -209,6 +209,18 @@ export function buildStaticRoutes(): StaticRoute[] {
         }),
       ),
     },
+    {
+      path: "/sitemap",
+      ...prerenderMeta("/sitemap"),
+      priority: "0.7",
+      changefreq: "monthly",
+      schema: graph(
+        buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Sitemap", url: "/sitemap" },
+        ]),
+      ),
+    },
     ...BLOG_ARTICLES.map(buildArticleRoute),
     ...Object.entries(CASE_STUDIES).map(([slug, data]) => buildCaseStudyRoute(slug, data)),
   ]
@@ -218,4 +230,5 @@ export const STATIC_ROUTE_SOURCE_FILES: Record<string, string> = {
   "/": "src/data/home.ts",
   "/works": "src/components/pages/WorksClient.tsx",
   "/articles": "src/components/pages/ArticleClient.tsx",
+  "/sitemap": "src/components/pages/SitemapClient.tsx",
 }
