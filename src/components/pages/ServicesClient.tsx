@@ -22,7 +22,7 @@ function ServiceCard({ section }: Readonly<ServiceCardProps>) {
     >
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-10 lg:gap-12 items-start">
         {/* Left column: 40% (2 of 5) */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 reveal-on-scroll">
           <h3 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-2">
             {section.title}
           </h3>
@@ -35,7 +35,7 @@ function ServiceCard({ section }: Readonly<ServiceCardProps>) {
         <div className="md:col-span-3">
           <ul className="space-y-3.5 text-[15px] sm:text-base text-ink/90 leading-relaxed">
             {section.items.map((item) => (
-              <li key={item} className="flex items-start gap-3">
+              <li key={item} className="flex items-start gap-3 reveal-on-scroll">
                 <svg
                   width={16}
                   height={16}
@@ -107,15 +107,15 @@ export function ServicesClient() {
       {/* Perspective */}
       <section className="py-14 sm:py-20 bg-canvas text-left">
         <Container>
-          <div className="max-w-5xl reveal-on-scroll">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-4 sm:mb-6">
+          <div className="max-w-5xl">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-4 sm:mb-6 reveal-on-scroll">
               Why I work across domains.
             </h2>
             <div className="space-y-4 sm:space-y-5 text-lg sm:text-xl md:text-[22px] font-normal text-ink/85 leading-relaxed">
-              <p>
+              <p className="reveal-on-scroll">
                 Real systems don&apos;t live in silos. I work across software engineering, DevOps, cloud, and cybersecurity to see how the pieces connect, and how a decision in one area affects the others.
               </p>
-              <p>
+              <p className="reveal-on-scroll">
                 What I know comes from applying these technologies across my projects. I&apos;m still building depth in each area, and I focus on how they work together to make systems secure and reliable.
               </p>
             </div>
