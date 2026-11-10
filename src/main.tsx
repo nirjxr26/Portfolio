@@ -7,6 +7,7 @@ import {
   CaseStudyPage,
   ErrorBoundary,
   HomeClient,
+  LegalClient,
   NotFoundClient,
   SitemapClient,
   WorksClient,
@@ -37,6 +38,8 @@ function App() {
     content = <ArticleClient />
   } else if (route.kind === "sitemap") {
     content = <SitemapClient />
+  } else if (route.kind === "legal") {
+    content = <LegalClient />
   } else if (route.kind === "article-detail" && route.articleSlug) {
     const article = getBlogArticle(route.articleSlug)
     if (article) {

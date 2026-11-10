@@ -153,6 +153,29 @@ export function AgentMarkdownView() {
 
   const lines = HOME_PAGE_MARKDOWN.split("\n")
 
+  // Filter out HTML comment blocks so they remain in raw markdown for AI agents,
+  // but are completely invisible to human users in the browser UI.
+  const visibleLines: { line: string; index: number }[] = []
+  let insideComment = false
+
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim()
+    if (trimmed.startsWith("<!--")) {
+      insideComment = true
+      if (trimmed.endsWith("-->") && trimmed.length > 4) {
+        insideComment = false
+      }
+      continue
+    }
+    if (insideComment) {
+      if (trimmed.endsWith("-->")) {
+        insideComment = false
+      }
+      continue
+    }
+    visibleLines.push({ line: lines[i], index: i })
+  }
+
   return (
     <div className="min-h-screen bg-canvas text-ink animate-agent-enter" style={REGULAR_MONO}>
       {/* Top Navbar stuck to upper screen with alternate design surface color for both themes */}
@@ -201,7 +224,7 @@ export function AgentMarkdownView() {
         <Container size="wide" className="max-w-[960px] px-3.5 min-[375px]:px-4 sm:px-6">
           <div className="bg-canvas text-ink selection:bg-accent selection:text-white max-w-full overflow-x-hidden">
             <div className="font-mono space-y-0.5 break-words">
-              {lines.map((line, idx) => renderMarkdownLine(line, idx))}
+              {visibleLines.map(({ line, index }) => renderMarkdownLine(line, index))}
             </div>
           </div>
         </Container>

@@ -46,6 +46,7 @@ export const FOOTER_RESOURCES: FooterLinkItem[] = [
   { name: "Home", href: "/" },
   { name: "Articles", href: "/articles" },
   { name: "Sitemap", href: "/sitemap" },
+  { name: "Legal", href: "/legal" },
   { name: "Resume", href: SOCIAL_LINKS.resume },
 ]
 

@@ -1,5 +1,4 @@
 import { hero, frames, productionCapabilities, projects, articles, quote } from "./home"
-import { CONTACT, FOOTER_CONNECT, FOOTER_RESOURCES } from "./navigation"
 import {
   SITE_DEFAULT_DESC,
   SITE_DEFAULT_TITLE,
@@ -75,14 +74,6 @@ canonical: "${SITE_URL}"
     )
     .join("\n\n")
 
-  const resourcesLines = FOOTER_RESOURCES
-    .map((r) => `- [${r.name}](${r.href.startsWith("/") ? `${SITE_URL}${r.href}` : r.href})`)
-    .join("\n")
-
-  const connectLines = FOOTER_CONNECT
-    .map((c) => `- [${c.name}](${c.href})`)
-    .join("\n")
-
   return `${metadataBlock}
 
 # Nirjar Goswami
@@ -128,19 +119,69 @@ ${articleLines}
 ![Website Tree](${SITE_URL}/assets/sitemap/sitemap_white.svg#gh-light-mode-only)
 ![Website Tree](${SITE_URL}/assets/sitemap/sitemap_black.svg#gh-dark-mode-only)
 
-### Resources
-${resourcesLines}
+<!--
+## Sitemap Tree (Machine-readable routes, works, articles, and endpoints for AI agents)
 
-### Connect
-${connectLines}
+nirjar.me/
+├── index.md/ [ Agent view: ${SITE_URL}/index.md ]
+├── sitemap/ [ Full Sitemap Directory: ${SITE_URL}/sitemap ]
+├── works/ [ All Works: ${SITE_URL}/works ]
+│   ├── trace/ [ Trace Forensics: ${SITE_URL}/works/trace ]
+│   ├── bastion/ [ Bastion IAM: ${SITE_URL}/works/bastion ]
+│   ├── kost/ [ Kost Cost Intelligence: ${SITE_URL}/works/kost ]
+│   └── hookdrop/ [ HookDrop Webhook Receiver: ${SITE_URL}/works/hookdrop ]
+├── articles/ [ Engineering Articles: ${SITE_URL}/articles ]
+│   ├── coding-is-taught-wrong-and-ai-exposed-it/ [ ${SITE_URL}/articles/coding-is-taught-wrong-and-ai-exposed-it ]
+│   ├── allow-remote-postgresql-without-opening-it-to-the-world/ [ ${SITE_URL}/articles/allow-remote-postgresql-without-opening-it-to-the-world ]
+│   ├── making-technical-debt-visible-with-sonarqube/ [ ${SITE_URL}/articles/making-technical-debt-visible-with-sonarqube ]
+│   ├── rethinking-my-git-workflow/ [ ${SITE_URL}/articles/rethinking-my-git-workflow ]
+│   └── how-vaultlock-reliably-fetches-brand-logos/ [ ${SITE_URL}/articles/how-vaultlock-reliably-fetches-brand-logos ]
+├── legal/ [ Legal & Terms of Use: ${SITE_URL}/legal ]
+├── assets/
+│   └── nirjar_resume.pdf [ ${SITE_URL}/assets/nirjar_resume.pdf ]
+└── Others
+    ├── humans.txt [ ${SITE_URL}/humans.txt ]
+    ├── llms.txt [ ${SITE_URL}/llms.txt ]
+    ├── rss.xml [ ${SITE_URL}/rss.xml ]
+    ├── sitemap.xml [ ${SITE_URL}/sitemap.xml ]
+    ├── robots.txt [ ${SITE_URL}/robots.txt ]
+    └── /.well-known/security.txt [ ${SITE_URL}/.well-known/security.txt ]
 
-### Contact
-- **Email**: [${CONTACT.emailAddress}](mailto:${CONTACT.emailAddress})
-- **Phone**: [${CONTACT.phoneLabel}](${CONTACT.phoneHref})
-- **Location**: ${CONTACT.location}
+github.com/nirjxr26/
+├── profile/ [ https://github.com/nirjxr26 ]
+└── repositories/
+    ├── Trace/ [ https://github.com/nirjxr26/Trace ]
+    ├── Bastion/ [ https://github.com/nirjxr26/Bastion ]
+    ├── Kost/ [ https://github.com/nirjxr26/Kost ]
+    ├── HookDrop/ [ https://github.com/nirjxr26/HookDrop ]
+    ├── DeployLens/ [ https://github.com/nirjxr26/DeployLens ]
+    ├── canopy/ [ https://github.com/nirjxr26/canopy ]
+    ├── SmartFlow/ [ https://github.com/nirjxr26/SmartFlow ]
+    ├── BlamLess/ [ https://github.com/nirjxr26/Blamless ]
+    ├── VaultLock/ [ https://github.com/nirjxr26/VaultLock-Password-Manager ]
+    └── code-humanizer/ [ https://github.com/nirjxr26/code-humanizer ]
+
+connect/
+├── github.com/nirjxr26 [ https://github.com/nirjxr26 ]
+├── linkedin.com/in/nirjxr [ https://www.linkedin.com/in/nirjxr ]
+├── x.com/nirjxrgoswami [ https://x.com/nirjxrgoswami ]
+├── instagram.com/nirjar_goswami [ https://instagram.com/nirjar_goswami ]
+└── mailto:nirjargoswami2626@gmail.com
+-->
+
+## Contact
+ 
+- **Email**: nirjargoswami2626@gmail.com
+- **Phone**: +91 87991 42626
+- **Location**: Ahmedabad, Gujarat, India
+- **GitHub**: https://github.com/nirjxr26
+- **LinkedIn**: https://www.linkedin.com/in/nirjxr
+- **X (Twitter)**: https://x.com/nirjxrgoswami
+- **Instagram**: https://instagram.com/nirjar_goswami
+- **Resume**: https://nirjar.me/assets/nirjar_resume.pdf
 
 ---
-© ${new Date().getFullYear()} Nirjar Goswami. All rights reserved. • [Blog RSS](${SITE_URL}/rss.xml)
+© 2026 Nirjar Goswami. All rights reserved. • [Blog RSS](${SITE_URL}/rss.xml) • [Sitemap](${SITE_URL}/sitemap)
 `
 }
 

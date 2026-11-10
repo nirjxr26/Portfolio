@@ -7,8 +7,14 @@ import {
   type FooterLinkItem,
 } from "@/data/navigation"
 import { AppLink } from "../common/Button"
-import { ChevronDown, RssIcon } from "../common/Icons"
+import { ChevronDown } from "../common/Icons"
 import { Container } from "./Container"
+
+const BOTTOM_LEGAL_LINKS: readonly FooterLinkItem[] = [
+  { name: "Legal", href: "/legal" },
+  { name: "Sitemap", href: "/sitemap" },
+  { name: "Blog RSS", href: "/rss.xml" },
+]
 
 interface FooterProps {
   bgClass?: string
@@ -167,18 +173,28 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
           </FooterColumn>
         </div>
 
-        {/* Bottom Copyright Divider & Centered Legal Text */}
-        <div className={`mt-8 pt-6 sm:mt-12 sm:pt-8 border-t ${borderClass} flex flex-wrap items-center justify-center gap-3`}>
-          <p className={`text-xs sm:text-[13px] font-normal ${subtextClass}`}>
-            &copy; {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
-          </p>
-          <a
-            href="/rss.xml"
-            className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 t-fine hover:bg-card ${linkClass} ${borderClass}`}
-          >
-            <RssIcon width={13} height={13} />
-            <span>Blog RSS</span>
-          </a>
+        {/* Bottom Copyright & Legal Links (Apple-style) */}
+        <div className={`mt-8 pt-6 sm:mt-10 sm:pt-6 border-t ${borderClass} flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-2 text-xs sm:text-[12px] font-normal ${subtextClass}`}>
+          <div className="shrink-0">
+            Copyright &copy; {new Date().getFullYear()} Nirjar Goswami. All rights reserved.
+          </div>
+          <ul className="flex flex-wrap items-center gap-y-1 sm:justify-end">
+            {BOTTOM_LEGAL_LINKS.map((link, idx) => (
+              <li key={link.name} className="flex items-center">
+                {idx > 0 && (
+                  <span className="px-2 sm:px-2.5 text-muted-soft/40 select-none" aria-hidden="true">
+                    |
+                  </span>
+                )}
+                <AppLink
+                  href={link.href}
+                  className="hover:text-ink hover:underline transition-colors"
+                >
+                  {link.name}
+                </AppLink>
+              </li>
+            ))}
+          </ul>
         </div>
       </Container>
     </footer>
