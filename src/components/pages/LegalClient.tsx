@@ -32,12 +32,12 @@ export function LegalClient() {
 
           <div>
             {/* Privacy & Data */}
-            <section id="privacy" className="scroll-mt-24">
+            <section id="privacy" className="scroll-mt-24 reveal-on-scroll">
               <h2 className={h2Class}>Privacy &amp; Data</h2>
               <ul className={listClass}>
                 <li className={pClass}>
-                  <strong className="font-semibold text-ink">No Cookies:</strong>{" "}
-                  nirjar.me sets zero cookies, runs zero tracking scripts, and collects zero personal analytics.
+                  <strong className="font-semibold text-ink">Zero Tracking &amp; Cookieless:</strong>{" "}
+                  nirjar.me sets zero cookies and collects no personal data. A lightweight, privacy-first analytics service (Umami Cloud) records aggregated page views without persistent identifiers, device fingerprinting, or cross-site tracking.
                 </li>
                 <li className={pClass}>
                   <strong className="font-semibold text-ink">Server Logs:</strong>{" "}
@@ -53,7 +53,7 @@ export function LegalClient() {
             {divider}
 
             {/* Content & Code Licensing */}
-            <section id="licensing" className="scroll-mt-24">
+            <section id="licensing" className="scroll-mt-24 reveal-on-scroll">
               <h2 className={h2Class}>Content &amp; Code Licensing</h2>
               <ul className={listClass}>
                 <li className={pClass}>
@@ -83,7 +83,7 @@ export function LegalClient() {
             {divider}
 
             {/* Technical & Security Disclaimer */}
-            <section id="disclaimer" className="scroll-mt-24">
+            <section id="disclaimer" className="scroll-mt-24 reveal-on-scroll">
               <h2 className={h2Class}>Technical &amp; Security Disclaimer</h2>
               <ul className={listClass}>
                 <li className={pClass}>
@@ -104,7 +104,7 @@ export function LegalClient() {
             {divider}
 
             {/* Security Reports & Governing Law */}
-            <section id="security" className="scroll-mt-24">
+            <section id="security" className="scroll-mt-24 reveal-on-scroll">
               <h2 className={h2Class}>Security Reports &amp; Governing Law</h2>
               <ul className={listClass}>
                 <li className={pClass}>

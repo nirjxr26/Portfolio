@@ -1,23 +1,104 @@
 import { useState } from "react"
 import {
-  CONTACT,
-  FOOTER_CONNECT,
-  FOOTER_RESOURCES,
-  WORK_ITEMS,
+  SOCIAL_LINKS,
   type FooterLinkItem,
 } from "@/data/navigation"
 import { AppLink } from "../common/Button"
-import { ChevronDown } from "../common/Icons"
+import { ChevronDown, ChevronRight, HomeIcon } from "../common/Icons"
 import { Container } from "./Container"
+import { cleanPath, resolveRoute } from "@/data/routes"
+import { CASE_STUDIES } from "@/data/caseStudies"
+import { getBlogArticle } from "@/data/blogArticles"
+import { useInternalRouter } from "@/utils/useInternalRouter"
+
+export interface FooterBreadcrumb {
+  name: string
+  href?: string
+}
+
+function getFooterBreadcrumbs(pathname: string): FooterBreadcrumb[] {
+  const clean = cleanPath(pathname.split("#")[0] ?? "/")
+  const route = resolveRoute(clean)
+
+  if (route.kind === "home") {
+    return []
+  }
+
+  const items: FooterBreadcrumb[] = []
+
+  if (route.kind === "works") {
+    items.push({ name: "Works" })
+  } else if (route.kind === "case-study" && route.caseSlug) {
+    const cs = CASE_STUDIES[route.caseSlug]
+    items.push({ name: "Works", href: "/works" })
+    items.push({ name: cs?.hero.title ?? route.caseSlug })
+  } else if (route.kind === "articles") {
+    items.push({ name: "Articles" })
+  } else if (route.kind === "article-detail" && route.articleSlug) {
+    const article = getBlogArticle(route.articleSlug)
+    items.push({ name: "Articles", href: "/articles" })
+    items.push({ name: article?.title ?? route.articleSlug })
+  } else if (route.kind === "sitemap") {
+    items.push({ name: "Sitemap" })
+  } else if (route.kind === "legal") {
+    items.push({ name: "Terms of Use" })
+  } else if (clean === "/index.md") {
+    items.push({ name: "index.md" })
+  }
+
+  return items
+}
+
+const FOOTER_SECTIONS: ReadonlyArray<{
+  id: string
+  title: string
+  alignment: "start" | "center" | "end"
+  items: readonly FooterLinkItem[]
+}> = [
+  {
+    id: "works",
+    title: "Works",
+    alignment: "start",
+    items: [
+      { name: "Trace", href: "/works/trace" },
+      { name: "Bastion", href: "/works/bastion" },
+      { name: "Kost", href: "/works/kost" },
+      { name: "HookDrop", href: "/works/hookdrop" },
+      { name: "All Works →", href: "/works" },
+    ],
+  },
+  {
+    id: "resources",
+    title: "Resources",
+    alignment: "center",
+    items: [
+      { name: "Articles", href: "/articles" },
+      { name: "Resume (PDF)", href: SOCIAL_LINKS.resume },
+      { name: "index.md", href: "/index.md" },
+    ],
+  },
+  {
+    id: "connect",
+    title: "Connect",
+    alignment: "end",
+    items: [
+      { name: "GitHub", href: SOCIAL_LINKS.github },
+      { name: "LinkedIn", href: SOCIAL_LINKS.linkedin },
+      { name: "X (Twitter)", href: SOCIAL_LINKS.twitter },
+      { name: SOCIAL_LINKS.emailAddress, href: SOCIAL_LINKS.email },
+    ],
+  },
+]
 
 const BOTTOM_LEGAL_LINKS: readonly FooterLinkItem[] = [
-  { name: "Legal", href: "/legal" },
+  { name: "Terms of Use", href: "/legal" },
   { name: "Sitemap", href: "/sitemap" },
-  { name: "Blog RSS", href: "/rss.xml" },
+  { name: "RSS Feed", href: "/rss.xml" },
 ]
 
 interface FooterProps {
   bgClass?: string
+  breadcrumbs?: readonly FooterBreadcrumb[]
 }
 
 function FooterLinkList({
@@ -28,34 +109,12 @@ function FooterLinkList({
   return (
     <ul className={listClassName}>
       {items.map((item) => (
-        <li key={item.name}>
-          <AppLink href={item.href} className={linkClass}>
+        <li key={item.name} className="truncate">
+          <AppLink href={item.href} className={`${linkClass} block truncate`}>
             {item.name}
           </AppLink>
         </li>
       ))}
-    </ul>
-  )
-}
-
-function FooterContactList({
-  linkClass,
-  subtextClass,
-  listClassName = "pb-3.5 space-y-2.5 text-sm",
-}: Readonly<{ linkClass: string; subtextClass: string; listClassName?: string }>) {
-  return (
-    <ul className={listClassName}>
-      <li>
-        <a href={CONTACT.emailHref} className={`${linkClass} block truncate`}>
-          {CONTACT.emailAddress}
-        </a>
-      </li>
-      <li>
-        <a href={CONTACT.phoneHref} className={linkClass}>
-          {CONTACT.phoneLabel}
-        </a>
-      </li>
-      <li className={subtextClass}>{CONTACT.location}</li>
     </ul>
   )
 }
@@ -95,25 +154,36 @@ function FooterAccordionSection({
 
 function FooterColumn({
   title,
+  alignment = "center",
   headingClass,
   children,
-}: Readonly<{ title: string; headingClass: string; children: React.ReactNode }>) {
+}: Readonly<{
+  title: string
+  alignment?: "start" | "center" | "end"
+  headingClass: string
+  children: React.ReactNode
+}>) {
+  const alignClass =
+    alignment === "start"
+      ? "justify-start"
+      : alignment === "end"
+      ? "justify-start sm:justify-end"
+      : "justify-start sm:justify-center"
+
   return (
-    <div>
-      <h4 className={`text-base mb-4 ${headingClass}`}>{title}</h4>
-      {children}
+    <div className={`flex ${alignClass}`}>
+      <div className="w-fit max-w-full text-left">
+        <h4 className={`text-base mb-4 ${headingClass}`}>{title}</h4>
+        {children}
+      </div>
     </div>
   )
 }
 
-export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
+export function Footer({ bgClass = "bg-surface-alt", breadcrumbs: customBreadcrumbs }: Readonly<FooterProps>) {
+  const pathname = useInternalRouter()
+  const crumbs = customBreadcrumbs ?? getFooterBreadcrumbs(pathname)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({})
-
-  const sections: ReadonlyArray<{ id: string; title: string; items: readonly FooterLinkItem[] }> = [
-    { id: "works", title: "Works", items: WORK_ITEMS },
-    { id: "connect", title: "Connect", items: FOOTER_CONNECT },
-    { id: "resources", title: "Resources", items: FOOTER_RESOURCES },
-  ]
 
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({
@@ -128,13 +198,60 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
   const divideClass = "divide-hairline"
   const borderClass = "border-hairline"
   const iconClass = "text-muted"
+  const topPad = crumbs.length > 0 ? "pt-6 sm:pt-10" : "pt-8 sm:pt-16"
 
   return (
-    <footer id="footer" className={`${bgClass} pt-8 pb-8 sm:pt-16 sm:pb-12 border-t-0`}>
+    <footer id="footer" className={`${bgClass} ${topPad} pb-8 sm:pb-12 border-t-0`}>
       <Container>
+        <div className="max-w-5xl mx-auto w-full">
+          {/* Apple-style Footer Breadcrumbs (only on sub-pages) */}
+        {crumbs.length > 0 && (
+          <nav
+            aria-label="Breadcrumbs"
+            className={`flex items-center gap-2 text-xs sm:text-[13px] text-muted-soft mb-8 pb-5 sm:mb-10 sm:pb-6 border-b ${borderClass} overflow-x-auto no-scrollbar`}
+          >
+            <AppLink
+              href="/"
+              aria-label="Home"
+              className="text-muted hover:text-ink transition-colors flex items-center shrink-0"
+            >
+              <HomeIcon width={14} height={14} />
+            </AppLink>
+
+            {crumbs.map((crumb, idx) => {
+              const isLast = idx === crumbs.length - 1
+              return (
+                <div key={crumb.name} className="flex items-center gap-2 shrink-0 max-w-[280px] sm:max-w-none">
+                  <ChevronRight
+                    width={10}
+                    height={10}
+                    className="text-muted-soft/40 shrink-0"
+                    aria-hidden="true"
+                  />
+                  {crumb.href && !isLast ? (
+                    <AppLink
+                      href={crumb.href}
+                      className="hover:text-ink hover:underline transition-colors truncate"
+                    >
+                      {crumb.name}
+                    </AppLink>
+                  ) : (
+                    <span
+                      className="text-ink font-normal truncate"
+                      aria-current={isLast ? "page" : undefined}
+                    >
+                      {crumb.name}
+                    </span>
+                  )}
+                </div>
+              )
+            })}
+          </nav>
+        )}
+
         {/* Mobile Accordion View (< 640px) */}
         <div className={`block sm:hidden divide-y ${divideClass}`}>
-          {sections.map((section) => (
+          {FOOTER_SECTIONS.map((section) => (
             <FooterAccordionSection
               key={section.id}
               id={section.id}
@@ -147,30 +264,20 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
               <FooterLinkList items={section.items} linkClass={linkClass} />
             </FooterAccordionSection>
           ))}
-
-          <FooterAccordionSection
-            id="contact"
-            title="Contact"
-            open={Boolean(openSections.contact)}
-            onToggle={toggleSection}
-            headingClass={headingClass}
-            iconClass={iconClass}
-          >
-            <FooterContactList linkClass={linkClass} subtextClass={subtextClass} />
-          </FooterAccordionSection>
         </div>
 
-        {/* Desktop / Tablet 4-Column Layout (>= 640px) */}
-        <div className="hidden sm:grid sm:grid-cols-4 sm:gap-8">
-          {sections.map((section) => (
-            <FooterColumn key={section.id} title={section.title} headingClass={headingClass}>
+        {/* Desktop / Tablet 3-Column Layout (>= 640px) */}
+        <div className="hidden sm:grid sm:grid-cols-3 sm:gap-8 lg:gap-12">
+          {FOOTER_SECTIONS.map((section) => (
+            <FooterColumn
+              key={section.id}
+              title={section.title}
+              alignment={section.alignment}
+              headingClass={headingClass}
+            >
               <FooterLinkList items={section.items} linkClass={linkClass} listClassName="space-y-2.5 text-[15px]" />
             </FooterColumn>
           ))}
-
-          <FooterColumn title="Contact" headingClass={headingClass}>
-            <FooterContactList linkClass={linkClass} subtextClass={subtextClass} listClassName="space-y-2.5 text-[15px]" />
-          </FooterColumn>
         </div>
 
         {/* Bottom Copyright & Legal Links (Apple-style) */}
@@ -196,7 +303,8 @@ export function Footer({ bgClass = "bg-surface-alt" }: Readonly<FooterProps>) {
             ))}
           </ul>
         </div>
-      </Container>
+      </div>
+    </Container>
     </footer>
   )
 }

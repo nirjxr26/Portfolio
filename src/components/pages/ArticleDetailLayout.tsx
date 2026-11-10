@@ -17,7 +17,12 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
   const shareTitle = article.title
   const isoDate = toISODate(article.updated)
 
-  const articleImage = article.leadImage ? absoluteUrl(article.leadImage.src) : undefined
+  const posterSrc = article.poster?.dark ?? article.poster?.light
+  const articleImage = posterSrc
+    ? absoluteUrl(posterSrc)
+    : article.leadImage
+    ? absoluteUrl(article.leadImage.src)
+    : undefined
 
   const articleSchema = useMemo(() => {
     const bodyText = article.sections.map((s) => `${s.subtitle} ${s.content}`).join(" ")
