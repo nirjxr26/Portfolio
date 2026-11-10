@@ -83,7 +83,12 @@ function buildArticleRoute(blog: (typeof BLOG_ARTICLES)[number]): StaticRoute {
   const bodyText = blog.sections.map((s) => `${s.subtitle} ${s.content}`).join(" ")
   const wordCount = estimateWordCount(`${bodyText} ${blog.description}`)
   const keywords = blog.keywords || `${blog.category}, ${blog.title}, Nirjar Goswami, ${SITE_KEYWORDS}`
-  const articleImage = blog.leadImage ? absoluteUrl(blog.leadImage.src) : undefined
+  const posterSrc = blog.poster?.dark ?? blog.poster?.light
+  const articleImage = posterSrc
+    ? absoluteUrl(posterSrc)
+    : blog.leadImage
+    ? absoluteUrl(blog.leadImage.src)
+    : undefined
 
   return {
     path: `/articles/${blog.slug}`,

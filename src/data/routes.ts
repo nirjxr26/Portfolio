@@ -30,7 +30,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     keywords: `Works, Systems Architecture, Infrastructure, Bastion, Kost, HookDrop, Trace, ${SITE_KEYWORDS}`,
   },
   "/articles": {
-    title: "Article | Nirjar Goswami",
+    title: "Articles | Nirjar Goswami",
     description:
       "Technical articles on systems architecture, cloud infrastructure, DevOps, and security by Nirjar Goswami. Writing about things experienced and worked on.",
     canonical: `${SITE_URL}/articles`,

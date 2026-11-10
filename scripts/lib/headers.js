@@ -50,7 +50,7 @@ export function baseHeaders(csp) {
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
     "Permissions-Policy":
-      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), fullscreen=(self), display-capture=(), browsing-topics=()",
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), fullscreen=(self), display-capture=()",
     "Cross-Origin-Opener-Policy": "same-origin",
     "Cross-Origin-Resource-Policy": "same-origin",
     "Cross-Origin-Embedder-Policy": "credentialless",
@@ -73,6 +73,8 @@ export const CACHE_RULES = [
   { path: "/", vercelPath: "/", cacheControl: revalidate },
   { path: "/works", vercelPath: "/works", cacheControl: revalidate },
   { path: "/articles", vercelPath: "/articles", cacheControl: revalidate },
+  { path: "/sitemap", vercelPath: "/sitemap", cacheControl: revalidate },
+  { path: "/legal", vercelPath: "/legal", cacheControl: revalidate },
   { path: "/works/:slug", vercelPath: "/works/:slug", cacheControl: revalidate },
   { path: "/articles/:slug", vercelPath: "/articles/:slug", cacheControl: revalidate },
   { path: "/404.html", vercelPath: "/404.html", cacheControl: revalidate },

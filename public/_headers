@@ -3,7 +3,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), fullscreen=(self), display-capture=(), browsing-topics=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), fullscreen=(self), display-capture=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Cross-Origin-Embedder-Policy: credentialless
@@ -26,6 +26,12 @@
   Cache-Control: public, max-age=0, must-revalidate
 
 /articles
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sitemap
+  Cache-Control: public, max-age=0, must-revalidate
+
+/legal
   Cache-Control: public, max-age=0, must-revalidate
 
 /works/:slug

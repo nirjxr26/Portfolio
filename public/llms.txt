@@ -16,6 +16,8 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Location: Ahmedabad, Gujarat, India
 - Resume: https://nirjar.me/assets/nirjar_resume.pdf
 - RSS Feed: https://nirjar.me/rss.xml
+- Sitemap: https://nirjar.me/sitemap
+- Terms of Use / Legal: https://nirjar.me/legal
 
 ## What He Does
 - CI/CD Pipelines: Ship faster, break less. Every change gets built, tested, and deployed automatically - no step depends on someone remembering it.

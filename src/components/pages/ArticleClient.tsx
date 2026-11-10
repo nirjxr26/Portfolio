@@ -20,7 +20,7 @@ export function ArticleClient() {
       }
     >
       <PageHero
-        title="Article."
+        title="Articles."
         subhead="Writing about things I’ve experienced and worked on, not just ideas I’ve read about."
         compact
       />
