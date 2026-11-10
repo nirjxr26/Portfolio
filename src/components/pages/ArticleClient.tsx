@@ -24,11 +24,11 @@ export function ArticleClient() {
         subhead="Writing about things I’ve experienced and worked on, not just ideas I’ve read about."
         compact
       />
-      <Section id="articles" bgClass="bg-surface-alt" padClass="pt-6 pb-14 sm:pt-8 sm:pb-18 md:pt-10 md:pb-24">
+      <Section id="articles" bgClass="bg-surface-alt" padClass="pt-2.5 pb-14 sm:pt-4 sm:pb-18 md:pt-5 md:pb-24">
         <Container className="max-w-[1360px]">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 sm:gap-x-8 lg:gap-x-10 gap-y-8 sm:gap-y-10 lg:gap-y-12 justify-items-center reveal-on-scroll">
             {articlesWithPosters.map((article) => (
-              <ArticlePosterCard key={article.slug} article={article} className="w-full max-w-[360px] sm:max-w-[390px] md:max-w-[400px]" />
+              <ArticlePosterCard key={article.slug} article={article} className="w-full max-w-[400px]" />
             ))}
           </div>
         </Container>

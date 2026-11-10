@@ -27,7 +27,7 @@ export function PageHero({
   const sectionPadding = bottomFlush
     ? "pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0"
     : compact
-      ? "pt-20 pb-6 min-[480px]:pt-24 min-[480px]:pb-8 sm:pt-28 sm:pb-10 md:pt-32 md:pb-12"
+      ? "pt-20 pb-2.5 min-[480px]:pt-24 min-[480px]:pb-3 sm:pt-28 sm:pb-4 md:pt-32 md:pb-5"
       : "pt-32 pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28"
   return (
     <section className={`bg-canvas ${sectionPadding}`}>
