@@ -72,30 +72,6 @@ export function SitemapClient() {
                   <span className={guideClass}>├── </span>
                   <a href="/services" className={dirWrapClass}>services/</a>
                 </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/services#cybersecurity" className={linkWrapClass}>cybersecurity/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/services#devops" className={linkWrapClass}>devops/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/services#cloud-architecture" className={linkWrapClass}>cloud-architecture/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/services#system-design" className={linkWrapClass}>system-design/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/services#backend-api" className={linkWrapClass}>backend-development/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   └── </span>
-                  <a href="/services#code-quality" className={linkWrapClass}>code-quality/</a>
-                </div>
 
                 <div className={rowClass}>
                   <span className={guideClass}>├── </span>
