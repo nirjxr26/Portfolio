@@ -93,6 +93,13 @@ export function HomeClient() {
             bgClass="bg-surface-alt"
             headerClassName=""
             trackWrapperClassName="mt-6 sm:mt-10"
+            afterCards={
+              <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
+                <LightButton href="/articles" arrow className="bg-card">
+                  View other articles
+                </LightButton>
+              </div>
+            }
           >
             {homeArticles.map((article) => (
               <ArticlePosterCard
@@ -102,14 +109,9 @@ export function HomeClient() {
               />
             ))}
           </CarouselSection>
-          <div className="flex justify-center bg-surface-alt pb-12 sm:pb-16 reveal-on-scroll">
-            <LightButton href="/articles" arrow className="bg-card">
-              View other articles
-            </LightButton>
-          </div>
 
-          <section className="bg-canvas py-16 text-ink sm:py-20 reveal-on-scroll">
-            <Container size="wide" className="text-center text-pretty sm:text-balance">
+          <section className="bg-canvas py-16 text-ink sm:py-20">
+            <Container size="wide" className="text-center text-pretty sm:text-balance reveal-on-scroll">
               <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
             </Container>
           </section>

@@ -64,7 +64,7 @@ export const frames: Frame[] = [
   {
     tag: "Cloud Architecture & Security",
     title: "Cost-aware from day one.",
-    desc: "Designing and managing AWS infrastructure with secure access, protected secrets, and costs under control.",
+    desc: "Designing AWS infrastructure with secure access, protected secrets, and costs under control.",
   },
   {
     tag: "System Design",
@@ -74,12 +74,12 @@ export const frames: Frame[] = [
   {
     tag: "Backend Development",
     title: "Reliable behind the scenes.",
-    desc: "Building Go APIs and services that handle webhooks, events, and PostgreSQL data reliably.",
+    desc: "Building APIs and services that handle webhooks, events, and data reliably.",
   },
   {
     tag: "Code Quality",
     title: "Built to be maintained.",
-    desc: "Keeping code readable and maintainable with static analysis, automated tests, and disciplined Git workflows.",
+    desc: "Keeping code readable and maintainable with static analysis, automated tests, and Git workflows.",
   },
 ]
 
