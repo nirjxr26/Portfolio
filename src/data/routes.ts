@@ -29,6 +29,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     canonical: `${SITE_URL}/works`,
     keywords: `Works, Systems Architecture, Infrastructure, Bastion, Kost, HookDrop, Trace, ${SITE_KEYWORDS}`,
   },
+  "/services": {
+    title: "Services | Nirjar Goswami",
+    description:
+      "Core capabilities across Cybersecurity, DevOps, System Design, and Cloud Architecture & Security by Nirjar Goswami.",
+    canonical: `${SITE_URL}/services`,
+    keywords: `Services, Cybersecurity, DevOps, System Design, Cloud Architecture, Security, AWS, Kubernetes, ${SITE_KEYWORDS}`,
+  },
   "/articles": {
     title: "Articles | Nirjar Goswami",
     description:
@@ -55,7 +62,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   },
 }
 
-export type RouteKind = "home" | "works" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found"
+export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found"
 
 export interface ResolvedRoute {
   kind: RouteKind
@@ -76,6 +83,7 @@ export function resolveRoute(pathname: string): ResolvedRoute {
 
   if (clean === "/" || clean === "/index.html" || clean === "/index.md" || clean === "/agent.md") return { kind: "home" }
   if (clean === "/works") return { kind: "works" }
+  if (clean === "/services") return { kind: "services" }
   if (clean === "/articles" || clean === "/article") return { kind: "articles" }
   if (clean === "/sitemap") return { kind: "sitemap" }
   if (clean === "/legal") return { kind: "legal" }

@@ -25,6 +25,9 @@
 /works
   Cache-Control: public, max-age=0, must-revalidate
 
+/services
+  Cache-Control: public, max-age=0, must-revalidate
+
 /articles
   Cache-Control: public, max-age=0, must-revalidate
 

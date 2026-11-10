@@ -28,6 +28,8 @@ function getFooterBreadcrumbs(pathname: string): FooterBreadcrumb[] {
 
   if (route.kind === "works") {
     items.push({ name: "Works" })
+  } else if (route.kind === "services") {
+    items.push({ name: "Services" })
   } else if (route.kind === "case-study" && route.caseSlug) {
     const cs = CASE_STUDIES[route.caseSlug]
     items.push({ name: "Works", href: "/works" })
@@ -72,6 +74,7 @@ const FOOTER_SECTIONS: ReadonlyArray<{
     title: "Resources",
     alignment: "center",
     items: [
+      { name: "Services", href: "/services" },
       { name: "Articles", href: "/articles" },
       { name: "Resume (PDF)", href: SOCIAL_LINKS.resume },
       { name: "index.md", href: "/index.md" },
