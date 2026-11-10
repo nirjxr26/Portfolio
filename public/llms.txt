@@ -20,19 +20,27 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Sitemap: https://nirjar.me/sitemap
 - Terms of Use / Legal: https://nirjar.me/legal
 
-## What He Does
-- CI/CD Pipelines: Ship faster, break less. Every change gets built, tested, and deployed automatically - no step depends on someone remembering it.
-- Vulnerability Patching: Fixed, not filed. Vulnerabilities get triaged by real severity and closed inside SLA - before they're exploited, not after.
-- Secure by default: Nothing left open. Access is scoped tight and secrets stay encrypted from the first commit - security isn't a later step.
-- Monitoring & Alerting: Know before it breaks. Systems are instrumented so problems surface on a dashboard, not from a user complaint.
-- Incident Response & Recovery: Fail loud, recover fast. Rollback paths and runbooks exist before something breaks - not improvised while it's on fire.
+## Services & What He Does
+- Cybersecurity: Find it before they do. Finding weak points through testing and recon, then prioritizing, fixing, and verifying them.
+- DevOps: Automate the boring parts. Automating how software is built, tested, deployed, and monitored, with safe releases and rollbacks.
+- Cloud Architecture & Security: Cost-aware from day one. Designing AWS infrastructure with secure access, protected secrets, and costs under control.
+- System Design: Draw it before you build it. Turning requirements into clear architecture, with failure points, scale, and cost considered early.
+- Backend Development: Reliable behind the scenes. Building APIs and services that handle webhooks, events, and data reliably.
+- Code Quality: Built to be maintained. Keeping code readable and maintainable with static analysis, automated tests, and Git workflows.
+
+## How He Works
+- Automate the Repeatable: Ship faster, break less. Anything done twice gets automated, so no step depends on someone remembering it.
+- Fix, Don’t File: Fixed, not filed. Issues are ranked by real impact and closed, not left sitting in a backlog.
+- Security from the Start: Nothing left open. It’s part of the first design conversation, not a review at the end.
+- Signals Early: Know before it breaks. Systems report their own problems, so I hear about them from a dashboard, not a user.
+- Recovery Planned: Fail loud, recover fast. Rollback steps are written while things are calm, not improvised mid-incident.
 
 ## How He Thinks (Mental Models)
-- Systems Fluency: Where pieces connect. Built across frontend, backend, infra, and pipeline layers - enough to see how a change in one breaks another.
-- System Design: Whiteboard before code. Failure points get mapped on paper first. Cheaper to redesign a diagram than rewrite production code.
-- Cost Awareness: Efficient, not cheap. Systems sized to what they actually need to handle, not what looks impressive on a spec sheet.
-- Code Quality: Checked before it's seen. Style, types, and tests are enforced automatically - so review time goes to design decisions, not typos.
-- Fault Isolation: Small blast radius. Components are scoped so one failure doesn't cascade - and the cause is obvious immediately.
+- Systems Fluency: Where pieces connect. Built across the frontend, backend, infra, and pipeline layers, enough to see how a change in one breaks another.
+- Trade-offs: Everything costs something. Each choice buys something and gives something up. I write down both before deciding.
+- Simplicity: Fewer moving parts. Every extra component is one more thing to break and maintain. It earns its place or stays out.
+- Accuracy over Polish: Tested, not assumed. Claims get checked before they’re trusted, including my own.
+- Fault Isolation: Small blast radius. Components are scoped so one failure stays local and its cause is obvious.
 
 ## Operating Credo
 > "Production systems should be boring to operate. The work goes into the architecture, the automation, and the failure modes - so when things break, recovery is a script, not a panic."

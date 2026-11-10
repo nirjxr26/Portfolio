@@ -88,7 +88,7 @@ ${resumeAction}
 ${worksAction}
 ${servicesAction}
 
-## What I do.
+## Services.
 
 ${whatIDoLines}
 

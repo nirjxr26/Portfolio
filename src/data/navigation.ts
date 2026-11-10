@@ -23,9 +23,8 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: "What I do", href: "/#what-i-do" },
-  { label: "Works", href: "/works", expandable: true },
   { label: "Services", href: "/services" },
+  { label: "Works", href: "/works", expandable: true },
   { label: "Articles", href: "/articles" },
   { label: "Resume", href: SOCIAL_LINKS.resume, external: true },
   { label: "Contact", href: "/#footer" },

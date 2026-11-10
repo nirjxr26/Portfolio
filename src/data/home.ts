@@ -19,7 +19,7 @@ export const productionCapabilities: ProductionCapability[] = [
   },
   {
     title: "Trade-offs",
-    tagline: "Everything costs something.",
+    tagline: "Every choice has price.",
     desc: "Each choice buys something and gives something up. I write down both before deciding.",
   },
   {
