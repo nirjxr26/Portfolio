@@ -14,6 +14,7 @@ canonical: "${SITE_URL}"
 
   const resumeAction = `[View Resume](${SITE_URL}/assets/nirjar_resume.pdf)`
   const worksAction = `[View Works](${SITE_URL}/works)`
+  const servicesAction = `[View Services](${SITE_URL}/services)`
 
   const whatIDoLines = frames
     .map(
@@ -83,6 +84,7 @@ canonical: "${SITE_URL}"
 
 ${resumeAction}
 ${worksAction}
+${servicesAction}
 
 ## What I do.
 
@@ -130,6 +132,7 @@ nirjar.me/
 │   ├── bastion/ [ Bastion IAM: ${SITE_URL}/works/bastion ]
 │   ├── kost/ [ Kost Cost Intelligence: ${SITE_URL}/works/kost ]
 │   └── hookdrop/ [ HookDrop Webhook Receiver: ${SITE_URL}/works/hookdrop ]
+├── services/ [ Services & Capabilities: ${SITE_URL}/services ]
 ├── articles/ [ Engineering Articles: ${SITE_URL}/articles ]
 │   ├── coding-is-taught-wrong-and-ai-exposed-it/ [ ${SITE_URL}/articles/coding-is-taught-wrong-and-ai-exposed-it ]
 │   ├── allow-remote-postgresql-without-opening-it-to-the-world/ [ ${SITE_URL}/articles/allow-remote-postgresql-without-opening-it-to-the-world ]

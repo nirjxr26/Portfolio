@@ -42,7 +42,7 @@ function graph(...nodes: Record<string, unknown>[]): StaticRoute["schema"] {
   return { "@context": SCHEMA_CONTEXT, "@graph": nodes }
 }
 
-function prerenderMeta(path: "/" | "/works" | "/articles" | "/sitemap" | "/legal"): Pick<
+function prerenderMeta(path: "/" | "/works" | "/services" | "/articles" | "/sitemap" | "/legal"): Pick<
   StaticRoute,
   "title" | "description" | "canonical" | "keywords"
 > {
@@ -215,6 +215,18 @@ export function buildStaticRoutes(): StaticRoute[] {
       ),
     },
     {
+      path: "/services",
+      ...prerenderMeta("/services"),
+      priority: "0.8",
+      changefreq: "monthly",
+      schema: graph(
+        buildBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Services", url: "/services" },
+        ]),
+      ),
+    },
+    {
       path: "/sitemap",
       ...prerenderMeta("/sitemap"),
       priority: "0.7",
@@ -246,6 +258,7 @@ export function buildStaticRoutes(): StaticRoute[] {
 export const STATIC_ROUTE_SOURCE_FILES: Record<string, string> = {
   "/": "src/data/home.ts",
   "/works": "src/components/pages/WorksClient.tsx",
+  "/services": "src/components/pages/ServicesClient.tsx",
   "/articles": "src/components/pages/ArticleClient.tsx",
   "/sitemap": "src/components/pages/SitemapClient.tsx",
   "/legal": "src/components/pages/LegalClient.tsx",

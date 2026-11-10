@@ -70,6 +70,11 @@ export function SitemapClient() {
 
                 <div className={rowClass}>
                   <span className={guideClass}>├── </span>
+                  <a href="/services" className={dirWrapClass}>services/</a>
+                </div>
+
+                <div className={rowClass}>
+                  <span className={guideClass}>├── </span>
                   <a href="/articles" className={dirWrapClass}>articles/</a>
                 </div>
                 <div className={rowClass}>

@@ -72,6 +72,7 @@ export const CACHE_RULES = [
   { path: "/assets/*", vercelPath: "/assets/(.*)", cacheControl: revalidate },
   { path: "/", vercelPath: "/", cacheControl: revalidate },
   { path: "/works", vercelPath: "/works", cacheControl: revalidate },
+  { path: "/services", vercelPath: "/services", cacheControl: revalidate },
   { path: "/articles", vercelPath: "/articles", cacheControl: revalidate },
   { path: "/sitemap", vercelPath: "/sitemap", cacheControl: revalidate },
   { path: "/legal", vercelPath: "/legal", cacheControl: revalidate },

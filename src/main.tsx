@@ -9,6 +9,7 @@ import {
   HomeClient,
   LegalClient,
   NotFoundClient,
+  ServicesClient,
   SitemapClient,
   WorksClient,
 } from "@/components"
@@ -34,6 +35,8 @@ function App() {
     content = <HomeClient />
   } else if (route.kind === "works") {
     content = <WorksClient />
+  } else if (route.kind === "services") {
+    content = <ServicesClient />
   } else if (route.kind === "articles") {
     content = <ArticleClient />
   } else if (route.kind === "sitemap") {

@@ -15,6 +15,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Email: nirjargoswami2626@gmail.com
 - Location: Ahmedabad, Gujarat, India
 - Resume: https://nirjar.me/assets/nirjar_resume.pdf
+- Services: https://nirjar.me/services
 - RSS Feed: https://nirjar.me/rss.xml
 - Sitemap: https://nirjar.me/sitemap
 - Terms of Use / Legal: https://nirjar.me/legal

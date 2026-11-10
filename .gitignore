@@ -58,3 +58,9 @@ DESIGN-bastion.md
 *.test.tsx
 *.test.js
 *.test.jsx
+
+# Local stack tool icon folders
+public/assets/stack/cybersecurity/
+public/assets/stack/devops/
+public/assets/stack/
+
