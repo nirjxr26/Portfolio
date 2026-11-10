@@ -1,4 +1,5 @@
 import { hero, frames, productionCapabilities, projects, articles, quote } from "./home"
+import { HOW_I_WORK_CARDS } from "./services"
 import {
   SITE_DEFAULT_DESC,
   SITE_DEFAULT_TITLE,
@@ -64,6 +65,10 @@ canonical: "${SITE_URL}"
     )
     .join("\n\n")
 
+  const howIWorkLines = HOW_I_WORK_CARDS
+    .map((card) => `### ${card.tag}\n**${card.title}**\n${card.desc}`)
+    .join("\n\n")
+
   const homeArticles = articles.filter((a) => !a.hideFromHome && a.poster != null)
   const articleLines = homeArticles
     .map(
@@ -87,8 +92,6 @@ ${servicesAction}
 
 ${whatIDoLines}
 
-Also working with: System Design · Backend Development · Code Quality
-
 [View all services](${SITE_URL}/services)
 
 ## Featured work.
@@ -104,6 +107,10 @@ ${moreLines}
 ## How I think.
 
 ${howIThinkLines}
+
+## How I work.
+
+${howIWorkLines}
 
 ## Articles.
 

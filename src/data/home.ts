@@ -52,16 +52,34 @@ export const hero = {
 
 export const frames: Frame[] = [
   {
-    title: "Cybersecurity",
-    desc: "Attack-surface mapping, penetration testing, and hardening, with every issue prioritized and verified.",
+    tag: "Cybersecurity",
+    title: "Find it before they do.",
+    desc: "Finding weak points through testing and recon, then prioritizing, fixing, and verifying them.",
   },
   {
-    title: "DevOps",
-    desc: "CI/CD pipelines, containers, and Kubernetes, with automated releases and safe rollbacks.",
+    tag: "DevOps",
+    title: "Automate the boring parts.",
+    desc: "Automating how software is built, tested, deployed, and monitored, with safe releases and rollbacks.",
   },
   {
-    title: "Cloud Architecture & Security",
-    desc: "AWS infrastructure on Terraform, least-privilege access, secrets management, and cost reviews.",
+    tag: "Cloud Architecture & Security",
+    title: "Cost-aware from day one.",
+    desc: "Designing and managing AWS infrastructure with secure access, protected secrets, and costs under control.",
+  },
+  {
+    tag: "System Design",
+    title: "Draw it before you build it.",
+    desc: "Turning requirements into clear architecture, with failure points, scale, and cost considered early.",
+  },
+  {
+    tag: "Backend Development",
+    title: "Reliable behind the scenes.",
+    desc: "Building Go APIs and services that handle webhooks, events, and PostgreSQL data reliably.",
+  },
+  {
+    tag: "Code Quality",
+    title: "Built to be maintained.",
+    desc: "Keeping code readable and maintainable with static analysis, automated tests, and disciplined Git workflows.",
   },
 ]
 

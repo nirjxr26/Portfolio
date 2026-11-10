@@ -64,7 +64,7 @@ export function ServicesClient() {
   return (
     <PageShell
       headerPath="/services"
-      footerBgClass="bg-canvas border-t border-hairline"
+      footerBgClass="bg-surface-alt border-t border-hairline"
       seo={
         <RouteSeo
           meta={ROUTE_META["/services"]}

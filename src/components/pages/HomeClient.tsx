@@ -1,4 +1,5 @@
 import { articles, frames, hero, quote } from "@/data/home"
+import { HOW_I_WORK_CARDS } from "@/data/services"
 import {
   ActionButtons,
   ActionGroup,
@@ -20,7 +21,7 @@ export function HomeClient() {
   return (
     <PageShell
       headerPath="/"
-      footerBgClass="bg-canvas border-t border-hairline"
+      footerBgClass="bg-surface-alt border-t border-hairline"
       seo={<Seo articles={articles} />}
       hideHeader={isAgentMode}
       hideFooter={isAgentMode}
@@ -48,11 +49,7 @@ export function HomeClient() {
             title="What I do."
             bgClass="bg-surface-alt"
             afterCards={
-              <div className="reveal-on-scroll mt-10 sm:mt-12 flex flex-col items-center justify-center text-center px-4">
-                <p className="text-base sm:text-lg text-muted font-normal max-w-xl mb-4 sm:mb-5">
-                  <span className="text-ink font-semibold">Also working with:</span>{" "}
-                  System Design · Backend Development · Code Quality
-                </p>
+              <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
                 <LightButton href="/services" arrow className="bg-card">
                   View all services
                 </LightButton>
@@ -61,7 +58,7 @@ export function HomeClient() {
           >
             {frames.map((frame) => (
               <FeatureCard
-                key={frame.title}
+                key={frame.tag}
                 card={{
                   headline: frame.title,
                   body: frame.desc,
@@ -76,10 +73,24 @@ export function HomeClient() {
 
           <ProductionRail bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
+          <CarouselSection id="how-i-work" title="How I work." bgClass="bg-canvas">
+            {HOW_I_WORK_CARDS.map((card) => (
+              <FeatureCard
+                key={card.tag}
+                card={{
+                  headline: card.title,
+                  body: card.desc,
+                  tag: card.tag,
+                }}
+                cardBgClass="bg-surface-alt"
+              />
+            ))}
+          </CarouselSection>
+
           <CarouselSection
             id="articles"
             title="Articles."
-            bgClass="bg-canvas"
+            bgClass="bg-surface-alt"
             headerClassName=""
             trackWrapperClassName="mt-6 sm:mt-10"
           >
@@ -91,13 +102,13 @@ export function HomeClient() {
               />
             ))}
           </CarouselSection>
-          <div className="flex justify-center bg-canvas pb-12 sm:pb-16 reveal-on-scroll">
-            <LightButton href="/articles" arrow>
+          <div className="flex justify-center bg-surface-alt pb-12 sm:pb-16 reveal-on-scroll">
+            <LightButton href="/articles" arrow className="bg-card">
               View other articles
             </LightButton>
           </div>
 
-          <section className="bg-surface-alt py-16 text-ink sm:py-20 reveal-on-scroll">
+          <section className="bg-canvas py-16 text-ink sm:py-20 reveal-on-scroll">
             <Container size="wide" className="text-center text-pretty sm:text-balance">
               <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
             </Container>
