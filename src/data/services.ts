@@ -164,3 +164,37 @@ export const WORKING_KNOWLEDGE_SERVICES: readonly ServiceSection[] = [
     ],
   },
 ]
+
+export interface HowIWorkCard {
+  tag: string
+  title: string
+  desc: string
+}
+
+export const HOW_I_WORK_CARDS: readonly HowIWorkCard[] = [
+  {
+    tag: "CI/CD Pipelines",
+    title: "Ship faster, break less.",
+    desc: "Every change gets built, tested, and deployed automatically — no step depends on someone remembering it.",
+  },
+  {
+    tag: "Vulnerability Patching",
+    title: "Fixed, not filed.",
+    desc: "Vulnerabilities get triaged by real severity and closed inside SLA — before they're exploited, not after.",
+  },
+  {
+    tag: "Secure by default.",
+    title: "Nothing left open.",
+    desc: "Access is scoped tight and secrets stay encrypted from the first commit — security isn't a later step.",
+  },
+  {
+    tag: "Monitoring & Alerting",
+    title: "Know before it breaks.",
+    desc: "Systems are instrumented so problems surface on a dashboard, not from a user complaint.",
+  },
+  {
+    tag: "Incident Response & Recovery",
+    title: "Fail loud, recover fast.",
+    desc: "Rollback paths and runbooks exist before something breaks — not improvised while it's on fire.",
+  },
+]
