@@ -173,28 +173,28 @@ export interface HowIWorkCard {
 
 export const HOW_I_WORK_CARDS: readonly HowIWorkCard[] = [
   {
-    tag: "CI/CD Pipelines",
+    tag: "Automate the Repeatable",
     title: "Ship faster, break less.",
-    desc: "Every change gets built, tested, and deployed automatically — no step depends on someone remembering it.",
+    desc: "Anything done twice gets automated, so no step depends on someone remembering it.",
   },
   {
-    tag: "Vulnerability Patching",
+    tag: "Fix, Don’t File",
     title: "Fixed, not filed.",
-    desc: "Vulnerabilities get triaged by real severity and closed inside SLA — before they're exploited, not after.",
+    desc: "Issues are ranked by real impact and closed, not left sitting in a backlog.",
   },
   {
-    tag: "Secure by default.",
+    tag: "Security from the Start",
     title: "Nothing left open.",
-    desc: "Access is scoped tight and secrets stay encrypted from the first commit — security isn't a later step.",
+    desc: "It’s part of the first design conversation, not a review at the end.",
   },
   {
-    tag: "Monitoring & Alerting",
+    tag: "Signals Early",
     title: "Know before it breaks.",
-    desc: "Systems are instrumented so problems surface on a dashboard, not from a user complaint.",
+    desc: "Systems report their own problems, so I hear about them from a dashboard, not a user.",
   },
   {
-    tag: "Incident Response & Recovery",
+    tag: "Recovery Planned",
     title: "Fail loud, recover fast.",
-    desc: "Rollback paths and runbooks exist before something breaks — not improvised while it's on fire.",
+    desc: "Rollback steps are written while things are calm, not improvised mid-incident.",
   },
 ]

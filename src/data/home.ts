@@ -15,27 +15,27 @@ export const productionCapabilities: ProductionCapability[] = [
   {
     title: "Systems Fluency",
     tagline: "Where pieces connect.",
-    desc: "I've built across the frontend, backend, infra, and pipeline layers — enough to see how a change in one breaks another.",
+    desc: "I've built across the frontend, backend, infra, and pipeline layers, enough to see how a change in one breaks another.",
   },
   {
-    title: "System Design",
-    tagline: "Whiteboard before code.",
-    desc: "Failure points get mapped on paper first. Cheaper to redesign a diagram than rewrite production code.",
+    title: "Trade-offs",
+    tagline: "Everything costs something.",
+    desc: "Each choice buys something and gives something up. I write down both before deciding.",
   },
   {
-    title: "Cost Awareness",
-    tagline: "Efficient, not cheap.",
-    desc: "I size systems to what they actually need to handle, not what looks impressive on a spec sheet.",
+    title: "Simplicity",
+    tagline: "Fewer moving parts.",
+    desc: "Every extra component is one more thing to break and maintain. It earns its place or stays out.",
   },
   {
-    title: "Code Quality",
-    tagline: "Checked before it's seen.",
-    desc: "Style, types, and tests are enforced automatically — so review time goes to design decisions, not typos.",
+    title: "Accuracy over Polish",
+    tagline: "Tested, not assumed.",
+    desc: "Claims get checked before they're trusted, including my own.",
   },
   {
     title: "Fault Isolation",
     tagline: "Small blast radius.",
-    desc: "Components are scoped so one failure doesn't cascade — and the cause is obvious immediately.",
+    desc: "Components are scoped so one failure stays local and its cause is obvious.",
   },
 ]
 
