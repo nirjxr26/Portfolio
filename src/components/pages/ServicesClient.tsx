@@ -1,10 +1,11 @@
-import { ProductionRail } from "../common"
+import { FeatureCard, ProductionRail } from "../common"
 import { RouteSeo } from "../common/SEO"
-import { PageHero, PageShell, Container } from "../layout"
+import { CarouselSection, Container, PageHero, PageShell } from "../layout"
 import { ROUTE_META } from "@/data/routes"
 import { createBreadcrumbs } from "@/utils/helpers"
 import {
   CORE_SERVICES,
+  HOW_I_WORK_CARDS,
   WORKING_KNOWLEDGE_SERVICES,
   type ServiceSection,
 } from "@/data/services"
@@ -122,8 +123,23 @@ export function ServicesClient() {
         </Container>
       </section>
 
+      {/* How I work */}
+      <CarouselSection id="how-i-work" title="How I work." bgClass="bg-surface-alt">
+        {HOW_I_WORK_CARDS.map((card) => (
+          <FeatureCard
+            key={card.tag}
+            card={{
+              headline: card.title,
+              body: card.desc,
+              tag: card.tag,
+            }}
+            cardBgClass="bg-card"
+          />
+        ))}
+      </CarouselSection>
+
       {/* How I think */}
-      <ProductionRail bgClass="bg-surface-alt" cardBgClass="bg-card" />
+      <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
     </PageShell>
   )
 }

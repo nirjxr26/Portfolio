@@ -17,10 +17,7 @@ canonical: "${SITE_URL}"
   const servicesAction = `[View Services](${SITE_URL}/services)`
 
   const whatIDoLines = frames
-    .map(
-      (f) =>
-        `### ${f.tag}\n**${f.title}**\n${f.desc}`,
-    )
+    .map((f) => (f.tag ? `### ${f.tag}\n**${f.title}**\n${f.desc}` : `### ${f.title}\n${f.desc}`))
     .join("\n\n")
 
   const featured = projects.slice(0, 4)
@@ -89,6 +86,10 @@ ${servicesAction}
 ## What I do.
 
 ${whatIDoLines}
+
+Also working with: System Design · Backend Development · Code Quality
+
+[View all services](${SITE_URL}/services)
 
 ## Featured work.
 

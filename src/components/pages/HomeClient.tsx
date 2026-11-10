@@ -43,10 +43,25 @@ export function HomeClient() {
             </Container>
           </section>
 
-          <CarouselSection id="what-i-do" title="What I do." bgClass="bg-surface-alt">
+          <CarouselSection
+            id="what-i-do"
+            title="What I do."
+            bgClass="bg-surface-alt"
+            afterCards={
+              <div className="reveal-on-scroll mt-10 sm:mt-12 flex flex-col items-center justify-center text-center px-4">
+                <p className="text-base sm:text-lg text-muted font-normal max-w-xl mb-4 sm:mb-5">
+                  <span className="text-ink font-semibold">Also working with:</span>{" "}
+                  System Design · Backend Development · Code Quality
+                </p>
+                <LightButton href="/services" arrow className="bg-card">
+                  View all services
+                </LightButton>
+              </div>
+            }
+          >
             {frames.map((frame) => (
               <FeatureCard
-                key={frame.tag}
+                key={frame.title}
                 card={{
                   headline: frame.title,
                   body: frame.desc,

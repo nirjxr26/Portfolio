@@ -100,7 +100,7 @@ export interface HeroAction {
 }
 
 export interface Frame {
-  tag: string
+  tag?: string
   title: string
   desc: string
 }
