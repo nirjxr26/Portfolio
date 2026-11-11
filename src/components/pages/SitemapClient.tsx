@@ -105,6 +105,19 @@ export function SitemapClient() {
 
                 <div className={rowClass}>
                   <span className={guideClass}>├── </span>
+                  <span className="font-semibold break-words min-w-0">api/</span>
+                </div>
+                <div className={rowClass}>
+                  <span className={guideClass}>│   ├── </span>
+                  <a href="/api/status" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>status</a>
+                </div>
+                <div className={rowClass}>
+                  <span className={guideClass}>│   └── </span>
+                  <a href="/api/projects" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>projects</a>
+                </div>
+
+                <div className={rowClass}>
+                  <span className={guideClass}>├── </span>
                   <span className="font-semibold break-words min-w-0">assets/</span>
                 </div>
                 <div className={rowClass}>

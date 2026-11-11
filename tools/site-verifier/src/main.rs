@@ -247,6 +247,15 @@ fn path_exists_in_dist(dist: &Path, clean_target: &str, rewrites: &HashMap<Strin
         return path_exists_in_dist(dist, target, rewrites);
     }
 
+    if clean_target.starts_with("api/") {
+        let root = dist.parent().unwrap_or(Path::new("."));
+        let as_ts = root.join(format!("{}.ts", clean_target));
+        let as_js = root.join(format!("{}.js", clean_target));
+        if as_ts.is_file() || as_js.is_file() {
+            return true;
+        }
+    }
+
     let direct = dist.join(clean_target);
     let as_index = dist.join(clean_target).join("index.html");
     let with_html = dist.join(format!("{}.html", clean_target));
@@ -300,6 +309,14 @@ fn verify_dist_links(dist: &Path, rewrites: &HashMap<String, String>, report: &m
                 let as_index = dist.join(effective_clean).join("index.html");
                 let with_html = dist.join(format!("{}.html", effective_clean));
 
+                let is_api_endpoint = if clean_target.starts_with("api/") {
+                    let root = dist.parent().unwrap_or(Path::new("."));
+                    root.join(format!("{}.ts", clean_target)).is_file()
+                        || root.join(format!("{}.js", clean_target)).is_file()
+                } else {
+                    false
+                };
+
                 if direct.is_file() {
                     direct
                 } else if as_index.is_file() {
@@ -308,6 +325,9 @@ fn verify_dist_links(dist: &Path, rewrites: &HashMap<String, String>, report: &m
                     with_html
                 } else if effective_clean.is_empty() {
                     dist.join("index.html")
+                } else if is_api_endpoint {
+                    // Valid edge API endpoint
+                    continue;
                 } else {
                     report.errors.push(format!(
                         "Broken link/asset in '{}': target '{}' not found in build directory",

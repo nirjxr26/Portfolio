@@ -148,6 +148,9 @@ nirjar.me/
 │   ├── rethinking-my-git-workflow/ [ ${SITE_URL}/articles/rethinking-my-git-workflow ]
 │   └── how-vaultlock-reliably-fetches-brand-logos/ [ ${SITE_URL}/articles/how-vaultlock-reliably-fetches-brand-logos ]
 ├── legal/ [ Legal & Terms of Use: ${SITE_URL}/legal ]
+├── api/
+│   ├── status [ Edge Telemetry & Site Health: ${SITE_URL}/api/status ]
+│   └── projects [ Portfolio Projects Directory: ${SITE_URL}/api/projects ]
 ├── assets/
 │   └── nirjar_resume.pdf [ ${SITE_URL}/assets/nirjar_resume.pdf ]
 └── Others

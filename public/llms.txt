@@ -19,6 +19,8 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - RSS Feed: https://nirjar.me/rss.xml
 - Sitemap: https://nirjar.me/sitemap
 - Terms of Use / Legal: https://nirjar.me/legal
+- API Status (Edge Telemetry): https://nirjar.me/api/status
+- API Projects Directory: https://nirjar.me/api/projects
 
 ## Services & What He Does
 - Cybersecurity: Find it before they do. Finding weak points through testing and recon, then prioritizing, fixing, and verifying them.

@@ -212,14 +212,27 @@ const sitemapRoutes = routes.filter((route) => {
   seenCanonical.add(route.canonical)
   return true
 })
-const sitemapXml = buildSitemapXml(
-  sitemapRoutes.map((route) => ({
+const sitemapEntries = [
+  ...sitemapRoutes.map((route) => ({
     canonical: route.canonical,
     changefreq: route.changefreq,
     priority: route.priority,
     lastmod: getGitLastMod(sourceFileFor(route.path)),
   })),
-)
+  {
+    canonical: "https://nirjar.me/api/status",
+    changefreq: "hourly",
+    priority: "0.5",
+    lastmod: getGitLastMod("api/status.ts"),
+  },
+  {
+    canonical: "https://nirjar.me/api/projects",
+    changefreq: "weekly",
+    priority: "0.6",
+    lastmod: getGitLastMod("api/projects.ts"),
+  },
+]
+const sitemapXml = buildSitemapXml(sitemapEntries)
 fs.writeFileSync(path.resolve(distDir, "sitemap.xml"), sitemapXml, "utf-8")
 fs.writeFileSync(path.resolve(projectRoot, "public/sitemap.xml"), sitemapXml, "utf-8")
 
