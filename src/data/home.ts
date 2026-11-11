@@ -68,7 +68,7 @@ export const frames: Frame[] = [
   },
   {
     tag: "System Design",
-    title: "Draw it before you build it.",
+    title: "Diagram, then code.",
     desc: "Turning requirements into clear architecture, with failure points, scale, and cost considered early.",
   },
   {

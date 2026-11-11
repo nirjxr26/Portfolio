@@ -26,7 +26,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Cybersecurity: Find it before they do. Finding weak points through testing and recon, then prioritizing, fixing, and verifying them.
 - DevOps: Automate the boring parts. Automating how software is built, tested, deployed, and monitored, with safe releases and rollbacks.
 - Cloud Architecture & Security: Cost-aware from day one. Designing AWS infrastructure with secure access, protected secrets, and costs under control.
-- System Design: Draw it before you build it. Turning requirements into clear architecture, with failure points, scale, and cost considered early.
+- System Design: Diagram, then code. Turning requirements into clear architecture, with failure points, scale, and cost considered early.
 - Backend Development: Reliable behind the scenes. Building APIs and services that handle webhooks, events, and data reliably.
 - Code Quality: Built to be maintained. Keeping code readable and maintainable with static analysis, automated tests, and Git workflows.
 

@@ -130,7 +130,7 @@ export const WORKING_KNOWLEDGE_SERVICES: readonly ServiceSection[] = [
   {
     id: "system-design",
     title: "System Design",
-    tagline: "Draw it before you build it.",
+    tagline: "Diagram, then code.",
     items: [
       "Translating requirements into architecture diagrams",
       "Evaluating databases, APIs, and infrastructure choices",
