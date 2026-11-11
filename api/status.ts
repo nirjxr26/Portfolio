@@ -5,21 +5,25 @@ export const config = {
 export type HealthState = "ok" | "degraded" | "down"
 
 export interface StatusChecks {
+  edge_routing: HealthState
+  security_headers: "enforced" | "disabled"
   static_assets: HealthState
-  csp: "enforced" | "disabled"
 }
 
 export interface StatusResponse {
   status: HealthState
   service: string
-  version: string
   commit: string
   region: string
+  environment: "production" | "preview" | "development"
   timestamp: string
   checks: StatusChecks
 }
 
-export function buildStatus(region = "edge"): StatusResponse {
+export function buildStatus(
+  region = "edge",
+  env: "production" | "preview" | "development" = "production",
+): StatusResponse {
   const commitSha =
     process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
     process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
@@ -28,23 +32,33 @@ export function buildStatus(region = "edge"): StatusResponse {
   return {
     status: "ok",
     service: "nirjar.me",
-    version: "0.1.0",
     commit: commitSha,
     region,
+    environment: env,
     timestamp: new Date().toISOString(),
     checks: {
+      edge_routing: "ok",
+      security_headers: "enforced",
       static_assets: "ok",
-      csp: "enforced",
     },
   }
 }
 
 export default function handler(req?: Request): Response {
   let region = "local"
+  let env: "production" | "preview" | "development" = "development"
+
   if (req?.headers) {
     const vercelId = req.headers.get("x-vercel-id")
     const country = req.headers.get("x-vercel-ip-country")
     const city = req.headers.get("x-vercel-ip-city")
+    const vercelEnv = process.env.VERCEL_ENV
+
+    if (vercelEnv === "production" || vercelEnv === "preview") {
+      env = vercelEnv
+    } else if (vercelId) {
+      env = "production"
+    }
 
     if (city && country) {
       region = `${city.toLowerCase()}-${country.toLowerCase()}`
@@ -58,7 +72,7 @@ export default function handler(req?: Request): Response {
     }
   }
 
-  const payload = buildStatus(region)
+  const payload = buildStatus(region, env)
 
   return new Response(JSON.stringify(payload, null, 2), {
     status: 200,

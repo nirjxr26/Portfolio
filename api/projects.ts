@@ -9,7 +9,6 @@ export interface PortfolioProject {
   category: string
   state: ProjectState
   summary: string
-  stack: string[]
   repo: string
   case_study?: string
 }
@@ -25,7 +24,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "active",
     summary:
       "Local-first forensic CLI and console with tamper-evident, append-only SQLite audit trails.",
-    stack: ["Python", "Textual TUI", "SQLite", "Cryptography"],
     repo: "https://github.com/nirjxr26/Trace",
     case_study: "/works/trace",
   },
@@ -35,7 +33,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "active",
     summary:
       "Self-hosted access control gateway with MFA, session control, policy enforcement, and audit logs.",
-    stack: ["Go", "Docker", "Kubernetes", "PostgreSQL"],
     repo: "https://github.com/nirjxr26/Bastion",
     case_study: "/works/bastion",
   },
@@ -45,7 +42,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "active",
     summary:
       "Single-pod Kubernetes agent calculating workload resource waste and posting right-sizing commands to Slack.",
-    stack: ["Go", "Kubernetes API", "Slack Webhooks"],
     repo: "https://github.com/nirjxr26/Kost",
     case_study: "/works/kost",
   },
@@ -55,7 +51,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "active",
     summary:
       "Go webhook receiver with HMAC signature verification, live event streaming, and GitOps automated delivery.",
-    stack: ["Go", "Docker", "AWS ECR", "GitHub Actions"],
     repo: "https://github.com/nirjxr26/HookDrop",
     case_study: "/works/hookdrop",
   },
@@ -65,7 +60,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "active",
     summary:
       "Deployment observability tool unifying GitHub Actions workflow runs and AWS CodeDeploy events in a single timeline.",
-    stack: ["TypeScript", "AWS SDK", "GitHub Actions API"],
     repo: "https://github.com/nirjxr26/DeployLens",
   },
   {
@@ -74,7 +68,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     state: "maintained",
     summary:
       "Offline password manager with AES-256 local credential encryption and zero cloud dependencies.",
-    stack: ["Python", "AES-256", "CustomTkinter"],
     repo: "https://github.com/nirjxr26/VaultLock-Password-Manager",
   },
 ]

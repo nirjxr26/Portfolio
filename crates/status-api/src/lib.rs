@@ -2,31 +2,31 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct StatusChecks {
-    pub static_assets: &'static str,
-    pub csp: &'static str,
+    pub edge_routing: String,
+    pub security_headers: String,
+    pub static_assets: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct StatusResponse {
-    pub status: &'static str,
-    pub service: &'static str,
-    pub version: &'static str,
-    pub commit: &'static str,
-    pub region: &'static str,
-    pub timestamp: &'static str,
+    pub status: String,
+    pub service: String,
+    pub commit: String,
+    pub region: String,
+    pub environment: String,
+    pub timestamp: String,
     pub checks: StatusChecks,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ProjectItem {
-    pub name: &'static str,
-    pub category: &'static str,
-    pub state: &'static str,
-    pub summary: &'static str,
-    pub stack: &'static [&'static str],
-    pub repo: &'static str,
+    pub name: String,
+    pub category: String,
+    pub state: String,
+    pub summary: String,
+    pub repo: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub case_study: Option<&'static str>,
+    pub case_study: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
@@ -36,15 +36,16 @@ pub struct ProjectsResponse {
 
 pub fn get_status_payload() -> StatusResponse {
     StatusResponse {
-        status: "ok",
-        service: "nirjar.me",
-        version: "0.1.0",
-        commit: "fa657df",
-        region: "edge",
-        timestamp: "2026-11-11T10:00:00Z",
+        status: "ok".into(),
+        service: "nirjar.me".into(),
+        commit: "fa657df".into(),
+        region: "edge".into(),
+        environment: "production".into(),
+        timestamp: "2026-11-11T10:00:00Z".into(),
         checks: StatusChecks {
-            static_assets: "ok",
-            csp: "enforced",
+            edge_routing: "ok".into(),
+            security_headers: "enforced".into(),
+            static_assets: "ok".into(),
         },
     }
 }
@@ -53,57 +54,51 @@ pub fn get_projects_payload() -> ProjectsResponse {
     ProjectsResponse {
         projects: vec![
             ProjectItem {
-                name: "Trace",
-                category: "Digital Forensics & Incident Response",
-                state: "active",
-                summary: "Local-first forensic CLI and console with tamper-evident, append-only SQLite audit trails.",
-                stack: &["Python", "Textual TUI", "SQLite", "Cryptography"],
-                repo: "https://github.com/nirjxr26/Trace",
-                case_study: Some("/works/trace"),
+                name: "Trace".into(),
+                category: "Digital Forensics & Incident Response".into(),
+                state: "active".into(),
+                summary: "Local-first forensic CLI and console with tamper-evident, append-only SQLite audit trails.".into(),
+                repo: "https://github.com/nirjxr26/Trace".into(),
+                case_study: Some("/works/trace".into()),
             },
             ProjectItem {
-                name: "Bastion",
-                category: "Identity & Access Management",
-                state: "active",
-                summary: "Self-hosted access control gateway with MFA, session control, policy enforcement, and audit logs.",
-                stack: &["Go", "Docker", "Kubernetes", "PostgreSQL"],
-                repo: "https://github.com/nirjxr26/Bastion",
-                case_study: Some("/works/bastion"),
+                name: "Bastion".into(),
+                category: "Identity & Access Management".into(),
+                state: "active".into(),
+                summary: "Self-hosted access control gateway with MFA, session control, policy enforcement, and audit logs.".into(),
+                repo: "https://github.com/nirjxr26/Bastion".into(),
+                case_study: Some("/works/bastion".into()),
             },
             ProjectItem {
-                name: "Kost",
-                category: "Kubernetes Cost Intelligence",
-                state: "active",
-                summary: "Single-pod Kubernetes agent calculating workload resource waste and posting right-sizing commands to Slack.",
-                stack: &["Go", "Kubernetes API", "Slack Webhooks"],
-                repo: "https://github.com/nirjxr26/Kost",
-                case_study: Some("/works/kost"),
+                name: "Kost".into(),
+                category: "Kubernetes Cost Intelligence".into(),
+                state: "active".into(),
+                summary: "Single-pod Kubernetes agent calculating workload resource waste and posting right-sizing commands to Slack.".into(),
+                repo: "https://github.com/nirjxr26/Kost".into(),
+                case_study: Some("/works/kost".into()),
             },
             ProjectItem {
-                name: "HookDrop",
-                category: "Backend & Webhooks",
-                state: "active",
-                summary: "Go webhook receiver with HMAC signature verification, live event streaming, and GitOps automated delivery.",
-                stack: &["Go", "Docker", "AWS ECR", "GitHub Actions"],
-                repo: "https://github.com/nirjxr26/HookDrop",
-                case_study: Some("/works/hookdrop"),
+                name: "HookDrop".into(),
+                category: "Backend & Webhooks".into(),
+                state: "active".into(),
+                summary: "Go webhook receiver with HMAC signature verification, live event streaming, and GitOps automated delivery.".into(),
+                repo: "https://github.com/nirjxr26/HookDrop".into(),
+                case_study: Some("/works/hookdrop".into()),
             },
             ProjectItem {
-                name: "DeployLens",
-                category: "CI/CD & Observability",
-                state: "active",
-                summary: "Deployment observability tool unifying GitHub Actions workflow runs and AWS CodeDeploy events in a single timeline.",
-                stack: &["TypeScript", "AWS SDK", "GitHub Actions API"],
-                repo: "https://github.com/nirjxr26/DeployLens",
+                name: "DeployLens".into(),
+                category: "CI/CD & Observability".into(),
+                state: "active".into(),
+                summary: "Deployment observability tool unifying GitHub Actions workflow runs and AWS CodeDeploy events in a single timeline.".into(),
+                repo: "https://github.com/nirjxr26/DeployLens".into(),
                 case_study: None,
             },
             ProjectItem {
-                name: "VaultLock",
-                category: "Security Engineering",
-                state: "maintained",
-                summary: "Offline password manager with AES-256 local credential encryption and zero cloud dependencies.",
-                stack: &["Python", "AES-256", "CustomTkinter"],
-                repo: "https://github.com/nirjxr26/VaultLock-Password-Manager",
+                name: "VaultLock".into(),
+                category: "Security Engineering".into(),
+                state: "maintained".into(),
+                summary: "Offline password manager with AES-256 local credential encryption and zero cloud dependencies.".into(),
+                repo: "https://github.com/nirjxr26/VaultLock-Password-Manager".into(),
                 case_study: None,
             },
         ],
@@ -129,8 +124,9 @@ mod tests {
         let payload = get_status_payload();
         assert_eq!(payload.status, "ok");
         assert_eq!(payload.service, "nirjar.me");
+        assert_eq!(payload.checks.edge_routing, "ok");
+        assert_eq!(payload.checks.security_headers, "enforced");
         assert_eq!(payload.checks.static_assets, "ok");
-        assert_eq!(payload.checks.csp, "enforced");
     }
 
     #[test]
@@ -148,10 +144,10 @@ mod tests {
         let status_json = get_status_json();
         assert!(status_json.contains("\"status\":\"ok\""));
         assert!(status_json.contains("\"static_assets\":\"ok\""));
+        assert!(!status_json.contains("\"version\""));
 
         let projects_json = get_projects_json();
-        assert!(status_json.contains("\"nirjar.me\""));
         assert!(projects_json.contains("\"Trace\""));
-        assert!(projects_json.contains("\"Bastion\""));
+        assert!(!projects_json.contains("\"stack\""));
     }
 }
