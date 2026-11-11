@@ -1,0 +1,11 @@
+[package]
+name = "site-verifier"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nirjar Goswami <nirjargoswami2626@gmail.com>"]
+description = "High-speed static site, CSP integrity, and link audit engine for nirjar.me"
+
+[dependencies]
+sha2 = "0.10"
+base64 = "0.22"
+regex = "1.11"
