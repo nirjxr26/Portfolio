@@ -4,13 +4,14 @@
   "version": "0.1.0",
   "type": "module",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && node scripts/sync-headers.js && node scripts/verify-csp.js && vite build && node scripts/prerender.js",
     "sync:headers": "node scripts/sync-headers.js",
     "test": "vitest run",
+    "verify:site": "node scripts/verify-site.js",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,0 +1,13 @@
+[package]
+name = "status-api"
+version = "0.1.0"
+edition = "2021"
+authors = ["Nirjar Goswami <nirjargoswami2626@gmail.com>"]
+description = "High-performance Rust edge status and telemetry handler for nirjar.me"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
