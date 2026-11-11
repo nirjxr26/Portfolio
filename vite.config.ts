@@ -5,6 +5,7 @@ import react from "@vitejs/plugin-react"
 import tailwindcss from "@tailwindcss/vite"
 import { baseHeaders, cspDev, cspProd } from "./scripts/lib/headers.js"
 import { assetHashPlugin } from "./scripts/lib/asset-hash.js"
+import { apiDevPlugin } from "./scripts/lib/api-dev-plugin.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -17,6 +18,7 @@ export default defineConfig(({ command }) => ({
     react(),
     tailwindcss(),
     assetHashPlugin(resolve(__dirname, "./public/assets"), "/assets"),
+    apiDevPlugin(),
   ],
   resolve: {
     alias: {

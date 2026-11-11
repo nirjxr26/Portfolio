@@ -2,81 +2,72 @@ export const config = {
   runtime: "edge",
 }
 
-export interface ServiceHealth {
-  name: string
-  status: "operational" | "degraded" | "maintenance"
-  category: string
-  description: string
+export type HealthState = "ok" | "degraded" | "down"
+
+export interface StatusChecks {
+  static_assets: HealthState
+  csp: "enforced" | "disabled"
 }
 
-export interface EdgeMetrics {
-  engine: string
-  edge_sla: string
-  cold_start_target: string
-  memory_footprint: string
-  security_posture: string
-}
-
-export interface StatusPayload {
-  status: "operational" | "degraded"
-  version: string
+export interface StatusResponse {
+  status: HealthState
   service: string
-  edge_metrics: EdgeMetrics
-  systems: ServiceHealth[]
+  version: string
+  commit: string
+  region: string
+  timestamp: string
+  checks: StatusChecks
 }
 
-export const statusPayload: StatusPayload = {
-  status: "operational",
-  version: "0.1.0",
-  service: "nirjar.me",
-  edge_metrics: {
-    engine: "Rust Edge / WebAssembly",
-    edge_sla: "99.99%",
-    cold_start_target: "< 5ms",
-    memory_footprint: "< 15KB binary",
-    security_posture: "Memory-safe, Zero-trust, Strict CSP",
-  },
-  systems: [
-    {
-      name: "Bastion",
-      status: "operational",
-      category: "Cybersecurity & IAM",
-      description: "Zero-Trust ephemeral access gateway with audit logging",
+export function buildStatus(region = "edge"): StatusResponse {
+  const commitSha =
+    process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
+    process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
+    "fa657df"
+
+  return {
+    status: "ok",
+    service: "nirjar.me",
+    version: "0.1.0",
+    commit: commitSha,
+    region,
+    timestamp: new Date().toISOString(),
+    checks: {
+      static_assets: "ok",
+      csp: "enforced",
     },
-    {
-      name: "HookDrop",
-      status: "operational",
-      category: "Backend & Systems",
-      description: "High-throughput webhook ingestion and cryptographic relay",
-    },
-    {
-      name: "Kost",
-      status: "operational",
-      category: "Cloud Architecture",
-      description: "Multi-cloud Kubernetes FinOps and anomaly guardrails",
-    },
-    {
-      name: "Trace",
-      status: "operational",
-      category: "Distributed Systems",
-      description: "Zero-overhead distributed trace validator and evidence chain",
-    },
-    {
-      name: "Frontend Static Mesh",
-      status: "operational",
-      category: "Edge & CDN",
-      description: "Pre-rendered immutable assets with CSP sha256 integrity",
-    },
-  ],
+  }
 }
 
-export default function handler(): Response {
-  return new Response(JSON.stringify(statusPayload, null, 2), {
+export default function handler(req?: Request): Response {
+  let region = "local"
+  if (req?.headers) {
+    const vercelId = req.headers.get("x-vercel-id")
+    const country = req.headers.get("x-vercel-ip-country")
+    const city = req.headers.get("x-vercel-ip-city")
+
+    if (city && country) {
+      region = `${city.toLowerCase()}-${country.toLowerCase()}`
+    } else if (country) {
+      region = country.toLowerCase()
+    } else if (vercelId) {
+      // e.g. "iad1::..." -> "iad1"
+      region = vercelId.split("::")[0] || "edge"
+    } else {
+      region = "edge"
+    }
+  }
+
+  const payload = buildStatus(region)
+
+  return new Response(JSON.stringify(payload, null, 2), {
     status: 200,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
       "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
+      "X-Content-Type-Options": "nosniff",
     },
   })
 }
