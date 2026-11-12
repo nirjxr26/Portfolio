@@ -10,6 +10,26 @@
       "permanent": true
     },
     {
+      "source": "/terms",
+      "destination": "/legal",
+      "permanent": true
+    },
+    {
+      "source": "/terms-of-use",
+      "destination": "/legal",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/legal",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/legal",
+      "permanent": true
+    },
+    {
       "source": "/articles/872-issues-30-days-sonarqube",
       "destination": "/articles/making-technical-debt-visible-with-sonarqube",
       "permanent": true
