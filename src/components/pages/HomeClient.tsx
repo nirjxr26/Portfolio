@@ -1,17 +1,17 @@
-import { articles, frames, hero, quote } from "@/data/home"
+import { articles, frames, hero, productionCapabilities, quote } from "@/data/home"
 import { HOW_I_WORK_CARDS } from "@/data/services"
 import {
   ActionButtons,
   ActionGroup,
   AgentMarkdownView,
   ArticlePosterCard,
+  CarouselTrack,
   FeatureCard,
   LightButton,
-  ProductionRail,
   ProjectsRail,
   Seo,
 } from "../common"
-import { CarouselSection, Container, PageShell } from "../layout"
+import { CarouselSection, Container, PageShell, Section, SectionHeader } from "../layout"
 import { useAgentMode } from "@/utils/useAgentMode"
 
 export function HomeClient() {
@@ -21,7 +21,7 @@ export function HomeClient() {
   return (
     <PageShell
       headerPath="/"
-      footerBgClass="bg-surface-alt border-t border-hairline"
+      footerBgClass="bg-canvas border-t border-hairline"
       seo={<Seo articles={articles} />}
       hideHeader={isAgentMode}
       hideFooter={isAgentMode}
@@ -37,7 +37,7 @@ export function HomeClient() {
                 <br />
                 {hero.headingSecondary}
               </h1>
-              <p className="t-lead mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
+              <p className="t-lead font-medium mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
               <ActionGroup className="mt-8 sm:mt-10 px-4 sm:px-0 animate-hero-3">
                 <ActionButtons actions={hero.actions} />
               </ActionGroup>
@@ -71,31 +71,55 @@ export function HomeClient() {
 
           <ProjectsRail id="work" bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
 
-          <ProductionRail bgClass="bg-surface-alt" cardBgClass="bg-card" />
+          <Section id="how-i-think" bgClass="bg-surface-alt">
+            <SectionHeader title="How I think." />
 
-          <CarouselSection id="how-i-work" title="How I work." bgClass="bg-canvas">
-            {HOW_I_WORK_CARDS.map((card) => (
-              <FeatureCard
-                key={card.tag}
-                card={{
-                  headline: card.title,
-                  body: card.desc,
-                  tag: card.tag,
-                }}
-                cardBgClass="bg-surface-alt"
-              />
-            ))}
-          </CarouselSection>
+            <div className="reveal-on-scroll">
+              <CarouselTrack>
+                {productionCapabilities.map((cap) => (
+                  <FeatureCard
+                    key={cap.title}
+                    card={{
+                      headline: cap.tagline,
+                      body: cap.desc,
+                      tag: cap.title,
+                    }}
+                    cardBgClass="bg-card"
+                  />
+                ))}
+              </CarouselTrack>
+            </div>
+
+            <div id="how-i-work" className="mt-12 sm:mt-16 scroll-mt-12">
+              <SectionHeader title="How I work." />
+
+              <div className="reveal-on-scroll">
+                <CarouselTrack>
+                  {HOW_I_WORK_CARDS.map((card) => (
+                    <FeatureCard
+                      key={card.tag}
+                      card={{
+                        headline: card.title,
+                        body: card.desc,
+                        tag: card.tag,
+                      }}
+                      cardBgClass="bg-card"
+                    />
+                  ))}
+                </CarouselTrack>
+              </div>
+            </div>
+          </Section>
 
           <CarouselSection
             id="articles"
             title="Articles."
-            bgClass="bg-surface-alt"
+            bgClass="bg-canvas"
             headerClassName=""
             trackWrapperClassName="mt-6 sm:mt-10"
             afterCards={
               <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
-                <LightButton href="/articles" arrow className="bg-card">
+                <LightButton href="/articles" arrow className="bg-surface-alt">
                   View other articles
                 </LightButton>
               </div>
@@ -110,7 +134,7 @@ export function HomeClient() {
             ))}
           </CarouselSection>
 
-          <section className="bg-canvas py-16 text-ink sm:py-20">
+          <section className="bg-surface-alt py-16 text-ink sm:py-20">
             <Container size="wide" className="text-center text-pretty sm:text-balance reveal-on-scroll">
               <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
             </Container>

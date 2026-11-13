@@ -57,7 +57,7 @@
 
   .t-lead {
     font-family: var(--font-text);
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(15px, 2.2vw, 24px);
     line-height: 1.5;
     letter-spacing: 0.2px;

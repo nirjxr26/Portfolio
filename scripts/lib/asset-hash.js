@@ -51,5 +51,26 @@ export function assetHashPlugin(publicAssetsDir, urlPrefix = "/assets") {
         return `export const assetHashes = ${JSON.stringify(hashes)};\nexport default assetHashes;`
       }
     },
+    configureServer(server) {
+      server.watcher.add(publicAssetsDir)
+      server.watcher.on("all", (_event, file) => {
+        if (file && file.startsWith(publicAssetsDir)) {
+          const mod = server.moduleGraph.getModuleById(resolvedVirtualModuleId)
+          if (mod) {
+            server.moduleGraph.invalidateModule(mod)
+          }
+          server.ws.send({ type: "full-reload" })
+        }
+      })
+    },
+    handleHotUpdate({ file, server }) {
+      if (file && file.startsWith(publicAssetsDir)) {
+        const mod = server.moduleGraph.getModuleById(resolvedVirtualModuleId)
+        if (mod) {
+          server.moduleGraph.invalidateModule(mod)
+        }
+        server.ws.send({ type: "full-reload" })
+      }
+    },
   }
 }

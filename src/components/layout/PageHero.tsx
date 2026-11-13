@@ -38,7 +38,7 @@ export function PageHero({
           </p>
         )}
         <h1 className="t-hero text-[38px] sm:text-[clamp(34px,5.2vw,56px)] text-ink mt-2 sm:mt-3 animate-hero-1">{title}</h1>
-        <p className={`t-lead text-[15px] sm:text-[24px] font-normal font-univers leading-[1.5] mx-auto mt-4 sm:mt-6 max-w-2xl text-muted animate-hero-2 ${subheadClassName}`.trim()}>{subhead}</p>
+        <p className={`t-lead text-[15px] sm:text-[24px] font-medium font-univers leading-[1.5] mx-auto mt-4 sm:mt-6 max-w-2xl text-muted animate-hero-2 ${subheadClassName}`.trim()}>{subhead}</p>
         {children && (
           <div className={`mt-8 sm:mt-10 ${bottomFlush ? "" : "animate-hero-3"} flex justify-center w-full ${bottomFlush ? "mb-0" : ""} ${childrenClassName}`.trim()}>
             {children}

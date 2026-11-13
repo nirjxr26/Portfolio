@@ -55,6 +55,14 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     case_study: "/works/hookdrop",
   },
   {
+    name: "Parapet",
+    category: "Security & Site Auditor",
+    state: "active",
+    summary:
+      "Parapet is a Rust tool that checks your built static site for broken anchors, dead sitemap URLs and CSP hash mismatches, without needing a browser.",
+    repo: "https://github.com/nirjxr26/parapet",
+  },
+  {
     name: "DeployLens",
     category: "CI/CD & Observability",
     state: "active",

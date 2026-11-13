@@ -78,6 +78,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Architecture: Mock webhook receiver in Go - POST to a bucket URL, it catches, stores, and streams live. Production-grade pipeline around it: containerization, hardening, GitOps delivery, sub-35ms delivery under load.
 
 ### More Works
+- Parapet: Zero-Browser Static Site Integrity Auditor in Rust. Detects dead DOM anchors, stale sitemaps, and Content Security Policy drift in under 30ms before deployment. Repository: https://github.com/nirjxr26/parapet
 - DeployLens: Deployment Insights Timeline. Ties GitHub Actions and AWS CodeDeploy into a single timeline so a commit's full deployment story is visible on both sides instead of split across two dashboards. Repository: https://github.com/nirjxr26/DeployLens
 - Canopy: Self-Hosted Identity & Authentication (Clerk Alternative). Argon2id password hashing, encrypted MFA, and session control users never have to think about, with zero per-user pricing. Repository: https://github.com/nirjxr26/canopy
 - SmartFlow: Workflow Automation. A platform that unifies task workflows, approval pipelines, and system resource insights into a streamlined operations dashboard. Repository: https://github.com/nirjxr26/SmartFlow
@@ -93,6 +94,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Languages: Go, Rust, Python, Bash
 
 ## Technical Articles & Writing
+- "Parapet: A 100ms Rust site checker": Static builds hide broken anchors and CSP drift. A 100ms Rust binary catches both before code ever ships. (https://nirjar.me/articles/a-100ms-rust-site-verifier).
 - "Coding is taught wrong, and AI exposed it": The exam tested loops. The job tests judgement - and AI made the difference impossible to ignore. (https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it).
 - "How to allow remote PostgreSQL connection with security": Three locks instead of one: where Postgres listens, who may connect, and what the firewall allows. (https://nirjar.me/articles/allow-remote-postgresql-without-opening-it-to-the-world).
 - "Making technical debt visible with SonarQube": 872 hidden issues. One scan. 30 days to fix what I couldn't see before. (https://nirjar.me/articles/making-technical-debt-visible-with-sonarqube).

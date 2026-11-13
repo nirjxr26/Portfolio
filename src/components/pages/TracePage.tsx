@@ -81,7 +81,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             {hero.headline}
           </h1>
 
-          <p className={`text-[15px] sm:text-[24px] font-normal ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty`}>
+          <p className={`text-[15px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty`}>
             {hero.subhead}
           </p>
         </div>

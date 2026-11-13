@@ -6,7 +6,7 @@ export const SITE_DEFAULT_DESC =
   "Generalist — Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure."
 
 export const SITE_KEYWORDS =
-  "Nirjar Goswami, Cloud Engineer, Security Engineer, Cloud Architecture, DevOps, Kubernetes, Go, System Design, IAM, Cybersecurity, AegisMesh, Bastion, Kost, HookDrop, Trace, DeployLens, VaultLock"
+  "Nirjar Goswami, Cloud Engineer, Security Engineer, Cloud Architecture, DevOps, Kubernetes, Go, System Design, IAM, Cybersecurity, AegisMesh, Bastion, Kost, HookDrop, Trace, Parapet, DeployLens, VaultLock"
 
 export function stripTrailingSlashes(path: string): string {
   let end = path.length

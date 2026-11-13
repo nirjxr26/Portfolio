@@ -79,6 +79,10 @@ export function SitemapClient() {
                 </div>
                 <div className={rowClass}>
                   <span className={guideClass}>│   ├── </span>
+                  <a href="/articles/a-100ms-rust-site-verifier" className={linkWrapClass}>a-100ms-rust-site-verifier/</a>
+                </div>
+                <div className={rowClass}>
+                  <span className={guideClass}>│   ├── </span>
                   <a href="/articles/coding-is-taught-wrong-and-ai-exposed-it" className={linkWrapClass}>coding-is-taught-wrong-and-ai-exposed-it/</a>
                 </div>
                 <div className={rowClass}>
@@ -192,6 +196,10 @@ export function SitemapClient() {
                   <div className={rowClass}>
                     <span className={guideClass}>    ├── </span>
                     <a href="https://github.com/nirjxr26/HookDrop" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>HookDrop/</a>
+                  </div>
+                  <div className={rowClass}>
+                    <span className={guideClass}>    ├── </span>
+                    <a href="https://github.com/nirjxr26/parapet" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>Parapet/</a>
                   </div>
                   <div className={rowClass}>
                     <span className={guideClass}>    ├── </span>

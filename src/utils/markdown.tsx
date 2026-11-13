@@ -71,9 +71,157 @@ function renderInline(text: string, key: string): ReactNode[] {
   return nodes
 }
 
+function highlightCode(code: string, lang: string): ReactNode {
+  const normalizedLang = lang.toLowerCase()
+
+  // Terminal / text status line highlighting (matches user's screenshot)
+  if (normalizedLang === "text" || normalizedLang === "plain" || !normalizedLang) {
+    if (code.includes("[ PASSED ]") || code.includes("[ FAILED ]") || code.includes("════")) {
+      const lines = code.split("\n")
+      return lines.map((line, i) => {
+        const isLast = i === lines.length - 1
+        let lineNode: ReactNode = line
+
+        if (line.includes("[ PASSED ]")) {
+          const passIdx = line.indexOf("[ PASSED ]")
+          const prefix = line.slice(0, passIdx)
+          const greenText = line.slice(passIdx)
+          lineNode = (
+            <>
+              <span>{prefix}</span>
+              <span className="text-[#16a34a] dark:text-[#4ade80] font-medium">{greenText}</span>
+            </>
+          )
+        } else if (line.includes("[ FAILED ]")) {
+          const failIdx = line.indexOf("[ FAILED ]")
+          const prefix = line.slice(0, failIdx)
+          const redText = line.slice(failIdx)
+          lineNode = (
+            <>
+              <span>{prefix}</span>
+              <span className="text-[#e02424] dark:text-[#f87171] font-medium">{redText}</span>
+            </>
+          )
+        } else if (line.trim().startsWith("═") || line.trim().startsWith("─")) {
+          lineNode = <span className="text-muted/50">{line}</span>
+        } else if (line.includes("PARAPET INTEGRITY REPORT") || line.includes("RUST VERIFICATION & INTEGRITY AUDIT REPORT")) {
+          lineNode = <span className="font-semibold text-ink">{line}</span>
+        }
+
+        return (
+          <span key={i}>
+            {lineNode}
+            {!isLast && "\n"}
+          </span>
+        )
+      })
+    }
+    return code
+  }
+
+  const RUST_KW =
+    "\\b(?:fn|let|mut|for|in|if|else|return|struct|impl|pub|match|const|type|as|where|use|mod|crate|enum|trait|while|loop|break|continue|async|await)\\b"
+  const RUST_TYPES =
+    "\\b(?:String|Path|PathBuf|HashMap|HashSet|Sha256|Regex|Vec|Option|Some|None|Result|Ok|Err|bool|usize|u8|u16|u32|u64|i32|i64|str|Self|VerificationReport)\\b"
+  const RUST_MACROS = "\\b(?:format|println|eprintln|panic|vec)(?=!)"
+  const SQL_KW = "\\b(?:SELECT|FROM|WHERE|INSERT|INTO|UPDATE|DELETE|CREATE|ROLE|DATABASE|OWNER|LOGIN|SHOW|SET|WITH)\\b"
+  const HTTP_KW = "\\b(?:Content-Security-Policy|default-src|script-src|style-src|img-src)\\b"
+
+  const regex = new RegExp(
+    `(\\/\\/[^\\n]*|#[^\\n]*|"(?:\\\\.|[^"\\\\])*"|'[^']*'|${RUST_KW}|${RUST_TYPES}|${RUST_MACROS}|${SQL_KW}|${HTTP_KW}|\\b\\d+(?:\\.\\d+)?\\b)`,
+    "g",
+  )
+
+  const parts = code.split(regex)
+  return parts.map((part, i) => {
+    if (!part) return null
+    if (part.startsWith("//") || part.startsWith("#")) {
+      return (
+        <span key={i} className="text-muted/80 italic">
+          {part}
+        </span>
+      )
+    }
+    if ((part.startsWith('"') && part.endsWith('"')) || (part.startsWith("'") && part.endsWith("'"))) {
+      return (
+        <span key={i} className="text-[#057a55] dark:text-[#31c48d]">
+          {part}
+        </span>
+      )
+    }
+    if (new RegExp(`^(?:${RUST_KW}|${SQL_KW}|${HTTP_KW})$`).test(part)) {
+      return (
+        <span key={i} className="font-semibold text-[#a03d00] dark:text-[#ff8f5a]">
+          {part}
+        </span>
+      )
+    }
+    if (new RegExp(`^(${RUST_TYPES})$`).test(part)) {
+      return (
+        <span key={i} className="font-medium text-[#0284c7] dark:text-[#38bdf8]">
+          {part}
+        </span>
+      )
+    }
+    if (new RegExp(`^(${RUST_MACROS})$`).test(part)) {
+      return (
+        <span key={i} className="text-[#9333ea] dark:text-[#c084fc]">
+          {part}
+        </span>
+      )
+    }
+    if (/^\d+(?:\.\d+)?$/.test(part)) {
+      return (
+        <span key={i} className="text-[#b45309] dark:text-[#fbbf24]">
+          {part}
+        </span>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
 function CodeBlock({ code, lang }: Readonly<{ code: string; lang: string }>) {
   const { copied, copy } = useCopy(1600)
   const panelRef = useRef<HTMLDivElement>(null)
+
+  const normalizedLang = lang.toLowerCase()
+  if (normalizedLang === "pipeline" || (normalizedLang === "diagram" && (code.includes("→") || code.includes("->")))) {
+    const steps = code
+      .split(/\n/)[0]
+      .split(/->|→/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+
+    return (
+      <div className="py-2">
+        <div className="flex w-full items-center justify-between gap-1 overflow-hidden rounded-[14px] border border-hairline/60 bg-surface-alt/50 px-2 py-3 min-[390px]:px-3 min-[390px]:py-3.5 sm:gap-2.5 sm:px-5 sm:py-4">
+          {steps.map((step, idx) => {
+            const isLast = idx === steps.length - 1
+            const isParapet = /parapet/i.test(step)
+            return (
+              <div key={idx} className="flex items-center gap-1 min-[390px]:gap-1.5 sm:gap-2.5">
+                <div
+                  className={`flex items-center justify-center rounded-[8px] px-2 py-1.5 text-center font-mono text-[10.5px] min-[360px]:text-[11px] min-[390px]:px-2.5 min-[390px]:text-[11.5px] sm:rounded-[10px] sm:px-3.5 sm:py-2 sm:text-[13px] ${
+                    isParapet
+                      ? "border border-accent/30 bg-accent/15 font-bold text-accent"
+                      : "border border-hairline/60 bg-canvas/70 font-medium text-ink"
+                  }`}
+                >
+                  <span>{step}</span>
+                </div>
+                {!isLast && (
+                  <span className="text-[11px] text-muted/60 sm:text-[13px]" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
   /**
    * Selecting inside the panel copies the selection: a single line stays a
@@ -98,10 +246,10 @@ function CodeBlock({ code, lang }: Readonly<{ code: string; lang: string }>) {
         ref={panelRef}
         onMouseUp={copySelection}
         onKeyUp={copySelection}
-        className="relative overflow-hidden rounded-[14px] border border-hairline/60 bg-surface-alt"
+        className="relative overflow-hidden rounded-[14px] bg-surface-alt"
       >
         {lang ? (
-          <div className="flex items-center justify-between gap-3 border-b border-hairline/60 px-4 py-2.5 font-mono text-[11px] leading-none font-medium uppercase tracking-[0.14em] text-muted">
+          <div className="flex items-center justify-between gap-3 border-b border-hairline/65 px-3.5 py-2 font-mono text-[11px] leading-none font-medium uppercase tracking-[0.04em] text-muted sm:px-4 sm:py-2.5">
             <span>{lang}</span>
             <span
               aria-hidden="true"
@@ -112,8 +260,8 @@ function CodeBlock({ code, lang }: Readonly<{ code: string; lang: string }>) {
             </span>
           </div>
         ) : null}
-        <pre className="whitespace-pre-wrap break-words px-4 py-4 font-mono text-[12.5px] leading-relaxed tracking-normal text-ink sm:py-5 sm:text-[13px]">
-          <code>{code}</code>
+        <pre className="overflow-x-hidden whitespace-pre-wrap break-words px-3.5 py-3.5 font-mono text-[11px] leading-relaxed tracking-normal text-ink min-[375px]:text-[11.5px] min-[414px]:text-[12px] sm:px-4 sm:py-5 sm:text-[13px]">
+          <code>{highlightCode(code, lang)}</code>
         </pre>
         <span className="sr-only" aria-live="polite">
           {copied ? "Copied" : ""}
@@ -127,6 +275,7 @@ type Item = { text: string; blocks: MdNode[] }
 
 type MdNode =
   | { kind: "para"; text: string }
+  | { kind: "heading"; level: number; text: string }
   | { kind: "code"; lang: string; code: string }
   | { kind: "list"; ordered: boolean; items: Item[] }
   | { kind: "quote"; paragraphs: string[] }
@@ -218,6 +367,13 @@ function parseContent(content: string): MdNode[] {
       if (!indented && quoteLines.length > 0 && quoteLines.length === lines.length) {
         flushList()
         nodes.push({ kind: "quote", paragraphs: parseQuote(text.split("\n")) })
+        continue
+      }
+
+      const heading = indented ? null : /^(#{1,6})\s+([\s\S]+)$/.exec(text)
+      if (heading) {
+        flushList()
+        nodes.push({ kind: "heading", level: heading[1].length, text: heading[2].trim() })
         continue
       }
 
@@ -346,34 +502,110 @@ function renderNode(node: MdNode, key: string): ReactNode {
     )
   }
 
-  if (node.kind === "table") {
+  if (node.kind === "heading") {
+    if (node.level <= 2) {
+      return (
+        <h2 key={key} className="mt-8 mb-3 text-[18px] font-semibold tracking-tight text-ink sm:text-[20px]">
+          {renderInline(node.text, key)}
+        </h2>
+      )
+    }
     return (
-      <table key={key} className="mx-auto w-full border-collapse text-left text-[14px]">
-        <thead>
-          <tr>
-            {node.head.map((cell, i) => (
-              <th
-                key={`${key}-h${i}`}
-                scope="col"
-                className="border-b border-hairline px-4 py-3 align-top font-semibold text-ink"
-              >
-                {renderInline(cell, `${key}-h${i}`)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {node.rows.map((row, r) => (
-            <tr key={`${key}-r${r}`} className="border-b border-hairline/60">
-              {row.map((cell, c) => (
-                <td key={`${key}-r${r}c${c}`} className="px-4 py-3 align-top">
-                  {renderInline(cell, `${key}-r${r}c${c}`)}
-                </td>
-              ))}
+      <h3 key={key} className="mt-7 mb-2.5 text-[16px] font-semibold tracking-tight text-ink sm:text-[17.5px]">
+        {renderInline(node.text, key)}
+      </h3>
+    )
+  }
+
+  if (node.kind === "table") {
+    const highlightColIndex = node.head.findIndex((cell) => /parapet|rust/i.test(cell))
+
+    return (
+      <div key={key} className="my-6 w-full overflow-hidden">
+        <table className="w-full table-fixed border-collapse text-left text-[11px] min-[360px]:text-[11.5px] min-[414px]:text-[12.5px] sm:text-[14px]">
+          <thead>
+            <tr className="border-b border-hairline">
+              {node.head.map((cell, i) => {
+                const isHighlight = i === highlightColIndex
+                const isFirst = i === 0
+                return (
+                  <th
+                    key={`${key}-h${i}`}
+                    scope="col"
+                    className={`px-2 py-2.5 align-middle font-semibold sm:px-4 sm:py-3.5 ${
+                      isFirst ? "text-left w-[28%]" : "text-center w-[24%]"
+                    } ${
+                      isHighlight
+                        ? "bg-accent/15 text-accent font-bold"
+                        : "text-ink"
+                    }`}
+                  >
+                    {renderInline(cell, `${key}-h${i}`)}
+                  </th>
+                )
+              })}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {node.rows.map((row, r) => (
+              <tr key={`${key}-r${r}`} className="border-b border-hairline/60 last:border-b-0">
+                {row.map((cell, c) => {
+                  const isHighlight = c === highlightColIndex
+                  const isFirst = c === 0
+                  const match = !isFirst
+                    ? /^(.*?)\s*(?:\(([^)]+)\)|<br\s*\/?>\s*(.+))$/i.exec(cell.trim())
+                    : null
+
+                  const primary = match ? match[1].trim() : cell
+                  const sub = match ? (match[2] ?? match[3]).trim() : null
+
+                  return (
+                    <td
+                      key={`${key}-r${r}c${c}`}
+                      className={`px-1.5 py-2.5 align-middle min-[360px]:px-2 sm:px-4 sm:py-3.5 ${
+                        isFirst ? "text-left font-medium text-ink" : "text-center"
+                      } ${
+                        isHighlight
+                          ? "bg-accent/5 dark:bg-accent/10"
+                          : ""
+                      }`}
+                    >
+                      {sub ? (
+                        <div className="flex flex-col items-center justify-center leading-tight">
+                          <span
+                            className={
+                              isHighlight
+                                ? "font-bold text-accent sm:text-[14px]"
+                                : "font-semibold text-ink sm:text-[14px]"
+                            }
+                          >
+                            {renderInline(primary, `${key}-r${r}c${c}-p`)}
+                          </span>
+                          <span className="mt-1 block font-mono text-[9.5px] font-normal leading-tight text-muted/75 min-[360px]:text-[10px] sm:text-[11px] dark:text-muted/70">
+                            {renderInline(sub, `${key}-r${r}c${c}-s`)}
+                          </span>
+                        </div>
+                      ) : (
+                        <span
+                          className={
+                            isHighlight
+                              ? "font-bold text-accent sm:text-[14px]"
+                              : isFirst
+                              ? "font-medium text-ink"
+                              : "font-medium text-ink/90 sm:text-[13.5px]"
+                          }
+                        >
+                          {renderInline(cell, `${key}-r${r}c${c}`)}
+                        </span>
+                      )}
+                    </td>
+                  )
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
@@ -393,7 +625,7 @@ function renderNode(node: MdNode, key: string): ReactNode {
   }
 
   return (
-    <ul key={key} className="list-disc space-y-2 pl-5 marker:text-muted">
+    <ul key={key} className="list-disc space-y-3 pl-5 marker:text-ink/80">
       {items}
     </ul>
   )
