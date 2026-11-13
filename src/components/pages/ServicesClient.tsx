@@ -78,7 +78,7 @@ export function ServicesClient() {
         compact
       />
 
-      <section className="py-12 pb-20 sm:py-16 sm:pb-28 bg-surface-alt text-left">
+      <section className="py-16 sm:py-20 md:py-24 bg-surface-alt text-left">
         <Container size="wide">
           <div className="flex flex-col gap-6 sm:gap-8">
             {/* Core Services */}

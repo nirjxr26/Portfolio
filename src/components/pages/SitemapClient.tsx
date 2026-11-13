@@ -29,7 +29,7 @@ export function SitemapClient() {
         compact
       />
 
-      <Section id="sitemap" bgClass="bg-surface-alt" padClass="pt-10 pb-16 sm:pt-14 sm:pb-20 md:pt-16 md:pb-24">
+      <Section id="sitemap" bgClass="bg-surface-alt" padClass="py-16 sm:py-20 md:py-24">
         <div className="mx-auto w-full max-w-[680px] px-4 sm:px-6">
           <div className="flex flex-col gap-8 sm:gap-10">
             {/* Card 1: Internal Tree */}

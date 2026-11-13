@@ -21,7 +21,12 @@ export function WorksClient() {
         compact
       />
 
-      <ProjectsRail id="featured-works" bgClass="bg-surface-alt" cardBgClass="bg-card" />
+      <ProjectsRail
+        id="featured-works"
+        bgClass="bg-surface-alt"
+        cardBgClass="bg-card"
+        padClass="py-16 sm:py-20 md:py-24"
+      />
 
       <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
     </PageShell>

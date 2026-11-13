@@ -9,6 +9,7 @@ interface ProjectsRailProps {
   cardBgClass?: string
   id?: string
   featuredCount?: number
+  padClass?: string
 }
 
 export function ProjectsRail({
@@ -16,12 +17,13 @@ export function ProjectsRail({
   cardBgClass = "bg-surface-alt",
   id = "work",
   featuredCount = 4,
+  padClass,
 }: Readonly<ProjectsRailProps>) {
   const featured = projects.slice(0, featuredCount)
   const more = projects.slice(featuredCount)
 
   return (
-    <Section id={id} bgClass={bgClass}>
+    <Section id={id} bgClass={bgClass} padClass={padClass}>
       <SectionHeader title="Featured work." />
 
       {/* Featured Projects — Apple-style Horizontal Carousel */}
