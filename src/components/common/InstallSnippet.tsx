@@ -6,6 +6,8 @@ import { CheckIcon, CopyIcon } from "./Icons"
 interface InstallSnippetProps {
   commands: InstallCommand[]
   className?: string
+  outerBgClass?: string
+  innerBgClass?: string
 }
 
 const EXECUTOR_COMMANDS = new Set(["iex", "sh", "bash", "zsh", "cmd", "pwsh"])
@@ -58,6 +60,8 @@ function renderCommandTokens(command: string): ReactNode {
 export function InstallSnippet({
   commands = [],
   className = "",
+  outerBgClass = "bg-card",
+  innerBgClass = "bg-surface-alt/80",
 }: Readonly<InstallSnippetProps>) {
   const [activeTab, setActiveTab] = useState(0)
   const { copied, copy } = useCopy(2000)
@@ -68,19 +72,16 @@ export function InstallSnippet({
 
   return (
     <div className={`hidden sm:block w-fit max-w-full mx-auto text-left ${className}`.trim()}>
-      <div className="w-full max-w-full border border-hairline rounded-[20px] squircle bg-card/60 dark:bg-neutral-900/40 p-2 sm:p-2.5">
-        <div className="flex items-center justify-between gap-4 px-2.5 py-1.5 mb-2">
-          <div className="flex items-center gap-4 sm:gap-6">
+      <div className={`w-full max-w-full rounded-[20px] squircle ${outerBgClass} p-3 sm:p-4`}>
+        <div className="flex items-center justify-between gap-4 px-2 py-1.5 mb-2.5 sm:mb-3">
+          <div className="flex items-center gap-4 sm:gap-6" role="tablist">
             {commands.map((cmd, idx) => {
               const isActive = activeTab === idx
               return (
                 <button
                   type="button"
                   key={cmd.label}
-                  onClick={() => {
-                    setActiveTab(idx)
-                    void copy(cmd.command)
-                  }}
+                  onClick={() => setActiveTab(idx)}
                   className={`text-xs sm:text-[13px] font-medium transition-colors cursor-pointer ${
                     isActive
                       ? "text-ink dark:text-white font-semibold"
@@ -88,7 +89,7 @@ export function InstallSnippet({
                   }`}
                   aria-selected={isActive}
                   role="tab"
-                  title={`Select and copy ${cmd.label} command`}
+                  title={`Switch to ${cmd.label}`}
                 >
                   {cmd.label}
                 </button>
@@ -118,9 +119,18 @@ export function InstallSnippet({
         </div>
 
         <div
+          role="button"
+          tabIndex={0}
           onClick={() => void copy(current.command)}
-          className="border border-hairline rounded-[14px] bg-surface-alt/80 dark:bg-[#0c0c0e] px-3.5 py-3 sm:px-4.5 sm:py-3.5 overflow-x-auto no-scrollbar max-w-full cursor-pointer"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              void copy(current.command)
+            }
+          }}
+          className={`rounded-[14px] ${innerBgClass} px-4 py-3.5 sm:px-5 sm:py-4 overflow-x-auto no-scrollbar max-w-full cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent`}
           title="Click to copy command"
+          aria-label="Click to copy command"
         >
           <code className="block font-mono text-xs sm:text-[13px] md:text-[13.5px] leading-relaxed whitespace-nowrap select-all tracking-normal cursor-pointer">
             {renderCommandTokens(current.command)}

@@ -50,13 +50,13 @@
   .btn-ghost {
     background: var(--surface-alt);
     color: var(--ink);
-    border-color: var(--hairline);
+    border-color: transparent;
   }
 
   .dark .btn-ghost {
     background: #1c1c1e;
     color: #ffffff;
-    border-color: var(--hairline);
+    border-color: transparent;
   }
 
   .flow-arrow {
