@@ -18,6 +18,90 @@ const BOLD_MONO = {
   fontWeight: 700,
 }
 
+const TREE_ROUTES: Record<string, { href: string; isExternal?: boolean }> = {
+  "nirjar.me/": { href: "/" },
+  "index.md/": { href: "/index.md" },
+  "works/": { href: "/works" },
+  "trace/": { href: "/works/trace" },
+  "bastion/": { href: "/works/bastion" },
+  "kost/": { href: "/works/kost" },
+  "hookdrop/": { href: "/works/hookdrop" },
+  "services/": { href: "/services" },
+  "articles/": { href: "/articles" },
+  "legal/": { href: "/legal" },
+  status: { href: "/api/status", isExternal: true },
+  projects: { href: "/api/projects", isExternal: true },
+  "nirjar_resume.pdf": { href: "/assets/nirjar_resume.pdf", isExternal: true },
+  "humans.txt": { href: "/humans.txt", isExternal: true },
+  "llms.txt": { href: "/llms.txt", isExternal: true },
+  "rss.xml": { href: "/rss.xml", isExternal: true },
+  "sitemap.xml": { href: "/sitemap.xml", isExternal: true },
+  "robots.txt": { href: "/robots.txt", isExternal: true },
+  "/.well-known/security.txt": { href: "/.well-known/security.txt", isExternal: true },
+}
+
+function renderTreeRow(line: string, key: number): ReactNode {
+  const guideMatch = line.match(/^([│\s]*(?:├── |└── )|\s+)/)
+  const guide = guideMatch ? guideMatch[1] : ""
+  let content = guideMatch ? line.slice(guide.length) : line
+
+  let extra: { label: string; href: string } | null = null
+  const agentViewMatch = content.match(/^(.*?)\s*(\[\s*Agent view\s*\])$/)
+  if (agentViewMatch) {
+    content = agentViewMatch[1].trim()
+    extra = { label: "[ Agent view ]", href: "/index.md" }
+  }
+
+  const label = content.trim()
+  const route = TREE_ROUTES[label]
+
+  return (
+    <div key={key} className="flex items-start min-w-0 font-mono">
+      {guide && (
+        <span className="shrink-0 text-muted/60 select-none whitespace-pre">
+          {guide}
+        </span>
+      )}
+      {route ? (
+        <a
+          href={route.href}
+          target={route.isExternal ? "_blank" : undefined}
+          rel={route.isExternal ? "noopener noreferrer" : undefined}
+          className="min-w-0 break-words hover:text-accent hover:underline transition-colors text-ink font-medium"
+        >
+          {label}
+        </a>
+      ) : (
+        <span className="min-w-0 font-semibold break-words text-ink">
+          {label}
+        </span>
+      )}
+      {extra && (
+        <a
+          href={extra.href}
+          className="text-accent hover:underline shrink-0 ml-1.5 transition-colors"
+        >
+          {extra.label}
+        </a>
+      )}
+    </div>
+  )
+}
+
+function renderWebsiteTreeBlock(
+  lines: { line: string; index: number }[],
+  blockKey: number,
+): ReactNode {
+  return (
+    <div
+      key={`tree-block-${blockKey}`}
+      className="rounded-xl sm:rounded-2xl bg-surface-alt border border-hairline p-4 sm:p-6 lg:p-8 my-3 overflow-x-auto space-y-0.5 text-[10px] min-[375px]:text-[11px] sm:text-[13.5px] md:text-[14px] leading-[1.75] sm:leading-[1.85] select-text text-left"
+    >
+      {lines.map(({ line, index }) => renderTreeRow(line, index))}
+    </div>
+  )
+}
+
 function renderInlineMarkdown(text: string): ReactNode {
   // Matches **bold** or [label](url)
   const regex = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g
@@ -176,6 +260,48 @@ export function AgentMarkdownView() {
     visibleLines.push({ line: lines[i], index: i })
   }
 
+  type Block =
+    | { type: "line"; line: string; index: number }
+    | { type: "tree"; lines: { line: string; index: number }[] }
+
+  const blocks: Block[] = []
+  let inWebsiteTree = false
+  let treeAccumulator: { line: string; index: number }[] = []
+
+  for (const item of visibleLines) {
+    const trimmed = item.line.trim()
+
+    if (trimmed === "### Website Tree") {
+      blocks.push({ type: "line", line: item.line, index: item.index })
+      inWebsiteTree = true
+      continue
+    }
+
+    if (inWebsiteTree) {
+      if (
+        trimmed.startsWith("nirjar.me/") ||
+        trimmed.startsWith("├── ") ||
+        trimmed.startsWith("└── ") ||
+        trimmed.startsWith("│") ||
+        trimmed.startsWith("    ")
+      ) {
+        treeAccumulator.push(item)
+        continue
+      }
+      if (treeAccumulator.length > 0) {
+        blocks.push({ type: "tree", lines: treeAccumulator })
+        treeAccumulator = []
+      }
+      inWebsiteTree = false
+    }
+
+    blocks.push({ type: "line", line: item.line, index: item.index })
+  }
+
+  if (treeAccumulator.length > 0) {
+    blocks.push({ type: "tree", lines: treeAccumulator })
+  }
+
   return (
     <div className="min-h-screen bg-canvas text-ink animate-agent-enter" style={REGULAR_MONO}>
       {/* Top Navbar stuck to upper screen with alternate design surface color for both themes */}
@@ -224,7 +350,11 @@ export function AgentMarkdownView() {
         <Container size="wide" className="max-w-[960px] px-3.5 min-[375px]:px-4 sm:px-6">
           <div className="bg-canvas text-ink selection:bg-accent selection:text-white max-w-full overflow-x-hidden">
             <div className="font-mono space-y-0.5 break-words">
-              {visibleLines.map(({ line, index }) => renderMarkdownLine(line, index))}
+              {blocks.map((block, idx) =>
+                block.type === "tree"
+                  ? renderWebsiteTreeBlock(block.lines, idx)
+                  : renderMarkdownLine(block.line, block.index),
+              )}
             </div>
           </div>
         </Container>

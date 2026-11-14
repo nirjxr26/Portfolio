@@ -77,30 +77,6 @@ export function SitemapClient() {
                   <span className={guideClass}>├── </span>
                   <a href="/articles" className={dirWrapClass}>articles/</a>
                 </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/articles/a-100ms-rust-site-verifier" className={linkWrapClass}>a-100ms-rust-site-verifier/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/articles/coding-is-taught-wrong-and-ai-exposed-it" className={linkWrapClass}>coding-is-taught-wrong-and-ai-exposed-it/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/articles/allow-remote-postgresql-without-opening-it-to-the-world" className={linkWrapClass}>allow-remote-postgresql-without-opening-it/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/articles/making-technical-debt-visible-with-sonarqube" className={linkWrapClass}>making-technical-debt-visible-with-sonarqube/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   ├── </span>
-                  <a href="/articles/rethinking-my-git-workflow" className={linkWrapClass}>rethinking-my-git-workflow/</a>
-                </div>
-                <div className={rowClass}>
-                  <span className={guideClass}>│   └── </span>
-                  <a href="/articles/how-vaultlock-reliably-fetches-brand-logos" className={linkWrapClass}>how-vaultlock-reliably-fetches-brand-logos/</a>
-                </div>
 
                 <div className={rowClass}>
                   <span className={guideClass}>├── </span>

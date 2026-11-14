@@ -71,8 +71,40 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     repo: "https://github.com/nirjxr26/DeployLens",
   },
   {
+    name: "Canopy",
+    category: "Identity & Authentication",
+    state: "active",
+    summary:
+      "Self-hosted alternative to Clerk with Argon2id password hashing, encrypted MFA, and session control with zero per-user pricing.",
+    repo: "https://github.com/nirjxr26/canopy",
+  },
+  {
+    name: "SmartFlow",
+    category: "Workflow Automation",
+    state: "active",
+    summary:
+      "Operations platform unifying task workflows, approval pipelines, and system resource insights into a streamlined dashboard.",
+    repo: "https://github.com/nirjxr26/SmartFlow",
+  },
+  {
+    name: "BlamLess",
+    category: "GitHub Action",
+    state: "active",
+    summary:
+      "GitHub Action detecting whether CI failures stem from repo code or GitHub platform outages, retrying automatically on platform faults.",
+    repo: "https://github.com/nirjxr26/Blamless",
+  },
+  {
+    name: "Code Humanizer",
+    category: "Developer Tooling",
+    state: "active",
+    summary:
+      "AI code explanation skill file explaining the rationale, failure modes, and mental models behind complex codebases.",
+    repo: "https://github.com/nirjxr26/code-humanizer",
+  },
+  {
     name: "VaultLock",
-    category: "Security Engineering",
+    category: "Offline Password Manager",
     state: "maintained",
     summary:
       "Offline password manager with AES-256 local credential encryption and zero cloud dependencies.",

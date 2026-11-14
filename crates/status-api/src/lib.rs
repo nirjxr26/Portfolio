@@ -86,6 +86,14 @@ pub fn get_projects_payload() -> ProjectsResponse {
                 case_study: Some("/works/hookdrop".into()),
             },
             ProjectItem {
+                name: "Parapet".into(),
+                category: "Security & Site Auditor".into(),
+                state: "active".into(),
+                summary: "Zero-browser static site integrity auditor in Rust that checks built HTML for broken anchors, dead sitemap URLs, and CSP hash mismatches.".into(),
+                repo: "https://github.com/nirjxr26/parapet".into(),
+                case_study: None,
+            },
+            ProjectItem {
                 name: "DeployLens".into(),
                 category: "CI/CD & Observability".into(),
                 state: "active".into(),
@@ -94,8 +102,40 @@ pub fn get_projects_payload() -> ProjectsResponse {
                 case_study: None,
             },
             ProjectItem {
+                name: "Canopy".into(),
+                category: "Identity & Authentication".into(),
+                state: "active".into(),
+                summary: "Self-hosted alternative to Clerk with Argon2id password hashing, encrypted MFA, and session control with zero per-user pricing.".into(),
+                repo: "https://github.com/nirjxr26/canopy".into(),
+                case_study: None,
+            },
+            ProjectItem {
+                name: "SmartFlow".into(),
+                category: "Workflow Automation".into(),
+                state: "active".into(),
+                summary: "Operations platform unifying task workflows, approval pipelines, and system resource insights into a streamlined dashboard.".into(),
+                repo: "https://github.com/nirjxr26/SmartFlow".into(),
+                case_study: None,
+            },
+            ProjectItem {
+                name: "BlamLess".into(),
+                category: "GitHub Action".into(),
+                state: "active".into(),
+                summary: "GitHub Action detecting whether CI failures stem from repo code or GitHub platform outages, retrying automatically on platform faults.".into(),
+                repo: "https://github.com/nirjxr26/Blamless".into(),
+                case_study: None,
+            },
+            ProjectItem {
+                name: "Code Humanizer".into(),
+                category: "Developer Tooling".into(),
+                state: "active".into(),
+                summary: "AI code explanation skill file explaining the rationale, failure modes, and mental models behind complex codebases.".into(),
+                repo: "https://github.com/nirjxr26/code-humanizer".into(),
+                case_study: None,
+            },
+            ProjectItem {
                 name: "VaultLock".into(),
-                category: "Security Engineering".into(),
+                category: "Offline Password Manager".into(),
                 state: "maintained".into(),
                 summary: "Offline password manager with AES-256 local credential encryption and zero cloud dependencies.".into(),
                 repo: "https://github.com/nirjxr26/VaultLock-Password-Manager".into(),
@@ -132,11 +172,11 @@ mod tests {
     #[test]
     fn test_projects_payload_validity() {
         let payload = get_projects_payload();
-        assert_eq!(payload.projects.len(), 6);
+        assert_eq!(payload.projects.len(), 11);
         assert_eq!(payload.projects[0].name, "Trace");
         assert_eq!(payload.projects[0].state, "active");
-        assert_eq!(payload.projects[5].name, "VaultLock");
-        assert_eq!(payload.projects[5].state, "maintained");
+        assert_eq!(payload.projects[10].name, "VaultLock");
+        assert_eq!(payload.projects[10].state, "maintained");
     }
 
     #[test]

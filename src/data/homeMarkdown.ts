@@ -126,64 +126,28 @@ ${articleLines}
 
 ### Website Tree
 
-![Website Tree](${SITE_URL}/assets/sitemap/sitemap_white.svg#gh-light-mode-only)
-![Website Tree](${SITE_URL}/assets/sitemap/sitemap_black.svg#gh-dark-mode-only)
-
-<!--
-## Sitemap Tree (Machine-readable routes, works, articles, and endpoints for AI agents)
-
 nirjar.me/
-├── index.md/ [ Agent view: ${SITE_URL}/index.md ]
-├── sitemap/ [ Full Sitemap Directory: ${SITE_URL}/sitemap ]
-├── works/ [ All Works: ${SITE_URL}/works ]
-│   ├── trace/ [ Trace Forensics: ${SITE_URL}/works/trace ]
-│   ├── bastion/ [ Bastion IAM: ${SITE_URL}/works/bastion ]
-│   ├── kost/ [ Kost Cost Intelligence: ${SITE_URL}/works/kost ]
-│   └── hookdrop/ [ HookDrop Webhook Receiver: ${SITE_URL}/works/hookdrop ]
-├── services/ [ Services & Capabilities: ${SITE_URL}/services ]
-├── articles/ [ Engineering Articles: ${SITE_URL}/articles ]
-│   ├── a-100ms-rust-site-verifier/ [ ${SITE_URL}/articles/a-100ms-rust-site-verifier ]
-│   ├── coding-is-taught-wrong-and-ai-exposed-it/ [ ${SITE_URL}/articles/coding-is-taught-wrong-and-ai-exposed-it ]
-│   ├── allow-remote-postgresql-without-opening-it-to-the-world/ [ ${SITE_URL}/articles/allow-remote-postgresql-without-opening-it-to-the-world ]
-│   ├── making-technical-debt-visible-with-sonarqube/ [ ${SITE_URL}/articles/making-technical-debt-visible-with-sonarqube ]
-│   ├── rethinking-my-git-workflow/ [ ${SITE_URL}/articles/rethinking-my-git-workflow ]
-│   └── how-vaultlock-reliably-fetches-brand-logos/ [ ${SITE_URL}/articles/how-vaultlock-reliably-fetches-brand-logos ]
-├── legal/ [ Legal & Terms of Use: ${SITE_URL}/legal ]
+├── index.md/ [ Agent view ]
+├── works/
+│   ├── trace/
+│   ├── bastion/
+│   ├── kost/
+│   └── hookdrop/
+├── services/
+├── articles/
+├── legal/
 ├── api/
-│   ├── status [ Edge Telemetry & Site Health: ${SITE_URL}/api/status ]
-│   └── projects [ Portfolio Projects Directory: ${SITE_URL}/api/projects ]
+│   ├── status
+│   └── projects
 ├── assets/
-│   └── nirjar_resume.pdf [ ${SITE_URL}/assets/nirjar_resume.pdf ]
+│   └── nirjar_resume.pdf
 └── Others
-    ├── humans.txt [ ${SITE_URL}/humans.txt ]
-    ├── llms.txt [ ${SITE_URL}/llms.txt ]
-    ├── rss.xml [ ${SITE_URL}/rss.xml ]
-    ├── sitemap.xml [ ${SITE_URL}/sitemap.xml ]
-    ├── robots.txt [ ${SITE_URL}/robots.txt ]
-    └── /.well-known/security.txt [ ${SITE_URL}/.well-known/security.txt ]
-
-github.com/nirjxr26/
-├── profile/ [ https://github.com/nirjxr26 ]
-└── repositories/
-    ├── Trace/ [ https://github.com/nirjxr26/Trace ]
-    ├── Bastion/ [ https://github.com/nirjxr26/Bastion ]
-    ├── Kost/ [ https://github.com/nirjxr26/Kost ]
-    ├── HookDrop/ [ https://github.com/nirjxr26/HookDrop ]
-    ├── Parapet/ [ https://github.com/nirjxr26/parapet ]
-    ├── DeployLens/ [ https://github.com/nirjxr26/DeployLens ]
-    ├── canopy/ [ https://github.com/nirjxr26/canopy ]
-    ├── SmartFlow/ [ https://github.com/nirjxr26/SmartFlow ]
-    ├── BlamLess/ [ https://github.com/nirjxr26/Blamless ]
-    ├── VaultLock/ [ https://github.com/nirjxr26/VaultLock-Password-Manager ]
-    └── code-humanizer/ [ https://github.com/nirjxr26/code-humanizer ]
-
-connect/
-├── github.com/nirjxr26 [ https://github.com/nirjxr26 ]
-├── linkedin.com/in/nirjxr [ https://www.linkedin.com/in/nirjxr ]
-├── x.com/nirjxrgoswami [ https://x.com/nirjxrgoswami ]
-├── instagram.com/nirjar_goswami [ https://instagram.com/nirjar_goswami ]
-└── mailto:nirjargoswami2626@gmail.com
--->
+    ├── humans.txt
+    ├── llms.txt
+    ├── rss.xml
+    ├── sitemap.xml
+    ├── robots.txt
+    └── /.well-known/security.txt
 
 ## Contact
  
