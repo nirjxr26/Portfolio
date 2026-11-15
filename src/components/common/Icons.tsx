@@ -214,22 +214,3 @@ export function RssIcon({ className = "", width = 14, height = 14 }: Readonly<Ic
     </FillIcon>
   )
 }
-
-export function RefreshIcon({ className = "", width = 14, height = 14, strokeWidth = 2 }: Readonly<IconProps>) {
-  return (
-    <StrokeIcon className={className} width={width} height={height} strokeWidth={strokeWidth}>
-      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-      <path d="M3 3v5h5" />
-      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-      <path d="M16 21h5v-5" />
-    </StrokeIcon>
-  )
-}
-
-export function ActivityIcon({ className = "", width = 14, height = 14, strokeWidth = 2 }: Readonly<IconProps>) {
-  return (
-    <StrokeIcon className={className} width={width} height={height} strokeWidth={strokeWidth}>
-      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-    </StrokeIcon>
-  )
-}

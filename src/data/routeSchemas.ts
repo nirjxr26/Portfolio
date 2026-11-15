@@ -42,7 +42,7 @@ function graph(...nodes: Record<string, unknown>[]): StaticRoute["schema"] {
   return { "@context": SCHEMA_CONTEXT, "@graph": nodes }
 }
 
-function prerenderMeta(path: "/" | "/works" | "/services" | "/articles" | "/sitemap" | "/legal" | "/status"): Pick<
+function prerenderMeta(path: "/" | "/works" | "/services" | "/articles" | "/sitemap" | "/legal"): Pick<
   StaticRoute,
   "title" | "description" | "canonical" | "keywords"
 > {
@@ -250,18 +250,6 @@ export function buildStaticRoutes(): StaticRoute[] {
         ]),
       ),
     },
-    {
-      path: "/status",
-      ...prerenderMeta("/status"),
-      priority: "0.6",
-      changefreq: "daily",
-      schema: graph(
-        buildBreadcrumbSchema([
-          { name: "Home", url: "/" },
-          { name: "System Status", url: "/status" },
-        ]),
-      ),
-    },
     ...BLOG_ARTICLES.map(buildArticleRoute),
     ...Object.entries(CASE_STUDIES).map(([slug, data]) => buildCaseStudyRoute(slug, data)),
   ]
@@ -274,5 +262,4 @@ export const STATIC_ROUTE_SOURCE_FILES: Record<string, string> = {
   "/articles": "src/components/pages/ArticleClient.tsx",
   "/sitemap": "src/components/pages/SitemapClient.tsx",
   "/legal": "src/components/pages/LegalClient.tsx",
-  "/status": "src/components/pages/StatusClient.tsx",
 }

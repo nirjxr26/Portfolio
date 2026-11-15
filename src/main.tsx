@@ -11,7 +11,6 @@ import {
   NotFoundClient,
   ServicesClient,
   SitemapClient,
-  StatusClient,
   WorksClient,
 } from "@/components"
 import { getBlogArticle } from "@/data/blogArticles"
@@ -44,8 +43,6 @@ function App() {
     content = <SitemapClient />
   } else if (route.kind === "legal") {
     content = <LegalClient />
-  } else if (route.kind === "status") {
-    content = <StatusClient />
   } else if (route.kind === "article-detail" && route.articleSlug) {
     const article = getBlogArticle(route.articleSlug)
     if (article) {

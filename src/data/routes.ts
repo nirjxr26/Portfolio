@@ -56,19 +56,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     canonical: `${SITE_URL}/legal`,
     keywords: `Legal, Terms of Use, Privacy, Security, Licensing, ${SITE_KEYWORDS}`,
   },
-  "/status": {
-    title: "System Status | Nirjar Goswami",
-    description: "Real-time edge performance, service availability, and uptime telemetry for nirjar.me.",
-    canonical: `${SITE_URL}/status`,
-    keywords: `System Status, Uptime, Edge Telemetry, Availability, Latency, ${SITE_KEYWORDS}`,
-  },
   "/404": {
     title: "Page Not Found | Nirjar Goswami",
     description: "The page you are looking for does not exist or has been moved.",
   },
 }
 
-export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "status" | "article-detail" | "case-study" | "not-found"
+export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found"
 
 export interface ResolvedRoute {
   kind: RouteKind
@@ -93,7 +87,6 @@ export function resolveRoute(pathname: string): ResolvedRoute {
   if (clean === "/articles" || clean === "/article") return { kind: "articles" }
   if (clean === "/sitemap") return { kind: "sitemap" }
   if (clean === "/legal") return { kind: "legal" }
-  if (clean === "/status") return { kind: "status" }
 
   if (clean.startsWith("/articles/") || clean.startsWith("/article/")) {
     const slug = clean.startsWith("/articles/")

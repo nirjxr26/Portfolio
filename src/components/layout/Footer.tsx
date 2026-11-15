@@ -44,8 +44,6 @@ function getFooterBreadcrumbs(pathname: string): FooterBreadcrumb[] {
     items.push({ name: "Sitemap" })
   } else if (route.kind === "legal") {
     items.push({ name: "Terms of Use" })
-  } else if (route.kind === "status") {
-    items.push({ name: "System Status" })
   } else if (clean === "/index.md") {
     items.push({ name: "index.md" })
   }
@@ -98,7 +96,6 @@ const FOOTER_SECTIONS: ReadonlyArray<{
 const BOTTOM_LEGAL_LINKS: readonly FooterLinkItem[] = [
   { name: "Terms of Use", href: "/legal" },
   { name: "Sitemap", href: "/sitemap" },
-  { name: "Status", href: "/status" },
   { name: "RSS Feed", href: "/rss.xml" },
 ]
 
