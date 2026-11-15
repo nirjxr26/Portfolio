@@ -2,7 +2,7 @@ import { withAssetHash } from "@/utils/helpers"
 import type { CaseStudyData } from "@/types"
 
 export const traceData: CaseStudyData = {
-  seoTitle: "Trace | Digital Forensics & Incident Response",
+  seoTitle: "Trace | Digital Forensics & Incident Response CLI",
   surfaceMode: "mono",
   hero: {
     title: "Trace",

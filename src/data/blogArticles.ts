@@ -23,9 +23,9 @@ export type BlogArticle = {
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "a-100ms-rust-site-verifier",
-    title: "Parapet: A 100ms Rust site checker",
+    title: "Parapet: A 100ms Rust Site Checker",
     description:
-      "Why I stopped booting a browser to verify things that are already sitting in a folder.",
+      "Parapet is a Rust site checker that audits CSP hashes, links, and sitemaps in about 100 ms, with no browser. Why I built it.",
     updated: "November 12, 2026",
     readTime: "5 min",
     category: "Security",
@@ -174,9 +174,9 @@ The name comes from the low wall at the edge of a roof, the thing between you an
   },
   {
     slug: "coding-is-taught-wrong-and-ai-exposed-it",
-    title: "Coding is taught wrong, and AI exposed it",
+    title: "Coding Is Taught Wrong, and AI Exposed It",
     description:
-      "Programming education still stops at loops and prime checkers. What AI changes about that, and what a syllabus worth teaching would look like.",
+      "Exams test loops, jobs test judgement. Why coding education needs to change, and what AI made impossible to ignore.",
     updated: "October 31, 2026",
     readTime: "9 min",
     category: "Artificial Intelligence",
@@ -346,9 +346,9 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
 
   {
     slug: "allow-remote-postgresql-without-opening-it-to-the-world",
-    title: "How to allow remote PostgreSQL connection with security",
+    title: "How to Allow Remote PostgreSQL Connections Securely",
     description:
-      "Allow remote access to PostgreSQL using listen_addresses, pg_hba.conf, verified TLS and a scoped firewall rule, instead of 0.0.0.0/0.",
+      "Secure remote PostgreSQL access with three locks: listen_addresses, pg_hba.conf rules, and a firewall. No open exposure to the internet.",
     updated: "October 27, 2026",
     readTime: "6 min",
     category: "Security",
@@ -380,9 +380,9 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   },
   {
     slug: "making-technical-debt-visible-with-sonarqube",
-    title: "Making technical debt visible with SonarQube",
+    title: "Making Technical Debt Visible with SonarQube",
     description:
-      "A 30-day cleanup of AegisMesh using SonarQube, turning 872 initially invisible bugs, vulnerabilities, hotspots, code smells, and duplication into measurable technical debt and a quality-gated workflow.",
+      "One SonarQube scan exposed 872 hidden issues. What I did over the next 30 days to fix what I couldn't see before.",
     updated: "May 25, 2026",
     readTime: "3 min",
     category: "Practice",
@@ -439,9 +439,9 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   },
   {
     slug: "rethinking-my-git-workflow",
-    title: "Rethinking my Git workflow",
+    title: "Rethinking My Git Workflow",
     description:
-      "How moving from unmanaged folders and versioned filenames to GitHub, commits, branches, documentation, and repositories changed the way I build and maintain projects.",
+      "How GitHub and commit discipline reshaped the way I build software, and the Git workflow I use now.",
     updated: "April 16, 2026",
     readTime: "3 min",
     category: "Practice",
@@ -494,9 +494,9 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   },
   {
     slug: "how-vaultlock-reliably-fetches-brand-logos",
-    title: "How VaultLock reliably fetches brand logos",
+    title: "How VaultLock Reliably Fetches Brand Logos",
     description:
-      "How VaultLock moved logo fetching out of the UI and into a dedicated backend flow using input normalization, caching, multiple fallback sources, response validation, and graceful failure handling.",
+      "How VaultLock gets the right brand logo every time without breaking the UI: ingestion, caching, and resilience.",
     updated: "April 8, 2026",
     readTime: "2 min",
     category: "Security",

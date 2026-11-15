@@ -60,7 +60,7 @@ export function buildDefaultSchemas(): Record<string, unknown>[] {
       name: SITE_NAME,
       url: SITE_URL,
       image: SITE_OG_IMAGE,
-      jobTitle: "Cloud & Security Engineer",
+      jobTitle: "Cloud, DevSecOps & Security Engineer",
       email: `mailto:${CONTACT.emailAddress}`,
       sameAs: [
         SOCIAL_LINKS.github,
@@ -83,11 +83,11 @@ export function buildDefaultSchemas(): Record<string, unknown>[] {
       ],
       hasOccupation: {
         "@type": "Occupation",
-        name: "Cloud & Security Engineer",
+        name: "Cloud, DevSecOps & Security Engineer",
         occupationalCategory: "15-1252.00",
         skills: "Cloud Architecture, Kubernetes, DevOps, Cybersecurity, IAM, System Design, Backend Development, Code Quality, Go",
       },
-      description: "Cloud & Security Engineer building systems meant to be forgotten.",
+      description: "Cloud, DevSecOps & Security Engineer building systems meant to be forgotten.",
     },
     {
       "@type": "WebSite",

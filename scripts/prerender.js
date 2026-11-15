@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url"
 import { execSync } from "node:child_process"
 import { createServer } from "vite"
 import {
+  buildArticleMarkdown,
+  buildJsonFeed,
   buildLlmsArticleLines,
   buildRssItems,
   buildRssXml,
@@ -220,6 +222,18 @@ const sitemapEntries = [
     lastmod: getGitLastMod(sourceFileFor(route.path)),
   })),
   {
+    canonical: "https://nirjar.me/feed.json",
+    changefreq: "weekly",
+    priority: "0.6",
+    lastmod: new Date().toISOString().split("T")[0],
+  },
+  {
+    canonical: "https://nirjar.me/resume.json",
+    changefreq: "monthly",
+    priority: "0.6",
+    lastmod: getGitLastMod("public/resume.json"),
+  },
+  {
     canonical: "https://nirjar.me/api/status",
     changefreq: "hourly",
     priority: "0.5",
@@ -239,6 +253,26 @@ fs.writeFileSync(path.resolve(projectRoot, "public/sitemap.xml"), sitemapXml, "u
 const rssXml = buildRssXml(buildRssItems(BLOG_ARTICLES), ROUTE_META["/articles"].description)
 fs.writeFileSync(path.resolve(distDir, "rss.xml"), rssXml, "utf-8")
 fs.writeFileSync(path.resolve(projectRoot, "public/rss.xml"), rssXml, "utf-8")
+
+const jsonFeed = buildJsonFeed(BLOG_ARTICLES, ROUTE_META["/articles"].description)
+fs.writeFileSync(path.resolve(distDir, "feed.json"), jsonFeed, "utf-8")
+fs.writeFileSync(path.resolve(projectRoot, "public/feed.json"), jsonFeed, "utf-8")
+
+const resumePublicPath = path.resolve(projectRoot, "public/resume.json")
+if (fs.existsSync(resumePublicPath)) {
+  fs.copyFileSync(resumePublicPath, path.resolve(distDir, "resume.json"))
+}
+
+const distArticlesDir = path.resolve(distDir, "articles")
+const publicArticlesDir = path.resolve(projectRoot, "public/articles")
+fs.mkdirSync(distArticlesDir, { recursive: true })
+fs.mkdirSync(publicArticlesDir, { recursive: true })
+
+for (const article of BLOG_ARTICLES) {
+  const md = buildArticleMarkdown(article)
+  fs.writeFileSync(path.resolve(distArticlesDir, `${article.slug}.md`), md, "utf-8")
+  fs.writeFileSync(path.resolve(publicArticlesDir, `${article.slug}.md`), md, "utf-8")
+}
 
 const llmsPublicPath = path.resolve(projectRoot, "public/llms.txt")
 const llmsOut = spliceLlmsSection(

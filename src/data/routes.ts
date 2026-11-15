@@ -23,38 +23,38 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     keywords: SITE_KEYWORDS,
   },
   "/works": {
-    title: "Works | Nirjar Goswami",
+    title: "Projects & Case Studies | Nirjar Goswami",
     description:
-      "Explore systems, infrastructure, and open-source tools built by Nirjar Goswami, including Bastion, Kost, HookDrop, and Trace.",
+      "Case studies of systems built by Nirjar Goswami: Bastion (IAM), Kost (Kubernetes cost), HookDrop (webhooks), and Trace (forensics CLI).",
     canonical: `${SITE_URL}/works`,
-    keywords: `Works, Systems Architecture, Infrastructure, Bastion, Kost, HookDrop, Trace, ${SITE_KEYWORDS}`,
+    keywords: "Case Studies, Bastion, Kost, HookDrop, Trace",
   },
   "/services": {
     title: "Services | Nirjar Goswami",
     description:
-      "Core capabilities across Cybersecurity, DevOps, System Design, and Cloud Architecture & Security by Nirjar Goswami.",
+      "Core capabilities in cybersecurity, DevOps, and cloud architecture and security, plus working knowledge of system design and backend engineering.",
     canonical: `${SITE_URL}/services`,
-    keywords: `Services, Cybersecurity, DevOps, System Design, Cloud Architecture, Security, AWS, Kubernetes, ${SITE_KEYWORDS}`,
+    keywords: "Cybersecurity, DevOps, Cloud Architecture, AWS, Kubernetes",
   },
   "/articles": {
-    title: "Articles | Nirjar Goswami",
+    title: "Articles on Cloud, DevOps & Security | Nirjar Goswami",
     description:
-      "Technical articles on systems architecture, cloud infrastructure, DevOps, and security by Nirjar Goswami. Writing about things experienced and worked on.",
+      "Technical articles on cloud infrastructure, DevOps, security, and systems architecture, with Markdown versions and an RSS feed.",
     canonical: `${SITE_URL}/articles`,
-    keywords: `Articles, Engineering Blog, Systems Architecture, DevOps, Security, ${SITE_KEYWORDS}`,
+    keywords: "Engineering Blog, DevOps, Security, Cloud",
   },
   "/sitemap": {
     title: "Sitemap | Nirjar Goswami",
-    description:
-      "A comprehensive directory of all pages, case studies, engineering articles, systems, and feeds across nirjar.me.",
+    description: "Complete directory of pages, case studies, articles, and feeds on nirjar.me.",
     canonical: `${SITE_URL}/sitemap`,
-    keywords: `Sitemap, Directory, Works, Articles, Systems Architecture, ${SITE_KEYWORDS}`,
+    keywords: "Sitemap, Directory",
   },
   "/legal": {
     title: "Terms of Use | Nirjar Goswami",
-    description: "Legal Information & Notices.",
+    description:
+      "Privacy statement, content and code licensing, technical disclaimer, and how to report security issues for nirjar.me.",
     canonical: `${SITE_URL}/legal`,
-    keywords: `Legal, Terms of Use, Privacy, Security, Licensing, ${SITE_KEYWORDS}`,
+    keywords: "Privacy, Licensing, Security Reporting",
   },
   "/404": {
     title: "Page Not Found | Nirjar Goswami",

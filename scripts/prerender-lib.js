@@ -58,12 +58,84 @@ export function buildRssXml(items, channelDescription) {
   )
 }
 
+export function buildJsonFeed(articles, channelDescription) {
+  const items = [...articles]
+    .sort((a, b) => new Date(b.updated) - new Date(a.updated))
+    .map((b) => {
+      const url = `https://nirjar.me/articles/${b.slug}`
+      const isoDate = new Date(`${b.updated} 12:00:00 UTC`).toISOString()
+      return {
+        id: url,
+        url,
+        title: b.title,
+        summary: b.cardDesc?.trim() || b.description?.trim(),
+        date_published: isoDate,
+        date_modified: isoDate,
+        tags: b.category ? [b.category] : [],
+      }
+    })
+
+  return JSON.stringify(
+    {
+      version: "https://jsonfeed.org/version/1.1",
+      title: "Nirjar Goswami — Articles",
+      home_page_url: "https://nirjar.me",
+      feed_url: "https://nirjar.me/feed.json",
+      description: channelDescription,
+      favicon: "https://nirjar.me/favicon.svg",
+      authors: [
+        {
+          name: "Nirjar Goswami",
+          url: "https://nirjar.me",
+        },
+      ],
+      items,
+    },
+    null,
+    2,
+  )
+}
+
+export function buildArticleMarkdown(article) {
+  const isoDate = new Date(`${article.updated} 12:00:00 UTC`).toISOString().split("T")[0]
+  const canonical = `https://nirjar.me/articles/${article.slug}`
+  const escapedTitle = article.title.replace(/"/g, '\\"')
+  const escapedDesc = article.description.replace(/"/g, '\\"')
+  const body = (article.sections || [])
+    .map((s) => {
+      const heading = s.subtitle ? `## ${s.subtitle}\n\n` : ""
+      return `${heading}${s.content}`
+    })
+    .join("\n\n")
+
+  return `---
+title: "${escapedTitle}"
+description: "${escapedDesc}"
+date: "${isoDate}"
+category: "${article.category}"
+canonical: "${canonical}"
+readTime: "${article.readTime}"
+---
+
+# ${article.title}
+
+> ${article.description}
+
+- **Published**: ${article.updated}
+- **Category**: ${article.category}
+- **Read Time**: ${article.readTime}
+- **Canonical**: ${canonical}
+
+${body}
+`
+}
+
 export function buildLlmsArticleLines(articles) {
   return [...articles]
     .sort((a, b) => new Date(b.updated) - new Date(a.updated))
     .map(
       (b) =>
-        `- "${b.title}": ${b.cardDesc.trim().replaceAll("—", "-")} (https://nirjar.me/articles/${b.slug}).`,
+        `- "${b.title}": ${b.cardDesc.trim().replaceAll("—", "-")} (Markdown: https://nirjar.me/articles/${b.slug}.md, HTML: https://nirjar.me/articles/${b.slug}).`,
     )
 }
 

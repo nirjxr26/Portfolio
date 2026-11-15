@@ -68,3 +68,7 @@ public/assets/stack/
 target/
 **/target/
 
+# Site metadata dumps
+pages-metadata.json
+metadata.json
+
