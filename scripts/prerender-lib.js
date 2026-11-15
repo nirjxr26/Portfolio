@@ -99,8 +99,6 @@ export function buildJsonFeed(articles, channelDescription) {
 export function buildArticleMarkdown(article) {
   const isoDate = new Date(`${article.updated} 12:00:00 UTC`).toISOString().split("T")[0]
   const canonical = `https://nirjar.me/articles/${article.slug}`
-  const escapedTitle = article.title.replace(/"/g, '\\"')
-  const escapedDesc = article.description.replace(/"/g, '\\"')
   const body = (article.sections || [])
     .map((s) => {
       const heading = s.subtitle ? `## ${s.subtitle}\n\n` : ""
@@ -109,8 +107,8 @@ export function buildArticleMarkdown(article) {
     .join("\n\n")
 
   return `---
-title: "${escapedTitle}"
-description: "${escapedDesc}"
+title: ${JSON.stringify(article.title)}
+description: ${JSON.stringify(article.description)}
 date: "${isoDate}"
 category: "${article.category}"
 canonical: "${canonical}"
