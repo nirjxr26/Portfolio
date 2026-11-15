@@ -1,8 +1,8 @@
-import type { CaseStudyData, HeroAction } from "@/types"
+import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
 import { createBreadcrumbs } from "@/utils/helpers"
-import { ActionButtons, ActionGroup, HeroAssetPreview, InstallSnippet, LayeredPreview, Seo } from "../common"
-import { PageShell } from "../layout"
+import { HeroAssetPreview, LayeredPreview, Seo } from "../common"
+import { CTASection, PageShell } from "../layout"
 
 interface TracePageProps {
   data: CaseStudyData
@@ -17,26 +17,6 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
   const canonicalUrl = `${SITE_URL}/works/trace`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
-
-  const ctaActions: HeroAction[] = [
-    {
-      label: typeof cta.action === "string" ? cta.action : "View on GitHub",
-      url: cta.url,
-      type: "primary",
-      arrow: "up-right",
-      ariaLabel: `View ${hero.title} on GitHub`,
-    },
-    ...(cta.secondaryAction
-      ? [
-          {
-            label: cta.secondaryAction.label,
-            url: cta.secondaryAction.url,
-            type: "secondary" as const,
-            arrow: cta.secondaryAction.arrow ?? (true as const),
-          },
-        ]
-      : []),
-  ]
 
   return (
     <PageShell
@@ -146,37 +126,17 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         </section>
       ))}
 
-      {/* Bottom CTA Section: with theme-adaptive alternating surface background */}
-      <section
-        className="w-full bg-surface-alt pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24 text-center"
-        aria-label={`View ${hero.title} on GitHub`}
-      >
-        <div className={CONTAINER}>
-          <div className="reveal-on-scroll">
-            <div className="max-w-2xl mx-auto">
-              <h2 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 tracking-[-0.005em]`}>
-                {cta.headline}
-              </h2>
-              <p className={`text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted max-w-xl mx-auto mb-8 leading-[1.5]`}>
-                {cta.body}
-              </p>
-            </div>
-
-            <ActionGroup className="mt-8">
-              <ActionButtons
-                actions={ctaActions}
-                className="w-full min-[360px]:w-[195px] sm:w-[195px] h-[48px] px-6 py-3 text-center justify-center whitespace-nowrap"
-              />
-            </ActionGroup>
-
-            {cta.installCommands && cta.installCommands.length > 0 && (
-              <div className="hidden sm:flex mt-10 justify-center w-full">
-                <InstallSnippet commands={cta.installCommands} />
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      {/* Bottom CTA Section */}
+      <CTASection
+        headline={cta.headline}
+        body={cta.body}
+        action={typeof cta.action === "string" ? cta.action : "View on GitHub"}
+        url={cta.url}
+        secondaryAction={cta.secondaryAction}
+        installCommands={cta.installCommands}
+        bgClass="bg-surface-alt"
+        ariaLabel={`View ${hero.title} on GitHub`}
+      />
     </PageShell>
   )
 }

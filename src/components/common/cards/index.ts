@@ -1,4 +1,3 @@
-export * from "./ArticleCard"
 export * from "./ArticleMoreCard"
 export * from "./ArticlePosterCard"
 export * from "./FeatureCard"

@@ -134,11 +134,11 @@ export function HomeClient() {
             ))}
           </CarouselSection>
 
-          <section className="bg-surface-alt py-16 text-ink sm:py-20">
+          <Section bgClass="bg-surface-alt" padClass="py-16 sm:py-20 text-ink">
             <Container size="wide" className="text-center text-pretty sm:text-balance reveal-on-scroll">
               <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
             </Container>
-          </section>
+          </Section>
         </div>
       )}
     </PageShell>

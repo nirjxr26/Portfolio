@@ -1,6 +1,6 @@
-import { FeatureCard, ProductionRail } from "../common"
+import { CheckIcon, FeatureCard, ProductionRail } from "../common"
 import { RouteSeo } from "../common/SEO"
-import { CarouselSection, Container, PageHero, PageShell } from "../layout"
+import { CarouselSection, Container, PageHero, PageShell, Section } from "../layout"
 import { ROUTE_META } from "@/data/routes"
 import { createBreadcrumbs } from "@/utils/helpers"
 import {
@@ -36,20 +36,12 @@ function ServiceCard({ section }: Readonly<ServiceCardProps>) {
           <ul className="space-y-3.5 text-[15px] sm:text-base text-ink/90 leading-relaxed">
             {section.items.map((item) => (
               <li key={item} className="flex items-start gap-3 reveal-on-scroll">
-                <svg
+                <CheckIcon
                   width={16}
                   height={16}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
                   strokeWidth={2.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
                   className="text-accent shrink-0 mt-1"
-                  aria-hidden="true"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
+                />
                 <span className="leading-snug">{item}</span>
               </li>
             ))}
@@ -78,7 +70,7 @@ export function ServicesClient() {
         compact
       />
 
-      <section className="py-16 sm:py-20 md:py-24 bg-surface-alt text-left">
+      <Section id="services-list" bgClass="bg-surface-alt" padClass="py-16 sm:py-20 md:py-24" className="text-left">
         <Container size="wide">
           <div className="flex flex-col gap-6 sm:gap-8">
             {/* Core Services */}
@@ -102,10 +94,10 @@ export function ServicesClient() {
             ))}
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Perspective */}
-      <section className="py-14 sm:py-20 bg-canvas text-left">
+      <Section id="perspective" bgClass="bg-canvas" padClass="py-14 sm:py-20" className="text-left">
         <Container>
           <div className="max-w-5xl">
             <h2 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-4 sm:mb-6 reveal-on-scroll">
@@ -121,7 +113,7 @@ export function ServicesClient() {
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* How I work */}
       <CarouselSection id="how-i-work" title="How I work." bgClass="bg-surface-alt">
