@@ -1,0 +1,279 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "meta": {
+    "about": "Machine-readable resume of Nirjar Goswami, in the JSON Resume schema (https://jsonresume.org). Every field is plain text or ISO dates. Metrics are copied from the human-readable resume and are not estimates.",
+    "canonical": "https://nirjar.me/resume.json",
+    "version": "v1.1.0",
+    "lastModified": "2026-11-15",
+    "targetRoles": [
+      "Cloud Architecture and Security Engineer (entry-level)",
+      "DevSecOps Engineer (entry-level)",
+      "Cybersecurity Analyst (entry-level)",
+      "Software Development Engineer (entry-level)"
+    ],
+    "focusAreas": {
+      "primary": [
+        "Cybersecurity",
+        "Cloud Architecture and Security",
+        "DevOps"
+      ],
+      "workingKnowledge": [
+        "System Design",
+        "Backend Development",
+        "Code Quality and Maintenance"
+      ]
+    },
+    "related": {
+      "site": "https://nirjar.me",
+      "siteMarkdown": "https://nirjar.me/index.md",
+      "llmsTxt": "https://nirjar.me/llms.txt",
+      "blogRss": "https://nirjar.me/rss.xml",
+      "projectsApi": "https://nirjar.me/api/projects",
+      "projectsPage": "https://nirjar.me/works"
+    }
+  },
+  "basics": {
+    "name": "Nirjar Goswami",
+    "label": "MSc Cybersecurity student | Cloud and DevSecOps",
+    "email": "nirjargoswami2626@gmail.com",
+    "url": "https://nirjar.me",
+    "summary": "Cybersecurity MSc student targeting entry-level Cloud and DevSecOps roles. Built projects spanning AWS infrastructure, Kubernetes GitOps pipelines, deny-first IAM, and ML-based authentication risk controls — using Terraform, Argo CD, and policy-as-code to automate secure container delivery.",
+    "location": {
+      "city": "Ahmedabad",
+      "region": "Gujarat",
+      "countryCode": "IN"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "nirjxr26",
+        "url": "https://github.com/nirjxr26"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "nirjxr",
+        "url": "https://linkedin.com/in/nirjxr"
+      },
+      {
+        "network": "Blog",
+        "url": "https://nirjar.me/articles"
+      }
+    ]
+  },
+  "education": [
+    {
+      "institution": "Gujarat Law Society (GLS)",
+      "area": "Cybersecurity",
+      "studyType": "Master of Science",
+      "startDate": "2026",
+      "endDate": "2028",
+      "note": "In progress. Expected completion 2028."
+    },
+    {
+      "institution": "Charotar University of Science and Technology (CHARUSAT)",
+      "area": "Computer Applications",
+      "studyType": "Bachelor of Computer Applications",
+      "startDate": "2023",
+      "endDate": "2026",
+      "score": "9/10 CGPA"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Cloud & Infrastructure",
+      "keywords": [
+        "EC2",
+        "ECR",
+        "IAM",
+        "S3",
+        "VPC",
+        "CloudWatch",
+        "CloudTrail",
+        "AWS Systems Manager",
+        "Terraform"
+      ]
+    },
+    {
+      "name": "DevOps",
+      "keywords": [
+        "Linux",
+        "Git",
+        "Docker",
+        "Kubernetes",
+        "Helm",
+        "Argo CD",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "name": "Security",
+      "keywords": [
+        "Trivy",
+        "Cosign",
+        "Kyverno",
+        "Falco",
+        "SonarCloud"
+      ]
+    },
+    {
+      "name": "Observability",
+      "keywords": [
+        "Prometheus",
+        "Grafana",
+        "Loki",
+        "Datadog",
+        "OpenTelemetry"
+      ]
+    },
+    {
+      "name": "Languages & Data",
+      "keywords": [
+        "Go",
+        "Rust",
+        "Python",
+        "JavaScript",
+        "Bash",
+        "SQL",
+        "PostgreSQL"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Bastion — IAM Platform",
+      "startDate": "2025",
+      "status": "ongoing",
+      "description": "Deny-first IAM platform with dynamic RBAC, policy simulation, and ML-based login risk scoring.",
+      "keywords": [
+        "Node.js",
+        "PostgreSQL",
+        "FastAPI",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "AWS EC2/ECR",
+        "Argo CD",
+        "MLflow",
+        "Falco",
+        "Datadog"
+      ],
+      "metrics": [
+        {
+          "what": "Security issues reduced",
+          "value": "87.4%",
+          "period": "30 days"
+        },
+        {
+          "what": "Step-up authentication risk score threshold",
+          "value": "above 0.7"
+        },
+        {
+          "what": "Daily model retraining data",
+          "value": "up to 10,000 audit records"
+        },
+        {
+          "what": "Container user",
+          "value": "non-root UID 10001"
+        }
+      ],
+      "highlights": [
+        "Built a deny-first IAM platform with dynamic RBAC and policy simulation; implemented Google and GitHub login, TOTP MFA, refresh-token rotation, session revocation, and step-up reauthentication.",
+        "Automated CI with tests, linting, and SonarCloud/CodeQL/Trivy scans, reducing security issues by 87.4% in 30 days; pushed commit-SHA images to ECR and promoted them via Argo CD to a Terraform-provisioned EC2 cluster.",
+        "Deployed a FastAPI Isolation Forest service that triggers step-up authentication for risk scores above 0.7; scheduled daily retraining on up to 10,000 audit records with model versioning in MLflow.",
+        "Hardened containers as non-root UID 10001 with read-only application files and dropped capabilities; encrypted Git-stored secrets with SealedSecrets and routed Falco runtime alerts to Datadog Security Signals."
+      ]
+    },
+    {
+      "name": "HookDrop — Webhook Receiver",
+      "startDate": "2026-03",
+      "endDate": "2026-03",
+      "status": "completed",
+      "description": "Go webhook receiver with a hardened GitOps delivery pipeline.",
+      "keywords": [
+        "Go",
+        "Kubernetes",
+        "Helm",
+        "Argo CD",
+        "Trivy",
+        "Cosign",
+        "Kyverno",
+        "OpenTelemetry",
+        "Prometheus",
+        "Grafana"
+      ],
+      "metrics": [
+        {
+          "what": "Go endpoints",
+          "value": "3"
+        },
+        {
+          "what": "Events buffered per bucket",
+          "value": "latest 50"
+        },
+        {
+          "what": "Streaming latency over SSE",
+          "value": "under 35 ms"
+        }
+      ],
+      "highlights": [
+        "Built 3 Go endpoints buffering the latest 50 events per bucket and streaming arrivals over SSE with sub-35 ms latency, preserving full headers, body, source IP, and trace context.",
+        "Automated a GitOps pipeline — GitHub Actions runs Trivy scans, signs images with Cosign OIDC, and pushes to ECR; Argo CD auto-syncs via Helm, with Renovate managing dependencies.",
+        "Hardened Kubernetes delivery with non-root execution, read-only filesystems, resource limits, HPA, NetworkPolicy, and Kyverno signature verification; exported traces, metrics, and logs to Grafana via Tempo, Prometheus, and Loki."
+      ]
+    },
+    {
+      "name": "Kost — Kubernetes Cost Agent",
+      "startDate": "2026-05",
+      "endDate": "2026-05",
+      "status": "completed",
+      "description": "Go agent that targets over-provisioning waste in Kubernetes clusters.",
+      "keywords": [
+        "Go",
+        "client-go",
+        "Kubernetes Metrics API",
+        "Docker",
+        "Kubernetes RBAC",
+        "Prometheus",
+        "Slack API"
+      ],
+      "metrics": [
+        {
+          "what": "Metrics API polling interval",
+          "value": "15 minutes"
+        },
+        {
+          "what": "Flag threshold: requests vs observed usage",
+          "value": "above 1.5x"
+        },
+        {
+          "what": "Flag threshold: projected waste",
+          "value": "above $5 per month"
+        },
+        {
+          "what": "Recommended resource setting",
+          "value": "1.3x observed usage"
+        },
+        {
+          "what": "Pod size",
+          "value": "about 25 MB"
+        }
+      ],
+      "highlights": [
+        "Built a Go agent that targets over-provisioning waste in Kubernetes clusters, polling the Metrics API every 15 minutes and flagging workloads when resource requests exceeded 1.5 times observed usage and projected waste exceeded $5 per month.",
+        "Traversed the Pod → ReplicaSet → Deployment ownership chain to generate copy-paste-ready kubectl set resources commands at 1.3 times observed usage, with minimum CPU and memory safeguards.",
+        "Shipped as a single, non-root pod (~25 MB) with a read-only ClusterRole blocking write, delete, exec, and secret access; exposed Prometheus metrics, a dashboard, and optional Slack alerts."
+      ]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Cloud Practitioner Essentials",
+      "issuer": "AWS Skill Builder"
+    },
+    {
+      "name": "Cloud Practitioner badge",
+      "issuer": "AWS Cloud Quest"
+    }
+  ],
+  "work": []
+}

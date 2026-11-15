@@ -183,7 +183,7 @@ export function buildStaticRoutes(): StaticRoute[] {
         buildCollectionPage({
           id: `${SITE_URL}/works#collection`,
           url: `${SITE_URL}/works`,
-          name: "Works & Systems Architecture | Nirjar Goswami",
+          name: "Projects & Case Studies | Nirjar Goswami",
           description: ROUTE_META["/works"].description,
           keywords: `Works, ${SITE_KEYWORDS}`,
           listName: "Featured Software & Infrastructure Systems",
