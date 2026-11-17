@@ -21,11 +21,15 @@ function performNavigation(to: string) {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" })
   }
 
+  const cleanTo = to.split("#")[0].replace(/\/$/, "") || "/"
+  const isTransitionToLegal = cleanTo === "/legal"
+
   const reduceMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
   if (
+    isTransitionToLegal &&
     !reduceMotion &&
     typeof document !== "undefined" &&
     "startViewTransition" in document &&
@@ -50,8 +54,11 @@ if (typeof window !== "undefined") {
       notify()
       window.scrollTo({ top: 0, left: 0, behavior: "instant" })
     }
+    const cleanCurrent = window.location.pathname.replace(/\/$/, "") || "/"
+    const isTransitionToLegal = cleanCurrent === "/legal"
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (
+      isTransitionToLegal &&
       !reduceMotion &&
       "startViewTransition" in document &&
       typeof document.startViewTransition === "function"
