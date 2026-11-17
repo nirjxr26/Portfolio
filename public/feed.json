@@ -13,6 +13,17 @@
   ],
   "items": [
     {
+      "id": "https://nirjar.me/articles/why-i-switched-to-zed",
+      "url": "https://nirjar.me/articles/why-i-switched-to-zed",
+      "title": "Why I Switched to Zed IDE",
+      "summary": "Four years of muscle memory, extensions and workspace config didn't break. The editor just got quieter, faster, and out of the way.",
+      "date_published": "2026-11-17T12:00:00.000Z",
+      "date_modified": "2026-11-17T12:00:00.000Z",
+      "tags": [
+        "Practice"
+      ]
+    },
+    {
       "id": "https://nirjar.me/articles/a-100ms-rust-site-verifier",
       "url": "https://nirjar.me/articles/a-100ms-rust-site-verifier",
       "title": "Parapet: A 100ms Rust Site Checker",

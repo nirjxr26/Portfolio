@@ -28,8 +28,10 @@
       "siteMarkdown": "https://nirjar.me/index.md",
       "llmsTxt": "https://nirjar.me/llms.txt",
       "blogRss": "https://nirjar.me/rss.xml",
+      "jsonFeed": "https://nirjar.me/feed.json",
       "projectsApi": "https://nirjar.me/api/projects",
-      "projectsPage": "https://nirjar.me/works"
+      "projectsPage": "https://nirjar.me/works",
+      "articlesPage": "https://nirjar.me/articles"
     }
   },
   "basics": {
