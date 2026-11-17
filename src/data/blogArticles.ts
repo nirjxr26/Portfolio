@@ -122,15 +122,13 @@ I don't have a deadline. The experiments are the point: open a project, try some
       },
       {
         subtitle: "Opening Zed first",
-        content: `VS Code is still an excellent editor, and I'll keep it installed for the cases where its ecosystem matters. My priorities changed. I started caring more about startup time, simplicity, and how little sits between opening a project and working on it.
+        content: `It was the speed that helped me get used to Zed, and it's why I kept using it. Everything else I noticed came after.
+
+VS Code is still an excellent editor, and I'll keep it installed for the cases where its ecosystem matters. My priorities changed. I started caring more about startup time, simplicity, and how little sits between opening a project and working on it.
 
 I didn't uninstall VS Code. I didn't make some dramatic switch. I just stopped opening it first.
 
 And I think that's when I actually switched.`,
-      },
-      {
-        subtitle: "The speed made it easy",
-        content: `It was the speed that helped me get used to Zed, and it's why I kept using it. Everything else I noticed came after.`,
       },
     ],
   },
