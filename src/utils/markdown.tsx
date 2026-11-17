@@ -11,7 +11,7 @@ import { useCopy } from "./useCopy"
 
 export function InlineCode({ children }: Readonly<{ children: string }>) {
   return (
-    <code className="rounded-[6px] bg-surface-alt px-1.5 py-0.5 font-mono text-[13px] font-medium tracking-normal text-ink sm:text-[14px]">
+    <code className="rounded-[6px] bg-surface-alt px-1.5 py-0.5 font-mono text-[0.875em] font-medium tracking-normal text-ink">
       {children}
     </code>
   )
@@ -25,7 +25,7 @@ export function slugify(text: string) {
  * Bold allows single asterisks inside (e.g. `'*'` in a bold lead-in). */
 const INLINE = /(\[[^\]]+\]\([^)\s]+\)|`[^`]+`|\*\*(?:[^*]|\*(?!\*))+\*\*|\*[^*\n]+\*)/g
 
-function renderInline(text: string, key: string): ReactNode[] {
+export function renderInline(text: string, key: string): ReactNode[] {
   const nodes: ReactNode[] = []
 
   text.split(INLINE).forEach((part, idx) => {
@@ -505,13 +505,13 @@ function renderNode(node: MdNode, key: string): ReactNode {
   if (node.kind === "heading") {
     if (node.level <= 2) {
       return (
-        <h2 key={key} className="mt-8 mb-3 text-[18px] font-semibold tracking-tight text-ink sm:text-[20px]">
+        <h2 key={key} className="mt-8 mb-3 text-[18px] font-semibold tracking-normal text-ink sm:text-[20px]">
           {renderInline(node.text, key)}
         </h2>
       )
     }
     return (
-      <h3 key={key} className="mt-7 mb-2.5 text-[16px] font-semibold tracking-tight text-ink sm:text-[17.5px]">
+      <h3 key={key} className="mt-7 mb-2.5 text-[16px] font-semibold tracking-normal text-ink sm:text-[17.5px]">
         {renderInline(node.text, key)}
       </h3>
     )

@@ -14,19 +14,52 @@ function notify() {
   }
 }
 
+function performNavigation(to: string) {
+  const performUpdate = () => {
+    window.history.pushState({}, "", to)
+    notify()
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+  }
+
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+  if (
+    !reduceMotion &&
+    typeof document !== "undefined" &&
+    "startViewTransition" in document &&
+    typeof document.startViewTransition === "function"
+  ) {
+    document.startViewTransition(performUpdate)
+  } else {
+    performUpdate()
+  }
+}
+
 export function navigate(to: string) {
   if (typeof window === "undefined") return
   const currentFull = window.location.pathname + window.location.search + window.location.hash
   if (currentFull === to) return
-  window.history.pushState({}, "", to)
-  notify()
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+  performNavigation(to)
 }
 
 if (typeof window !== "undefined") {
   window.addEventListener("popstate", () => {
-    notify()
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    const performUpdate = () => {
+      notify()
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    }
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (
+      !reduceMotion &&
+      "startViewTransition" in document &&
+      typeof document.startViewTransition === "function"
+    ) {
+      document.startViewTransition(performUpdate)
+    } else {
+      performUpdate()
+    }
   })
 
   const scrollToHash = (hash: string) => {
@@ -89,9 +122,7 @@ if (typeof window !== "undefined") {
       return
     }
     e.preventDefault()
-    window.history.pushState({}, "", href)
-    notify()
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    performNavigation(href)
   })
 }
 

@@ -58,7 +58,11 @@ Performance isn't a number I read off a chart. It's how quickly the editor gets 
 
 ## What might explain the speed
 
-I'm not going to pretend I know Zed's internals. From what I've read, it's written in Rust and uses its own UI framework instead of embedding a browser engine, and I'd guess that explains part of what I feel. But “Rust, therefore fast” is too simple. Plenty of slow software is written in fast languages. I suspect it's the whole set of design choices working together, not any single one. What I can say for certain is how it feels from the outside: fewer interruptions.
+I'm not going to pretend I know Zed's internals. From what I've read, it's written in Rust and uses its own UI framework instead of embedding a browser engine, and I'd guess that explains part of what I feel.
+
+        But “Rust, therefore fast” is too simple. Plenty of slow software is written in fast languages. I suspect it's the whole set of design choices working together, not any single one.
+
+        What I can say for certain is how it feels from the outside: fewer interruptions.
 
 ## The editor got quieter
 

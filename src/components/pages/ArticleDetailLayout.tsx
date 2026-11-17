@@ -3,7 +3,7 @@ import { ArticleMoreCard, ShareButton, Seo } from "../common"
 import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
-import { renderContent, slugify } from "@/utils/markdown"
+import { renderContent, renderInline, slugify } from "@/utils/markdown"
 import { absoluteUrl, buildTechArticleSchema, estimateWordCount, toISODate } from "@/data/seo"
 import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
 import { SITE_OG_IMAGE, SITE_URL } from "@/data/site"
@@ -42,10 +42,10 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
 
   const neighbors = useMemo(() => {
     const { previous, next } = getAdjacentArticles(article.slug)
-    const pairs: { blog: BlogArticle; eyebrow: string }[] = []
-    if (previous) pairs.push({ blog: previous, eyebrow: "← Previous" })
-    if (next) pairs.push({ blog: next, eyebrow: "Next →" })
-    return pairs
+    const list: BlogArticle[] = []
+    if (previous) list.push(previous)
+    if (next) list.push(next)
+    return list
   }, [article.slug])
 
   const handleCopyText = () => {
@@ -103,20 +103,22 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
         />
       }
     >
-        <section className="bg-canvas pt-28 pb-8 sm:pt-36 sm:pb-10">
-          <div className="mx-auto w-full max-w-[760px] px-4 text-center min-[414px]:px-6 sm:px-8">
-            <h1 className="t-display mt-3 font-bold tracking-normal text-ink">{article.title}</h1>
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 t-fine text-muted">
-              <span>{article.updated}</span>
-              <span aria-hidden="true">•</span>
-              <span>{article.readTime} read</span>
-            </div>
-          </div>
-        </section>
+        <article className="relative bg-canvas pt-28 pb-8 sm:pt-36 sm:pb-12">
+          <header className="mx-auto w-full max-w-[720px] px-4 text-left min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
+            <time dateTime={isoDate} className="block pb-2 sm:pb-3 text-[13px] sm:text-[14px] font-medium text-muted">
+              {article.updated}
+            </time>
+            <h1 className="t-display mt-2 sm:mt-2.5 font-bold tracking-normal text-ink text-left">{article.title}</h1>
+            {article.subhead ? (
+              <p className="pt-3.5 sm:pt-4 md:pt-5 text-[17px] sm:text-[21px] font-normal leading-relaxed sm:leading-snug text-ink text-pretty text-left">
+                {renderInline(article.subhead, "article-subhead")}
+              </p>
+            ) : null}
+            {!article.leadImage ? <hr className="mt-5 border-hairline sm:mt-6" /> : null}
+          </header>
 
-        <article className="relative bg-canvas pb-8 sm:pb-12">
           {article.leadImage ? (
-            <div className="mx-auto w-full max-w-[1040px] px-4 min-[414px]:px-6 sm:px-8">
+            <div className="mx-auto mt-6 w-full max-w-[1040px] px-4 min-[414px]:px-6 sm:mt-8 sm:px-8">
               <div className="aspect-[2/1] overflow-hidden rounded-[20px] squircle">
                 <img
                   src={withAssetHash(article.leadImage.src)}
@@ -132,8 +134,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
             </div>
           ) : null}
           <div className="mx-auto w-full max-w-[720px] px-4 min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
-            {!article.leadImage ? <hr className="border-hairline" /> : null}
-            <div className="mt-10 space-y-10 sm:mt-14 sm:space-y-12">
+            <div className={`${article.leadImage ? "mt-8 sm:mt-10" : "mt-6 sm:mt-8"} space-y-10 sm:space-y-12`}>
               {article.sections.map((section, idx) => {
                 const id = slugify(section.subtitle) || `section-${idx + 1}`
                 const isLast = idx === article.sections.length - 1
@@ -206,8 +207,8 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
           headerClassName="mb-6 sm:mb-8 text-center"
           trackCentered
         >
-          {neighbors.map(({ blog, eyebrow }) => (
-            <ArticleMoreCard key={blog.slug} article={blog} eyebrow={eyebrow} />
+          {neighbors.map((blog) => (
+            <ArticleMoreCard key={blog.slug} article={blog} />
           ))}
         </CarouselSection>
     </PageShell>

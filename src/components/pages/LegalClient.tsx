@@ -24,6 +24,7 @@ export function LegalClient() {
         title="Terms of Use"
         subhead="Legal Information & Notices."
         compact
+        animate={false}
       />
 
       <Section id="legal" bgClass="bg-canvas" padClass="pt-2 pb-14 sm:pt-3 sm:pb-20">
