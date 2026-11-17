@@ -2,6 +2,7 @@ export type BlogSection = { subtitle: string; content: string }
 export type BlogArticle = {
   slug: string
   title: string
+  subhead?: string
   description: string
   updated: string
   readTime: string
@@ -24,6 +25,8 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "why-i-switched-to-zed",
     title: "Why I Switched to Zed IDE",
+    subhead:
+      "I tried Zed out of curiosity, and its speed and simplicity gradually made it the editor I open first.",
     description:
       "Four years of muscle memory, extensions and workspace config didn't break. The editor just got quieter, faster, and out of the way.",
     updated: "November 17, 2026",
@@ -84,7 +87,11 @@ Performance isn't a number I read off a chart. It's how quickly the editor gets 
       },
       {
         subtitle: "What might explain the speed",
-        content: `I'm not going to pretend I know Zed's internals. From what I've read, it's written in Rust and uses its own UI framework instead of embedding a browser engine, and I'd guess that explains part of what I feel. But “Rust, therefore fast” is too simple. Plenty of slow software is written in fast languages. I suspect it's the whole set of design choices working together, not any single one. What I can say for certain is how it feels from the outside: fewer interruptions.`,
+        content: `I'm not going to pretend I know Zed's internals. From what I've read, it's written in Rust and uses its own UI framework instead of embedding a browser engine, and I'd guess that explains part of what I feel.
+
+        But “Rust, therefore fast” is too simple. Plenty of slow software is written in fast languages. I suspect it's the whole set of design choices working together, not any single one.
+
+        What I can say for certain is how it feels from the outside: fewer interruptions.`,
       },
       {
         subtitle: "The editor got quieter",
@@ -135,6 +142,8 @@ And I think that's when I actually switched.`,
   {
     slug: "a-100ms-rust-site-verifier",
     title: "Parapet: A 100ms Rust Site Checker",
+    subhead:
+      "A tiny Rust tool that catches silent static-site breakage in a tenth of a second.",
     description:
       "Parapet is a Rust site checker that audits CSP hashes, links, and sitemaps in about 100 ms, with no browser. Why I built it.",
     updated: "November 12, 2026",
@@ -286,6 +295,8 @@ The name comes from the low wall at the edge of a roof, the thing between you an
   {
     slug: "coding-is-taught-wrong-and-ai-exposed-it",
     title: "Coding Is Taught Wrong, and AI Exposed It",
+    subhead:
+      "Coding education should teach engineering judgement, not syntax, now that AI writes the syntax.",
     description:
       "Exams test loops, jobs test judgement. Why coding education needs to change, and what AI made impossible to ignore.",
     updated: "October 31, 2026",
@@ -458,6 +469,8 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   {
     slug: "allow-remote-postgresql-without-opening-it-to-the-world",
     title: "How to Allow Remote PostgreSQL Connections Securely",
+    subhead:
+      "Lock PostgreSQL down with a narrow listen address, a strict `pg_hba.conf` rule and a firewall, then verify it.",
     description:
       "Secure remote PostgreSQL access with three locks: listen_addresses, pg_hba.conf rules, and a firewall. No open exposure to the internet.",
     updated: "October 27, 2026",
@@ -492,6 +505,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   {
     slug: "making-technical-debt-visible-with-sonarqube",
     title: "Making Technical Debt Visible with SonarQube",
+    subhead: "Uncovering 872 hidden code smells and setting up quality gates to pay down technical debt.",
     description:
       "One SonarQube scan exposed 872 hidden issues. What I did over the next 30 days to fix what I couldn't see before.",
     updated: "May 25, 2026",
@@ -551,6 +565,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   {
     slug: "rethinking-my-git-workflow",
     title: "Rethinking My Git Workflow",
+    subhead: "Moving from messy script folders to atomic commits and structured version control.",
     description:
       "How GitHub and commit discipline reshaped the way I build software, and the Git workflow I use now.",
     updated: "April 16, 2026",
@@ -560,12 +575,6 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
     cardDesc: "Not just a code host. A place that quietly reshaped how I build.",
     cardReadTime: "3 min read",
     keywords: "Git, GitHub, workflow, version control, commit, branch, README, portfolio, collaboration, green squares, staging, push, clone",
-    leadImage: {
-      src: "/assets/article_poster/From Chaos to Structured Git History.png",
-      alt: "From Chaos to Structured Git History: transition from messy unmanaged files to structured branches and commits.",
-      width: 1536,
-      height: 1024,
-    },
     poster: {
       light: "/assets/article_poster/github_white.svg",
       dark: "/assets/article_poster/github_black.svg",
@@ -606,6 +615,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
   {
     slug: "how-vaultlock-reliably-fetches-brand-logos",
     title: "How VaultLock Reliably Fetches Brand Logos",
+    subhead: "Resolving brand icons reliably with layered caching and zero external network latency.",
     description:
       "How VaultLock gets the right brand logo every time without breaking the UI: ingestion, caching, and resilience.",
     updated: "April 8, 2026",
@@ -662,10 +672,12 @@ export function getBlogArticle(slug: string) {
 export const ARTICLE_CATEGORIES = ["Artificial Intelligence", "Practice", "Security"] as const
 
 export function getAdjacentArticles(slug: string) {
-  const ordered = [...BLOG_ARTICLES].sort((a, b) => Date.parse(b.cardDate) - Date.parse(a.cardDate))
+  const ordered = BLOG_ARTICLES.filter((a) => a.poster != null).sort(
+    (a, b) => Date.parse(b.cardDate) - Date.parse(a.cardDate),
+  )
   const idx = ordered.findIndex((a) => a.slug === slug)
   return {
-    previous: idx >= 0 ? ordered[idx + 1] : undefined,
+    previous: idx >= 0 && idx + 1 < ordered.length ? ordered[idx + 1] : undefined,
     next: idx > 0 ? ordered[idx - 1] : undefined,
   }
 }

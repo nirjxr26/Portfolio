@@ -11,11 +11,13 @@ interface ArticlePosterCardProps {
       dark: string
     }
   }
+  eyebrow?: string
   className?: string
 }
 
 export function ArticlePosterCard({
   article,
+  eyebrow,
   className = "",
 }: Readonly<ArticlePosterCardProps>) {
   if (!article.poster) return null
@@ -52,6 +54,9 @@ export function ArticlePosterCard({
       </div>
 
       <div className="mt-3.5 sm:mt-4 w-full">
+        {eyebrow ? (
+          <p className="t-fine text-muted mb-1.5 sm:mb-2">{eyebrow}</p>
+        ) : null}
         <CardHeadline>
           {article.title}
         </CardHeadline>
