@@ -139,7 +139,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                 const isLast = idx === article.sections.length - 1
                 return (
                   <div key={id}>
-                    <section id={id} className="scroll-mt-28 reveal-on-scroll">
+                    <section id={id} className="scroll-mt-28">
                       {section.subtitle ? (
                         <h2 className="t-section-title tracking-normal text-ink group flex items-center gap-2">
                           <span>{section.subtitle}</span>

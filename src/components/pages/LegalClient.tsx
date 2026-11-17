@@ -32,7 +32,7 @@ export function LegalClient() {
 
           <div>
             {/* Acceptance */}
-            <section id="acceptance" className="scroll-mt-24 reveal-on-scroll">
+            <section id="acceptance" className="scroll-mt-24">
               <h2 className={h2Class}>Acceptance</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -44,7 +44,7 @@ export function LegalClient() {
             {divider}
 
             {/* Data Protection */}
-            <section id="data-protection" className="scroll-mt-24 reveal-on-scroll">
+            <section id="data-protection" className="scroll-mt-24">
               <h2 className={h2Class}>Data Protection</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -66,7 +66,7 @@ export function LegalClient() {
             {divider}
 
             {/* Copyright & AI Use */}
-            <section id="copyright-ai" className="scroll-mt-24 reveal-on-scroll">
+            <section id="copyright-ai" className="scroll-mt-24">
               <h2 className={h2Class}>Copyright &amp; AI Use</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -90,7 +90,7 @@ export function LegalClient() {
             {divider}
 
             {/* Code Licensing */}
-            <section id="code-licensing" className="scroll-mt-24 reveal-on-scroll">
+            <section id="code-licensing" className="scroll-mt-24">
               <h2 className={h2Class}>Code Licensing</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -111,7 +111,7 @@ export function LegalClient() {
             {divider}
 
             {/* Acceptable Use */}
-            <section id="acceptable-use" className="scroll-mt-24 reveal-on-scroll">
+            <section id="acceptable-use" className="scroll-mt-24">
               <h2 className={h2Class}>Acceptable Use</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -123,7 +123,7 @@ export function LegalClient() {
             {divider}
 
             {/* Warranty Disclaimer */}
-            <section id="warranty-disclaimer" className="scroll-mt-24 reveal-on-scroll">
+            <section id="warranty-disclaimer" className="scroll-mt-24">
               <h2 className={h2Class}>Warranty Disclaimer</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -138,7 +138,7 @@ export function LegalClient() {
             {divider}
 
             {/* Authorized Use */}
-            <section id="authorized-use" className="scroll-mt-24 reveal-on-scroll">
+            <section id="authorized-use" className="scroll-mt-24">
               <h2 className={h2Class}>Authorized Use</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -153,7 +153,7 @@ export function LegalClient() {
             {divider}
 
             {/* Professional Advice */}
-            <section id="professional-advice" className="scroll-mt-24 reveal-on-scroll">
+            <section id="professional-advice" className="scroll-mt-24">
               <h2 className={h2Class}>Professional Advice</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -168,7 +168,7 @@ export function LegalClient() {
             {divider}
 
             {/* Trademarks & Links */}
-            <section id="trademarks-links" className="scroll-mt-24 reveal-on-scroll">
+            <section id="trademarks-links" className="scroll-mt-24">
               <h2 className={h2Class}>Trademarks &amp; Links</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -183,7 +183,7 @@ export function LegalClient() {
             {divider}
 
             {/* Limitation of Liability */}
-            <section id="limitation-of-liability" className="scroll-mt-24 reveal-on-scroll">
+            <section id="limitation-of-liability" className="scroll-mt-24">
               <h2 className={h2Class}>Limitation of Liability</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -198,7 +198,7 @@ export function LegalClient() {
             {divider}
 
             {/* Security Reporting */}
-            <section id="security-reporting" className="scroll-mt-24 reveal-on-scroll">
+            <section id="security-reporting" className="scroll-mt-24">
               <h2 className={h2Class}>Security Reporting</h2>
               <div className={groupClass}>
                 <p className={pClass}>
@@ -222,7 +222,7 @@ export function LegalClient() {
             {divider}
 
             {/* Governing Law */}
-            <section id="governing-law" className="scroll-mt-24 reveal-on-scroll">
+            <section id="governing-law" className="scroll-mt-24">
               <h2 className={h2Class}>Governing Law</h2>
               <div className={groupClass}>
                 <p className={pClass}>
