@@ -12,10 +12,6 @@ export function ThemeToggle() {
     const root = document.documentElement
     root.classList.toggle(THEME_DARK_CLASS, dark)
     localStorage.setItem(THEME_STORAGE_KEY, dark ? THEME_DARK_CLASS : "light")
-    // Keep the iOS status bar and browser chrome on the site's canvas, not the OS theme.
-    document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
-      meta.setAttribute("content", dark ? "#000000" : "#ffffff")
-    })
   }, [dark])
 
   return (

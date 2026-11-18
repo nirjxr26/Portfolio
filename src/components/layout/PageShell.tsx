@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { Footer, type FooterBreadcrumb } from "./Footer"
 import { Header } from "./Header"
 import { ScrollReveal } from "../providers/ScrollReveal"
+import { useNotchTint } from "@/utils/useNotchTint"
 
 interface PageShellProps {
   children: ReactNode
@@ -31,6 +32,8 @@ export function PageShell({
   hideHeader = false,
   hideFooter = false,
 }: Readonly<PageShellProps>) {
+  useNotchTint()
+
   return (
     <div className={outerClassName}>
       <a

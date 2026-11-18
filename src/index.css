@@ -59,13 +59,11 @@
 }
 @layer utilities {
   /*
-   * Notch scrim — the Instagram effect. Content paints from y=0 on iOS and
-   * Android; this fixed band blurs whatever slides under the status bar and
-   * fades to sharp through a mask, so there is no hard edge. Blur only, no
-   * tint: the notch shows the page itself, never a coloured strip. Mobile
-   * only; above 768px the header's own blur is enough.
+   * Notch scrim. Only in an installed web app: iOS Safari (browser tab) paints
+   * its own chrome over the status bar and cannot composite page pixels there,
+   * so a scrim would land just below the notch instead of behind it.
    */
-  @media (max-width: 767.98px) {
+  @media (max-width: 767.98px) and (display-mode: standalone) {
     .notch-blur {
       position: fixed;
       inset: 0 0 auto 0;

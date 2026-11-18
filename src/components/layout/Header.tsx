@@ -196,7 +196,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
     ? "bg-canvas translate-y-0 opacity-100 pointer-events-auto"
     : visible
       ? "bg-canvas/80 header-blur backdrop-blur-md translate-y-0 opacity-100 pointer-events-auto"
-      : "-translate-y-full opacity-0 pointer-events-none"
+      : "hidden"
 
   return (
     <header
