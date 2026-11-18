@@ -30,7 +30,7 @@ export function HomeClient() {
         <AgentMarkdownView />
       ) : (
         <div key="visual-view" className="animate-agent-enter">
-          <section className="bg-canvas pt-[var(--content-top)] pb-16 sm:pt-36 sm:pb-20">
+          <section className="bg-canvas pt-28 pb-16 sm:pt-36 sm:pb-20">
             <Container className="text-center">
               <h1 className="t-hero animate-hero-1">
                 {hero.headingPrimary}

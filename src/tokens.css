@@ -11,8 +11,6 @@
   --accent-hover: #0071e3;
   --page-gutter: 1rem;
   --header-h: 2.75rem;
-  /* First line of page content: clears the fixed header and the notch. */
-  --content-top: calc(env(safe-area-inset-top, 0px) + var(--header-h) + 0.75rem);
   --font-mono: "f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-mono-bold: "f-mno-b", "f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }

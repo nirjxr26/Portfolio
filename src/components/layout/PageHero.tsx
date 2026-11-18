@@ -27,10 +27,10 @@ export function PageHero({
   animate = true,
 }: Readonly<PageHeroProps>) {
   const sectionPadding = bottomFlush
-    ? "pt-[var(--content-top)] min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0"
+    ? "pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0"
     : compact
-      ? "pt-[var(--content-top)] pb-6 min-[480px]:pt-24 min-[480px]:pb-6 sm:pt-28 sm:pb-8 md:pt-32 md:pb-8"
-      : "pt-[var(--content-top)] pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28"
+      ? "pt-20 pb-6 min-[480px]:pt-24 min-[480px]:pb-6 sm:pt-28 sm:pb-8 md:pt-32 md:pb-8"
+      : "pt-32 pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28"
   return (
     <section className={`bg-canvas ${sectionPadding}`}>
       <Container className="text-center">
