@@ -1,20 +1,20 @@
 import { useEffect } from "react"
+import { THEME_DARK_CLASS } from "./helpers"
 
 /**
- * iOS 26 Safari paints its own tint layer over the status bar and notch. It
- * samples the root background, so a page whose top section is lighter than
- * `--canvas` shows a hard band above the content. Keep `html`, `body` and the
- * theme-color tag on the colour of whatever sits under the top edge, so the
- * notch reads as part of the page.
+ * Keeps the strip behind the status bar and notch on a solid colour: pure
+ * black in the dark theme, pure white in the light theme. It never follows the
+ * section under the top edge, so scrolling to a lighter or darker section
+ * cannot change the colour behind the notch.
  *
- * Browsers that do not paint that layer (desktop, Android) see no change: the
- * sampled colour only ever equals a section that already paints there.
+ * iOS 26 Safari paints its own tint layer over the status bar and samples the
+ * root background. `html`, `body` and the `theme-color` tags are kept in sync
+ * with the theme, so that layer always resolves to the same colour.
  */
 export function useNotchTint() {
   useEffect(() => {
     const root = document.documentElement
     const body = document.body
-    let frame = 0
 
     // Probes the resolved safe-area inset. `env()` cannot be read from CSS
     // directly, and Android reports 0 even when installed. Absolute, not
@@ -29,25 +29,8 @@ export function useNotchTint() {
       root.classList.toggle("has-notch", inset > 0)
     }
 
-    const isVisibleColor = (color: string) =>
-      color !== "" && color !== "transparent" && !/,\s*0\)$/.test(color)
-
-    const sample = () => {
-      frame = 0
-      const header = document.querySelector("header")
-      const headerBottom = header ? header.getBoundingClientRect().bottom : 0
-      const y = Math.min(window.innerHeight - 1, Math.max(8, headerBottom + 8))
-      let node = document.elementFromPoint(window.innerWidth / 2, y)
-      let color = ""
-
-      while (node && !color) {
-        const background = getComputedStyle(node).backgroundColor
-        if (isVisibleColor(background)) color = background
-        node = node.parentElement
-      }
-
-      if (!color) color = getComputedStyle(root).getPropertyValue("--canvas").trim()
-
+    const applyThemeColor = () => {
+      const color = root.classList.contains(THEME_DARK_CLASS) ? "#000000" : "#ffffff"
       root.style.backgroundColor = color
       body.style.backgroundColor = color
       document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
@@ -55,33 +38,22 @@ export function useNotchTint() {
       })
     }
 
-    const schedule = () => {
-      if (frame) return
-      frame = window.requestAnimationFrame(sample)
-    }
-
-    // The header is hidden with `display: none` while scrolling down, so the
-    // sample below it hits page content rather than the fixed bar.
-    const observer = new MutationObserver(schedule)
+    // `ThemeToggle` flips the theme by toggling the class on `<html>`.
+    const observer = new MutationObserver(applyThemeColor)
     observer.observe(root, { attributes: true, attributeFilter: ["class"] })
 
     body.appendChild(probe)
     measureInset()
-    sample()
-    window.addEventListener("scroll", schedule, { passive: true })
+    applyThemeColor()
     window.addEventListener("resize", measureInset)
     window.addEventListener("orientationchange", measureInset)
-    window.addEventListener("resize", schedule)
 
     return () => {
       observer.disconnect()
       probe.remove()
       root.classList.remove("has-notch")
-      window.removeEventListener("scroll", schedule)
       window.removeEventListener("resize", measureInset)
       window.removeEventListener("orientationchange", measureInset)
-      window.removeEventListener("resize", schedule)
-      if (frame) window.cancelAnimationFrame(frame)
       root.style.removeProperty("background-color")
       body.style.removeProperty("background-color")
     }

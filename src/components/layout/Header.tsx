@@ -46,37 +46,29 @@ function MobileDrawer({
               <a
                 key={item.name}
                 href={item.href}
-                className={`flex items-center justify-between py-1 transition-colors ${
+                className={`py-1 transition-colors ${
                   isActive ? "text-accent font-medium" : "text-ink-soft hover:text-accent"
                 }`}
               >
-                <span>{item.name}</span>
-                <ArrowRight
-                  width={16}
-                  height={16}
-                  className={isActive ? "text-accent" : "text-muted-faint"}
-                />
+                {item.name}
               </a>
             )
           })}
 
-          <div className="pt-3 mt-1 border-t border-hairline dark:border-hairline/50">
-            <a
-              href="/works"
-              onClick={closeMobileNav}
-              className="flex items-center justify-between py-1 text-accent hover:opacity-80 transition-opacity font-medium"
-            >
-              <span>View All Works</span>
-              <ArrowRight width={16} height={16} />
-            </a>
-          </div>
+          <a
+            href="/works"
+            onClick={closeMobileNav}
+            className="py-1 text-accent hover:opacity-80 transition-opacity font-medium"
+          >
+            View All Works
+          </a>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink">
+    <div className="flex flex-col gap-6 text-[28px] font-normal tracking-normal normal-none py-2 text-ink animate-drawer-links">
       <a href="/" onClick={closeMobileNav} className={MOBILE_LINK}>
         Home
       </a>
@@ -143,38 +135,6 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
   const [worksDropdownOpen, setWorksDropdownOpen] = useState(false)
   const [mobileWorksExpanded, setMobileWorksExpanded] = useState(false)
 
-  const [visible, setVisible] = useState(true)
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY
-    let ticking = false
-
-    const updateHeader = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY <= 20) {
-        setVisible(true)
-      } else if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > 5) {
-        setVisible(false)
-      } else if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > 5) {
-        setVisible(true)
-      }
-
-      lastScrollY = currentScrollY
-      ticking = false
-    }
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateHeader)
-        ticking = true
-      }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden"
@@ -192,137 +152,167 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
     setMobileWorksExpanded(false)
   }
 
-  const headerVisibilityClass = mobileMenuOpen
-    ? "bg-canvas translate-y-0 opacity-100 pointer-events-auto"
-    : visible
-      ? "bg-canvas/80 header-blur backdrop-blur-md translate-y-0 opacity-100 pointer-events-auto"
-      : "hidden"
-
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] border-b border-hairline dark:border-hairline/50 text-ink bg-clip-content transition-all duration-300 ease-out ${
-        headerVisibilityClass
-      }`}
-    >
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-full focus:font-medium focus:text-sm focus:shadow-md"
-      >
-        Skip to main content
-      </a>
-      <nav>
-        <Container className="relative flex h-[var(--header-h)] items-center justify-between">
-          <a
-            href="/"
-            aria-label="Home"
-            className="flex items-center text-muted transition-colors hover:text-ink md:hidden"
-          >
-            <HomeIcon width={16} height={16} />
-          </a>
+    <>
+      <header className="absolute inset-x-0 top-0 z-40 pt-[env(safe-area-inset-top,0px)] bg-canvas text-ink border-b border-hairline dark:border-hairline/50 reveal-on-scroll">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-full focus:font-medium focus:text-sm focus:shadow-md"
+        >
+          Skip to main content
+        </a>
+        <nav>
+          <Container className="relative flex h-[var(--header-h)] items-center justify-between">
+            {activePath !== "/" && (
+              <a
+                href="/"
+                aria-label="Home"
+                className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
+              >
+                <HomeIcon width={16} height={16} />
+              </a>
+            )}
 
-          <div className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-5 lg:gap-8 text-xs text-muted md:flex whitespace-nowrap">
-            <a
-              href="/"
-              aria-label="Home"
-              className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
-            >
-              <HomeIcon width={15} height={15} />
-            </a>
-
-            {NAV_LINKS.map((link) =>
-              link.expandable ? (
-                <div
-                  key={link.label}
-                  className="relative py-3 shrink-0"
-                  onMouseEnter={() => setWorksDropdownOpen(true)}
-                  onMouseLeave={() => setWorksDropdownOpen(false)}
-                  onFocus={() => setWorksDropdownOpen(true)}
-                  onBlur={(e) => {
-                    if (!e.currentTarget.contains(e.relatedTarget)) {
-                      setWorksDropdownOpen(false)
-                    }
-                  }}
+            <div className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-5 lg:gap-8 text-xs text-muted md:flex whitespace-nowrap">
+              {activePath !== "/" && (
+                <a
+                  href="/"
+                  aria-label="Home"
+                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
                 >
-                  <WorksDropdown isWorks={isWorks} open={worksDropdownOpen} />
+                  <HomeIcon width={15} height={15} />
+                </a>
+              )}
 
+              {NAV_LINKS.map((link) =>
+                link.expandable ? (
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 z-50 transition-all duration-200 ease-out motion-reduce:transition-none ${
-                      worksDropdownOpen
-                        ? "opacity-100 pointer-events-auto visible"
-                        : "opacity-0 pointer-events-none invisible"
-                    }`}
-                    aria-hidden={!worksDropdownOpen}
+                    key={link.label}
+                    className="relative py-3 shrink-0"
+                    onMouseEnter={() => setWorksDropdownOpen(true)}
+                    onMouseLeave={() => setWorksDropdownOpen(false)}
+                    onFocus={() => setWorksDropdownOpen(true)}
+                    onBlur={(e) => {
+                      if (!e.currentTarget.contains(e.relatedTarget)) {
+                        setWorksDropdownOpen(false)
+                      }
+                    }}
                   >
-                    <div
-                      className={`rounded-2xl bg-card p-3 shadow-2xl border border-hairline/80 dark:border-hairline/50 text-ink whitespace-normal transition-all duration-200 ease-out origin-top motion-reduce:transition-none motion-reduce:transform-none ${
-                        worksDropdownOpen
-                          ? "translate-y-0 scale-100"
-                          : "-translate-y-2 scale-[0.96]"
-                      }`}
-                    >
-                      <div className="space-y-1">
-                        {WORK_ITEMS.map((item) => (
-                          <a
-                            key={item.name}
-                            href={item.href}
-                            className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
-                          >
-                            {item.name}
-                          </a>
-                        ))}
-                      </div>
+                    <WorksDropdown isWorks={isWorks} open={worksDropdownOpen} />
 
-                      <div className="mt-2 pt-1 border-t border-hairline/50 dark:border-hairline/30">
-                        <a
-                          href="/works"
-                          className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-accent transition-opacity hover:opacity-80"
-                        >
-                          <span>View All Works</span>
-                          <ArrowRight width={12} height={12} />
-                        </a>
+                    <div
+                      className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-52 z-50 transition-all duration-200 ease-out motion-reduce:transition-none ${
+                        worksDropdownOpen
+                          ? "opacity-100 pointer-events-auto visible"
+                          : "opacity-0 pointer-events-none invisible"
+                      }`}
+                      aria-hidden={!worksDropdownOpen}
+                    >
+                      <div
+                        className={`rounded-2xl bg-card p-3 shadow-2xl border border-hairline/80 dark:border-hairline/50 text-ink whitespace-normal transition-all duration-200 ease-out origin-top motion-reduce:transition-none motion-reduce:transform-none ${
+                          worksDropdownOpen
+                            ? "translate-y-0 scale-100"
+                            : "-translate-y-2 scale-[0.96]"
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          {WORK_ITEMS.map((item) => (
+                            <a
+                              key={item.name}
+                              href={item.href}
+                              className="block rounded-xl px-3 py-2 text-sm text-muted hover:text-accent transition-colors font-medium"
+                            >
+                              {item.name}
+                            </a>
+                          ))}
+                        </div>
+
+                        <div className="mt-2 pt-1 border-t border-hairline/50 dark:border-hairline/30">
+                          <a
+                            href="/works"
+                            className="flex items-center justify-between rounded-xl px-3 py-2 text-xs font-semibold text-accent transition-opacity hover:opacity-80"
+                          >
+                            <span>View All Works</span>
+                            <ArrowRight width={12} height={12} />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  {...externalAttrs(link)}
-                  className={DESKTOP_LINK}
-                >
-                  {link.label}
-                </a>
-              ),
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3 ml-auto md:ml-0">
-            <AgentButton />
-            <ThemeToggle />
-
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted hover:text-ink md:hidden focus:outline-none hit-area"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    {...externalAttrs(link)}
+                    className={DESKTOP_LINK}
+                  >
+                    {link.label}
+                  </a>
+                ),
               )}
-            </button>
-          </div>
-        </Container>
+            </div>
 
-        {mobileMenuOpen && (
-          <div className="fixed inset-x-0 top-[calc(var(--header-h)+env(safe-area-inset-top,0px))] bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100dvh-var(--header-h)-env(safe-area-inset-top,0px))]">
+            <div className="flex items-center gap-2 sm:gap-3 ml-auto md:ml-0">
+              {activePath === "/" && <AgentButton />}
+              <ThemeToggle />
+
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:text-ink md:hidden focus:outline-none hit-area"
+                aria-label="Toggle navigation menu"
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? (
+                  <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
+          </Container>
+        </nav>
+      </header>
+
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-canvas flex flex-col md:hidden text-ink animate-curtain-fall">
+          {/* Top Bar: exactly mirrors the closed header's height and alignment */}
+          <div className="w-full pt-[env(safe-area-inset-top,0px)] border-b border-hairline dark:border-hairline/50 bg-canvas">
+            <Container className="relative flex h-[var(--header-h)] items-center justify-between">
+              {activePath !== "/" && (
+                <a
+                  href="/"
+                  aria-label="Home"
+                  onClick={closeMobileNav}
+                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
+                >
+                  <HomeIcon width={16} height={16} />
+                </a>
+              )}
+
+              <div className="flex items-center gap-2 sm:gap-3 ml-auto">
+                {activePath === "/" && <AgentButton />}
+                <ThemeToggle />
+                <button
+                  type="button"
+                  onClick={closeMobileNav}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:text-ink focus:outline-none hit-area"
+                  aria-label="Close navigation menu"
+                >
+                  <svg width={19} height={19} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </Container>
+          </div>
+
+          {/* Links Area: sits naturally below the top bar without huge void */}
+          <div className="flex-1 overflow-y-auto page-gutter pt-8 pb-12 flex flex-col justify-start">
             <MobileDrawer
               activePath={activePath}
               worksExpanded={mobileWorksExpanded}
@@ -331,8 +321,8 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               closeMobileNav={closeMobileNav}
             />
           </div>
-        )}
-      </nav>
-    </header>
+        </div>
+      )}
+    </>
   )
 }

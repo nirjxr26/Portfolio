@@ -2,21 +2,40 @@
 
   @keyframes curtainFall {
     0% {
-      opacity: 0;
-      transform: translate3d(0, -100%, 0) scaleY(0.96);
+      opacity: 0.2;
+      transform: translate3d(0, -100%, 0);
     }
 
     100% {
       opacity: 1;
-      transform: translate3d(0, 0, 0) scaleY(1);
+      transform: translate3d(0, 0, 0);
     }
   }
 
   .animate-curtain-fall {
-    animation: curtainFall 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    transform-origin: top;
-    will-change: transform, opacity;
+    animation: curtainFall 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  @keyframes drawerLinksFade {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-drawer-links {
+    animation: drawerLinksFade 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.1s both;
+    will-change: transform, opacity;
   }
 
   @keyframes drillIn {
@@ -37,10 +56,157 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .animate-curtain-fall,
+    .animate-drawer-links,
     .animate-drill-in {
       animation: none !important;
       opacity: 1 !important;
       transform: none !important;
+    }
+  }
+
+  @keyframes navFloatIn {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -14px, 0) scale(0.96);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  /*
+   * Mobile floating nav. The wrapper owns the `fixed` positioning and the
+   * centring transform, so this element is free to animate its own transform.
+   * Slow and eased: the bar should drift in, not snap.
+   */
+  .animate-nav-in {
+    animation: navFloatIn 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  @keyframes iconReveal {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 30px, 0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .animate-icon-reveal {
+    animation: iconReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  @keyframes navFloatOut {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate3d(0, -14px, 0) scale(0.96);
+    }
+  }
+
+  .animate-nav-out {
+    animation: navFloatOut 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  @keyframes slideInLeft {
+    0% {
+      opacity: 0;
+      transform: translate3d(-40px, 0, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slideOutLeft {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(-40px, 0, 0);
+    }
+  }
+
+  @keyframes slideInRight {
+    0% {
+      opacity: 0;
+      transform: translate3d(40px, 0, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes slideOutRight {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(40px, 0, 0);
+    }
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  .animate-slide-out-left {
+    animation: slideOutLeft 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.95s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  .animate-slide-out-right {
+    animation: slideOutRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-nav-in,
+    .animate-icon-reveal,
+    .animate-slide-in-left,
+    .animate-slide-in-right {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* Keep it non-zero so `animationend` still unmounts the bar. */
+    .animate-nav-out,
+    .animate-slide-out-left,
+    .animate-slide-out-right {
+      animation-duration: 1ms !important;
     }
   }
 
