@@ -64,7 +64,7 @@
   }
 
   .t-quote {
-    font-family: var(--font-display);
+    font-family: var(--font-univers, "f-ui", sans-serif);
     font-weight: 600;
     font-size: 20px;
     line-height: 1.3;

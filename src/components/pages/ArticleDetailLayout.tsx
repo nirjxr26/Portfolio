@@ -180,7 +180,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                           </a>
                         </h2>
                       ) : null}
-                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[17px] leading-relaxed text-muted`}>
+                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[17px] leading-relaxed text-ink`}>
                         {renderContent(section.content)}
                       </div>
                     </section>

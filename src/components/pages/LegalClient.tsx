@@ -4,9 +4,9 @@ import { ROUTE_META } from "@/data/routes"
 import { createBreadcrumbs } from "@/utils/helpers"
 
 export function LegalClient() {
-  const pClass = "text-[15px] sm:text-[16px] leading-[1.65] text-ink/90 text-left"
-  const h2Class = "text-lg sm:text-[21px] font-bold text-ink tracking-tight mb-3 sm:mb-4 text-left"
-  const groupClass = "space-y-3.5 sm:space-y-4"
+  const pClass = "t-body text-[17px] leading-relaxed text-ink text-left"
+  const h2Class = "t-section-title tracking-normal text-ink mb-3 sm:mb-4 text-left"
+  const groupClass = "space-y-4"
   const divider = <hr className="border-hairline my-6 sm:my-8" />
 
   return (

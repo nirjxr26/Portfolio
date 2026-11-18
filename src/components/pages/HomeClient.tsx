@@ -136,7 +136,7 @@ export function HomeClient() {
 
           <Section bgClass="bg-surface-alt" padClass="py-16 sm:py-20 text-ink">
             <Container size="wide" className="text-center text-pretty sm:text-balance reveal-on-scroll">
-              <blockquote className="t-quote">&ldquo;{quote}&rdquo;</blockquote>
+              <blockquote className="t-quote font-univers">{quote}</blockquote>
             </Container>
           </Section>
         </div>

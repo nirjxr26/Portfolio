@@ -518,6 +518,48 @@ function renderNode(node: MdNode, key: string): ReactNode {
   }
 
   if (node.kind === "table") {
+    const isComparison = node.head.length === 2
+
+    if (isComparison) {
+      return (
+        <div key={key} className="my-6 sm:my-8 w-full overflow-x-auto rounded-xl border border-hairline/60">
+          <table className="w-full table-fixed border-collapse text-left text-[13px] min-[360px]:text-[13.5px] sm:text-[14.5px] md:text-[15px]">
+            <thead className="bg-surface-alt">
+              <tr className="border-b border-hairline/60">
+                {node.head.map((cell, i) => (
+                  <th
+                    key={`${key}-h${i}`}
+                    scope="col"
+                    className={`w-1/2 px-4 py-3.5 sm:px-6 sm:py-4 align-middle font-semibold text-ink text-left ${
+                      i === 0 ? "border-r border-hairline/60" : ""
+                    }`}
+                  >
+                    {renderInline(cell, `${key}-h${i}`)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {node.rows.map((row, r) => (
+                <tr key={`${key}-r${r}`} className="border-b border-hairline/60 last:border-b-0">
+                  {row.map((cell, c) => (
+                    <td
+                      key={`${key}-r${r}c${c}`}
+                      className={`w-1/2 px-4 py-3.5 sm:px-6 sm:py-4 align-middle text-left font-normal text-ink leading-relaxed ${
+                        c === 0 ? "border-r border-hairline/60" : ""
+                      }`}
+                    >
+                      {renderInline(cell, `${key}-r${r}c${c}`)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+
     const highlightColIndex = node.head.findIndex((cell) => /parapet|rust/i.test(cell))
 
     return (
