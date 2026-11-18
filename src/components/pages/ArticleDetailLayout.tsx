@@ -9,6 +9,33 @@ import { getAdjacentArticles, type BlogArticle } from "@/data/blogArticles"
 import { SITE_OG_IMAGE, SITE_URL } from "@/data/site"
 import { createBreadcrumbs, withAssetHash } from "@/utils/helpers"
 
+function renderArticleTitle(article: BlogArticle) {
+  const raw = article.displayTitle ?? article.title
+  if (!/<br\s*\/?>/i.test(raw)) {
+    return raw
+  }
+
+  const parts = raw.split(/<br\s*\/?>/i)
+  return (
+    <>
+      {parts.map((part, index) => {
+        const cleanPart = part.trim()
+        return (
+          <span key={index}>
+            {index > 0 && (
+              <>
+                <span className="hidden sm:inline"> </span>
+                <br className="sm:hidden" />
+              </>
+            )}
+            {cleanPart}
+          </span>
+        )
+      })}
+    </>
+  )
+}
+
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
   const { copied: copiedText, copy: copyText } = useCopy()
   const { copied: copiedLink, copy: copyLink } = useCopy()
@@ -108,9 +135,9 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
             <time dateTime={isoDate} className="block pb-2 sm:pb-3 text-[13px] sm:text-[14px] font-medium text-muted">
               {article.updated}
             </time>
-            <h1 className="t-display mt-2 sm:mt-2.5 font-bold tracking-normal text-ink text-left">{article.title}</h1>
+            <h1 className="t-display text-[32px] sm:text-[clamp(30px,3.6vw,40px)] mt-2 sm:mt-2.5 font-bold tracking-normal text-ink text-left leading-[1.2]">{renderArticleTitle(article)}</h1>
             {article.subhead ? (
-              <p className="pt-3.5 sm:pt-4 md:pt-5 text-[17px] sm:text-[21px] font-normal leading-relaxed sm:leading-snug text-ink text-pretty text-left">
+              <p className="pt-3.5 sm:pt-4 md:pt-5 text-[20px] sm:text-[21px] font-normal leading-snug text-ink text-pretty text-left">
                 {renderInline(article.subhead, "article-subhead")}
               </p>
             ) : null}
@@ -153,7 +180,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                           </a>
                         </h2>
                       ) : null}
-                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body leading-relaxed text-muted sm:text-[16px]`}>
+                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[17px] leading-relaxed text-muted`}>
                         {renderContent(section.content)}
                       </div>
                     </section>

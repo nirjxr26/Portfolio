@@ -2,6 +2,7 @@ export type BlogSection = { subtitle: string; content: string }
 export type BlogArticle = {
   slug: string
   title: string
+  displayTitle?: string
   subhead?: string
   description: string
   updated: string
@@ -25,6 +26,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   {
     slug: "why-i-switched-to-zed",
     title: "Why I Switched to Zed IDE",
+    displayTitle: "Why I Switched to <br>Zed IDE",
     subhead:
       "I tried Zed out of curiosity, and its speed and simplicity gradually made it the editor I open first.",
     description:
