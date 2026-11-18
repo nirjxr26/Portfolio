@@ -30,14 +30,14 @@ export function HomeClient() {
         <AgentMarkdownView />
       ) : (
         <div key="visual-view" className="animate-agent-enter">
-          <section className="bg-canvas pt-28 pb-16 sm:pt-36 sm:pb-20">
+          <section className="bg-canvas pt-[var(--content-top)] pb-16 sm:pt-36 sm:pb-20">
             <Container className="text-center">
               <h1 className="t-hero animate-hero-1">
                 {hero.headingPrimary}
                 <br />
                 {hero.headingSecondary}
               </h1>
-              <p className="t-lead font-medium mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
+              <p className="t-lead text-[17px] sm:text-[clamp(15px,2.2vw,24px)] font-medium mx-auto mt-6 max-w-2xl text-muted animate-hero-2">{hero.subheading}</p>
               <ActionGroup className="mt-8 sm:mt-10 px-4 sm:px-0 animate-hero-3">
                 <ActionButtons actions={hero.actions} />
               </ActionGroup>

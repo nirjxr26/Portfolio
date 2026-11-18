@@ -10,7 +10,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 72px;
+    scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
+    overscroll-behavior-y: none;
+    background: var(--canvas);
+    min-height: 100%;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
   }
 
   body {
@@ -20,6 +26,17 @@
     letter-spacing: 0.2px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+  }
+
+  #root {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
   }
 
   .font-univers,
@@ -41,6 +58,46 @@
   }
 }
 @layer utilities {
+  /*
+   * Notch scrim — the Instagram effect. Content paints from y=0 on iOS and
+   * Android; this fixed band blurs whatever slides under the status bar and
+   * fades to sharp through a mask, so there is no hard edge. Blur only, no
+   * tint: the notch shows the page itself, never a coloured strip. Mobile
+   * only; above 768px the header's own blur is enough.
+   */
+  @media (max-width: 767.98px) {
+    .notch-blur {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 46;
+      height: max(calc(env(safe-area-inset-top, 0px) + 18px), 30px);
+      pointer-events: none;
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0 58%, rgba(0, 0, 0, 0.45) 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0 58%, rgba(0, 0, 0, 0.45) 82%, transparent 100%);
+      background: none;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+  }
+
+  /* Browsers without backdrop-filter keep the tinted fade, drop the blur. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .notch-blur {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  .header-blur {
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -147,6 +204,7 @@
 @media print {
   header,
   footer,
+  .notch-blur,
   #theme-toggle,
   .no-print {
     display: none !important;

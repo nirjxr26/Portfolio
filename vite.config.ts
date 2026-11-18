@@ -41,6 +41,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   server: {
+    host: true,
     headers: command === "serve" ? devHeaders : prodHeaders,
   },
   preview: {

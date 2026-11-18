@@ -30,7 +30,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`scroll-mt-12 overflow-hidden ${padClass} ${bgClass} ${className}`.trim()}
+      className={`w-full scroll-mt-12 overflow-hidden ${padClass} ${bgClass} ${className}`.trim()}
     >
       {children}
     </section>

@@ -130,7 +130,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
         />
       }
     >
-        <article className="relative bg-canvas pt-28 pb-8 sm:pt-36 sm:pb-12">
+        <article className="relative bg-canvas pt-[var(--content-top)] pb-8 sm:pt-36 sm:pb-12">
           <header className="mx-auto w-full max-w-[720px] px-4 text-left min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
             <time dateTime={isoDate} className="block pb-2 sm:pb-3 text-[13px] sm:text-[14px] font-medium text-muted">
               {article.updated}
@@ -180,7 +180,7 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                           </a>
                         </h2>
                       ) : null}
-                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[17px] leading-relaxed text-ink`}>
+                      <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[15px] sm:text-[17px] leading-relaxed text-ink`}>
                         {renderContent(section.content)}
                       </div>
                     </section>

@@ -46,6 +46,7 @@ export function PageShell({
         {children}
       </main>
       {!hideFooter && <Footer bgClass={footerBgClass} breadcrumbs={footerBreadcrumbs} />}
+      <div aria-hidden="true" className="notch-blur" />
     </div>
   )
 }

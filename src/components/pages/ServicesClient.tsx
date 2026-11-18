@@ -103,7 +103,7 @@ export function ServicesClient() {
             <h2 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-4 sm:mb-6 reveal-on-scroll">
               Why I work across domains.
             </h2>
-            <div className="space-y-4 sm:space-y-5 text-lg sm:text-xl md:text-[22px] font-normal text-ink/85 leading-relaxed">
+            <div className="space-y-4 sm:space-y-5 text-[15px] sm:text-base font-normal text-ink/85 leading-relaxed">
               <p className="reveal-on-scroll">
                 Real systems don&apos;t live in silos. I work across software engineering, DevOps, cloud, and cybersecurity to see how the pieces connect, and how a decision in one area affects the others.
               </p>

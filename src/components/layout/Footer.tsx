@@ -204,7 +204,7 @@ export function Footer({ bgClass = "bg-surface-alt", breadcrumbs: customBreadcru
   const topPad = crumbs.length > 0 ? "pt-6 sm:pt-10" : "pt-8 sm:pt-16"
 
   return (
-    <footer id="footer" className={`${bgClass} ${topPad} pb-8 sm:pb-12 border-t-0`}>
+    <footer id="footer" className={`${bgClass} ${topPad} pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-12 border-t-0`}>
       <Container>
         <div className="max-w-5xl mx-auto w-full">
           {/* Apple-style Footer Breadcrumbs (only on sub-pages) */}

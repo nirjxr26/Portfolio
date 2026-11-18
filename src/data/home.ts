@@ -58,7 +58,7 @@ export const frames: Frame[] = [
   },
   {
     tag: "DevOps",
-    title: "Automate the boring parts.",
+    title: "Automate the boring.",
     desc: "Automating how software is built, tested, deployed, and monitored, with safe releases and rollbacks.",
   },
   {

@@ -195,12 +195,12 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
   const headerVisibilityClass = mobileMenuOpen
     ? "bg-canvas translate-y-0 opacity-100 pointer-events-auto"
     : visible
-      ? "bg-canvas/85 backdrop-blur-md translate-y-0 opacity-100 pointer-events-auto"
+      ? "bg-canvas/80 header-blur backdrop-blur-md translate-y-0 opacity-100 pointer-events-auto"
       : "-translate-y-full opacity-0 pointer-events-none"
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b border-hairline dark:border-hairline/50 text-ink transition-all duration-300 ease-out ${
+      className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] border-b border-hairline dark:border-hairline/50 text-ink bg-clip-content transition-all duration-300 ease-out ${
         headerVisibilityClass
       }`}
     >
@@ -322,7 +322,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
         </Container>
 
         {mobileMenuOpen && (
-          <div className="fixed inset-x-0 top-[var(--header-h)] bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100vh-var(--header-h))]">
+          <div className="fixed inset-x-0 top-[calc(var(--header-h)+env(safe-area-inset-top,0px))] bottom-0 z-40 bg-canvas px-7 pt-7 pb-12 flex flex-col justify-between overflow-y-auto md:hidden text-ink animate-curtain-fall border-t border-hairline dark:border-hairline/50 h-[calc(100dvh-var(--header-h)-env(safe-area-inset-top,0px))]">
             <MobileDrawer
               activePath={activePath}
               worksExpanded={mobileWorksExpanded}

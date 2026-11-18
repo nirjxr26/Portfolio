@@ -56,7 +56,7 @@ export const CORE_SERVICES: readonly ServiceSection[] = [
   {
     id: "devops",
     title: "DevOps",
-    tagline: "Automate the boring parts.",
+    tagline: "Automate the boring.",
     items: [
       "CI/CD pipelines written in YAML, such as GitHub Actions",
       "Containerizing applications and deploying them",

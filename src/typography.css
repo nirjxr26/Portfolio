@@ -122,6 +122,6 @@
   }
 
   .card-desc {
-    @apply mt-1.5 sm:mt-2;
+    @apply mt-1.5 sm:mt-2 text-[15px] sm:text-base;
   }
 }
