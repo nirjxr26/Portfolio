@@ -59,16 +59,17 @@
 }
 @layer utilities {
   /*
-   * Notch scrim. Only in an installed web app: iOS Safari (browser tab) paints
-   * its own chrome over the status bar and cannot composite page pixels there,
-   * so a scrim would land just below the notch instead of behind it.
+   * Notch scrim. Installed web apps only, and only when the platform actually
+   * hands the notch pixels to the page (`--has-notch`, measured in
+   * useNotchTint). Android usually reports 0 even in standalone, so without
+   * that gate the band would land just below the status bar.
    */
-  @media (max-width: 767.98px) and (display-mode: standalone) {
-    .notch-blur {
+  @media (max-width: 767.98px) and (display-mode: standalone), (max-width: 767.98px) and (display-mode: fullscreen) {
+    .has-notch .notch-blur {
       position: fixed;
       inset: 0 0 auto 0;
       z-index: 46;
-      height: max(calc(env(safe-area-inset-top, 0px) + 18px), 30px);
+      height: calc(env(safe-area-inset-top, 0px) + 18px);
       pointer-events: none;
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);

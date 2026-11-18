@@ -1,9 +1,10 @@
 {
   "name": "Nirjar Goswami | Cloud & Security Engineer",
   "short_name": "Nirjar",
-  "description": "Generalist — Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure.",
+  "description": "Generalist - Working across Cloud & DevOps, Cybersecurity, Backend Engineering, and System Design, with an emphasis on secure, resilient, and cost-aware infrastructure.",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
