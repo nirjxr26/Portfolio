@@ -246,7 +246,7 @@ export function AppleShareSheet({
       role="dialog"
       aria-modal="true"
       aria-label="Share article"
-      className="fixed inset-0 z-50 flex flex-col justify-end items-center pointer-events-auto px-[10px] pb-[10px] sm:px-4 sm:pb-3 overscroll-none"
+      className="fixed inset-0 z-50 flex flex-col justify-end items-center pointer-events-auto px-[10px] pb-[calc(1.75rem+env(safe-area-inset-bottom,0px))] sm:px-4 sm:pb-8 overscroll-none"
       style={{
         height: "100dvh",
         maxHeight: "100dvh",
@@ -263,7 +263,7 @@ export function AppleShareSheet({
         aria-hidden="true"
       />
 
-      {/* Floating Bottom Sheet Card with slow smooth slide-up flow */}
+      {/* Floating Bottom Sheet Card detached and lifted above bottom bar */}
       <div
         ref={sheetRef}
         onTouchStart={onTouchStart}
@@ -271,7 +271,7 @@ export function AppleShareSheet({
         onTouchEnd={onTouchEnd}
         style={{
           transform: !isEntered || isClosing
-            ? "translate3d(0, 100%, 0)"
+            ? "translate3d(0, calc(100% + 5rem), 0)"
             : dragOffset > 0
             ? `translate3d(0, ${dragOffset}px, 0)`
             : "translate3d(0, 0, 0)",
@@ -281,7 +281,7 @@ export function AppleShareSheet({
             : "transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease-out",
           touchAction: "pan-y",
         }}
-        className="relative z-10 mx-auto w-full sm:max-w-[420px] rounded-[32px] bg-[#212124] text-white shadow-2xl border-0 select-none overflow-hidden pt-3.5 pb-6 sm:pt-3 sm:pb-5 overscroll-contain max-h-[calc(100dvh-20px)]"
+        className="relative z-10 mx-auto w-full sm:max-w-[420px] rounded-[32px] bg-[#212124] text-white shadow-2xl border border-white/5 select-none overflow-hidden pt-3.5 pb-6 sm:pt-3 sm:pb-5 overscroll-contain max-h-[calc(100dvh-50px)]"
       >
         {/* Horizontal grabber bar in top center */}
         <div className="pt-1 pb-2 sm:pt-0.5 sm:pb-1.5">
