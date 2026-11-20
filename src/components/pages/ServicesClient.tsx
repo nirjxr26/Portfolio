@@ -1,6 +1,7 @@
-import { CheckIcon, FeatureCard, ProductionRail } from "../common"
+import { CarouselTrack, CheckIcon, FeatureCard } from "../common"
 import { RouteSeo } from "../common/SEO"
-import { CarouselSection, Container, PageHero, PageShell, Section } from "../layout"
+import { Container, PageHero, PageShell, Section, SectionHeader } from "../layout"
+import { productionCapabilities } from "@/data/home"
 import { ROUTE_META } from "@/data/routes"
 import { createBreadcrumbs } from "@/utils/helpers"
 import {
@@ -96,42 +97,46 @@ export function ServicesClient() {
         </Container>
       </Section>
 
-      {/* Perspective */}
-      <Section id="perspective" bgClass="bg-canvas" padClass="py-14 sm:py-20" className="text-left">
-        <Container>
-          <div className="max-w-5xl">
-            <h2 className="text-2xl sm:text-3xl font-semibold text-ink tracking-normal mb-4 sm:mb-6 reveal-on-scroll">
-              Why I work across domains.
-            </h2>
-            <div className="space-y-4 sm:space-y-5 text-[15px] sm:text-base font-normal text-ink/85 leading-relaxed">
-              <p className="reveal-on-scroll">
-                Real systems don&apos;t live in silos. I work across software engineering, DevOps, cloud, and cybersecurity to see how the pieces connect, and how a decision in one area affects the others.
-              </p>
-              <p className="reveal-on-scroll">
-                What I know comes from applying these technologies across my projects. I&apos;m still building depth in each area, and I focus on how they work together to make systems secure and reliable.
-              </p>
-            </div>
+      {/* How I think & How I work — matching main website */}
+      <Section id="how-i-think" bgClass="bg-canvas" padClass="py-16 sm:py-20">
+        <SectionHeader title="How I think." />
+
+        <div className="reveal-on-scroll">
+          <CarouselTrack>
+            {productionCapabilities.map((cap) => (
+              <FeatureCard
+                key={cap.title}
+                card={{
+                  headline: cap.tagline,
+                  body: cap.desc,
+                  tag: cap.title,
+                }}
+                cardBgClass="bg-surface-alt"
+              />
+            ))}
+          </CarouselTrack>
+        </div>
+
+        <div id="how-i-work" className="mt-12 sm:mt-16 scroll-mt-12">
+          <SectionHeader title="How I work." />
+
+          <div className="reveal-on-scroll">
+            <CarouselTrack>
+              {HOW_I_WORK_CARDS.map((card) => (
+                <FeatureCard
+                  key={card.tag}
+                  card={{
+                    headline: card.title,
+                    body: card.desc,
+                    tag: card.tag,
+                  }}
+                  cardBgClass="bg-surface-alt"
+                />
+              ))}
+            </CarouselTrack>
           </div>
-        </Container>
+        </div>
       </Section>
-
-      {/* How I work */}
-      <CarouselSection id="how-i-work" title="How I work." bgClass="bg-surface-alt">
-        {HOW_I_WORK_CARDS.map((card) => (
-          <FeatureCard
-            key={card.tag}
-            card={{
-              headline: card.title,
-              body: card.desc,
-              tag: card.tag,
-            }}
-            cardBgClass="bg-card"
-          />
-        ))}
-      </CarouselSection>
-
-      {/* How I think */}
-      <ProductionRail bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
     </PageShell>
   )
 }

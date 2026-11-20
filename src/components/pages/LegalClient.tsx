@@ -71,7 +71,7 @@ export function LegalClient() {
               <h2 className={h2Class}>Copyright &amp; AI Use</h2>
               <div className={groupClass}>
                 <p className={pClass}>
-                  All articles, case studies, diagrams, and graphics on this site are &copy; 2026 Nirjar Goswami, all rights reserved. You may quote short excerpts for commentary or education, provided you give attribution and a working link to the original. Reproducing, mirroring, or translating a full work requires my prior written permission.
+                  All articles, case studies, diagrams, and graphics on this site are the original work of the author, all rights reserved. You may quote short excerpts for commentary or education, provided you give attribution and a working link to the original. Reproducing, mirroring, or translating a full work requires my prior written permission.
                 </p>
                 <p className={pClass}>
                   Under the Copyright Act, 1957, and Article 4(3) of Directive (EU) 2019/790, I expressly reserve all rights in this content. I prohibit its collection or use by crawlers, bots, scrapers, or other automated means for text and data mining, or for training machine learning or generative AI models, without my prior written consent. This reservation is also published in machine-readable form through the site&rsquo;s{" "}
@@ -131,7 +131,7 @@ export function LegalClient() {
                   ALL CONTENT ON THIS SITE, INCLUDING ARTICLES, CODE, SCRIPTS, CONFIGURATIONS, DIAGRAMS, AND TUTORIALS, IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE,&rdquo; WITH ALL FAULTS AND WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, STATUTORY, OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, I DISCLAIM ALL WARRANTIES OF ACCURACY, COMPLETENESS, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ERROR-FREE OPERATION.
                 </p>
                 <p className={pClass}>
-                  Software, networking, and systems work carries inherent risk of failure and data loss. You rely on this material at your own risk and are solely responsible for testing any configuration, firewall rule, or script in an isolated staging environment, with verified backups and a rollback plan, before applying it to a production system. The site and its content may change, be suspended, or be removed at any time without notice.
+                  You rely on this material at your own risk and are solely responsible for testing any configuration, firewall rule, or script in an isolated staging environment, with verified backups and a rollback plan, before applying it to production.
                 </p>
               </div>
             </section>
@@ -158,10 +158,7 @@ export function LegalClient() {
               <h2 className={h2Class}>Professional Advice</h2>
               <div className={groupClass}>
                 <p className={pClass}>
-                  Content on this site is general information and does not constitute legal, financial, compliance, or other professional advice. Reading this site or emailing me does not create a consulting, fiduciary, or other professional relationship; any engagement begins only under a separate written agreement.
-                </p>
-                <p className={pClass}>
-                  Cost savings, percentages, performance figures, and benchmarks, including those relating to Kost and AWS architecture work, are illustrative results from specific environments. They are not guarantees of any outcome, uptime, discount, or audit result.
+                  Content on this site is general information and does not constitute legal, financial, compliance, or other professional advice. Reading this site or emailing me does not create a consulting or other professional relationship.
                 </p>
               </div>
             </section>
@@ -173,7 +170,7 @@ export function LegalClient() {
               <h2 className={h2Class}>Trademarks &amp; Links</h2>
               <div className={groupClass}>
                 <p className={pClass}>
-                  All third-party names, logos, and trademarks referenced on this site, including Amazon Web Services, Docker, Kubernetes, Cloudflare, GitHub, and Google, belong to their respective owners. They appear solely to identify the technologies discussed, as permitted under Section 30 of the Trade Marks Act, 1999. I am not sponsored by, endorsed by, or affiliated with any trademark holder.
+                  All third-party names, logos, and trademarks referenced on this site, including belong to their respective owners. They appear solely to identify the technologies discussed, as permitted under Section 30 of the Trade Marks Act, 1999. I am not sponsored by, endorsed by, or affiliated with any trademark holder.
                 </p>
                 <p className={pClass}>
                   This site links to external websites, including GitHub, LinkedIn, and X. I do not control and am not responsible for their content, availability, or privacy practices.
@@ -242,7 +239,7 @@ export function LegalClient() {
                   </a>
                 </p>
                 <p className="text-[13px] sm:text-[14px] italic text-ink/60 pt-4 select-none">
-                  Updated by Nirjar Goswami on November 12, 2026
+                  Updated by Nirjar Goswami on November 20, 2026
                 </p>
               </div>
             </section>

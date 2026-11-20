@@ -90,19 +90,27 @@ export function AppleShareSheet({
       document.body.style.overflow = "hidden"
     }
 
-    // Tint top status bar (notch) and bottom Safari address bar to dark overlay for seamless edge-to-edge view
+    // Tint top status bar (notch) and bottom Safari address bar with primary color according to active theme
     const root = document.documentElement
     const body = document.body
+    const isDark = root.classList.contains("dark")
+    const primaryTint = isDark ? "#000000" : "#ffffff"
+
     const originalRootBg = root.style.backgroundColor
     const originalBodyBg = body.style.backgroundColor
-    root.style.backgroundColor = "#141416"
-    body.style.backgroundColor = "#141416"
+    root.style.backgroundColor = primaryTint
+    body.style.backgroundColor = primaryTint
 
     const metas = document.querySelectorAll('meta[name="theme-color"]')
-    const previousThemeColors: string[] = []
+    const previousMetaState: Array<{ el: Element; content: string | null; media: string | null }> = []
     metas.forEach((meta) => {
-      previousThemeColors.push(meta.getAttribute("content") || "")
-      meta.setAttribute("content", "#141416")
+      previousMetaState.push({
+        el: meta,
+        content: meta.getAttribute("content"),
+        media: meta.getAttribute("media"),
+      })
+      meta.removeAttribute("media")
+      meta.setAttribute("content", primaryTint)
     })
 
     window.addEventListener("keydown", handleKeyDown)
@@ -122,9 +130,16 @@ export function AppleShareSheet({
       } else {
         body.style.removeProperty("background-color")
       }
-      metas.forEach((meta, idx) => {
-        if (previousThemeColors[idx]) {
-          meta.setAttribute("content", previousThemeColors[idx])
+      previousMetaState.forEach(({ el, content, media }) => {
+        if (content !== null) {
+          el.setAttribute("content", content)
+        } else {
+          el.removeAttribute("content")
+        }
+        if (media !== null) {
+          el.setAttribute("media", media)
+        } else {
+          el.removeAttribute("media")
         }
       })
       window.removeEventListener("keydown", handleKeyDown)
@@ -246,24 +261,24 @@ export function AppleShareSheet({
       role="dialog"
       aria-modal="true"
       aria-label="Share article"
-      className="fixed inset-0 z-50 flex flex-col justify-end items-center pointer-events-auto px-[10px] pb-[calc(1.75rem+env(safe-area-inset-bottom,0px))] sm:px-4 sm:pb-8 overscroll-none"
+      className="fixed inset-0 z-50 flex flex-col justify-end items-center pointer-events-auto px-[10px] pb-[10px] sm:px-4 sm:pb-3 overscroll-none"
       style={{
         height: "100dvh",
         maxHeight: "100dvh",
         touchAction: "manipulation",
       }}
     >
-      {/* Full screen backdrop */}
+      {/* Full screen backdrop with 2px background blur */}
       <div
         onClick={handleClose}
         onTouchMove={(e) => e.preventDefault()}
-        className={`fixed inset-0 bg-black/60 backdrop-blur-[4px] transition-opacity duration-400 ease-out ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity duration-400 ease-out ${
           !isEntered || isClosing ? "opacity-0" : "opacity-100"
         }`}
         aria-hidden="true"
       />
 
-      {/* Floating Bottom Sheet Card detached and lifted above bottom bar */}
+      {/* Floating Bottom Sheet Card with slow smooth slide-up flow */}
       <div
         ref={sheetRef}
         onTouchStart={onTouchStart}
@@ -271,7 +286,7 @@ export function AppleShareSheet({
         onTouchEnd={onTouchEnd}
         style={{
           transform: !isEntered || isClosing
-            ? "translate3d(0, calc(100% + 5rem), 0)"
+            ? "translate3d(0, 100%, 0)"
             : dragOffset > 0
             ? `translate3d(0, ${dragOffset}px, 0)`
             : "translate3d(0, 0, 0)",
@@ -281,7 +296,7 @@ export function AppleShareSheet({
             : "transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease-out",
           touchAction: "pan-y",
         }}
-        className="relative z-10 mx-auto w-full sm:max-w-[420px] rounded-[32px] bg-[#212124] text-white shadow-2xl border border-white/5 select-none overflow-hidden pt-3.5 pb-6 sm:pt-3 sm:pb-5 overscroll-contain max-h-[calc(100dvh-50px)]"
+        className="relative z-10 mx-auto w-full sm:max-w-[420px] rounded-[32px] bg-[#212124] text-white shadow-2xl border-0 select-none overflow-hidden pt-3.5 pb-6 sm:pt-3 sm:pb-5 overscroll-contain max-h-[calc(100dvh-20px)]"
       >
         {/* Horizontal grabber bar in top center */}
         <div className="pt-1 pb-2 sm:pt-0.5 sm:pb-1.5">
