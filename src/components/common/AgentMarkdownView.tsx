@@ -67,7 +67,7 @@ function renderTreeRow(line: string, key: number): ReactNode {
           href={route.href}
           target={route.isExternal ? "_blank" : undefined}
           rel={route.isExternal ? "noopener noreferrer" : undefined}
-          className="min-w-0 break-words hover:text-accent hover:underline transition-colors text-ink font-medium"
+          className="min-w-0 break-words hover:text-accent transition-colors text-ink font-medium"
         >
           {label}
         </a>
@@ -79,7 +79,7 @@ function renderTreeRow(line: string, key: number): ReactNode {
       {extra && (
         <a
           href={extra.href}
-          className="text-accent hover:underline shrink-0 ml-1.5 transition-colors"
+          className="text-accent hover:opacity-80 shrink-0 ml-1.5 transition-colors"
         >
           {extra.label}
         </a>
@@ -126,7 +126,7 @@ function renderInlineMarkdown(text: string): ReactNode {
           href={url}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer" : undefined}
-          className="text-accent hover:underline transition-colors break-all"
+          className="text-accent hover:opacity-80 transition-opacity break-all"
         >
           [{label}]({url})
         </a>

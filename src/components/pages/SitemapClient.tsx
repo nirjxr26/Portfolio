@@ -7,8 +7,8 @@ import { createBreadcrumbs } from "@/utils/helpers"
 export function SitemapClient() {
   const rowClass = "flex items-start min-w-0"
   const guideClass = "shrink-0 text-muted/60 select-none whitespace-pre"
-  const linkWrapClass = "min-w-0 break-words hover:text-accent hover:underline transition-colors"
-  const dirWrapClass = "min-w-0 font-semibold break-words hover:text-accent hover:underline transition-colors"
+  const linkWrapClass = "min-w-0 break-words hover:text-accent transition-colors"
+  const dirWrapClass = "min-w-0 font-semibold break-words hover:text-accent transition-colors"
   const cardClass = "w-full bg-white dark:bg-black rounded-2xl p-4 sm:p-8 lg:p-10 overflow-hidden reveal-on-scroll"
   const monoClass = "font-mono text-[12px] sm:text-[13.5px] md:text-[14px] leading-[1.75] sm:leading-[1.85] tracking-tight sm:tracking-normal text-ink select-text text-left"
 
@@ -43,7 +43,7 @@ export function SitemapClient() {
                   <span className={guideClass}>├── </span>
                   <div className="flex flex-wrap items-center gap-x-1.5 min-w-0">
                     <a href="/index.md" className={linkWrapClass}>index.md/</a>
-                    <a href="/index.md" className="text-accent hover:underline shrink-0">[ Agent view ]</a>
+                    <a href="/index.md" className="text-accent hover:opacity-80 transition-opacity shrink-0">[ Agent view ]</a>
                   </div>
                 </div>
 
@@ -150,7 +150,7 @@ export function SitemapClient() {
                     <span className={guideClass}>├── </span>
                     <div className="flex flex-wrap items-center gap-x-1.5 min-w-0">
                       <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className={linkWrapClass}>profile/</a>
-                      <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline shrink-0">[ @nirjxr26 ]</a>
+                      <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-accent hover:opacity-80 transition-opacity shrink-0">[ @nirjxr26 ]</a>
                     </div>
                   </div>
                   <div className={rowClass}>

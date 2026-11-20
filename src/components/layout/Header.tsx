@@ -163,15 +163,18 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
         </a>
         <nav>
           <Container className="relative flex h-[var(--header-h)] items-center justify-between">
-            {activePath !== "/" && (
-              <a
-                href="/"
-                aria-label="Home"
-                className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
-              >
-                <HomeIcon width={16} height={16} />
-              </a>
-            )}
+            <div className="flex items-center gap-2 md:hidden">
+              {activePath !== "/" && (
+                <a
+                  href="/"
+                  aria-label="Home"
+                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
+                >
+                  <HomeIcon width={16} height={16} />
+                </a>
+              )}
+              {activePath === "/" && <AgentButton />}
+            </div>
 
             <div className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-5 lg:gap-8 text-xs text-muted md:flex whitespace-nowrap">
               {activePath !== "/" && (
@@ -250,16 +253,24 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                   </a>
                 ),
               )}
+
+              {activePath === "/" && (
+                <div className="flex items-center">
+                  <AgentButton />
+                </div>
+              )}
+              <div className="flex items-center">
+                <ThemeToggle />
+              </div>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3 ml-auto md:ml-0">
-              {activePath === "/" && <AgentButton />}
+            <div className="flex items-center gap-2 sm:gap-3 ml-auto md:hidden">
               <ThemeToggle />
 
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:text-ink md:hidden focus:outline-none hit-area"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:text-ink focus:outline-none hit-area"
                 aria-label="Toggle navigation menu"
                 aria-expanded={mobileMenuOpen}
               >
@@ -283,19 +294,21 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
           {/* Top Bar: exactly mirrors the closed header's height and alignment */}
           <div className="w-full pt-[env(safe-area-inset-top,0px)] border-b border-hairline dark:border-hairline/50 bg-canvas">
             <Container className="relative flex h-[var(--header-h)] items-center justify-between">
-              {activePath !== "/" && (
-                <a
-                  href="/"
-                  aria-label="Home"
-                  onClick={closeMobileNav}
-                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
-                >
-                  <HomeIcon width={16} height={16} />
-                </a>
-              )}
+              <div className="flex items-center gap-2">
+                {activePath !== "/" && (
+                  <a
+                    href="/"
+                    aria-label="Home"
+                    onClick={closeMobileNav}
+                    className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
+                  >
+                    <HomeIcon width={16} height={16} />
+                  </a>
+                )}
+                {activePath === "/" && <AgentButton />}
+              </div>
 
               <div className="flex items-center gap-2 sm:gap-3 ml-auto">
-                {activePath === "/" && <AgentButton />}
                 <ThemeToggle />
                 <button
                   type="button"

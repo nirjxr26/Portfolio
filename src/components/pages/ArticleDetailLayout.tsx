@@ -1,6 +1,6 @@
-import { useMemo } from "react"
-import { ArticleMoreCard, ShareButton, Seo } from "../common"
-import { CheckIcon, CopySwapIcon, LinkIcon, MailIcon, WhatsAppIcon, XIcon } from "../common/Icons"
+import { useState, useMemo } from "react"
+import { ArticleMoreCard, Seo, AppleShareSheet } from "../common"
+import { CopySwapIcon, ShareIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
 import { renderContent, renderInline, slugify } from "@/utils/markdown"
@@ -37,11 +37,10 @@ function renderArticleTitle(article: BlogArticle) {
 }
 
 export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle }>) {
+  const [isShareSheetOpen, setIsShareSheetOpen] = useState(false)
   const { copied: copiedText, copy: copyText } = useCopy()
-  const { copied: copiedLink, copy: copyLink } = useCopy()
   const canonical = `${SITE_URL}/articles/${article.slug}`
   const shareUrl = typeof window !== "undefined" ? window.location.href : canonical
-  const shareTitle = article.title
   const isoDate = toISODate(article.updated)
 
   const posterSrc = article.poster?.dark ?? article.poster?.light
@@ -79,32 +78,6 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
     const sectionsText = article.sections.map((section) => section.subtitle + "\n" + section.content).join("\n\n")
     const fullText = [article.title, article.description, sectionsText].join("\n\n")
     void copyText(fullText)
-  }
-
-  const handleCopyLink = () => {
-    void copyLink(shareUrl)
-  }
-
-  const whatsappShareText = `${shareTitle} ${shareUrl}`
-  const whatsappHref = `https://wa.me/?text=${encodeURIComponent(whatsappShareText)}`
-  const xHref = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`
-  const mailHref = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareUrl)}`
-  const shareLinks = [
-    { label: "Share on WhatsApp", href: whatsappHref, Icon: WhatsAppIcon, width: 16, height: 16 },
-    { label: "Share on X", href: xHref, Icon: XIcon, width: 14, height: 14 },
-    { label: "Share via mail", href: mailHref, Icon: MailIcon, width: 16, height: 16 },
-  ]
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: shareTitle, url: shareUrl })
-      } catch {
-        handleCopyLink()
-      }
-    } else {
-      handleCopyLink()
-    }
   }
 
   return (
@@ -209,19 +182,18 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                 <span>{copiedText ? "Copied!" : "Copy Article"}</span>
               </button>
 
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="t-fine text-muted">Share this article</span>
-                <div className="flex items-center gap-2">
-                  {shareLinks.map((s) => (
-                    <ShareButton key={s.label} label={s.label} href={s.href}>
-                      <s.Icon width={s.width} height={s.height} />
-                    </ShareButton>
-                  ))}
-                  <ShareButton label="Copy link or share" onClick={handleShare}>
-                    {copiedLink ? <CheckIcon width={14} height={14} className="text-accent" /> : <LinkIcon width={16} height={16} />}
-                  </ShareButton>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setIsShareSheetOpen(true)
+                }}
+                className="btn-sm cursor-pointer border-0 flex items-center gap-2"
+              >
+                <ShareIcon width={14} height={14} />
+                <span>Share article</span>
+              </button>
             </div>
           </div>
 
@@ -238,6 +210,16 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
             <ArticleMoreCard key={blog.slug} article={blog} />
           ))}
         </CarouselSection>
+
+        <AppleShareSheet
+          isOpen={isShareSheetOpen}
+          onClose={() => setIsShareSheetOpen(false)}
+          title={article.title}
+          url={shareUrl}
+          description={article.description}
+          image={posterSrc ?? article.leadImage?.src}
+          slug={article.slug}
+        />
     </PageShell>
   )
 }

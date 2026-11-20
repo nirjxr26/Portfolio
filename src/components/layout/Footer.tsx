@@ -234,7 +234,7 @@ export function Footer({ bgClass = "bg-surface-alt", breadcrumbs: customBreadcru
                   {crumb.href && !isLast ? (
                     <AppLink
                       href={crumb.href}
-                      className="hover:text-ink hover:underline transition-colors truncate"
+                      className="hover:text-ink transition-colors truncate"
                     >
                       {crumb.name}
                     </AppLink>
@@ -298,7 +298,7 @@ export function Footer({ bgClass = "bg-surface-alt", breadcrumbs: customBreadcru
                 )}
                 <AppLink
                   href={link.href}
-                  className="hover:text-ink hover:underline transition-colors"
+                  className="hover:text-ink transition-colors"
                 >
                   {link.name}
                 </AppLink>

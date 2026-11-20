@@ -5,9 +5,9 @@ import { createBreadcrumbs } from "@/utils/helpers"
 
 export function LegalClient() {
   const pClass = "t-body text-[15px] sm:text-[17px] leading-relaxed text-ink text-left"
-  const h2Class = "t-section-title tracking-normal text-ink mb-3 sm:mb-4 text-left"
-  const groupClass = "space-y-4"
-  const divider = <hr className="border-hairline my-6 sm:my-8" />
+  const h2Class = "t-section-title tracking-normal text-ink text-left"
+  const groupClass = "mt-6 space-y-4"
+  const divider = <hr className="mt-10 border-hairline sm:mt-12" />
 
   return (
     <PageShell
@@ -28,10 +28,10 @@ export function LegalClient() {
       />
 
       <Section id="legal" bgClass="bg-canvas" padClass="pt-2 pb-14 sm:pt-3 sm:pb-20">
-        <div className="mx-auto w-full max-w-[800px] px-4 sm:px-6">
-          <hr className="border-hairline mb-6 sm:mb-8" />
+        <div className="mx-auto w-full max-w-[720px] px-4 min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
+          <hr className="border-hairline mb-10 sm:mb-12" />
 
-          <div>
+          <div className="space-y-10 sm:space-y-12">
             {/* Acceptance */}
             <section id="acceptance" className="scroll-mt-24">
               <h2 className={h2Class}>Acceptance</h2>
@@ -55,7 +55,7 @@ export function LegalClient() {
                   If you email me at{" "}
                   <a
                     href="mailto:nirjargoswami2626@gmail.com"
-                    className="text-accent hover:underline transition-colors"
+                    className="text-accent hover:text-accent/80 transition-colors"
                   >
                     nirjargoswami2626@gmail.com
                   </a>
@@ -79,7 +79,7 @@ export function LegalClient() {
                     href="/robots.txt"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-accent hover:underline transition-colors"
+                    className="text-accent hover:text-accent/80 transition-colors"
                   >
                     robots.txt
                   </a>{" "}
@@ -100,7 +100,7 @@ export function LegalClient() {
                     href="https://github.com/nirjxr26"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-accent hover:underline transition-colors"
+                    className="text-accent hover:text-accent/80 transition-colors"
                   >
                     GitHub repositories
                   </a>
@@ -208,7 +208,7 @@ export function LegalClient() {
                     href="/.well-known/security.txt"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-accent hover:underline transition-colors"
+                    className="text-accent hover:text-accent/80 transition-colors"
                   >
                     security.txt
                   </a>{" "}
@@ -236,7 +236,7 @@ export function LegalClient() {
                   Contact:{" "}
                   <a
                     href="mailto:nirjargoswami2626@gmail.com"
-                    className="text-accent hover:underline transition-colors"
+                    className="text-accent hover:text-accent/80 transition-colors"
                   >
                     nirjargoswami2626@gmail.com
                   </a>
