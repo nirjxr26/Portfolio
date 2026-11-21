@@ -2,6 +2,7 @@ import type { ReactNode } from "react"
 import { Footer, type FooterBreadcrumb } from "./Footer"
 import { Header } from "./Header"
 import { CommandPalette } from "../common/CommandPalette"
+import { NotificationToast } from "../common/NotificationToast"
 import { ScrollReveal } from "../providers/ScrollReveal"
 import { useNotchTint } from "@/utils/useNotchTint"
 
@@ -51,6 +52,7 @@ export function PageShell({
       </main>
       {!hideFooter && <Footer bgClass={footerBgClass} breadcrumbs={footerBreadcrumbs} />}
       <CommandPalette />
+      <NotificationToast />
       <div aria-hidden="true" className="notch-blur" />
     </div>
   )

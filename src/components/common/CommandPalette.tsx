@@ -3,13 +3,15 @@ import { BLOG_ARTICLES } from "@/data/blogArticles"
 import { CASE_STUDIES } from "@/data/caseStudies"
 import { useCopy } from "@/utils/useCopy"
 import { CheckIcon, SearchIcon } from "./Icons"
+import { notifySite } from "./NotificationToast"
 
 export interface PaletteItem {
   id: string
   title: string
-  category: "Navigation" | "Projects" | "Articles" | "Actions"
+  category: "Navigation" | "Projects" | "Articles" | "Other" | "Actions"
   href?: string
   keywords?: string
+  shortcut?: string
   onSelect?: () => void
 }
 
@@ -42,17 +44,20 @@ const DEFAULT_NAVIGATION: PaletteItem[] = [
     href: "/articles",
     keywords: "blog essays writing posts",
   },
+]
+
+const OTHER_ITEMS: PaletteItem[] = [
   {
     id: "nav-sitemap",
     title: "Sitemap",
-    category: "Navigation",
+    category: "Other",
     href: "/sitemap",
-    keywords: "index all links pages",
+    keywords: "index all links pages directory",
   },
   {
     id: "nav-legal",
     title: "Terms of use",
-    category: "Navigation",
+    category: "Other",
     href: "/legal",
     keywords: "privacy security terms copyright disclaimer legal",
   },
@@ -69,6 +74,101 @@ export function CommandPalette() {
   const listRef = useRef<HTMLDivElement>(null)
   const searchInputId = useId()
   const { copied, copy } = useCopy(1800)
+  const [isMac, setIsMac] = useState(false)
+
+  useEffect(() => {
+    setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent))
+  }, [])
+
+  const toggleTheme = useCallback(() => {
+    const root = document.documentElement
+    const isDark = root.classList.toggle("dark")
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light")
+    } catch {}
+    window.dispatchEvent(new Event("theme-change"))
+    notifySite("Theme updated", isDark ? "Switched to dark mode." : "Switched to light mode.")
+  }, [])
+
+  const downloadResume = useCallback(() => {
+    // 1. Notify immediately
+    notifySite("Download started", "Your résumé PDF is downloading.")
+
+    // 2. Direct synchronous trigger preserves user gesture token and forces native file download
+    const a = document.createElement("a")
+    a.href = "/resume.pdf"
+    a.download = "Nirjar_Goswami_Resume.pdf"
+    a.rel = "noopener noreferrer"
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(() => {
+      if (document.body.contains(a)) document.body.removeChild(a)
+    }, 500)
+  }, [])
+
+  const copyUrl = useCallback(async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "https://nirjargoswami.me"
+    let ok = false
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url)
+        ok = true
+      }
+    } catch {}
+
+    if (!ok) {
+      try {
+        const ta = document.createElement("textarea")
+        ta.value = url
+        ta.style.position = "fixed"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.focus()
+        ta.select()
+        ok = document.execCommand("copy")
+        document.body.removeChild(ta)
+      } catch {}
+    }
+
+    void copy(url)
+    notifySite("Link copied", "Page URL copied to clipboard.")
+  }, [copy])
+
+  const openContact = useCallback(() => {
+    const email = "nirjargoswami2626@gmail.com"
+    // 1. Trigger mail client directly via window.location.href
+    try {
+      window.location.href = `mailto:${email}`
+    } catch {
+      try {
+        const a = document.createElement("a")
+        a.href = `mailto:${email}`
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+          if (document.body.contains(a)) document.body.removeChild(a)
+        }, 200)
+      } catch {}
+    }
+
+    // 2. Also copy email to clipboard so user always has it ready
+    try {
+      if (navigator.clipboard?.writeText) {
+        void navigator.clipboard.writeText(email)
+      } else {
+        const ta = document.createElement("textarea")
+        ta.value = email
+        ta.style.position = "fixed"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand("copy")
+        document.body.removeChild(ta)
+      }
+    } catch {}
+
+    notifySite("Contact opened", "Email copied & mail client opened.")
+  }, [])
 
   // Works / Case studies items
   const projectItems: PaletteItem[] = useMemo(
@@ -96,7 +196,7 @@ export function CommandPalette() {
     [],
   )
 
-  // Actions items
+  // Actions items with daily keybindings
   const actionItems: PaletteItem[] = useMemo(
     () => [
       {
@@ -104,14 +204,8 @@ export function CommandPalette() {
         title: "Toggle Theme",
         category: "Actions",
         keywords: "theme dark light mode color switch",
-        onSelect: () => {
-          const root = document.documentElement
-          const isDark = root.classList.toggle("dark")
-          try {
-            localStorage.setItem("theme", isDark ? "dark" : "light")
-          } catch {}
-          window.dispatchEvent(new Event("theme-change"))
-        },
+        shortcut: isMac ? "⌥ + T" : "Alt + T",
+        onSelect: toggleTheme,
       },
       {
         id: "action-resume",
@@ -119,17 +213,16 @@ export function CommandPalette() {
         category: "Actions",
         href: "/resume.pdf",
         keywords: "cv resume pdf hiring career credentials",
+        shortcut: isMac ? "⌥ + R" : "Alt + R",
+        onSelect: downloadResume,
       },
       {
         id: "action-copy-url",
         title: "Copy Current Page URL",
         category: "Actions",
         keywords: "copy share link url address",
-        onSelect: () => {
-          if (typeof window !== "undefined") {
-            void copy(window.location.href)
-          }
-        },
+        shortcut: isMac ? "⌘ + C" : "Ctrl + C",
+        onSelect: copyUrl,
       },
       {
         id: "action-email",
@@ -137,14 +230,16 @@ export function CommandPalette() {
         category: "Actions",
         href: "mailto:nirjargoswami2626@gmail.com",
         keywords: "contact hire email message ping mail",
+        shortcut: isMac ? "⌥ + M" : "Alt + M",
+        onSelect: openContact,
       },
     ],
-    [copy],
+    [copyUrl, downloadResume, isMac, openContact, toggleTheme],
   )
 
   // Build the complete searchable catalog
   const catalog = useMemo<PaletteItem[]>(() => {
-    return [...DEFAULT_NAVIGATION, ...projectItems, ...articleItems, ...actionItems]
+    return [...DEFAULT_NAVIGATION, ...projectItems, ...articleItems, ...OTHER_ITEMS, ...actionItems]
   }, [actionItems, articleItems, projectItems])
 
   // Filter items: by default show Navigation + Works (Projects). "View more" reveals Articles & Actions.
@@ -164,7 +259,7 @@ export function CommandPalette() {
 
   // Group displayed items by category
   const groupedSections = useMemo(() => {
-    const categoryOrder: Array<PaletteItem["category"]> = ["Navigation", "Projects", "Articles", "Actions"]
+    const categoryOrder: Array<PaletteItem["category"]> = ["Navigation", "Projects", "Articles", "Other", "Actions"]
     const groups: Array<{ category: PaletteItem["category"]; items: PaletteItem[] }> = []
 
     for (const cat of categoryOrder) {
@@ -202,10 +297,29 @@ export function CommandPalette() {
     }, 200)
   }, [isClosing])
 
-  // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc)
+  // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc, and daily action keybindings)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      // Skip keybindings on touch-only mobile devices or iPads/tablets
+      const isTouchOnly =
+        typeof window !== "undefined" &&
+        navigator.maxTouchPoints > 1 &&
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+      if (isTouchOnly) {
+        return
+      }
+
+      const key = e.key.toLowerCase()
+      const code = e.code
+
+      const isC = key === "c" || code === "KeyC"
+      const isR = key === "r" || code === "KeyR" || key === "®"
+      const isT = key === "t" || code === "KeyT"
+      const isM = key === "m" || code === "KeyM" || key === "e" || code === "KeyE"
+
+      // Cmd+K or Ctrl+K: toggle command palette
+      if ((e.metaKey || e.ctrlKey) && (key === "k" || code === "KeyK")) {
         e.preventDefault()
         if (isOpen) {
           closePalette()
@@ -221,14 +335,97 @@ export function CommandPalette() {
         return
       }
 
+      // Ctrl+C or Cmd+C: Copy URL (both inside palette and anywhere on site when no text is highlighted)
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && isC) {
+        if (isOpen) {
+          const inputEl = inputRef.current
+          const hasInputSelection = inputEl ? inputEl.selectionStart !== inputEl.selectionEnd : false
+          if (!hasInputSelection) {
+            e.preventDefault()
+            copyUrl()
+            closePalette()
+            return
+          }
+        } else {
+          const selection = window.getSelection()?.toString()
+          if (!selection || selection.length === 0) {
+            e.preventDefault()
+            copyUrl()
+            return
+          }
+        }
+      }
+
+      // Alt+R (or Option+R): Download resume
+      if (e.altKey && isR) {
+        e.preventDefault()
+        downloadResume()
+        if (isOpen) closePalette()
+        return
+      }
+
+      // Alt+T (or Option+T): Toggle theme
+      if (e.altKey && isT) {
+        e.preventDefault()
+        toggleTheme()
+        return
+      }
+
+      // Alt+M (or Option+M / Alt+E): Open contact
+      if (e.altKey && isM) {
+        e.preventDefault()
+        openContact()
+        if (isOpen) closePalette()
+        return
+      }
+
+      // When command palette is OPEN, don't trigger single-key shortcuts while typing in input
+      if (isOpen) return
+
+      const isInput =
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable)
+
       // Open on `/` when not typing inside an input/textarea
-      if (
-        e.key === "/" &&
-        !isOpen &&
-        !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
-      ) {
+      if (e.key === "/" && !isInput) {
         e.preventDefault()
         openPalette()
+        return
+      }
+
+      // Quick single-key bindings when not typing in any input:
+      if (!isInput && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
+        // T -> Toggle theme
+        if (isT) {
+          e.preventDefault()
+          toggleTheme()
+          return
+        }
+
+        // R -> Download resume
+        if (isR) {
+          e.preventDefault()
+          downloadResume()
+          return
+        }
+
+        // C -> Copy page URL
+        if (isC) {
+          const selection = window.getSelection()?.toString()
+          if (!selection || selection.length === 0) {
+            e.preventDefault()
+            copyUrl()
+            return
+          }
+        }
+
+        // M or E -> Contact
+        if (isM) {
+          e.preventDefault()
+          openContact()
+          return
+        }
       }
     }
 
@@ -241,7 +438,7 @@ export function CommandPalette() {
       window.removeEventListener("keydown", handleKeyDown)
       window.removeEventListener("open-command-palette", handleCustomOpen)
     }
-  }, [closePalette, isOpen, openPalette])
+  }, [closePalette, copyUrl, downloadResume, isOpen, openContact, openPalette, toggleTheme])
 
   // Lock scroll & auto-focus input when opened
   useEffect(() => {
@@ -264,19 +461,16 @@ export function CommandPalette() {
     (item: PaletteItem) => {
       if (item.onSelect) {
         item.onSelect()
-        if (item.id !== "action-copy-url") {
-          closePalette()
-        }
+        closePalette()
         return
       }
 
       if (item.href) {
+        notifySite("Page navigation", `Navigating to ${item.title}.`)
         closePalette()
-        if (item.href.startsWith("mailto:") || item.href.endsWith(".pdf")) {
-          window.open(item.href, "_blank", "noopener,noreferrer")
-        } else {
-          window.location.href = item.href
-        }
+        setTimeout(() => {
+          window.location.href = item.href!
+        }, 120)
       }
     },
     [closePalette],
@@ -429,6 +623,25 @@ export function CommandPalette() {
                         <span className="text-[15px] sm:text-[15px] truncate transition-colors tracking-normal [letter-spacing:normal]">
                           {item.title}
                         </span>
+
+                        {item.id === "action-copy-url" && copied ? (
+                          <span className="inline-flex items-center gap-1 text-[11.5px] font-medium text-accent shrink-0 select-none">
+                            <CheckIcon width={12} height={12} strokeWidth={2.5} />
+                            Copied
+                          </span>
+                        ) : (
+                          item.shortcut && (
+                            <kbd
+                              className={`hidden sm:inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
+                                isSelected
+                                  ? "bg-canvas dark:bg-white/[0.12] text-ink"
+                                  : "bg-surface-alt/80 dark:bg-white/[0.06] text-muted/80"
+                              }`}
+                            >
+                              {item.shortcut}
+                            </kbd>
+                          )
+                        )}
                       </div>
                     )
                   })}
@@ -531,7 +744,7 @@ export function CommandPalette() {
             </span>
           </div>
 
-          <span className="text-[13px] sm:text-[14px] text-muted/80 font-mono">
+          <span className="text-[13px] sm:text-[14px] font-medium text-muted/90">
             {displayedItems.length} {displayedItems.length === 1 ? "result" : "results"}
           </span>
         </div>

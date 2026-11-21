@@ -9,17 +9,41 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
   )
 
   useEffect(() => {
-    const root = document.documentElement
-    root.classList.toggle(THEME_DARK_CLASS, dark)
-    localStorage.setItem(THEME_STORAGE_KEY, dark ? THEME_DARK_CLASS : "light")
-  }, [dark])
+    const syncTheme = () => {
+      const isDark = document.documentElement.classList.contains(THEME_DARK_CLASS)
+      setDark(isDark)
+    }
+
+    // Immediately sync state with actual DOM in case it changed prior to mounting
+    syncTheme()
+
+    // Listen to theme-change events dispatched from keyboard shortcuts or command palette
+    window.addEventListener("theme-change", syncTheme)
+    window.addEventListener("storage", syncTheme)
+
+    return () => {
+      window.removeEventListener("theme-change", syncTheme)
+      window.removeEventListener("storage", syncTheme)
+    }
+  }, [])
 
   const defaultClasses = "flex h-8 w-8 items-center justify-center rounded-full text-muted transition-all hover:text-ink focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer"
+
+  const handleToggle = () => {
+    const root = document.documentElement
+    const nextDark = !root.classList.contains(THEME_DARK_CLASS)
+    root.classList.toggle(THEME_DARK_CLASS, nextDark)
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, nextDark ? THEME_DARK_CLASS : "light")
+    } catch {}
+    setDark(nextDark)
+    window.dispatchEvent(new Event("theme-change"))
+  }
 
   return (
     <button
       type="button"
-      onClick={() => setDark((d) => !d)}
+      onClick={handleToggle}
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       className={className ? `flex items-center justify-center rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer ${className}` : defaultClasses}
     >
