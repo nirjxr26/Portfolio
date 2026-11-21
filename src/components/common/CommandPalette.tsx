@@ -87,7 +87,7 @@ export function CommandPalette() {
       localStorage.setItem("theme", isDark ? "dark" : "light")
     } catch {}
     window.dispatchEvent(new Event("theme-change"))
-    notifySite("Yes, it's done", `Theme switched to ${isDark ? "dark" : "light"} mode`)
+    notifySite("Theme updated", isDark ? "Switched to dark mode." : "Switched to light mode.")
   }, [])
 
   const downloadResume = useCallback(() => {
@@ -103,7 +103,7 @@ export function CommandPalette() {
     } catch {
       window.open("/resume.pdf", "_blank", "noopener,noreferrer")
     }
-    notifySite("Yes, it's done", "Resume downloaded (PDF)")
+    notifySite("Download started", "Your résumé PDF is downloading.")
   }, [])
 
   const copyUrl = useCallback(async () => {
@@ -131,7 +131,7 @@ export function CommandPalette() {
     }
 
     void copy(url)
-    notifySite("Yes, it's done", "Page URL copied to clipboard")
+    notifySite("Link copied", "Page URL copied to clipboard.")
   }, [copy])
 
   const openContact = useCallback(async () => {
@@ -158,7 +158,7 @@ export function CommandPalette() {
       window.location.href = `mailto:${email}`
     } catch {}
 
-    notifySite("Yes, it's done", "Email copied & mail client opened")
+    notifySite("Contact opened", "Email copied & mail client opened.")
   }, [])
 
   // Works / Case studies items
@@ -443,7 +443,7 @@ export function CommandPalette() {
       }
 
       if (item.href) {
-        notifySite("Yes, it's done", `Navigating to ${item.title}`)
+        notifySite("Page navigation", `Navigating to ${item.title}.`)
         closePalette()
         setTimeout(() => {
           window.location.href = item.href!

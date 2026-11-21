@@ -20,7 +20,7 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
   const handleToggle = () => {
     setDark((d) => {
       const next = !d
-      notifySite("Yes, it's done", `Theme switched to ${next ? "dark" : "light"} mode`)
+      notifySite("Theme updated", next ? "Switched to dark mode." : "Switched to light mode.")
       return next
     })
   }
