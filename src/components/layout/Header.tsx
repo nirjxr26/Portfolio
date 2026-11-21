@@ -277,16 +277,16 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                 ),
               )}
 
-              {/* Right icons cluster with compact spacing */}
-              <div className="flex items-center gap-1.5 ml-2 lg:ml-3">
+              {/* Right icons cluster with compact spacing and unified alignment */}
+              <div className="flex items-center gap-1 ml-2 lg:ml-3">
                 <button
                   type="button"
                   onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
-                  className="flex items-center gap-1.5 px-1.5 py-1 text-muted hover:text-ink transition-colors hit-area cursor-pointer bg-transparent"
+                  className="flex h-8 items-center gap-1.5 px-2 rounded-full text-muted hover:text-ink transition-colors hit-area cursor-pointer bg-transparent"
                   aria-label={isMac ? "Search and commands (Cmd+K)" : "Search and commands (Ctrl+K)"}
                   title={isMac ? "Search and commands (Cmd+K)" : "Search and commands (Ctrl+K)"}
                 >
-                  <SearchIcon width={16} height={16} className="shrink-0" />
+                  <SearchIcon width={17} height={17} className="shrink-0" />
                   <kbd className="inline-flex items-center justify-center text-center font-mono text-[11.5px] px-2 py-0.5 rounded-[5px] bg-surface-alt border border-hairline/80 text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</kbd>
                 </button>
 

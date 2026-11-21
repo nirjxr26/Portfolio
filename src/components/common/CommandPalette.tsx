@@ -10,7 +10,7 @@ export interface PaletteItem {
   category: "Navigation" | "Projects" | "Articles" | "Other" | "Actions"
   href?: string
   keywords?: string
-  shortcut?: string[]
+  shortcut?: string
   onSelect?: () => void
 }
 
@@ -136,7 +136,7 @@ export function CommandPalette() {
         title: "Toggle Theme",
         category: "Actions",
         keywords: "theme dark light mode color switch",
-        shortcut: isMac ? ["⌥", "T"] : ["Alt", "T"],
+        shortcut: isMac ? "⌥ + T" : "Alt + T",
         onSelect: toggleTheme,
       },
       {
@@ -145,14 +145,14 @@ export function CommandPalette() {
         category: "Actions",
         href: "/resume.pdf",
         keywords: "cv resume pdf hiring career credentials",
-        shortcut: isMac ? ["⌥", "R"] : ["Alt", "R"],
+        shortcut: isMac ? "⌥ + R" : "Alt + R",
       },
       {
         id: "action-copy-url",
         title: "Copy Current Page URL",
         category: "Actions",
         keywords: "copy share link url address",
-        shortcut: isMac ? ["⌘", "C"] : ["Ctrl", "C"],
+        shortcut: isMac ? "⌘ + C" : "Ctrl + C",
         onSelect: copyUrl,
       },
       {
@@ -161,7 +161,7 @@ export function CommandPalette() {
         category: "Actions",
         href: "mailto:nirjargoswami2626@gmail.com",
         keywords: "contact hire email message ping mail",
-        shortcut: isMac ? ["⌥", "M"] : ["Alt", "M"],
+        shortcut: isMac ? "⌥ + M" : "Alt + M",
       },
     ],
     [copyUrl, isMac, toggleTheme],
@@ -550,20 +550,15 @@ export function CommandPalette() {
                           </span>
                         ) : (
                           item.shortcut && (
-                            <span className="flex items-center gap-1 shrink-0 ml-3">
-                              {item.shortcut.map((key) => (
-                                <kbd
-                                  key={key}
-                                  className={`inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 text-[11px] font-mono font-medium rounded-[4px] border select-none leading-none transition-colors ${
-                                    isSelected
-                                      ? "bg-canvas dark:bg-white/[0.12] border-hairline text-ink"
-                                      : "bg-surface-alt/70 dark:bg-white/[0.06] border-hairline/70 text-muted/80"
-                                  }`}
-                                >
-                                  {key}
-                                </kbd>
-                              ))}
-                            </span>
+                            <kbd
+                              className={`inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
+                                isSelected
+                                  ? "bg-canvas dark:bg-white/[0.12] text-ink"
+                                  : "bg-surface-alt/80 dark:bg-white/[0.06] text-muted/80"
+                              }`}
+                            >
+                              {item.shortcut}
+                            </kbd>
                           )
                         )}
                       </div>
