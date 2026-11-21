@@ -94,35 +94,16 @@ export function CommandPalette() {
     // 1. Notify immediately
     notifySite("Download started", "Your résumé PDF is downloading.")
 
-    // 2. Fetch as blob and trigger download via object URL - guarantees direct file download
-    fetch("/resume.pdf")
-      .then((res) => {
-        if (!res.ok) throw new Error("Fetch failed")
-        return res.blob()
-      })
-      .then((blob) => {
-        const blobUrl = window.URL.createObjectURL(blob)
-        const a = document.createElement("a")
-        a.style.display = "none"
-        a.href = blobUrl
-        a.download = "Nirjar_Goswami_Resume.pdf"
-        document.body.appendChild(a)
-        a.click()
-        setTimeout(() => {
-          window.URL.revokeObjectURL(blobUrl)
-          if (document.body.contains(a)) document.body.removeChild(a)
-        }, 1000)
-      })
-      .catch(() => {
-        const a = document.createElement("a")
-        a.href = "/resume.pdf"
-        a.download = "Nirjar_Goswami_Resume.pdf"
-        document.body.appendChild(a)
-        a.click()
-        setTimeout(() => {
-          if (document.body.contains(a)) document.body.removeChild(a)
-        }, 300)
-      })
+    // 2. Direct synchronous trigger preserves user gesture token and forces native file download
+    const a = document.createElement("a")
+    a.href = "/resume.pdf"
+    a.download = "Nirjar_Goswami_Resume.pdf"
+    a.rel = "noopener noreferrer"
+    document.body.appendChild(a)
+    a.click()
+    setTimeout(() => {
+      if (document.body.contains(a)) document.body.removeChild(a)
+    }, 500)
   }, [])
 
   const copyUrl = useCallback(async () => {
@@ -333,7 +314,7 @@ export function CommandPalette() {
       const code = e.code
 
       const isC = key === "c" || code === "KeyC"
-      const isR = key === "r" || code === "KeyR"
+      const isR = key === "r" || code === "KeyR" || key === "®"
       const isT = key === "t" || code === "KeyT"
       const isM = key === "m" || code === "KeyM" || key === "e" || code === "KeyE"
 
@@ -651,7 +632,7 @@ export function CommandPalette() {
                         ) : (
                           item.shortcut && (
                             <kbd
-                              className={`hidden lg:inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
+                              className={`hidden sm:inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
                                 isSelected
                                   ? "bg-canvas dark:bg-white/[0.12] text-ink"
                                   : "bg-surface-alt/80 dark:bg-white/[0.06] text-muted/80"

@@ -88,7 +88,7 @@ export function NotificationToast() {
     <aside
       aria-label="Notification"
       aria-live="polite"
-      className="hidden lg:flex fixed top-5 right-5 sm:top-6 sm:right-6 z-[60] items-start justify-between gap-4 px-5 sm:px-6 py-4 rounded-[20px] bg-[#f0f0f3] dark:bg-[#18181b] text-ink select-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] max-w-[92vw] sm:max-w-[380px] tracking-normal [letter-spacing:normal] animate-in fade-in slide-in-from-top-3"
+      className="hidden sm:flex fixed top-5 right-5 sm:top-6 sm:right-6 z-[60] items-start justify-between gap-4 px-5 sm:px-6 py-4 rounded-[20px] bg-[#f0f0f3] dark:bg-[#18181b] text-ink select-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] max-w-[92vw] sm:max-w-[380px] tracking-normal [letter-spacing:normal] animate-in fade-in slide-in-from-top-3"
     >
       {/* Left group: green circular checkmark icon centered to title and subtitle */}
       <div className="flex items-center gap-3.5 min-w-0">
