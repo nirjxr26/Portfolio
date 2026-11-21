@@ -95,13 +95,13 @@ export function CommandPalette() {
       const a = document.createElement("a")
       a.href = "/resume.pdf"
       a.download = "Nirjar_Goswami_Resume.pdf"
-      a.target = "_blank"
-      a.rel = "noopener noreferrer"
       document.body.appendChild(a)
       a.click()
-      document.body.removeChild(a)
+      setTimeout(() => {
+        if (document.body.contains(a)) document.body.removeChild(a)
+      }, 200)
     } catch {
-      window.open("/resume.pdf", "_blank", "noopener,noreferrer")
+      window.location.href = "/resume.pdf"
     }
     notifySite("Download started", "Your résumé PDF is downloading.")
   }, [])
@@ -134,28 +134,35 @@ export function CommandPalette() {
     notifySite("Link copied", "Page URL copied to clipboard.")
   }, [copy])
 
-  const openContact = useCallback(async () => {
+  const openContact = useCallback(() => {
     const email = "nirjargoswami2626@gmail.com"
+    // 1. Synchronously trigger mailto so browser user activation token is active
+    try {
+      const a = document.createElement("a")
+      a.href = `mailto:${email}`
+      document.body.appendChild(a)
+      a.click()
+      setTimeout(() => {
+        if (document.body.contains(a)) document.body.removeChild(a)
+      }, 200)
+    } catch {
+      window.location.href = `mailto:${email}`
+    }
+
+    // 2. Also copy email to clipboard synchronously/asynchronously so user has it ready
     try {
       if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(email)
-      }
-    } catch {
-      try {
+        void navigator.clipboard.writeText(email)
+      } else {
         const ta = document.createElement("textarea")
         ta.value = email
         ta.style.position = "fixed"
         ta.style.opacity = "0"
         document.body.appendChild(ta)
-        ta.focus()
         ta.select()
         document.execCommand("copy")
         document.body.removeChild(ta)
-      } catch {}
-    }
-
-    try {
-      window.location.href = `mailto:${email}`
+      }
     } catch {}
 
     notifySite("Contact opened", "Email copied & mail client opened.")
@@ -291,8 +298,16 @@ export function CommandPalette() {
   // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc, and daily action keybindings)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase()
+      const code = e.code
+
+      const isC = key === "c" || code === "KeyC"
+      const isR = key === "r" || code === "KeyR"
+      const isT = key === "t" || code === "KeyT"
+      const isM = key === "m" || code === "KeyM" || key === "e" || code === "KeyE"
+
       // Cmd+K or Ctrl+K: toggle command palette
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      if ((e.metaKey || e.ctrlKey) && (key === "k" || code === "KeyK")) {
         e.preventDefault()
         if (isOpen) {
           closePalette()
@@ -308,44 +323,53 @@ export function CommandPalette() {
         return
       }
 
-      // When command palette is OPEN:
-      if (isOpen) {
-        // Ctrl+C / Cmd+C inside command palette: copies URL if no text is selected in input
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "c") {
+      // Ctrl+C or Cmd+C: Copy URL (both inside palette and anywhere on site when no text is highlighted)
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && isC) {
+        if (isOpen) {
           const inputEl = inputRef.current
           const hasInputSelection = inputEl ? inputEl.selectionStart !== inputEl.selectionEnd : false
           if (!hasInputSelection) {
             e.preventDefault()
             copyUrl()
+            closePalette()
+            return
+          }
+        } else {
+          const selection = window.getSelection()?.toString()
+          if (!selection || selection.length === 0) {
+            e.preventDefault()
+            copyUrl()
             return
           }
         }
+      }
 
-        // Alt+T / Opt+T: toggle theme
-        if (e.altKey && e.key.toLowerCase() === "t") {
-          e.preventDefault()
-          toggleTheme()
-          return
-        }
-
-        // Alt+R / Opt+R: download resume
-        if (e.altKey && e.key.toLowerCase() === "r") {
-          e.preventDefault()
-          downloadResume()
-          return
-        }
-
-        // Alt+M / Opt+M: contact
-        if (e.altKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e")) {
-          e.preventDefault()
-          openContact()
-          return
-        }
-
+      // Alt+R (or Option+R): Download resume
+      if (e.altKey && isR) {
+        e.preventDefault()
+        downloadResume()
+        if (isOpen) closePalette()
         return
       }
 
-      // When command palette is CLOSED:
+      // Alt+T (or Option+T): Toggle theme
+      if (e.altKey && isT) {
+        e.preventDefault()
+        toggleTheme()
+        return
+      }
+
+      // Alt+M (or Option+M / Alt+E): Open contact
+      if (e.altKey && isM) {
+        e.preventDefault()
+        openContact()
+        if (isOpen) closePalette()
+        return
+      }
+
+      // When command palette is OPEN, don't trigger single-key shortcuts while typing in input
+      if (isOpen) return
+
       const isInput =
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement ||
@@ -358,34 +382,24 @@ export function CommandPalette() {
         return
       }
 
-      // Quick keybindings when not typing in any input:
-      if (!isInput) {
-        // Toggle theme: T or Alt+T
-        if (
-          (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.key.toLowerCase() === "t") ||
-          (e.altKey && e.key.toLowerCase() === "t")
-        ) {
+      // Quick single-key bindings when not typing in any input:
+      if (!isInput && !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
+        // T -> Toggle theme
+        if (isT) {
           e.preventDefault()
           toggleTheme()
           return
         }
 
-        // Download resume: R or Alt+R
-        if (
-          (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.key.toLowerCase() === "r") ||
-          (e.altKey && e.key.toLowerCase() === "r")
-        ) {
+        // R -> Download resume
+        if (isR) {
           e.preventDefault()
           downloadResume()
           return
         }
 
-        // Copy page URL: C, Alt+C, or Ctrl/Cmd+Shift+C
-        if (
-          (!e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "c") ||
-          (e.altKey && e.key.toLowerCase() === "c") ||
-          ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "c")
-        ) {
+        // C -> Copy page URL
+        if (isC) {
           const selection = window.getSelection()?.toString()
           if (!selection || selection.length === 0) {
             e.preventDefault()
@@ -394,11 +408,8 @@ export function CommandPalette() {
           }
         }
 
-        // Contact: M, E, or Alt+M / Alt+E
-        if (
-          (!e.ctrlKey && !e.metaKey && !e.shiftKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e")) ||
-          (e.altKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e"))
-        ) {
+        // M or E -> Contact
+        if (isM) {
           e.preventDefault()
           openContact()
           return
