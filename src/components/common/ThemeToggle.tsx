@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { THEME_DARK_CLASS, THEME_STORAGE_KEY } from "@/utils/helpers"
-import { notifySite } from "./NotificationToast"
 
 export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ className?: string; iconSize?: number }>) {
   const [dark, setDark] = useState(() =>
@@ -39,7 +38,6 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
     } catch {}
     setDark(nextDark)
     window.dispatchEvent(new Event("theme-change"))
-    notifySite("Theme updated", nextDark ? "Switched to dark mode." : "Switched to light mode.")
   }
 
   return (

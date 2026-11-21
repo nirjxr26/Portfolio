@@ -298,6 +298,11 @@ export function CommandPalette() {
   // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc, and daily action keybindings)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Only enable keybindings on desktop (>= 1024px) - not for mobile or tablets/iPads
+      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+        return
+      }
+
       const key = e.key.toLowerCase()
       const code = e.code
 
@@ -620,7 +625,7 @@ export function CommandPalette() {
                         ) : (
                           item.shortcut && (
                             <kbd
-                              className={`inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
+                              className={`hidden lg:inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
                                 isSelected
                                   ? "bg-canvas dark:bg-white/[0.12] text-ink"
                                   : "bg-surface-alt/80 dark:bg-white/[0.06] text-muted/80"
