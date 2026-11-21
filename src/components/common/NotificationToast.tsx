@@ -25,22 +25,38 @@ export function NotificationToast() {
     message: string
     visible: boolean
   }>({
-    title: "Link copied",
-    message: "Page URL copied to clipboard.",
-    visible: true, // Static by default as requested so design is immediately visible
+    title: "",
+    message: "",
+    visible: false,
   })
 
   const timerRef = useRef<number | null>(null)
+  const lastTriggerRef = useRef<{ msg: string; time: number }>({ msg: "", time: 0 })
 
   useEffect(() => {
     const handleNotification = (e: Event) => {
-      // Don't show notifications on mobile, iPads, or tablets (< 1024px)
-      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      // Don't show notifications on touch-only mobile devices or iPads/tablets
+      const isTouchOnly =
+        typeof window !== "undefined" &&
+        navigator.maxTouchPoints > 1 &&
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+      if (isTouchOnly) {
         return
       }
 
       const custom = e as CustomEvent<SiteNotificationDetail>
       if (custom.detail) {
+        const now = Date.now()
+        // Deduplicate rapid double clicks/triggers within 1.2s
+        if (
+          custom.detail.message === lastTriggerRef.current.msg &&
+          now - lastTriggerRef.current.time < 1200
+        ) {
+          return
+        }
+        lastTriggerRef.current = { msg: custom.detail.message, time: now }
+
         setNotification({
           title: custom.detail.title ?? "Action completed",
           message: custom.detail.message,
@@ -50,10 +66,10 @@ export function NotificationToast() {
         if (timerRef.current) {
           window.clearTimeout(timerRef.current)
         }
-        // Auto dismiss after 4.5 seconds
+        // Auto dismiss after exactly 3 seconds
         timerRef.current = window.setTimeout(() => {
           setNotification((prev) => ({ ...prev, visible: false }))
-        }, 4500)
+        }, 3000)
       }
     }
 

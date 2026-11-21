@@ -91,19 +91,38 @@ export function CommandPalette() {
   }, [])
 
   const downloadResume = useCallback(() => {
-    try {
-      const a = document.createElement("a")
-      a.href = "/resume.pdf"
-      a.download = "Nirjar_Goswami_Resume.pdf"
-      document.body.appendChild(a)
-      a.click()
-      setTimeout(() => {
-        if (document.body.contains(a)) document.body.removeChild(a)
-      }, 200)
-    } catch {
-      window.location.href = "/resume.pdf"
-    }
+    // 1. Notify immediately
     notifySite("Download started", "Your résumé PDF is downloading.")
+
+    // 2. Fetch as blob and trigger download via object URL - guarantees direct file download
+    fetch("/resume.pdf")
+      .then((res) => {
+        if (!res.ok) throw new Error("Fetch failed")
+        return res.blob()
+      })
+      .then((blob) => {
+        const blobUrl = window.URL.createObjectURL(blob)
+        const a = document.createElement("a")
+        a.style.display = "none"
+        a.href = blobUrl
+        a.download = "Nirjar_Goswami_Resume.pdf"
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+          window.URL.revokeObjectURL(blobUrl)
+          if (document.body.contains(a)) document.body.removeChild(a)
+        }, 1000)
+      })
+      .catch(() => {
+        const a = document.createElement("a")
+        a.href = "/resume.pdf"
+        a.download = "Nirjar_Goswami_Resume.pdf"
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+          if (document.body.contains(a)) document.body.removeChild(a)
+        }, 300)
+      })
   }, [])
 
   const copyUrl = useCallback(async () => {
@@ -136,20 +155,22 @@ export function CommandPalette() {
 
   const openContact = useCallback(() => {
     const email = "nirjargoswami2626@gmail.com"
-    // 1. Synchronously trigger mailto so browser user activation token is active
+    // 1. Trigger mail client directly via window.location.href
     try {
-      const a = document.createElement("a")
-      a.href = `mailto:${email}`
-      document.body.appendChild(a)
-      a.click()
-      setTimeout(() => {
-        if (document.body.contains(a)) document.body.removeChild(a)
-      }, 200)
-    } catch {
       window.location.href = `mailto:${email}`
+    } catch {
+      try {
+        const a = document.createElement("a")
+        a.href = `mailto:${email}`
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+          if (document.body.contains(a)) document.body.removeChild(a)
+        }, 200)
+      } catch {}
     }
 
-    // 2. Also copy email to clipboard synchronously/asynchronously so user has it ready
+    // 2. Also copy email to clipboard so user always has it ready
     try {
       if (navigator.clipboard?.writeText) {
         void navigator.clipboard.writeText(email)
@@ -298,8 +319,13 @@ export function CommandPalette() {
   // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc, and daily action keybindings)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only enable keybindings on desktop (>= 1024px) - not for mobile or tablets/iPads
-      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+      // Skip keybindings on touch-only mobile devices or iPads/tablets
+      const isTouchOnly =
+        typeof window !== "undefined" &&
+        navigator.maxTouchPoints > 1 &&
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+
+      if (isTouchOnly) {
         return
       }
 
