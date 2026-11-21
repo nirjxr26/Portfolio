@@ -1,20 +1,29 @@
 import { Component, ErrorInfo, ReactNode } from "react"
-import { AppButton } from "../common/Button"
+import { ErrorClient } from "../pages/ErrorClient"
 
 interface Props {
   children: ReactNode
+  code?: string | number
+  desc?: string
 }
 
 interface State {
   hasError: boolean
+  code: string | number
+  desc: string
 }
 
 export class ErrorBoundary extends Component<Readonly<Props>, State> {
-  public state: State = {
-    hasError: false,
+  public constructor(props: Props) {
+    super(props)
+    this.state = {
+      hasError: false,
+      code: props.code ?? 500,
+      desc: props.desc ?? "An unexpected error occurred.",
+    }
   }
 
-  public static getDerivedStateFromError(): State {
+  public static getDerivedStateFromError(): Partial<State> {
     return { hasError: true }
   }
 
@@ -26,34 +35,22 @@ export class ErrorBoundary extends Component<Readonly<Props>, State> {
     // Global handlers kept silent — no console output
   }
 
-  private handleReload = () => {
-    window.location.reload()
-  }
-
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-canvas text-ink flex flex-col items-center justify-center p-6 text-center">
-          <div className="max-w-3xl space-y-5 sm:space-y-6">
-            <h1 className="t-hero text-3xl min-[375px]:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-accent whitespace-nowrap">
-              Something went wrong.
-            </h1>
-            <p className="t-lead text-muted max-w-xl mx-auto">
-              An unexpected error occurred. No internal details or sensitive data were exposed.
-            </p>
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-3.5">
-              <AppButton variant="primary" onClick={this.handleReload}>
-                Reload Page
-              </AppButton>
-              <AppButton variant="ghost" href="mailto:nirjargoswami2626@gmail.com?subject=Application%20Issue%20Report">
-                Report Issue
-              </AppButton>
-            </div>
-          </div>
-        </div>
+        <ErrorClient
+          code={this.state.code}
+          desc={this.state.desc}
+          actionLabel="Go to Home"
+          actionHref="/"
+          onAction={() => {
+            this.setState({ hasError: false })
+          }}
+        />
       )
     }
 
     return this.props.children
   }
 }
+

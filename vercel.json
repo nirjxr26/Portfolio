@@ -54,6 +54,10 @@
     {
       "source": "/index.md",
       "destination": "/index.html"
+    },
+    {
+      "source": "/resume",
+      "destination": "/resume.pdf"
     }
   ],
   "headers": [

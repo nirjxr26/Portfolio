@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { NAV_LINKS, WORK_ITEMS, type NavLink } from "@/data/navigation"
 import { AgentButton } from "../common/AgentButton"
-import { ArrowRight, ChevronDown, HomeIcon } from "../common/Icons"
+import { ArrowRight, ChevronDown, HomeIcon, SearchIcon } from "../common/Icons"
 import { ThemeToggle } from "../common/ThemeToggle"
 import { Container } from "./Container"
 
@@ -18,12 +18,14 @@ function MobileDrawer({
   setWorksExpanded,
   isWorks,
   closeMobileNav,
+  isMac,
 }: Readonly<{
   activePath: string
   worksExpanded: boolean
   setWorksExpanded: (expanded: boolean) => void
   isWorks: boolean
   closeMobileNav: () => void
+  isMac: boolean
 }>) {
   if (worksExpanded) {
     return (
@@ -72,6 +74,18 @@ function MobileDrawer({
       <a href="/" onClick={closeMobileNav} className={MOBILE_LINK}>
         Home
       </a>
+
+      <button
+        type="button"
+        onClick={() => {
+          closeMobileNav()
+          window.dispatchEvent(new CustomEvent("open-command-palette"))
+        }}
+        className={`w-full flex items-center justify-between text-left ${MOBILE_LINK} cursor-pointer`}
+      >
+        <span>Search</span>
+        <span className="inline-flex items-center justify-center text-center font-mono text-[13px] px-2 py-0.5 rounded-md bg-surface-alt border border-hairline text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</span>
+      </button>
 
       {NAV_LINKS.map((link) =>
         link.expandable ? (
@@ -134,6 +148,14 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [worksDropdownOpen, setWorksDropdownOpen] = useState(false)
   const [mobileWorksExpanded, setMobileWorksExpanded] = useState(false)
+  const [isMac, setIsMac] = useState(false)
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      const p = (navigator.platform || navigator.userAgent || "").toLowerCase()
+      setIsMac(p.includes("mac") || p.includes("iphone") || p.includes("ipad") || p.includes("ipod"))
+    }
+  }, [])
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -176,12 +198,13 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               {activePath === "/" && <AgentButton />}
             </div>
 
-            <div className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-5 lg:gap-8 text-xs text-muted md:flex whitespace-nowrap">
+            <div className="absolute left-1/2 -translate-x-1/2 hidden items-center gap-6 lg:gap-8 text-[13px] text-muted md:flex whitespace-nowrap">
               {activePath !== "/" && (
                 <a
                   href="/"
                   aria-label="Home"
-                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0"
+                  title="Home"
+                  className="flex items-center text-muted transition-colors hover:text-ink pr-1 shrink-0 hit-area"
                 >
                   <HomeIcon width={15} height={15} />
                 </a>
@@ -254,17 +277,35 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                 ),
               )}
 
-              {activePath === "/" && (
-                <div className="flex items-center">
-                  <AgentButton />
-                </div>
-              )}
-              <div className="flex items-center">
+              {/* Right icons cluster with compact spacing */}
+              <div className="flex items-center gap-1.5 ml-2 lg:ml-3">
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+                  className="flex items-center gap-1.5 px-1.5 py-1 text-muted hover:text-ink transition-colors hit-area cursor-pointer bg-transparent"
+                  aria-label={isMac ? "Search and commands (Cmd+K)" : "Search and commands (Ctrl+K)"}
+                  title={isMac ? "Search and commands (Cmd+K)" : "Search and commands (Ctrl+K)"}
+                >
+                  <SearchIcon width={16} height={16} className="shrink-0" />
+                  <kbd className="inline-flex items-center justify-center text-center font-mono text-[11.5px] px-2 py-0.5 rounded-[5px] bg-surface-alt border border-hairline/80 text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+                </button>
+
+                <AgentButton />
+
                 <ThemeToggle />
               </div>
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3 ml-auto md:hidden">
+            <div className="flex items-center gap-1.5 sm:gap-2 ml-auto md:hidden">
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:text-ink focus:outline-none hit-area cursor-pointer"
+                aria-label="Search and commands"
+                title="Search and commands"
+              >
+                <SearchIcon width={17} height={17} />
+              </button>
               <ThemeToggle />
 
               <button
@@ -332,6 +373,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
               setWorksExpanded={setMobileWorksExpanded}
               isWorks={isWorks}
               closeMobileNav={closeMobileNav}
+              isMac={isMac}
             />
           </div>
         </div>
