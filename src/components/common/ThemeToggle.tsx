@@ -14,14 +14,14 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
     localStorage.setItem(THEME_STORAGE_KEY, dark ? THEME_DARK_CLASS : "light")
   }, [dark])
 
-  const defaultClasses = "flex h-8 w-8 items-center justify-center rounded-full text-muted transition-all hover:text-ink focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area"
+  const defaultClasses = "flex h-8 w-8 items-center justify-center rounded-full text-muted transition-all hover:text-ink focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer"
 
   return (
     <button
       type="button"
       onClick={() => setDark((d) => !d)}
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
-      className={className ? `flex items-center justify-center rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area ${className}` : defaultClasses}
+      className={className ? `flex items-center justify-center rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer ${className}` : defaultClasses}
     >
       {dark ? (
         <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
