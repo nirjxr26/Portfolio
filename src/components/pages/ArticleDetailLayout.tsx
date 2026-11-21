@@ -114,10 +114,10 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                 {renderInline(article.subhead, "article-subhead")}
               </p>
             ) : null}
-            <div className="mt-5 sm:mt-6">
-              <ArticleAudioPlayer article={article} />
+            <div className="mt-6 sm:mt-7 pt-1 border-t border-hairline/80 dark:border-hairline/40">
+              <ArticleAudioPlayer article={article} onShare={() => setIsShareSheetOpen(true)} />
             </div>
-            {!article.leadImage ? <hr className="mt-5 border-hairline sm:mt-6" /> : null}
+            {!article.leadImage ? <hr className="border-hairline/80 dark:border-hairline/40" /> : null}
           </header>
 
           {article.leadImage ? (

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { BlogArticle } from "@/data/blogArticles"
-import { HeadphonesIcon, PauseIcon, PlayIcon } from "./Icons"
+import { LinkIcon, PauseIcon, PlayIcon } from "./Icons"
 import { notifySite } from "./NotificationToast"
 
 export function cleanTextForSpeech(text: string): string {
@@ -63,17 +63,34 @@ export function prepareSpeechChunks(article: BlogArticle): string[] {
   return chunks
 }
 
-interface ArticleAudioPlayerProps {
-  article: BlogArticle
+export function calculateAudioDuration(chunks: string[], wpm = 145): { totalSeconds: number; formatted: string } {
+  const text = chunks.join(" ")
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  const totalSeconds = Math.max(60, Math.round((words / wpm) * 60))
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  return {
+    totalSeconds,
+    formatted: `${minutes}:${seconds.toString().padStart(2, "0")}`,
+  }
 }
 
-export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps>) {
+interface ArticleAudioPlayerProps {
+  article: BlogArticle
+  onShare?: () => void
+  className?: string
+}
+
+export function ArticleAudioPlayer({ article, onShare, className = "" }: Readonly<ArticleAudioPlayerProps>) {
   const [supported, setSupported] = useState(false)
   const [state, setState] = useState<"idle" | "playing" | "paused">("idle")
   const [chunkIndex, setChunkIndex] = useState(0)
   const [rate, setRate] = useState<1 | 1.25 | 1.5>(1)
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
 
   const chunks = useMemo(() => prepareSpeechChunks(article), [article])
+  const duration = useMemo(() => calculateAudioDuration(chunks), [chunks])
+
   const activeUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
   const isCancelledRef = useRef(false)
   const chunkIndexRef = useRef(0)
@@ -87,10 +104,26 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
     chunkIndexRef.current = chunkIndex
   }, [chunkIndex])
 
-  // Feature detection
+  // Feature detection & voice loading
   useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
-      setSupported(true)
+    if (typeof window === "undefined" || !("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+      return
+    }
+    setSupported(true)
+
+    const updateVoices = () => {
+      try {
+        const v = window.speechSynthesis.getVoices()
+        if (v && v.length > 0) {
+          setVoices(v)
+        }
+      } catch {}
+    }
+
+    updateVoices()
+    window.speechSynthesis.addEventListener("voiceschanged", updateVoices)
+    return () => {
+      window.speechSynthesis.removeEventListener("voiceschanged", updateVoices)
     }
   }, [])
 
@@ -99,31 +132,35 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
     return () => {
       isCancelledRef.current = true
       if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.cancel()
+        try {
+          window.speechSynthesis.cancel()
+        } catch {}
       }
     }
   }, [article.slug])
 
   const getBestVoice = useCallback((): SpeechSynthesisVoice | null => {
     if (typeof window === "undefined" || !window.speechSynthesis) return null
-    const voices = window.speechSynthesis.getVoices()
-    if (!voices || voices.length === 0) return null
+    const list = voices.length > 0 ? voices : window.speechSynthesis.getVoices()
+    if (!list || list.length === 0) return null
 
-    // Look for high-quality English natural voices (macOS Samantha/Daniel, Chrome Google Natural, Windows Natural)
-    const natural = voices.find(
+    // Look for high-quality natural voices (macOS Samantha/Daniel/Ava, Chrome Google Natural, Windows Natural)
+    const natural = list.find(
       (v) =>
         v.lang.startsWith("en") &&
         (v.name.includes("Natural") ||
           v.name.includes("Samantha") ||
           v.name.includes("Daniel") ||
           v.name.includes("Google") ||
-          v.name.includes("Premium")),
+          v.name.includes("Premium") ||
+          v.name.includes("Ava") ||
+          v.name.includes("Jenny")),
     )
     if (natural) return natural
 
-    const english = voices.find((v) => v.lang.startsWith("en"))
-    return english || voices[0] || null
-  }, [])
+    const english = list.find((v) => v.lang.startsWith("en"))
+    return english || list[0] || null
+  }, [voices])
 
   const speakChunk = useCallback(
     (index: number) => {
@@ -136,15 +173,37 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
         return
       }
 
-      window.speechSynthesis.cancel()
-      const text = chunks[index]
+      const text = chunks[index]?.trim()
+      if (!text) {
+        if (index + 1 < chunks.length) {
+          speakChunk(index + 1)
+        } else {
+          setState("idle")
+        }
+        return
+      }
+
+      // If paused, unpause first
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume()
+      }
+
       const utterance = new SpeechSynthesisUtterance(text)
+      utterance.lang = "en-US"
 
       const voice = getBestVoice()
-      if (voice) utterance.voice = voice
+      if (voice) {
+        utterance.voice = voice
+        utterance.lang = voice.lang || "en-US"
+      }
 
-      utterance.rate = rateRef.current
+      utterance.rate = rateRef.current || 1.0
       utterance.pitch = 1.0
+      utterance.volume = 1.0
+
+      utterance.onstart = () => {
+        setState("playing")
+      }
 
       utterance.onend = () => {
         if (isCancelledRef.current) return
@@ -159,7 +218,10 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
         setState("idle")
       }
 
+      // Chromium Bug Fix: prevent V8 garbage collection mid-speech
+      ;(window as unknown as { __speechUtterance?: SpeechSynthesisUtterance }).__speechUtterance = utterance
       activeUtteranceRef.current = utterance
+
       window.speechSynthesis.speak(utterance)
     },
     [article.title, chunks, getBestVoice],
@@ -169,7 +231,21 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
     if (!supported || chunks.length === 0) return
     isCancelledRef.current = false
     setState("playing")
-    speakChunk(chunkIndex)
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume()
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel()
+        setTimeout(() => {
+          speakChunk(chunkIndexRef.current)
+        }, 40)
+        return
+      }
+    }
+
+    speakChunk(chunkIndexRef.current)
   }
 
   const handlePause = () => {
@@ -208,93 +284,109 @@ export function ArticleAudioPlayer({ article }: Readonly<ArticleAudioPlayerProps
     }
   }
 
-  if (!supported || chunks.length === 0) {
-    return null
-  }
+  // Calculate elapsed progress formatted string
+  const elapsedSeconds = Math.round((chunkIndex / Math.max(1, chunks.length)) * duration.totalSeconds)
+  const elapsedMinutes = Math.floor(elapsedSeconds / 60)
+  const elapsedRemainingSec = elapsedSeconds % 60
+  const elapsedFormatted = `${elapsedMinutes}:${elapsedRemainingSec.toString().padStart(2, "0")}`
 
-  const progressPercent = Math.min(100, Math.round((chunkIndex / chunks.length) * 100))
+  const displayTime =
+    state === "playing" || state === "paused"
+      ? `${elapsedFormatted} / ${duration.formatted}`
+      : duration.formatted
 
   return (
-    <div className="flex items-center select-none" aria-label="Article narration player">
-      {state === "idle" ? (
+    <div
+      className={`flex items-center justify-between w-full py-3.5 sm:py-4 select-none ${className}`.trim()}
+      aria-label="Article narration and share bar"
+    >
+      {/* Left side: Circular Play button + "Listen to article" + "|" + Duration */}
+      <div className="flex items-center gap-3 sm:gap-4 min-w-0">
         <button
           type="button"
-          onClick={handleStart}
-          className="inline-flex items-center gap-2 h-9 px-3.5 rounded-full bg-surface-alt hover:bg-surface-alt/80 text-ink font-medium text-[13px] sm:text-[13.5px] border border-hairline/80 dark:border-hairline/40 transition-all hover:border-hairline active:scale-[0.98] select-none cursor-pointer hit-area shadow-2xs"
-          aria-label={`Listen to article (${article.readTime} read)`}
+          onClick={() => {
+            if (state === "playing") {
+              handlePause()
+            } else if (state === "paused") {
+              handleResume()
+            } else {
+              handleStart()
+            }
+          }}
+          className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-[#1c1c1e] dark:bg-[#27272a] text-white hover:opacity-90 active:scale-95 transition-all cursor-pointer shadow-sm shrink-0 hit-area"
+          aria-label={state === "playing" ? "Pause narration" : "Listen to article"}
+          title={state === "playing" ? "Pause narration" : "Listen to article"}
         >
-          <HeadphonesIcon width={14} height={14} className="text-accent shrink-0" />
-          <span>Listen to article</span>
-          <span className="text-muted/60 text-[11px]" aria-hidden="true">
-            •
-          </span>
-          <span className="text-muted text-[12px]">{article.readTime} read</span>
+          {state === "playing" ? (
+            <PauseIcon width={13} height={13} />
+          ) : (
+            <PlayIcon width={13} height={13} className="ml-0.5" />
+          )}
         </button>
-      ) : (
-        <div className="inline-flex items-center gap-2.5 sm:gap-3 h-10 px-3 py-1.5 rounded-full bg-surface-alt dark:bg-[#18181b] text-ink border border-hairline/90 dark:border-hairline/50 shadow-md backdrop-blur-md transition-all select-none max-w-full animate-in fade-in zoom-in-95 duration-200">
-          {/* Play/Pause Button */}
-          <button
-            type="button"
-            onClick={state === "playing" ? handlePause : handleResume}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-accent text-white hover:opacity-90 transition-opacity cursor-pointer shrink-0 active:scale-95 hit-area"
-            aria-label={state === "playing" ? "Pause narration" : "Resume narration"}
-            title={state === "playing" ? "Pause" : "Resume"}
-          >
-            {state === "playing" ? (
-              <PauseIcon width={11} height={11} />
-            ) : (
-              <PlayIcon width={11} height={11} className="ml-0.5" />
-            )}
-          </button>
 
-          {/* Progress bar & Percent */}
-          <div className="flex items-center gap-2 min-w-[70px] sm:min-w-[90px]">
-            <div className="h-1.5 w-16 sm:w-20 rounded-full bg-hairline dark:bg-white/10 overflow-hidden">
-              <div
-                className="h-full bg-accent rounded-full transition-all duration-300"
-                style={{ width: `${progressPercent}%` }}
-              />
+        <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+          <span className="text-[15px] sm:text-[16px] font-semibold text-ink tracking-tight select-none whitespace-nowrap">
+            Listen to article
+          </span>
+
+          <span className="h-4 w-px bg-hairline dark:bg-hairline/70 select-none shrink-0" aria-hidden="true" />
+
+          <span className="text-[14px] sm:text-[15px] font-medium text-ink/90 dark:text-ink/90 font-mono tracking-tight select-none whitespace-nowrap">
+            {displayTime}
+          </span>
+
+          {/* Quick speed toggle & stop controls visible when active */}
+          {(state === "playing" || state === "paused") && (
+            <div className="flex items-center gap-1.5 ml-1">
+              <button
+                type="button"
+                onClick={cycleRate}
+                className="px-2 py-0.5 rounded-full bg-surface-alt hover:bg-hairline text-muted hover:text-ink text-[11px] font-mono font-medium transition-colors cursor-pointer select-none border border-hairline/60 hit-area"
+                aria-label={`Playback speed: ${rate}x. Click to change.`}
+                title="Change speed"
+              >
+                {rate}×
+              </button>
+
+              <button
+                type="button"
+                onClick={handleStop}
+                className="flex h-5 w-5 items-center justify-center rounded-full text-muted hover:text-ink hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer hit-area"
+                aria-label="Stop narration"
+                title="Stop narration"
+              >
+                <svg
+                  width={10}
+                  height={10}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
             </div>
-            <span className="text-[11px] font-mono text-muted tabular-nums shrink-0">
-              {progressPercent}%
-            </span>
-          </div>
-
-          {/* Speed Toggle (1x, 1.25x, 1.5x) */}
-          <button
-            type="button"
-            onClick={cycleRate}
-            className="px-2 py-0.5 rounded-full bg-canvas/80 dark:bg-white/[0.08] hover:bg-canvas text-muted hover:text-ink text-[11px] font-mono font-medium transition-colors cursor-pointer select-none border border-hairline/40 hit-area"
-            aria-label={`Playback speed: ${rate}x. Click to change.`}
-            title="Change playback speed"
-          >
-            {rate}×
-          </button>
-
-          {/* Stop / Dismiss Button */}
-          <button
-            type="button"
-            onClick={handleStop}
-            className="flex h-6 w-6 items-center justify-center rounded-full text-muted hover:text-ink hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer shrink-0 hit-area ml-0.5"
-            aria-label="Stop narration"
-            title="Stop narration"
-          >
-            <svg
-              width={11}
-              height={11}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
+          )}
         </div>
+      </div>
+
+      {/* Right side: Share icon + "Share" text */}
+      {onShare && (
+        <button
+          type="button"
+          onClick={onShare}
+          className="flex items-center gap-1.5 sm:gap-2 text-ink hover:text-accent transition-colors font-medium sm:font-semibold text-[14px] sm:text-[15px] cursor-pointer select-none hit-area shrink-0 ml-4"
+          aria-label="Share article"
+          title="Share this article"
+        >
+          <LinkIcon width={16} height={16} strokeWidth={2.2} className="shrink-0" />
+          <span>Share</span>
+        </button>
       )}
     </div>
   )
