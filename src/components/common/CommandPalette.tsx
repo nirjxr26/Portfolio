@@ -10,6 +10,7 @@ export interface PaletteItem {
   category: "Navigation" | "Projects" | "Articles" | "Other" | "Actions"
   href?: string
   keywords?: string
+  shortcut?: string[]
   onSelect?: () => void
 }
 
@@ -72,6 +73,34 @@ export function CommandPalette() {
   const listRef = useRef<HTMLDivElement>(null)
   const searchInputId = useId()
   const { copied, copy } = useCopy(1800)
+  const [isMac, setIsMac] = useState(false)
+
+  useEffect(() => {
+    setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent))
+  }, [])
+
+  const toggleTheme = useCallback(() => {
+    const root = document.documentElement
+    const isDark = root.classList.toggle("dark")
+    try {
+      localStorage.setItem("theme", isDark ? "dark" : "light")
+    } catch {}
+    window.dispatchEvent(new Event("theme-change"))
+  }, [])
+
+  const downloadResume = useCallback(() => {
+    window.open("/resume.pdf", "_blank", "noopener,noreferrer")
+  }, [])
+
+  const copyUrl = useCallback(() => {
+    if (typeof window !== "undefined") {
+      void copy(window.location.href)
+    }
+  }, [copy])
+
+  const openContact = useCallback(() => {
+    window.open("mailto:nirjargoswami2626@gmail.com", "_blank", "noopener,noreferrer")
+  }, [])
 
   // Works / Case studies items
   const projectItems: PaletteItem[] = useMemo(
@@ -99,7 +128,7 @@ export function CommandPalette() {
     [],
   )
 
-  // Actions items
+  // Actions items with daily keybindings
   const actionItems: PaletteItem[] = useMemo(
     () => [
       {
@@ -107,14 +136,8 @@ export function CommandPalette() {
         title: "Toggle Theme",
         category: "Actions",
         keywords: "theme dark light mode color switch",
-        onSelect: () => {
-          const root = document.documentElement
-          const isDark = root.classList.toggle("dark")
-          try {
-            localStorage.setItem("theme", isDark ? "dark" : "light")
-          } catch {}
-          window.dispatchEvent(new Event("theme-change"))
-        },
+        shortcut: isMac ? ["⌥", "T"] : ["Alt", "T"],
+        onSelect: toggleTheme,
       },
       {
         id: "action-resume",
@@ -122,17 +145,15 @@ export function CommandPalette() {
         category: "Actions",
         href: "/resume.pdf",
         keywords: "cv resume pdf hiring career credentials",
+        shortcut: isMac ? ["⌥", "R"] : ["Alt", "R"],
       },
       {
         id: "action-copy-url",
         title: "Copy Current Page URL",
         category: "Actions",
         keywords: "copy share link url address",
-        onSelect: () => {
-          if (typeof window !== "undefined") {
-            void copy(window.location.href)
-          }
-        },
+        shortcut: isMac ? ["⌘", "C"] : ["Ctrl", "C"],
+        onSelect: copyUrl,
       },
       {
         id: "action-email",
@@ -140,9 +161,10 @@ export function CommandPalette() {
         category: "Actions",
         href: "mailto:nirjargoswami2626@gmail.com",
         keywords: "contact hire email message ping mail",
+        shortcut: isMac ? ["⌥", "M"] : ["Alt", "M"],
       },
     ],
-    [copy],
+    [copyUrl, isMac, toggleTheme],
   )
 
   // Build the complete searchable catalog
@@ -205,9 +227,10 @@ export function CommandPalette() {
     }, 200)
   }, [isClosing])
 
-  // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc)
+  // Global keyboard shortcuts (Cmd+K, Ctrl+K, /, Esc, and daily action keybindings)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Cmd+K or Ctrl+K: toggle command palette
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault()
         if (isOpen) {
@@ -224,14 +247,101 @@ export function CommandPalette() {
         return
       }
 
+      // When command palette is OPEN:
+      if (isOpen) {
+        // Ctrl+C / Cmd+C inside command palette: copies URL if no text is selected in input
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "c") {
+          const inputEl = inputRef.current
+          const hasInputSelection = inputEl ? inputEl.selectionStart !== inputEl.selectionEnd : false
+          if (!hasInputSelection) {
+            e.preventDefault()
+            copyUrl()
+            return
+          }
+        }
+
+        // Alt+T / Opt+T: toggle theme
+        if (e.altKey && e.key.toLowerCase() === "t") {
+          e.preventDefault()
+          toggleTheme()
+          return
+        }
+
+        // Alt+R / Opt+R: download resume
+        if (e.altKey && e.key.toLowerCase() === "r") {
+          e.preventDefault()
+          downloadResume()
+          return
+        }
+
+        // Alt+M / Opt+M: contact
+        if (e.altKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e")) {
+          e.preventDefault()
+          openContact()
+          return
+        }
+
+        return
+      }
+
+      // When command palette is CLOSED:
+      const isInput =
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target instanceof HTMLElement && e.target.isContentEditable)
+
       // Open on `/` when not typing inside an input/textarea
-      if (
-        e.key === "/" &&
-        !isOpen &&
-        !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
-      ) {
+      if (e.key === "/" && !isInput) {
         e.preventDefault()
         openPalette()
+        return
+      }
+
+      // Quick keybindings when not typing in any input:
+      if (!isInput) {
+        // Toggle theme: T or Alt+T
+        if (
+          (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.key.toLowerCase() === "t") ||
+          (e.altKey && e.key.toLowerCase() === "t")
+        ) {
+          e.preventDefault()
+          toggleTheme()
+          return
+        }
+
+        // Download resume: R or Alt+R
+        if (
+          (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.key.toLowerCase() === "r") ||
+          (e.altKey && e.key.toLowerCase() === "r")
+        ) {
+          e.preventDefault()
+          downloadResume()
+          return
+        }
+
+        // Copy page URL: C, Alt+C, or Ctrl/Cmd+Shift+C
+        if (
+          (!e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "c") ||
+          (e.altKey && e.key.toLowerCase() === "c") ||
+          ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "c")
+        ) {
+          const selection = window.getSelection()?.toString()
+          if (!selection || selection.length === 0) {
+            e.preventDefault()
+            copyUrl()
+            return
+          }
+        }
+
+        // Contact: M, E, or Alt+M / Alt+E
+        if (
+          (!e.ctrlKey && !e.metaKey && !e.shiftKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e")) ||
+          (e.altKey && (e.key.toLowerCase() === "m" || e.key.toLowerCase() === "e"))
+        ) {
+          e.preventDefault()
+          openContact()
+          return
+        }
       }
     }
 
@@ -244,7 +354,7 @@ export function CommandPalette() {
       window.removeEventListener("keydown", handleKeyDown)
       window.removeEventListener("open-command-palette", handleCustomOpen)
     }
-  }, [closePalette, isOpen, openPalette])
+  }, [closePalette, copyUrl, downloadResume, isOpen, openContact, openPalette, toggleTheme])
 
   // Lock scroll & auto-focus input when opened
   useEffect(() => {
@@ -432,6 +542,30 @@ export function CommandPalette() {
                         <span className="text-[15px] sm:text-[15px] truncate transition-colors tracking-normal [letter-spacing:normal]">
                           {item.title}
                         </span>
+
+                        {item.id === "action-copy-url" && copied ? (
+                          <span className="inline-flex items-center gap-1 text-[11.5px] font-medium text-accent shrink-0 select-none">
+                            <CheckIcon width={12} height={12} strokeWidth={2.5} />
+                            Copied
+                          </span>
+                        ) : (
+                          item.shortcut && (
+                            <span className="flex items-center gap-1 shrink-0 ml-3">
+                              {item.shortcut.map((key) => (
+                                <kbd
+                                  key={key}
+                                  className={`inline-flex items-center justify-center min-w-[20px] h-[20px] px-1.5 text-[11px] font-mono font-medium rounded-[4px] border select-none leading-none transition-colors ${
+                                    isSelected
+                                      ? "bg-canvas dark:bg-white/[0.12] border-hairline text-ink"
+                                      : "bg-surface-alt/70 dark:bg-white/[0.06] border-hairline/70 text-muted/80"
+                                  }`}
+                                >
+                                  {key}
+                                </kbd>
+                              ))}
+                            </span>
+                          )
+                        )}
                       </div>
                     )
                   })}
