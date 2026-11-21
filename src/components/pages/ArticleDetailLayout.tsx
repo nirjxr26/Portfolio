@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { ArticleMoreCard, Seo, AppleShareSheet } from "../common"
+import { ArticleMoreCard, Seo, AppleShareSheet, ArticleAudioPlayer } from "../common"
 import { CopySwapIcon, ShareIcon } from "../common/Icons"
 import { CarouselSection, PageShell } from "../layout"
 import { useCopy } from "@/utils/useCopy"
@@ -114,6 +114,9 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
                 {renderInline(article.subhead, "article-subhead")}
               </p>
             ) : null}
+            <div className="mt-5 sm:mt-6">
+              <ArticleAudioPlayer article={article} />
+            </div>
             {!article.leadImage ? <hr className="mt-5 border-hairline sm:mt-6" /> : null}
           </header>
 
