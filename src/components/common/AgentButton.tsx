@@ -1,13 +1,19 @@
 import { BotIcon } from "./Icons"
 import { useAgentMode } from "@/utils/useAgentMode"
+import { notifySite } from "./NotificationToast"
 
 export function AgentButton({ className = "" }: Readonly<{ className?: string }>) {
   const { isAgentMode, toggleAgentMode } = useAgentMode()
 
+  const handleToggle = () => {
+    toggleAgentMode()
+    notifySite("Yes, it's done", isAgentMode ? "Exited Agent markdown view" : "Switched to Agent markdown view")
+  }
+
   return (
     <button
       type="button"
-      onClick={toggleAgentMode}
+      onClick={handleToggle}
       aria-label={isAgentMode ? "Exit Agent markdown view" : "Switch to Agent markdown view"}
       aria-pressed={isAgentMode}
       title={isAgentMode ? "Exit Agent markdown view" : "View main site in raw Markdown format"}

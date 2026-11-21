@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { THEME_DARK_CLASS, THEME_STORAGE_KEY } from "@/utils/helpers"
+import { notifySite } from "./NotificationToast"
 
 export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ className?: string; iconSize?: number }>) {
   const [dark, setDark] = useState(() =>
@@ -16,10 +17,18 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
 
   const defaultClasses = "flex h-8 w-8 items-center justify-center rounded-full text-muted transition-all hover:text-ink focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer"
 
+  const handleToggle = () => {
+    setDark((d) => {
+      const next = !d
+      notifySite("Yes, it's done", `Theme switched to ${next ? "dark" : "light"} mode`)
+      return next
+    })
+  }
+
   return (
     <button
       type="button"
-      onClick={() => setDark((d) => !d)}
+      onClick={handleToggle}
       aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
       className={className ? `flex items-center justify-center rounded-full transition-all focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer ${className}` : defaultClasses}
     >

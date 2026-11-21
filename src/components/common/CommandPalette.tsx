@@ -3,6 +3,7 @@ import { BLOG_ARTICLES } from "@/data/blogArticles"
 import { CASE_STUDIES } from "@/data/caseStudies"
 import { useCopy } from "@/utils/useCopy"
 import { CheckIcon, SearchIcon } from "./Icons"
+import { notifySite } from "./NotificationToast"
 
 export interface PaletteItem {
   id: string
@@ -86,20 +87,78 @@ export function CommandPalette() {
       localStorage.setItem("theme", isDark ? "dark" : "light")
     } catch {}
     window.dispatchEvent(new Event("theme-change"))
+    notifySite("Yes, it's done", `Theme switched to ${isDark ? "dark" : "light"} mode`)
   }, [])
 
   const downloadResume = useCallback(() => {
-    window.open("/resume.pdf", "_blank", "noopener,noreferrer")
+    try {
+      const a = document.createElement("a")
+      a.href = "/resume.pdf"
+      a.download = "Nirjar_Goswami_Resume.pdf"
+      a.target = "_blank"
+      a.rel = "noopener noreferrer"
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+    } catch {
+      window.open("/resume.pdf", "_blank", "noopener,noreferrer")
+    }
+    notifySite("Yes, it's done", "Resume downloaded (PDF)")
   }, [])
 
-  const copyUrl = useCallback(() => {
-    if (typeof window !== "undefined") {
-      void copy(window.location.href)
+  const copyUrl = useCallback(async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "https://nirjargoswami.me"
+    let ok = false
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url)
+        ok = true
+      }
+    } catch {}
+
+    if (!ok) {
+      try {
+        const ta = document.createElement("textarea")
+        ta.value = url
+        ta.style.position = "fixed"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.focus()
+        ta.select()
+        ok = document.execCommand("copy")
+        document.body.removeChild(ta)
+      } catch {}
     }
+
+    void copy(url)
+    notifySite("Yes, it's done", "Page URL copied to clipboard")
   }, [copy])
 
-  const openContact = useCallback(() => {
-    window.open("mailto:nirjargoswami2626@gmail.com", "_blank", "noopener,noreferrer")
+  const openContact = useCallback(async () => {
+    const email = "nirjargoswami2626@gmail.com"
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(email)
+      }
+    } catch {
+      try {
+        const ta = document.createElement("textarea")
+        ta.value = email
+        ta.style.position = "fixed"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.focus()
+        ta.select()
+        document.execCommand("copy")
+        document.body.removeChild(ta)
+      } catch {}
+    }
+
+    try {
+      window.location.href = `mailto:${email}`
+    } catch {}
+
+    notifySite("Yes, it's done", "Email copied & mail client opened")
   }, [])
 
   // Works / Case studies items
@@ -146,6 +205,7 @@ export function CommandPalette() {
         href: "/resume.pdf",
         keywords: "cv resume pdf hiring career credentials",
         shortcut: isMac ? "⌥ + R" : "Alt + R",
+        onSelect: downloadResume,
       },
       {
         id: "action-copy-url",
@@ -162,9 +222,10 @@ export function CommandPalette() {
         href: "mailto:nirjargoswami2626@gmail.com",
         keywords: "contact hire email message ping mail",
         shortcut: isMac ? "⌥ + M" : "Alt + M",
+        onSelect: openContact,
       },
     ],
-    [copyUrl, isMac, toggleTheme],
+    [copyUrl, downloadResume, isMac, openContact, toggleTheme],
   )
 
   // Build the complete searchable catalog
@@ -377,19 +438,16 @@ export function CommandPalette() {
     (item: PaletteItem) => {
       if (item.onSelect) {
         item.onSelect()
-        if (item.id !== "action-copy-url") {
-          closePalette()
-        }
+        closePalette()
         return
       }
 
       if (item.href) {
+        notifySite("Yes, it's done", `Navigating to ${item.title}`)
         closePalette()
-        if (item.href.startsWith("mailto:") || item.href.endsWith(".pdf")) {
-          window.open(item.href, "_blank", "noopener,noreferrer")
-        } else {
-          window.location.href = item.href
-        }
+        setTimeout(() => {
+          window.location.href = item.href!
+        }, 120)
       }
     },
     [closePalette],
