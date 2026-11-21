@@ -60,9 +60,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: "Page Not Found | Nirjar Goswami",
     description: "The page you are looking for does not exist or has been moved.",
   },
+  "/500": {
+    title: "500 - Internal Server Error | Nirjar Goswami",
+    description: "An unexpected error occurred.",
+  },
 }
 
-export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found"
+export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found" | "error"
 
 export interface ResolvedRoute {
   kind: RouteKind
@@ -87,6 +91,7 @@ export function resolveRoute(pathname: string): ResolvedRoute {
   if (clean === "/articles" || clean === "/article") return { kind: "articles" }
   if (clean === "/sitemap") return { kind: "sitemap" }
   if (clean === "/legal") return { kind: "legal" }
+  if (clean === "/500" || clean === "/error") return { kind: "error" }
 
   if (clean.startsWith("/articles/") || clean.startsWith("/article/")) {
     const slug = clean.startsWith("/articles/")

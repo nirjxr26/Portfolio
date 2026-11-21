@@ -224,3 +224,12 @@ export function RssIcon({ className = "", width = 14, height = 14 }: Readonly<Ic
     </FillIcon>
   )
 }
+
+export function SearchIcon({ className = "", width = 16, height = 16, strokeWidth = 2 }: Readonly<IconProps>) {
+  return (
+    <StrokeIcon width={width} height={height} strokeWidth={strokeWidth} className={className}>
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </StrokeIcon>
+  )
+}

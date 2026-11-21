@@ -52,16 +52,16 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       <section className="pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0 overflow-hidden flex flex-col items-center text-center">
         <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-center">
           {hero.title && (
-            <span className="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase text-accent mb-4 sm:mb-5 block select-none">
+            <span className="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase text-accent mb-4 sm:mb-5 block select-none reveal-on-scroll">
               {hero.title}
             </span>
           )}
 
-          <h1 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-[-0.005em]`}>
+          <h1 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${INTER_FONT} text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-[-0.005em] reveal-on-scroll`}>
             {hero.headline}
           </h1>
 
-          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty`}>
+          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty reveal-on-scroll`}>
             {hero.subhead}
           </p>
         </div>

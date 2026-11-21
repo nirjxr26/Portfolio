@@ -251,15 +251,31 @@ function CodeBlock({ code, lang }: Readonly<{ code: string; lang: string }>) {
         {lang ? (
           <div className="flex items-center justify-between gap-3 border-b border-hairline/65 px-3.5 py-2 font-mono text-[11px] leading-none font-medium uppercase tracking-[0.04em] text-muted sm:px-4 sm:py-2.5">
             <span>{lang}</span>
-            <span
-              aria-hidden="true"
-              className={`flex items-center gap-1.5 font-text text-[11px] leading-none font-medium normal-case tracking-normal text-ink transition-opacity duration-150 ${copied ? "opacity-100" : "opacity-0"}`}
+            <button
+              type="button"
+              onClick={() => void copy(code)}
+              className="flex items-center gap-1.5 font-text text-[11px] leading-none font-medium normal-case tracking-normal text-muted hover:text-ink transition-colors cursor-pointer hit-area select-none"
+              aria-label={copied ? "Code copied to clipboard" : `Copy ${lang} code`}
+              title={copied ? "Copied!" : "Copy code"}
             >
-              <CopySwapIcon copied={copied} width={12} height={12} className="[&_svg]:block" />
-              Copied!
-            </span>
+              <CopySwapIcon copied={copied} width={12} height={12} className="[&_svg]:block text-ink" />
+              <span className={copied ? "text-accent font-semibold" : ""}>{copied ? "Copied!" : "Copy"}</span>
+            </button>
           </div>
-        ) : null}
+        ) : (
+          <div className="absolute top-2.5 right-3 z-10">
+            <button
+              type="button"
+              onClick={() => void copy(code)}
+              className="flex items-center gap-1.5 rounded-md bg-canvas/80 px-2 py-1 font-text text-[11px] leading-none font-medium normal-case tracking-normal text-muted hover:text-ink transition-colors cursor-pointer select-none border border-hairline/60 hit-area backdrop-blur-sm"
+              aria-label={copied ? "Code copied to clipboard" : "Copy code"}
+              title={copied ? "Copied!" : "Copy code"}
+            >
+              <CopySwapIcon copied={copied} width={12} height={12} className="[&_svg]:block text-ink" />
+              <span className={copied ? "text-accent font-semibold" : ""}>{copied ? "Copied!" : "Copy"}</span>
+            </button>
+          </div>
+        )}
         <pre className="overflow-x-hidden whitespace-pre-wrap break-words px-3.5 py-3.5 font-mono text-[11px] leading-relaxed tracking-normal text-ink min-[375px]:text-[11.5px] min-[414px]:text-[12px] sm:px-4 sm:py-5 sm:text-[13px]">
           <code>{highlightCode(code, lang)}</code>
         </pre>

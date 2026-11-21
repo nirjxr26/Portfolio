@@ -6,6 +6,7 @@ import {
   ArticleDetailLayout,
   CaseStudyPage,
   ErrorBoundary,
+  ErrorClient,
   HomeClient,
   LegalClient,
   NotFoundClient,
@@ -24,6 +25,13 @@ if (typeof window !== "undefined") {
     window.history.scrollRestoration = "manual"
   }
   window.scrollTo(0, 0)
+
+  // Register Service Worker in production for offline article reading
+  if ("serviceWorker" in navigator && import.meta.env.PROD) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(() => {})
+    })
+  }
 }
 
 function App() {
@@ -43,6 +51,8 @@ function App() {
     content = <SitemapClient />
   } else if (route.kind === "legal") {
     content = <LegalClient />
+  } else if (route.kind === "error") {
+    content = <ErrorClient />
   } else if (route.kind === "article-detail" && route.articleSlug) {
     const article = getBlogArticle(route.articleSlug)
     if (article) {

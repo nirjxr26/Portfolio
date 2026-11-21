@@ -5,7 +5,7 @@ export const SOCIAL_LINKS = {
   instagram: "https://instagram.com/nirjar_goswami",
   email: "mailto:nirjargoswami2626@gmail.com",
   emailAddress: "nirjargoswami2626@gmail.com",
-  resume: "/assets/nirjar_resume.pdf",
+  resume: "/resume.pdf",
 } as const
 
 export const WORK_ITEMS = [
