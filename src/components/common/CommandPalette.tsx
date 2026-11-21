@@ -7,7 +7,7 @@ import { CheckIcon, SearchIcon } from "./Icons"
 export interface PaletteItem {
   id: string
   title: string
-  category: "Navigation" | "Projects" | "Articles" | "Actions"
+  category: "Navigation" | "Projects" | "Articles" | "Other" | "Actions"
   href?: string
   keywords?: string
   onSelect?: () => void
@@ -42,17 +42,20 @@ const DEFAULT_NAVIGATION: PaletteItem[] = [
     href: "/articles",
     keywords: "blog essays writing posts",
   },
+]
+
+const OTHER_ITEMS: PaletteItem[] = [
   {
     id: "nav-sitemap",
     title: "Sitemap",
-    category: "Navigation",
+    category: "Other",
     href: "/sitemap",
-    keywords: "index all links pages",
+    keywords: "index all links pages directory",
   },
   {
     id: "nav-legal",
     title: "Terms of use",
-    category: "Navigation",
+    category: "Other",
     href: "/legal",
     keywords: "privacy security terms copyright disclaimer legal",
   },
@@ -144,7 +147,7 @@ export function CommandPalette() {
 
   // Build the complete searchable catalog
   const catalog = useMemo<PaletteItem[]>(() => {
-    return [...DEFAULT_NAVIGATION, ...projectItems, ...articleItems, ...actionItems]
+    return [...DEFAULT_NAVIGATION, ...projectItems, ...articleItems, ...OTHER_ITEMS, ...actionItems]
   }, [actionItems, articleItems, projectItems])
 
   // Filter items: by default show Navigation + Works (Projects). "View more" reveals Articles & Actions.
@@ -164,7 +167,7 @@ export function CommandPalette() {
 
   // Group displayed items by category
   const groupedSections = useMemo(() => {
-    const categoryOrder: Array<PaletteItem["category"]> = ["Navigation", "Projects", "Articles", "Actions"]
+    const categoryOrder: Array<PaletteItem["category"]> = ["Navigation", "Projects", "Articles", "Other", "Actions"]
     const groups: Array<{ category: PaletteItem["category"]; items: PaletteItem[] }> = []
 
     for (const cat of categoryOrder) {
@@ -531,7 +534,7 @@ export function CommandPalette() {
             </span>
           </div>
 
-          <span className="text-[13px] sm:text-[14px] text-muted/80 font-mono">
+          <span className="text-[13px] sm:text-[14px] font-medium text-muted/90">
             {displayedItems.length} {displayedItems.length === 1 ? "result" : "results"}
           </span>
         </div>
