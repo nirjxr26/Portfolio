@@ -67,30 +67,30 @@ export function NotificationToast() {
     <aside
       aria-label="Notification"
       aria-live="polite"
-      className="fixed top-5 right-5 sm:top-6 sm:right-6 z-[60] flex items-start gap-3.5 p-4 rounded-[18px] backdrop-blur-2xl bg-card/95 dark:bg-[#18181b]/95 text-ink border border-hairline/90 dark:border-white/[0.12] shadow-[0_16px_45px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_55px_rgba(0,0,0,0.7)] select-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] max-w-[92vw] sm:max-w-[360px] animate-in fade-in slide-in-from-top-3"
+      className="fixed top-5 right-5 sm:top-6 sm:right-6 z-[60] flex items-center gap-3.5 px-4 py-3 rounded-[18px] bg-[#f0f0f3] dark:bg-[#18181b] text-ink select-none transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] max-w-[92vw] sm:max-w-[360px] tracking-normal [letter-spacing:normal] animate-in fade-in slide-in-from-top-3"
     >
-      {/* Green circular checkmark icon */}
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 shrink-0 mt-0.5">
+      {/* Green circular checkmark icon - centered to title and subtitle */}
+      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400 shrink-0">
         <CheckIcon width={14} height={14} strokeWidth={2.8} />
       </span>
 
-      {/* Vertical text layout with bigger fonts */}
-      <div className="flex flex-col min-w-0 pr-1">
-        <span className="text-[15px] sm:text-[16px] font-semibold text-ink tracking-tight leading-snug">
+      {/* Vertical text layout with reduced line height and normal letter-spacing */}
+      <div className="flex flex-col min-w-0 pr-1 tracking-normal [letter-spacing:normal]">
+        <span className="text-[15px] sm:text-[16px] font-semibold text-ink tracking-normal [letter-spacing:normal] leading-tight">
           {notification.title}
         </span>
         {notification.message && (
-          <p className="text-[13px] sm:text-[14px] font-normal text-muted leading-relaxed mt-0.5">
+          <p className="text-[13px] sm:text-[14px] font-normal text-muted tracking-normal [letter-spacing:normal] leading-tight mt-1">
             {notification.message}
           </p>
         )}
       </div>
 
-      {/* Dismiss button */}
+      {/* Dismiss button - vertically centered */}
       <button
         type="button"
         onClick={() => setNotification((prev) => ({ ...prev, visible: false }))}
-        className="flex h-6 w-6 items-center justify-center rounded-full text-muted hover:text-ink hover:bg-canvas/80 transition-colors ml-auto shrink-0 cursor-pointer -mr-1 -mt-0.5 hit-area"
+        className="flex h-6 w-6 items-center justify-center rounded-full text-muted hover:text-ink hover:bg-black/5 dark:hover:bg-white/10 transition-colors ml-auto shrink-0 cursor-pointer -mr-1 hit-area"
         aria-label="Dismiss notification"
         title="Dismiss"
       >
