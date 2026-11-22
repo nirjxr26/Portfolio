@@ -233,28 +233,3 @@ export function SearchIcon({ className = "", width = 16, height = 16, strokeWidt
     </StrokeIcon>
   )
 }
-
-export function HeadphonesIcon({ className = "", width = 16, height = 16, strokeWidth = 2 }: Readonly<IconProps>) {
-  return (
-    <StrokeIcon width={width} height={height} strokeWidth={strokeWidth} className={className}>
-      <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />
-    </StrokeIcon>
-  )
-}
-
-export function PlayIcon({ className = "", width = 16, height = 16 }: Readonly<IconProps>) {
-  return (
-    <svg width={width} height={height} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <polygon points="6 4 20 12 6 20 6 4" />
-    </svg>
-  )
-}
-
-export function PauseIcon({ className = "", width = 16, height = 16 }: Readonly<IconProps>) {
-  return (
-    <svg width={width} height={height} viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <rect x="6" y="4" width="4" height="16" rx="1" />
-      <rect x="14" y="4" width="4" height="16" rx="1" />
-    </svg>
-  )
-}
