@@ -13,6 +13,7 @@ export interface RouteMeta {
   description: string
   canonical?: string
   keywords?: string
+  image?: string
 }
 
 export const ROUTE_META: Record<string, RouteMeta> = {
@@ -28,6 +29,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       "Case studies of systems built by Nirjar Goswami: Bastion (IAM), Kost (Kubernetes cost), HookDrop (webhooks), and Trace (forensics CLI).",
     canonical: `${SITE_URL}/works`,
     keywords: "Case Studies, Bastion, Kost, HookDrop, Trace",
+    image: `${SITE_URL}/assets/og/works_og.svg`,
   },
   "/services": {
     title: "Services | Nirjar Goswami",
@@ -35,6 +37,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       "Core capabilities in cybersecurity, DevOps, and cloud architecture and security, plus working knowledge of system design and backend engineering.",
     canonical: `${SITE_URL}/services`,
     keywords: "Cybersecurity, DevOps, Cloud Architecture, AWS, Kubernetes",
+    image: `${SITE_URL}/assets/og/services_og.svg`,
   },
   "/articles": {
     title: "Articles on Cloud, DevOps & Security | Nirjar Goswami",
@@ -42,6 +45,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
       "Technical articles on cloud infrastructure, DevOps, security, and systems architecture, with Markdown versions and an RSS feed.",
     canonical: `${SITE_URL}/articles`,
     keywords: "Engineering Blog, DevOps, Security, Cloud",
+    image: `${SITE_URL}/assets/og/articles_og.svg`,
   },
   "/sitemap": {
     title: "Sitemap | Nirjar Goswami",

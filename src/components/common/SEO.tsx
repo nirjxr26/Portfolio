@@ -77,6 +77,14 @@ export function Seo({
     setMeta("property", "og:url", canonical)
     setMeta("property", "og:image", ogImage)
     setMeta("property", "og:image:alt", title)
+    const imageType = ogImage.endsWith(".svg")
+      ? "image/svg+xml"
+      : ogImage.endsWith(".png")
+      ? "image/png"
+      : ogImage.endsWith(".jpg") || ogImage.endsWith(".jpeg")
+      ? "image/jpeg"
+      : "image/webp"
+    setMeta("property", "og:image:type", imageType)
     setMeta("property", "og:site_name", "Nirjar Goswami")
     setMeta("property", "profile:first_name", "Nirjar")
     setMeta("property", "profile:last_name", "Goswami")
@@ -136,6 +144,7 @@ export function RouteSeo({
       title={meta.title}
       description={meta.description}
       canonicalUrl={meta.canonical}
+      ogImage={meta.image}
       keywords={meta.keywords}
       includeDefaultSchemas={false}
       breadcrumbs={breadcrumbs}

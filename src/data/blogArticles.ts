@@ -20,6 +20,7 @@ export type BlogArticle = {
     light: string
     dark: string
   }
+  ogImage?: string
 }
 
 export const BLOG_ARTICLES: BlogArticle[] = [
@@ -44,6 +45,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       light: "/assets/article_poster/zed_white.svg",
       dark: "/assets/article_poster/zed_black.svg",
     },
+    ogImage: "/assets/og/zed_og.svg",
     sections: [
       {
         subtitle: "",
@@ -160,6 +162,7 @@ And I think that's when I actually switched.`,
       light: "/assets/article_poster/rust_white.svg",
       dark: "/assets/article_poster/rust_black.svg",
     },
+    ogImage: "/assets/og/rust_og.svg",
     sections: [
       {
         subtitle: "",
@@ -313,6 +316,7 @@ The name comes from the low wall at the edge of a roof, the thing between you an
       light: "/assets/article_poster/coding_white.svg",
       dark: "/assets/article_poster/coding_black.svg",
     },
+    ogImage: "/assets/og/coding_og.svg",
     disclaimer:
       "The views and opinions expressed in this article are my own and are intended for educational and informational purposes. The arguments and recommendations reflect my personal perspective and interpretation of the cited research. They do not represent the views of any institution, organization, or affiliated entity. Nothing in this article is intended to defame, misrepresent, or infringe upon the rights of any individual or institution.",
     sections: [
@@ -486,6 +490,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
       light: "/assets/article_poster/postgres_white.svg",
       dark: "/assets/article_poster/postgres_black.svg",
     },
+    ogImage: "/assets/og/postgres_og.svg",
     sections: [
       {
         subtitle: "Why the quick fix is wrong",
@@ -521,6 +526,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
       light: "/assets/article_poster/sonarqube_white.svg",
       dark: "/assets/article_poster/sonarqube_black.svg",
     },
+    ogImage: "/assets/og/sonarqube_og.svg",
     sections: [
       {
         subtitle: "Why bother",
@@ -581,6 +587,7 @@ Syllabi move slowly, so students should not wait for a board of studies to rescu
       light: "/assets/article_poster/github_white.svg",
       dark: "/assets/article_poster/github_black.svg",
     },
+    ogImage: "/assets/og/github_og.svg",
     sections: [
       {
         subtitle: "Before GitHub",

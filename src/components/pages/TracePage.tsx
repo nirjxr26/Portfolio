@@ -16,6 +16,7 @@ const UNIVERS_FONT = "font-univers"
 export function TracePage({ data }: Readonly<TracePageProps>) {
   const { hero, sections, cta, seoTitle } = data
   const canonicalUrl = `${SITE_URL}/works/trace`
+  const ogImage = `${SITE_URL}/assets/og/trace_og.svg`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
 
   return (
@@ -28,6 +29,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
           title={pageTitle}
           description={hero.subhead}
           canonicalUrl={canonicalUrl}
+          ogImage={ogImage}
           includeDefaultSchemas={false}
           breadcrumbs={createBreadcrumbs([
             { name: "Works", url: "/works" },

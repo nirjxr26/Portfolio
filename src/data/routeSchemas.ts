@@ -44,7 +44,7 @@ function graph(...nodes: Record<string, unknown>[]): StaticRoute["schema"] {
 
 function prerenderMeta(path: "/" | "/works" | "/services" | "/articles" | "/sitemap" | "/legal"): Pick<
   StaticRoute,
-  "title" | "description" | "canonical" | "keywords"
+  "title" | "description" | "canonical" | "keywords" | "image"
 > {
   const meta = ROUTE_META[path]
   if (!meta.canonical) throw new Error(`ROUTE_META["${path}"] is missing a canonical`)
@@ -53,6 +53,7 @@ function prerenderMeta(path: "/" | "/works" | "/services" | "/articles" | "/site
     description: meta.description,
     canonical: meta.canonical,
     keywords: meta.keywords ?? SITE_KEYWORDS,
+    image: meta.image ?? SITE_OG_IMAGE,
   }
 }
 
@@ -73,7 +74,7 @@ const worksCollectionItems = Object.entries(CASE_STUDIES).map(([slug, cs], idx) 
       codeRepository: cs.cta.url,
       ...cs.softwareSchema,
     },
-    { url: `${SITE_URL}/works/${slug}`, image: SITE_OG_IMAGE },
+    { url: `${SITE_URL}/works/${slug}`, image: `${SITE_URL}/assets/og/${slug}_og.svg` },
   ),
 }))
 
@@ -84,7 +85,9 @@ function buildArticleRoute(blog: (typeof BLOG_ARTICLES)[number]): StaticRoute {
   const wordCount = estimateWordCount(`${bodyText} ${blog.description}`)
   const keywords = blog.keywords || `${blog.category}, ${blog.title}, Nirjar Goswami, ${SITE_KEYWORDS}`
   const posterSrc = blog.poster?.dark ?? blog.poster?.light
-  const articleImage = posterSrc
+  const articleImage = blog.ogImage
+    ? absoluteUrl(blog.ogImage)
+    : posterSrc
     ? absoluteUrl(posterSrc)
     : blog.leadImage
     ? absoluteUrl(blog.leadImage.src)
@@ -129,6 +132,7 @@ function buildCaseStudyRoute(slug: string, data: (typeof CASE_STUDIES)[string]):
   const description = data.hero.subhead
   const canonical = `${SITE_URL}/works/${slug}`
   const keywords = `${data.hero.title}, ${headlineText || description}, Go, Kubernetes, Docker, DevOps, ${SITE_KEYWORDS}`
+  const ogImage = `${SITE_URL}/assets/og/${slug}_og.svg`
 
   return {
     path: `/works/${slug}`,
@@ -138,7 +142,7 @@ function buildCaseStudyRoute(slug: string, data: (typeof CASE_STUDIES)[string]):
     priority: "0.8",
     changefreq: "monthly",
     keywords,
-    image: SITE_OG_IMAGE,
+    image: ogImage,
     schema: graph(
       buildBreadcrumbSchema([
         { name: "Home", url: "/" },
@@ -155,7 +159,7 @@ function buildCaseStudyRoute(slug: string, data: (typeof CASE_STUDIES)[string]):
           codeRepository: data.cta.url,
           ...data.softwareSchema,
         },
-        { url: canonical, image: SITE_OG_IMAGE, keywords },
+        { url: canonical, image: ogImage, keywords },
       ),
     ),
   }

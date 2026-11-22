@@ -44,7 +44,9 @@ export function ArticleDetailLayout({ article }: Readonly<{ article: BlogArticle
   const isoDate = toISODate(article.updated)
 
   const posterSrc = article.poster?.dark ?? article.poster?.light
-  const articleImage = posterSrc
+  const articleImage = article.ogImage
+    ? absoluteUrl(article.ogImage)
+    : posterSrc
     ? absoluteUrl(posterSrc)
     : article.leadImage
     ? absoluteUrl(article.leadImage.src)

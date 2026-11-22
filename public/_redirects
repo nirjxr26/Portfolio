@@ -12,6 +12,19 @@ http://nirjar.me/* https://nirjar.me/:splat 301!
 # Agent Mode Markdown SPA rewrite
 /index.md /index.html 200
 
+# Legacy asset paths → organized assets/ directories
+/works_og.svg /assets/og/works_og.svg 301
+/services_og.svg /assets/og/services_og.svg 301
+/articles_og.svg /assets/og/articles_og.svg 301
+/bastion_og.svg /assets/og/bastion_og.svg 301
+/hookdrop_og.svg /assets/og/hookdrop_og.svg 301
+/kost_og.svg /assets/og/kost_og.svg 301
+/trace_og.svg /assets/og/trace_og.svg 301
+/favicon-16x16.svg /assets/favicons/favicon-16x16.svg 301
+/favicon-32x32.svg /assets/favicons/favicon-32x32.svg 301
+/favicon-192x192.svg /assets/favicons/favicon-192x192.svg 301
+/favicon-512x512.svg /assets/favicons/favicon-512x512.svg 301
+
 # SPA Routing & Real 404 Fallback
 # Static prerendered pages (/works, /works/bastion, /works/kost, /works/hookdrop) are served directly by the static host.
 # Any genuinely nonexistent route falls back to 404.html with real HTTP 404 status.
