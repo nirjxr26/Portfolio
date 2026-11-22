@@ -20,6 +20,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
 
   const { hero, sections, cta, seoTitle } = data
   const canonicalUrl = `${SITE_URL}/works/${slug}`
+  const ogImage = `${SITE_URL}/assets/og/${slug}_og.svg`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
   // The first section keeps the alternating rhythm so the page still opens on a
   // contrast band; `mono` flattens everything after it.
@@ -43,6 +44,7 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           title={pageTitle}
           description={hero.subhead}
           canonicalUrl={canonicalUrl}
+          ogImage={ogImage}
           includeDefaultSchemas={false}
           breadcrumbs={createBreadcrumbs([
             { name: "Works", url: "/works" },

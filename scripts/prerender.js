@@ -125,6 +125,13 @@ function renderRouteHtml(route) {
     `<meta property="og:url" content="${route.canonical}" />`,
   )
   if (route.image) {
+    const imageType = route.image.endsWith(".svg")
+      ? "image/svg+xml"
+      : route.image.endsWith(".png")
+      ? "image/png"
+      : route.image.endsWith(".jpg") || route.image.endsWith(".jpeg")
+      ? "image/jpeg"
+      : "image/webp"
     html = replaceHead(
       html,
       /<meta\s+property="og:image"\s+content=".*?"\s*\/?>/,
@@ -134,6 +141,11 @@ function renderRouteHtml(route) {
       html,
       /<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/,
       `<meta name="twitter:image" content="${route.image}" />`,
+    )
+    html = replaceHead(
+      html,
+      /<meta\s+property="og:image:type"\s+content=".*?"\s*\/?>/,
+      `<meta property="og:image:type" content="${imageType}" />`,
     )
   }
   html = replaceHead(
