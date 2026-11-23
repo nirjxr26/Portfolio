@@ -89,6 +89,7 @@ export function LayeredPreview({
         width={bgWidth}
         height={bgHeight}
         loading="lazy"
+        fetchPriority="low"
         decoding="async"
         draggable={false}
         className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
@@ -102,6 +103,7 @@ export function LayeredPreview({
           width={fgWidth}
           height={fgHeight}
           loading="lazy"
+          fetchPriority="low"
           decoding="async"
           draggable={false}
           className={`block h-full w-auto max-w-none select-none pointer-events-none sm:mx-auto sm:h-auto sm:w-full ${fgMaxWidthClass}`.trim()}

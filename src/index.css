@@ -90,13 +90,6 @@
     }
   }
 
-  .header-blur {
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -123,10 +116,6 @@
 
   .text-muted-soft {
     color: color-mix(in oklab, var(--muted) 80%, transparent);
-  }
-
-  .text-muted-faint {
-    color: color-mix(in oklab, var(--muted) 60%, transparent);
   }
 
   .aspect-hero-65 {
@@ -204,8 +193,7 @@
   header,
   footer,
   .notch-blur,
-  #theme-toggle,
-  .no-print {
+  #theme-toggle {
     display: none !important;
   }
 

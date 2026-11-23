@@ -9,7 +9,7 @@ import type { BlogArticle } from "./blogArticles"
 import { BLOG_ARTICLES } from "./blogArticles"
 import { byNewestFirst } from "@/utils/helpers"
 
-export type { Article, Frame, HeroAction, ProductionCapability, Project }
+export type { Project }
 
 export const productionCapabilities: ProductionCapability[] = [
   {
@@ -45,7 +45,7 @@ export const hero = {
   subheading:
     "Nirjar Goswami — everyone's specializing, but I went wide instead, learning how most of the pieces connect rather than mastering just one.",
   actions: [
-    { label: "View Resume", url: "/assets/nirjar_resume.pdf", type: "primary" },
+    { label: "View Resume", url: "/resume.pdf", type: "primary" },
     { label: "View Works", url: "/works", type: "secondary" },
   ] as HeroAction[],
 }

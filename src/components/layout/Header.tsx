@@ -84,7 +84,7 @@ function MobileDrawer({
         className={`w-full flex items-center justify-between text-left ${MOBILE_LINK} cursor-pointer`}
       >
         <span>Search</span>
-        <span className="inline-flex items-center justify-center text-center font-mono text-[13px] px-2 py-0.5 rounded-md bg-surface-alt border border-hairline text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</span>
+        <span className="inline-flex items-center justify-center text-center font-mono text-[13px] px-2 py-0.5 rounded-md text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</span>
       </button>
 
       {NAV_LINKS.map((link) =>
@@ -184,7 +184,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
           Skip to main content
         </a>
         <nav>
-          <Container className="relative flex h-[var(--header-h)] items-center justify-between">
+          <Container className="relative flex h-[var(--header-h)] items-center justify-between px-6 sm:px-8 md:px-10">
             <div className="flex items-center gap-2 md:hidden">
               {activePath !== "/" && (
                 <a
@@ -276,8 +276,10 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                   </a>
                 ),
               )}
+            </div>
 
-              {/* Right icons cluster with compact spacing and unified alignment */}
+            {/* Right icons cluster with compact spacing and unified alignment */}
+            <div className="hidden items-center gap-1 ml-auto md:flex">
               <div className="flex items-center gap-1 ml-2 lg:ml-3">
                 <button
                   type="button"
@@ -287,7 +289,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
                   title={isMac ? "Search and commands (Cmd+K)" : "Search and commands (Ctrl+K)"}
                 >
                   <SearchIcon width={17} height={17} className="shrink-0" />
-                  <kbd className="inline-flex items-center justify-center text-center font-mono text-[11.5px] px-2 py-0.5 rounded-[5px] bg-surface-alt border border-hairline/80 text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</kbd>
+                  <kbd className="inline-flex items-center justify-center text-center font-mono text-[13px] px-2 py-0.5 rounded-[5px] text-muted select-none leading-none">{isMac ? "⌘K" : "Ctrl K"}</kbd>
                 </button>
 
                 <AgentButton />
@@ -334,7 +336,7 @@ export function Header({ activePath = "/" }: Readonly<{ activePath?: string }>) 
         <div className="fixed inset-0 z-50 bg-canvas flex flex-col md:hidden text-ink animate-curtain-fall">
           {/* Top Bar: exactly mirrors the closed header's height and alignment */}
           <div className="w-full pt-[env(safe-area-inset-top,0px)] border-b border-hairline dark:border-hairline/50 bg-canvas">
-            <Container className="relative flex h-[var(--header-h)] items-center justify-between">
+            <Container className="relative flex h-[var(--header-h)] items-center justify-between px-6 sm:px-8 md:px-10">
               <div className="flex items-center gap-2">
                 {activePath !== "/" && (
                   <a

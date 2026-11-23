@@ -27,7 +27,7 @@ export function buildStatus(
   const commitSha =
     process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
     process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
-    "fa657df"
+    "unknown"
 
   return {
     status: "ok",

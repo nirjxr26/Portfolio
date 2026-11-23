@@ -10,6 +10,7 @@ import {
   buildRssItems,
   buildRssXml,
   buildSitemapXml,
+  escXml,
   spliceLlmsSection,
 } from "./prerender-lib.js"
 
@@ -32,12 +33,12 @@ function getGitLastMod(relativeFilePath) {
     let fullPath = path.resolve(projectRoot, relativeFilePath)
     if (!fs.existsSync(fullPath) && fs.existsSync(fullPath + "x")) fullPath += "x"
     if (fs.existsSync(fullPath)) {
-      const out = execSync(`git log -1 --format=%aI -- "${fullPath}"`, {
+      const out = execSync(`git log -1 --format=%cI -- "${fullPath}"`, {
         cwd: projectRoot,
         encoding: "utf-8",
         stdio: ["pipe", "pipe", "ignore"],
       }).trim()
-      if (out) return out.split("T")[0]
+      if (out) return new Date(out).toISOString().split("T")[0]
     }
   } catch {}
   try {
@@ -89,40 +90,45 @@ function replaceHead(html, pattern, replacement) {
 
 function renderRouteHtml(route) {
   let html = template
-  const ogType = route.ogType ?? (route.path.startsWith("/articles/") ? "article" : "website")
+  const title = escXml(route.title ?? "")
+  const description = escXml(route.description ?? "")
+  const canonical = escXml(route.canonical ?? "")
+  const image = route.image ? escXml(route.image) : ""
+  const keywords = route.keywords ? escXml(route.keywords) : ""
+  const ogType = escXml(route.ogType ?? (route.path.startsWith("/articles/") ? "article" : "website"))
 
-  html = replaceHead(html, /<title>.*?<\/title>/, `<title>${route.title}</title>`)
+  html = replaceHead(html, /<title>.*?<\/title>/, `<title>${title}</title>`)
   html = replaceHead(
     html,
     /<meta\s+name="description"\s+content=".*?"\s*\/?>/,
-    `<meta name="description" content="${route.description}" />`,
+    `<meta name="description" content="${description}" />`,
   )
   if (route.keywords) {
     html = replaceHead(
       html,
       /<meta\s+name="keywords"\s+content=".*?"\s*\/?>/,
-      `<meta name="keywords" content="${route.keywords}" />`,
+      `<meta name="keywords" content="${keywords}" />`,
     )
   }
   html = replaceHead(
     html,
     /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/,
-    `<link rel="canonical" href="${route.canonical}" />`,
+    `<link rel="canonical" href="${canonical}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/,
-    `<meta property="og:title" content="${route.title}" />`,
+    `<meta property="og:title" content="${title}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/,
-    `<meta property="og:description" content="${route.description}" />`,
+    `<meta property="og:description" content="${description}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+property="og:url"\s+content=".*?"\s*\/?>/,
-    `<meta property="og:url" content="${route.canonical}" />`,
+    `<meta property="og:url" content="${canonical}" />`,
   )
   if (route.image) {
     const imageType = route.image.endsWith(".svg")
@@ -135,12 +141,12 @@ function renderRouteHtml(route) {
     html = replaceHead(
       html,
       /<meta\s+property="og:image"\s+content=".*?"\s*\/?>/,
-      `<meta property="og:image" content="${route.image}" />`,
+      `<meta property="og:image" content="${image}" />`,
     )
     html = replaceHead(
       html,
       /<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/,
-      `<meta name="twitter:image" content="${route.image}" />`,
+      `<meta name="twitter:image" content="${image}" />`,
     )
     html = replaceHead(
       html,
@@ -151,7 +157,7 @@ function renderRouteHtml(route) {
   html = replaceHead(
     html,
     /<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/,
-    `<meta property="og:image:alt" content="${route.title}" />`,
+    `<meta property="og:image:alt" content="${title}" />`,
   )
   html = replaceHead(
     html,
@@ -161,31 +167,31 @@ function renderRouteHtml(route) {
   html = replaceHead(
     html,
     /<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/,
-    `<meta name="twitter:url" content="${route.canonical}" />`,
+    `<meta name="twitter:url" content="${canonical}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/,
-    `<meta name="twitter:title" content="${route.title}" />`,
+    `<meta name="twitter:title" content="${title}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/,
-    `<meta name="twitter:description" content="${route.description}" />`,
+    `<meta name="twitter:description" content="${description}" />`,
   )
   html = replaceHead(
     html,
     /<meta\s+name="twitter:image:alt"\s+content=".*?"\s*\/?>/,
-    `<meta name="twitter:image:alt" content="${route.title}" />`,
+    `<meta name="twitter:image:alt" content="${title}" />`,
   )
 
   if (route.publishedTime || route.modifiedTime) {
     const stamps = [
       route.publishedTime
-        ? `  <meta property="article:published_time" content="${route.publishedTime}" />`
+        ? `  <meta property="article:published_time" content="${escXml(route.publishedTime)}" />`
         : null,
       route.modifiedTime
-        ? `  <meta property="article:modified_time" content="${route.modifiedTime}" />`
+        ? `  <meta property="article:modified_time" content="${escXml(route.modifiedTime)}" />`
         : null,
     ]
       .filter(Boolean)
@@ -213,7 +219,7 @@ for (const route of routes) {
 }
 
 const notFoundHtml = template
-  .replace(/<title>.*?<\/title>/, `<title>${ROUTE_META["/404"].title}</title>`)
+  .replace(/<title>.*?<\/title>/, `<title>${escXml(ROUTE_META["/404"].title)}</title>`)
   .replace(
     /<meta\s+name="robots"\s+content=".*?"\s*\/?>/,
     '<meta name="robots" content="noindex, nofollow" />',
@@ -291,7 +297,9 @@ const llmsOut = spliceLlmsSection(
   fs.readFileSync(llmsPublicPath, "utf-8"),
   buildLlmsArticleLines(BLOG_ARTICLES),
 )
-if (llmsOut !== null) {
-  fs.writeFileSync(llmsPublicPath, llmsOut, "utf-8")
-  fs.writeFileSync(path.resolve(distDir, "llms.txt"), llmsOut, "utf-8")
+if (llmsOut === null) {
+  console.error("prerender: llms.txt article section not found")
+  process.exit(1)
 }
+fs.writeFileSync(llmsPublicPath, llmsOut, "utf-8")
+fs.writeFileSync(path.resolve(distDir, "llms.txt"), llmsOut, "utf-8")

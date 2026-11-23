@@ -3,13 +3,19 @@ import { isInternalRoute } from "@/data/routes"
 import { isStaticAsset } from "./helpers"
 
 let currentPath = typeof window !== "undefined" ? window.location.pathname : "/"
+let currentUrl =
+  typeof window !== "undefined"
+    ? window.location.pathname + window.location.search + window.location.hash
+    : "/"
 const listeners = new Set<() => void>()
 
 function notify() {
   if (typeof window === "undefined") return
-  const next = window.location.pathname
-  if (currentPath !== next) {
-    currentPath = next
+  const nextPath = window.location.pathname
+  const nextUrl = nextPath + window.location.search + window.location.hash
+  if (currentUrl !== nextUrl) {
+    currentUrl = nextUrl
+    currentPath = nextPath
     listeners.forEach((listener) => listener())
   }
 }

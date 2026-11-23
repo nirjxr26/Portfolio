@@ -13,7 +13,7 @@ description: "${SITE_DEFAULT_DESC}"
 canonical: "${SITE_URL}"
 ---`
 
-  const resumeAction = `[View Resume](${SITE_URL}/assets/nirjar_resume.pdf)`
+  const resumeAction = `[View Resume](${SITE_URL}/resume.pdf)`
   const worksAction = `[View Works](${SITE_URL}/works)`
   const servicesAction = `[View Services](${SITE_URL}/services)`
 
@@ -150,7 +150,7 @@ nirjar.me/
     └── /.well-known/security.txt
 
 ## Contact
- 
+
 - **Email**: nirjargoswami2626@gmail.com
 - **Phone**: +91 87991 42626
 - **Location**: Ahmedabad, Gujarat, India
@@ -158,7 +158,7 @@ nirjar.me/
 - **LinkedIn**: https://www.linkedin.com/in/nirjxr
 - **X (Twitter)**: https://x.com/nirjxrgoswami
 - **Instagram**: https://instagram.com/nirjar_goswami
-- **Resume**: https://nirjar.me/assets/nirjar_resume.pdf
+- **Resume**: https://nirjar.me/resume.pdf
 
 ---
 © 2026 Nirjar Goswami. All rights reserved. • [Blog RSS](${SITE_URL}/rss.xml) • [Sitemap](${SITE_URL}/sitemap)

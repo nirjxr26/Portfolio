@@ -1,5 +1,4 @@
 import type { ReactNode } from "react"
-import { ClockIcon } from "../Icons"
 import { BODY_MUTED_CLASS } from "../textStyles"
 
 export function CardEyebrow({ tone, children }: Readonly<{ tone: "accent" | "muted"; children: ReactNode }>) {
@@ -9,15 +8,6 @@ export function CardEyebrow({ tone, children }: Readonly<{ tone: "accent" | "mut
     >
       {children}
     </p>
-  )
-}
-
-export function CardReadTime({ timeText }: Readonly<{ timeText: string }>) {
-  return (
-    <div className="flex items-center gap-1.5">
-      <ClockIcon width={12} height={12} className="shrink-0 text-muted" />
-      <span className="t-fine text-muted">{timeText}</span>
-    </div>
   )
 }
 

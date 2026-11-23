@@ -102,7 +102,7 @@ export function SitemapClient() {
                 </div>
                 <div className={rowClass}>
                   <span className={guideClass}>│   └── </span>
-                  <a href="/assets/nirjar_resume.pdf" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>nirjar_resume.pdf</a>
+                  <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className={linkWrapClass}>nirjar_resume.pdf</a>
                 </div>
 
                 <div className={rowClass}>
