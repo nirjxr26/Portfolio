@@ -24,6 +24,7 @@ export function HeroAssetPreview({
         height={asset.height ?? 610}
         className="absolute top-0 left-0 w-full h-auto object-top select-none pointer-events-none block"
         loading="eager"
+        fetchPriority="high"
         decoding="async"
       />
     </div>

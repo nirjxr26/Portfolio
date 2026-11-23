@@ -32,10 +32,16 @@ jobs:
         run: npm ci
 
       - name: Security Audit (Critical Level)
-        run: npm audit --omit=dev --audit-level=critical
+        run: npm audit --audit-level=critical
+
+      - name: Tests
+        run: npm test
 
       - name: TypeScript Typecheck & Build
         run: npm run build
 
       - name: Rust Site & CSP Integrity Verification
         run: npm run verify:site
+
+      - name: Rust Tests
+        run: cargo test --manifest-path tools/site-verifier/Cargo.toml

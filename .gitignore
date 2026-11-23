@@ -53,12 +53,6 @@ desktop.ini
 DESIGN-apple.md
 DESIGN-bastion.md
 
-# Local-only tests (run with `npm test`, never committed)
-*.test.ts
-*.test.tsx
-*.test.js
-*.test.jsx
-
 # Local stack tool icon folders
 public/assets/stack/cybersecurity/
 public/assets/stack/devops/

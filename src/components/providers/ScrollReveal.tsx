@@ -41,15 +41,6 @@ export function ScrollReveal() {
 
     attach()
 
-    const handleAgentChange = () => {
-      // Re-scan when agent mode toggles so elements reveal immediately without refresh
-      attach()
-      setTimeout(attach, 100)
-      setTimeout(attach, 300)
-    }
-
-    window.addEventListener("agent-mode-change", handleAgentChange)
-
     let mutationObserver: MutationObserver | null = null
     if (typeof MutationObserver !== "undefined") {
       mutationObserver = new MutationObserver(() => {
@@ -62,7 +53,6 @@ export function ScrollReveal() {
       if (rafId) cancelAnimationFrame(rafId)
       if (observer) observer.disconnect()
       if (mutationObserver) mutationObserver.disconnect()
-      window.removeEventListener("agent-mode-change", handleAgentChange)
     }
   }, [pathname])
 

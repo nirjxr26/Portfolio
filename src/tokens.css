@@ -6,13 +6,10 @@
   --ink: #1d1d1f;
   --muted: #6E6E73;
   --hairline: #e0e0e0;
-  --trace-line: #E5E5E5;
   --accent: #0066cc;
   --accent-hover: #0071e3;
   --page-gutter: 1rem;
   --header-h: 2.75rem;
-  --font-mono: "f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-mono-bold: "f-mno-b", "f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 :root.dark,
@@ -24,7 +21,6 @@
   --ink: #ffffff;
   --muted: #b8b8bd;
   --hairline: #333336;
-  --trace-line: #1F1F1F;
   --accent: #2997ff;
   --accent-hover: #4aa8ff;
 }
@@ -54,18 +50,14 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
-  --color-trace-line: var(--trace-line);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
 }
 
 @theme {
-  --color-tile-dark: #272729;
-  --font-display: "f-dsp", -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
-  --font-text: "f-ui", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-inter: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-inter-variable: "f-dsp", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-univers: "f-ui", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-univers-condensed: "f-uic", "f-ui", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: "f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-display: "Inter";
+  --font-text: "Unifora Standard";
+  --font-inter-variable: "Inter";
+  --font-univers: "Unifora Standard";
+  --font-mono: "Berkeley Mono Variable";
 }

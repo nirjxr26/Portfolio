@@ -2,6 +2,7 @@ export interface CacheRule {
   path: string
   vercelPath: string
   cacheControl: string
+  headers?: Record<string, string>
 }
 
 export declare const cspProd: string

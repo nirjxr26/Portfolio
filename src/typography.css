@@ -64,7 +64,7 @@
   }
 
   .t-quote {
-    font-family: var(--font-univers, "f-ui", sans-serif);
+    font-family: var(--font-univers);
     font-weight: 600;
     font-size: 20px;
     line-height: 1.3;
@@ -91,16 +91,8 @@
     }
   }
 
-  .t-caption {
-    font-family: var(--font-text);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.43;
-    letter-spacing: 0.2px;
-  }
-
   .t-caption-strong {
-    font-family: var(--font-univers, "f-ui", sans-serif);
+    font-family: var(--font-univers);
     font-weight: 600;
     font-size: 14px;
     line-height: 1.29;
@@ -115,7 +107,7 @@
     letter-spacing: 0.2px;
   }
   .card-tag {
-    font-family: var(--font-univers, "f-ui", sans-serif);
+    font-family: var(--font-univers);
     font-weight: 600;
     letter-spacing: 0.2px;
     @apply mb-3 sm:mb-4;

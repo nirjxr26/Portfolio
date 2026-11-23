@@ -7,14 +7,12 @@ import { useAgentMode } from "@/utils/useAgentMode"
 import { useCopy } from "@/utils/useCopy"
 
 const REGULAR_MONO = {
-  fontFamily:
-    '"f-mno", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  fontFamily: '"Berkeley Mono Variable"',
   fontWeight: 400,
 }
 
 const BOLD_MONO = {
-  fontFamily:
-    '"f-mno-b", "f-mno", ui-monospace, SFMono-Regular, monospace',
+  fontFamily: '"Berkeley Mono Variable"',
   fontWeight: 700,
 }
 
@@ -31,7 +29,7 @@ const TREE_ROUTES: Record<string, { href: string; isExternal?: boolean }> = {
   "legal/": { href: "/legal" },
   status: { href: "/api/status", isExternal: true },
   projects: { href: "/api/projects", isExternal: true },
-  "nirjar_resume.pdf": { href: "/assets/nirjar_resume.pdf", isExternal: true },
+  "nirjar_resume.pdf": { href: "/resume.pdf", isExternal: true },
   "humans.txt": { href: "/humans.txt", isExternal: true },
   "llms.txt": { href: "/llms.txt", isExternal: true },
   "rss.xml": { href: "/rss.xml", isExternal: true },

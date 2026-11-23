@@ -108,30 +108,9 @@ export function CommandPalette() {
 
   const copyUrl = useCallback(async () => {
     const url = typeof window !== "undefined" ? window.location.href : "https://nirjargoswami.me"
-    let ok = false
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(url)
-        ok = true
-      }
-    } catch {}
-
-    if (!ok) {
-      try {
-        const ta = document.createElement("textarea")
-        ta.value = url
-        ta.style.position = "fixed"
-        ta.style.opacity = "0"
-        document.body.appendChild(ta)
-        ta.focus()
-        ta.select()
-        ok = document.execCommand("copy")
-        document.body.removeChild(ta)
-      } catch {}
+    if (await copy(url)) {
+      notifySite("Link copied", "Page URL copied to clipboard.")
     }
-
-    void copy(url)
-    notifySite("Link copied", "Page URL copied to clipboard.")
   }, [copy])
 
   const openContact = useCallback(() => {

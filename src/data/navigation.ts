@@ -35,22 +35,6 @@ export interface FooterLinkItem {
   href: string
 }
 
-export const FOOTER_CONNECT: FooterLinkItem[] = [
-  { name: "GitHub", href: SOCIAL_LINKS.github },
-  { name: "LinkedIn", href: SOCIAL_LINKS.linkedin },
-  { name: "X (Twitter)", href: SOCIAL_LINKS.twitter },
-  { name: "Instagram", href: SOCIAL_LINKS.instagram },
-]
-
-export const FOOTER_RESOURCES: FooterLinkItem[] = [
-  { name: "Home", href: "/" },
-  { name: "Services", href: "/services" },
-  { name: "Articles", href: "/articles" },
-  { name: "Sitemap", href: "/sitemap" },
-  { name: "Legal", href: "/legal" },
-  { name: "Resume", href: SOCIAL_LINKS.resume },
-]
-
 export const CONTACT = {
   emailHref: SOCIAL_LINKS.email,
   emailAddress: SOCIAL_LINKS.emailAddress,

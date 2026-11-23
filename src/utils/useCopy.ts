@@ -13,14 +13,16 @@ async function copyWithFallback(text: string) {
   try {
     if (typeof document !== "undefined") {
       const ta = document.createElement("textarea")
-      ta.value = text
-      ta.style.position = "fixed"
-      ta.style.opacity = "0"
-      document.body.appendChild(ta)
-      ta.select()
-      const ok = document.execCommand("copy")
-      document.body.removeChild(ta)
-      return ok
+      try {
+        ta.value = text
+        ta.style.position = "fixed"
+        ta.style.opacity = "0"
+        document.body.appendChild(ta)
+        ta.select()
+        return document.execCommand("copy")
+      } finally {
+        ta.remove()
+      }
     }
   } catch {
     return false
@@ -44,10 +46,11 @@ export function useCopy(timeoutMs = 2000) {
 
   const copy = useCallback(
     async (text: string) => {
-      await copyWithFallback(text)
+      if (!(await copyWithFallback(text))) return false
       setCopied(true)
       if (timer.current) window.clearTimeout(timer.current)
       timer.current = window.setTimeout(() => setCopied(false), timeoutMs)
+      return true
     },
     [timeoutMs],
   )

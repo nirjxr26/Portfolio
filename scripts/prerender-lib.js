@@ -7,15 +7,21 @@ export function escXml(s) {
     .replaceAll("'", "&apos;")
 }
 
+/** Accepts both "Month D, YYYY" and ISO dates without throwing on the latter. */
+function utcNoon(updated) {
+  const dateOnly = /^\d{4}-\d{2}-\d{2}/.test(updated) ? updated.slice(0, 10) : updated
+  return new Date(`${dateOnly} 12:00:00 UTC`)
+}
+
 export function rssPubDate(updated) {
-  return new Date(`${updated} 12:00:00 UTC`).toUTCString()
+  return utcNoon(updated).toUTCString()
 }
 
 export function buildSitemapXml(entries) {
   const body = entries
     .map(
       (r) =>
-        `  <url>\n    <loc>${r.canonical}</loc>\n    <lastmod>${r.lastmod}</lastmod>\n    <changefreq>${r.changefreq}</changefreq>\n    <priority>${r.priority}</priority>\n  </url>`,
+        `  <url>\n    <loc>${escXml(r.canonical)}</loc>\n    <lastmod>${escXml(r.lastmod)}</lastmod>\n    <changefreq>${escXml(r.changefreq)}</changefreq>\n    <priority>${escXml(r.priority)}</priority>\n  </url>`,
     )
     .join("\n")
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
@@ -48,7 +54,7 @@ export function buildRssXml(items, channelDescription) {
     `  <title>Nirjar Goswami — Articles</title>\n` +
     `  <link>https://nirjar.me/articles</link>\n` +
     `  <atom:link href="https://nirjar.me/rss.xml" rel="self" type="application/rss+xml" />\n` +
-    `  <description>${channelDescription}</description>\n` +
+    `  <description>${escXml(channelDescription)}</description>\n` +
     `  <language>en-us</language>\n` +
     `  <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>\n` +
     `  <generator>nirjar.me prerender</generator>\n` +
@@ -63,7 +69,7 @@ export function buildJsonFeed(articles, channelDescription) {
     .sort((a, b) => new Date(b.updated) - new Date(a.updated))
     .map((b) => {
       const url = `https://nirjar.me/articles/${b.slug}`
-      const isoDate = new Date(`${b.updated} 12:00:00 UTC`).toISOString()
+      const isoDate = utcNoon(b.updated).toISOString()
       return {
         id: url,
         url,
@@ -97,7 +103,7 @@ export function buildJsonFeed(articles, channelDescription) {
 }
 
 export function buildArticleMarkdown(article) {
-  const isoDate = new Date(`${article.updated} 12:00:00 UTC`).toISOString().split("T")[0]
+  const isoDate = utcNoon(article.updated).toISOString().split("T")[0]
   const canonical = `https://nirjar.me/articles/${article.slug}`
   const body = (article.sections || [])
     .map((s) => {
