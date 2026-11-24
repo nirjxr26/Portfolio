@@ -35,8 +35,8 @@ if (!cargoBin) {
   process.exit(1)
 }
 
-const manifestPath = path.resolve(import.meta.dirname, "..", "tools", "site-verifier", "Cargo.toml")
-const distPath = path.resolve(import.meta.dirname, "..", "dist")
+const manifestPath = path.resolve(import.meta.dirname, "../..", "tools", "site-verifier", "Cargo.toml")
+const distPath = path.resolve(import.meta.dirname, "../..", "dist")
 
 try {
   execFileSync(cargoBin, ["run", "--manifest-path", manifestPath, "--", distPath], {
