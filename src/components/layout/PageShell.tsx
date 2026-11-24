@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
 import { Footer, type FooterBreadcrumb } from "./Footer"
 import { Header } from "./Header"
-import { CommandPalette } from "../common/CommandPalette"
-import { NotificationToast } from "../common/NotificationToast"
-import { ScrollReveal } from "../providers/ScrollReveal"
-import { useNotchTint } from "@/utils/useNotchTint"
+import { CommandPalette } from "@/components/ui/CommandPalette"
+import { NotificationToast } from "@/components/ui/NotificationToast"
+import { ScrollReveal } from "@/components/providers/ScrollReveal"
+import { useNotchTint } from "@/hooks/useNotchTint"
 
 interface PageShellProps {
   children: ReactNode

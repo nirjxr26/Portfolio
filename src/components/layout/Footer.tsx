@@ -2,14 +2,14 @@ import { useState } from "react"
 import {
   SOCIAL_LINKS,
   type FooterLinkItem,
-} from "@/data/navigation"
-import { AppLink } from "../common/Button"
-import { ChevronDown, ChevronRight, HomeIcon } from "../common/Icons"
+} from "@/app/config/navigation"
+import { AppLink } from "@/components/ui/Button"
+import { ChevronDown, ChevronRight, HomeIcon } from "@/components/ui/Icons"
 import { Container } from "./Container"
-import { cleanPath, resolveRoute } from "@/data/routes"
-import { CASE_STUDIES } from "@/data/caseStudies"
-import { getBlogArticle } from "@/data/blogArticles"
-import { useInternalRouter } from "@/utils/useInternalRouter"
+import { cleanPath, resolveRoute } from "@/app/router/routes"
+import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
+import { getBlogArticle } from "@/features/articles/data/blogArticles"
+import { useInternalRouter } from "@/app/router/useInternalRouter"
 
 export interface FooterBreadcrumb {
   name: string

@@ -4,7 +4,7 @@
   "home_page_url": "https://nirjar.me",
   "feed_url": "https://nirjar.me/feed.json",
   "description": "Technical articles on cloud infrastructure, DevOps, security, and systems architecture, with Markdown versions and an RSS feed.",
-  "favicon": "https://nirjar.me/favicon.svg",
+  "favicon": "https://nirjar.me/assets/brand/favicon.svg",
   "authors": [
     {
       "name": "Nirjar Goswami",
