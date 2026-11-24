@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
-import { useEffect, useRef } from "react"
-import { CASES, ConsolePreviewBox, SCREEN_HEIGHT, Text } from "./TraceConsole"
+import { useEffect, useRef, useState } from "react"
+import { CASES, ConsolePreviewBox, Text } from "./TraceConsole"
 import { useIsTabActive } from "./SegmentedTabs"
 import { typedCount } from "@/utils/typewriter"
 import { useOnceTimeline } from "@/utils/useOnceTimeline"
@@ -38,11 +38,12 @@ import { useOnceTimeline } from "@/utils/useOnceTimeline"
  */
 
 /** The launch banner's wordmark, exactly as the CLI draws it. */
-const LOGO = String.raw`   _____ ____      _    ____ _____
-  |_   _|  _ \    / \  / ___| ____|
-    | | | |_) |  / _ \| |   |  _|
-    | | |  _ <  / ___ \ |___| |___
-    |_| |_| \_\/_/   \_\____|_____|`
+const LOGO = String.raw` _____ ____      _     ____ _____
+|_   _|  _ \    / \   / ___| ____|
+  | | | |_) |  / _ \ | |   |  _|
+  | | |  _ <  / ___ \| |___| |___
+  |_| |_| \_\/_/   \_\_____|_____|
+`;
 
 /**
  * One terminal row, and the type that sits on it — in the console's own units.
@@ -75,14 +76,14 @@ const MUTED = "text-[#737c84]"
 const TITLE = "text-[#f0f6fc]"
 
 /** The CLI's own accent, which is what it prints a case identifier in. */
-const ACCENT = "text-[#72b7d3]"
+const ACCENT = "text-[#4bb3fd]"
 
 /**
  * Tags take the accent held back. They are the same family as the identifier
  * above them — labels for this record, not prose — but further from the front,
  * so the case's own name stays the loudest thing on the screen.
  */
-const TAGS = "text-[#72b7d3]/70"
+const TAGS = "text-[#4bb3fd]/70"
 
 /**
  * A case's state, in the console's own green — the colour the case list prints
@@ -99,10 +100,8 @@ const STATE_DOT = "bg-[#39d353]"
  * something, and it should read as a division of the same type it separates
  * rather than as another thing printed in the output.
  *
- * It stops at 70% rather than running the width of the screen. A terminal rule
- * that reaches both margins divides the window; one that stops short divides the
- * text, which is what it is for — and it lands at about the width the case table
- * itself occupies when it rules that table off.
+ * Every rule is the same full-width, one-pixel line so the record's blocks read
+ * as one set of divisions rather than as rules drawn at different lengths.
  *
  * One CSS pixel tall, not one design unit. In units the line is whatever `851`
  * units divide into on the screen it is on, and the browser spreads that across
@@ -112,7 +111,7 @@ const STATE_DOT = "bg-[#39d353]"
  * same line every time, and the same one the title bar's own border is drawn in.
  */
 function Rule() {
-  return <span aria-hidden="true" className="h-px w-[70%] bg-white/20" />
+  return <span aria-hidden="true" className="h-px w-full bg-white/10" />
 }
 
 /**
@@ -125,9 +124,13 @@ function Rule() {
  * is about to appear, and the reader would see the terminal's future — phantom
  * gaps, and prompts sitting in mid-air before anything asked for them.
  */
-function Slot({ show = true, children }: Readonly<{ show?: boolean; children?: ReactNode }>) {
+function Slot({
+  show = true,
+  rowClass = ROW,
+  children,
+}: Readonly<{ show?: boolean; rowClass?: string; children?: ReactNode }>) {
   if (!show) return null
-  return <div className={`flex ${ROW} items-center`}>{children}</div>
+  return <div className={`flex ${rowClass} items-center`}>{children}</div>
 }
 
 /* ------------------------------------------------------------------ *
@@ -153,8 +156,9 @@ type RecordRow =
   | { readonly kind: "caseStatus"; readonly state: string }
   | { readonly kind: "heading"; readonly text: string }
   | { readonly kind: "meta"; readonly label: string; readonly value: string; readonly valueClass?: string }
-  | { readonly kind: "text"; readonly text: string }
+  | { readonly kind: "text"; readonly text: string; readonly wrap?: boolean }
   | { readonly kind: "device"; readonly text: string }
+  | { readonly kind: "verified"; readonly text: string }
   | { readonly kind: "event"; readonly stamp: string; readonly what: string; readonly who: string }
 
 const RECORD: readonly RecordRow[] = [
@@ -171,13 +175,21 @@ const RECORD: readonly RecordRow[] = [
   { kind: "meta", label: "Tags", value: "#memory-dump #server #ransomware", valueClass: TAGS },
   { kind: "rule" },
   { kind: "heading", text: "DESCRIPTION" },
-  { kind: "text", text: "Outbound transfer staged from the shared drive over two nights." },
+  { kind: "text", text: "Suspicious outbound transfer staged from the shared finance drive across two consecutive nights, correlated to a service account signing from an unmanaged endpoint.", wrap: true },
   { kind: "rule" },
   { kind: "heading", text: "LINKED DEVICE" },
-  { kind: "device", text: "Samsung 980 PRO · 931.5 GB" },
+  { kind: "device", text: "Samsung 980 PRO · 931.5 GB · /dev/nvme0n1" },
   { kind: "rule" },
-  { kind: "heading", text: "HISTORY · 1 event" },
+  { kind: "heading", text: "IMAGING" },
+  { kind: "text", text: "Preparing — reservation only; no image acquired" },
+  { kind: "rule" },
+  { kind: "heading", text: "INTEGRITY" },
+  { kind: "verified", text: "Verified" },
+  { kind: "rule" },
+  { kind: "heading", text: "HISTORY · 3 events" },
   { kind: "event", stamp: "05-10 04:18 PM", what: "Case Updated", who: "Nirjar Goswami" },
+  { kind: "event", stamp: "03-10 11:42 AM", what: "Device Linked", who: "Priya Sharma" },
+  { kind: "event", stamp: "02-10 09:41 AM", what: "Case Created", who: "Nirjar Goswami" },
 ]
 
 /**
@@ -200,11 +212,11 @@ const PROMPT_ROWS = 2
 /**
  * How long a command takes to type, and the beat before it prints anything.
  */
-const TYPING_MS = 1250
+const TYPING_MS = 2200
 const SUBMIT_MS = 620
 
 /** The table prints a row at a time; this is the gap between rows. */
-const ROW_STAGGER_MS = 105
+const ROW_STAGGER_MS = 140
 
 /** Held once the record is complete, so the last frame is readable before looping. */
 const HOLD_MS = 2800
@@ -222,14 +234,14 @@ const DONE_GAP_MS = 700
 const DONE_ROWS = 1
 
 interface Phase {
+  /** Which of the two fresh views the terminal is showing. */
+  view: "list" | "record"
   /** Characters of each command on screen so far. */
   listTyped: number
   recordTyped: number
   /** How many rows of each output have printed. */
   listPrinted: number
   recordPrinted: number
-  /** The shell has printed its prompt back and is taking the second command. */
-  atSecondPrompt: boolean
   /** The record is complete and the closing prompt is up. */
   done: boolean
 }
@@ -245,6 +257,8 @@ type Beat =
   | { readonly kind: "type"; readonly text: string; readonly ms: number }
   | { readonly kind: "wait"; readonly ms: number }
   | { readonly kind: "rows"; readonly count: number }
+  /** The shell clears the screen before the next command. */
+  | { readonly kind: "clear" }
 
 const LIST_COMMAND = "case list"
 const RECORD_COMMAND = "case show 2026-CR-0142"
@@ -256,8 +270,10 @@ const SCRIPT: readonly Beat[] = [
   { kind: "type", text: LIST_COMMAND, ms: TYPING_MS },
   { kind: "wait", ms: SUBMIT_MS },
   { kind: "rows", count: LIST_ROWS },
-  // The beat before the next prompt: the shell returning to the user.
+  // Hold the finished case-list view long enough to be read.
   { kind: "wait", ms: PROMPT_GAP_MS },
+  // The next command starts on a cleared screen, in the same terminal window.
+  { kind: "clear" },
   { kind: "type", text: RECORD_COMMAND, ms: TYPING_MS * 1.4 },
   { kind: "wait", ms: SUBMIT_MS },
   { kind: "rows", count: RECORD_ROWS },
@@ -271,7 +287,8 @@ const SCRIPT: readonly Beat[] = [
  * as long as it takes to print its rows, which is what ties the script to the
  * markup that renders them.
  */
-const beatMs = (beat: Beat) => (beat.kind === "rows" ? beat.count * ROW_STAGGER_MS : beat.ms)
+const beatMs = (beat: Beat) =>
+  beat.kind === "rows" ? beat.count * ROW_STAGGER_MS : beat.kind === "clear" ? 0 : beat.ms
 
 /**
  * Expands the session into absolute boundaries once, so `resolvePhase` stays a
@@ -292,11 +309,11 @@ const TIMELINE = (() => {
 function resolvePhase(elapsed: number): Phase {
   const cycle = Math.min(Math.max(elapsed, 0), TIMELINE.cycleMs)
   const phase: Phase = {
+    view: "list",
     listTyped: 0,
     recordTyped: 0,
     listPrinted: 0,
     recordPrinted: 0,
-    atSecondPrompt: false,
     done: false,
   }
 
@@ -305,15 +322,12 @@ function resolvePhase(elapsed: number): Phase {
 
     const t = Math.min(cycle - start, end - start)
 
-    if (beat.kind === "type") {
+    if (beat.kind === "clear") {
+      phase.view = "record"
+    } else if (beat.kind === "type") {
       const typed = typedCount(t, beat.text, beat.ms)
       if (beat.text === LIST_COMMAND) phase.listTyped = typed
-      else {
-        phase.recordTyped = typed
-        // The prompt belongs to the command being written at it, so it exists
-        // from the moment the shell starts writing that command.
-        phase.atSecondPrompt = true
-      }
+      else phase.recordTyped = typed
     } else if (beat.kind === "rows") {
       const count = Math.min(beat.count, Math.floor(t / ROW_STAGGER_MS) + 1)
       if (beat.count === LIST_ROWS) phase.listPrinted = count
@@ -370,6 +384,74 @@ function Prompt({
   )
 }
 
+/** The command reference the shell offers while a line is being written. */
+const COMMANDS = [
+  ["create", "Guided case wizard"],
+  ["list", "List all cases"],
+  ["show", "Display case dossier"],
+  ["edit", "Update case metadata"],
+  ["close", "Seal & close case"],
+  ["delete", "Archive or purge case"],
+  ["restore", "Restore archived case"],
+] as const
+
+/** The suggestion card the CLI drops under a command still being typed. */
+function Autocomplete({ query }: Readonly<{ query: string }>) {
+  const matches = COMMANDS.filter(([command]) => command.startsWith(query.toLowerCase()))
+  if (matches.length === 0) return null
+
+  return (
+    <span aria-hidden="true" className="absolute left-[56em] top-[20em] z-20 flex overflow-hidden rounded-[4em] font-mono">
+      <span className="bg-[#a9a9a9] px-[8em] py-[4em] text-[#262626]">
+        {matches.map(([command]) => (
+          <span key={command} className={`block h-[1.2em] whitespace-nowrap ${LINE} leading-none`}>{command}</span>
+        ))}
+      </span>
+      <span className="bg-[#d4d4d4] px-[8em] py-[4em] text-[#333333]">
+        {matches.map(([command, description]) => (
+          <span key={command} className={`block h-[1.2em] whitespace-nowrap ${LINE} leading-none`}>{description}</span>
+        ))}
+      </span>
+    </span>
+  )
+}
+
+/** Once `show` is typed, the shell offers the cases it can open. */
+function CaseAutocomplete() {
+  return (
+    <span aria-hidden="true" className="absolute left-[56em] top-[20em] z-20 flex flex-col overflow-hidden rounded-[4em] bg-[#c9c9c9] px-[8em] py-[4em] font-mono text-[#000000]">
+      <Text sizeClass={LINE} className="leading-none text-[#000000]">—</Text>
+      {CASES.map((entry) => (
+        <span key={entry.id} className="flex h-[15em] items-center whitespace-nowrap leading-none">
+          <Text sizeClass={LINE} className="text-[#000000]">{entry.id}</Text>
+          <Text sizeClass={LINE} className="ml-[1ch] text-[#000000]">·</Text>
+          <Text sizeClass={LINE} className="ml-[1ch] text-[#000000]">{entry.status}</Text>
+          <Text sizeClass={LINE} className="ml-[1ch] text-[#000000]">· {entry.title}</Text>
+        </span>
+      ))}
+    </span>
+  )
+}
+
+/** A prompt with its live suggestion card, used for both commands in the run. */
+function CommandPrompt({
+  text,
+  typed,
+  caretOn,
+}: Readonly<{ text: string; typed: number; caretOn: boolean }>) {
+  return (
+    <span className="relative inline-flex items-center">
+      <Prompt text={text} typed={typed} caretOn={caretOn} />
+      {caretOn && typed > 0 && (() => {
+        const subcommand = text.slice("case ".length, typed).split(" ")[0]
+        return text.startsWith("case show") && subcommand === "show"
+          ? <CaseAutocomplete />
+          : <Autocomplete query={subcommand} />
+      })()}
+    </span>
+  )
+}
+
 /**
  * Column widths, in characters, shared by the heading and every row.
  *
@@ -382,8 +464,8 @@ const COL_ID = "w-[16ch]"
 const COL_TITLE = "w-[26ch]"
 const COL_EXAMINER = "w-[20ch]"
 
-/** The record keys its fields in a narrower column than the table's do. */
-const COL_LABEL = "w-[15ch]"
+/** Record fields use the table's identifier column, so both views line up. */
+const COL_LABEL = COL_ID
 const COL_STAMP = "w-[16ch]"
 
 /**
@@ -477,8 +559,25 @@ function RecordSlot({ row }: Readonly<{ row: RecordRow }>) {
     return <Text sizeClass={LINE} className={ACCENT}>{row.text}</Text>
   }
 
+  if (row.kind === "text" && row.wrap) {
+    return (
+      <span className={`${LINE} block w-full whitespace-normal leading-[1.35]`}>
+        {row.text}
+      </span>
+    )
+  }
+
   if (row.kind === "text" || row.kind === "device") {
     return <Text sizeClass={LINE}>{row.text}</Text>
+  }
+
+  if (row.kind === "verified") {
+    return (
+      <>
+        <span aria-hidden="true" className={`mr-[6em] h-[9em] w-[9em] rounded-full ${STATE_DOT}`} />
+        <Text sizeClass={LINE} className={STATE_TEXT}>{row.text}</Text>
+      </>
+    )
   }
 
   return (
@@ -495,61 +594,73 @@ function Splash({ elapsed }: Readonly<{ elapsed: number }>) {
   const phase = resolvePhase(elapsed)
   const listing = phase.listPrinted > 0
   const showing = phase.recordPrinted > 0
+  const listView = phase.view === "list"
 
   return (
     <div>
       {/* The content below; the window clips it and this slides it up. */}
-      <div className={`whitespace-pre ${BANNER} text-[#72b7d3]`}>{LOGO}</div>
+      <div className={`whitespace-pre font-mono ${BANNER} text-[#4bb3fd]`}>{LOGO}</div>
 
       <Slot />
       <Slot>
         <Text sizeClass={LINE} className={MUTED}>
-          {"  Forensic Data Imaging & Retrieval Tool · v0.3.4"}
+          {"Forensic Data Imaging & Retrieval Tool · v0.5.0"}
         </Text>
       </Slot>
       <Slot />
-      <Slot>
-        <Prompt
-          text={LIST_COMMAND}
-          typed={phase.listTyped}
-          caretOn={!listing}
-        />
-      </Slot>
+      {listView && (
+        <Slot>
+          <CommandPrompt
+            text={LIST_COMMAND}
+            typed={phase.listTyped}
+            caretOn={!listing}
+          />
+        </Slot>
+      )}
 
       {/*
        * The list, printed a row at a time. Each row waits for its turn to exist
        * at all, so the output grows the way a shell writes it.
        */}
-      <Slot show={phase.listPrinted >= 1} />
-      <Slot show={phase.listPrinted >= 2}>
-        <Text sizeClass={LINE} className={TITLE}>Forensic Cases</Text>
-      </Slot>
-      <Slot show={phase.listPrinted >= 3} />
-      <Slot show={phase.listPrinted >= 4}><Columns /></Slot>
-      <Slot show={phase.listPrinted >= 5}><Rule /></Slot>
+      {listView && (
+        <>
+          <Slot show={phase.listPrinted >= 1} />
+          <Slot show={phase.listPrinted >= 2}>
+            <Text sizeClass={LINE} className={TITLE}>Forensic Cases</Text>
+          </Slot>
+          <Slot show={phase.listPrinted >= 3} />
+          <Slot show={phase.listPrinted >= 4}><Columns /></Slot>
+          <Slot show={phase.listPrinted >= 5}><Rule /></Slot>
 
-      {CASES.map((entry, index) => (
-        <Slot key={entry.id} show={index < phase.listPrinted}>
-          <CaseRow index={index} />
-        </Slot>
-      ))}
+          {CASES.map((entry, index) => (
+            <Slot key={entry.id} show={index < phase.listPrinted}>
+              <CaseRow index={index} />
+            </Slot>
+          ))}
+        </>
+      )}
 
       {/*
        * The shell returns to the user and the second command is written at it.
        * The prompt does not exist until the list above it is finished — an
        * empty `trace>` sitting in the middle of the output reads as a mistake.
        */}
-      <Slot show={phase.atSecondPrompt} />
-      <Slot show={phase.atSecondPrompt}>
-        <Prompt
-          text={RECORD_COMMAND}
-          typed={phase.recordTyped}
-          caretOn={!showing}
-        />
-      </Slot>
+      {!listView && (
+        <Slot>
+          <CommandPrompt
+            text={RECORD_COMMAND}
+            typed={phase.recordTyped}
+            caretOn={!showing}
+          />
+        </Slot>
+      )}
 
-      {RECORD.map((row, index) => (
-        <Slot key={index} show={index < phase.recordPrinted}>
+      {!listView && RECORD.map((row, index) => (
+        <Slot
+          key={index}
+          show={index < phase.recordPrinted}
+          rowClass={row.kind === "text" && row.wrap ? "min-h-[18em] py-[3em]" : ROW}
+        >
           <RecordSlot row={row} />
         </Slot>
       ))}
@@ -589,75 +700,49 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
    */
   const follow = useRef(true)
 
-  const printed =
-    HEADER_ROWS +
-    Math.min(phase.listPrinted, LIST_ROWS) +
-    (phase.listPrinted === LIST_ROWS ? PROMPT_ROWS : 0) +
-    phase.recordPrinted +
-    (phase.done ? DONE_ROWS : 0)
+  const printed = phase.view === "list"
+    ? HEADER_ROWS + Math.min(phase.listPrinted, LIST_ROWS)
+    : HEADER_ROWS + PROMPT_ROWS + phase.recordPrinted + (phase.done ? DONE_ROWS : 0)
 
-  // Once the session has played out, the window belongs to the reader. A chase
-    // left running would keep nudging `scrollTop` and drag the view back to the
-    // bottom under their hands — and since scroll positions are fractional,
-    // "close enough" is no guarantee it ever settles. One last snap, then it
-    // stops for good.
-    //
-    // `finished` is a boolean rather than the elapsed time on purpose. Depends
-    // on the elapsed time and this effect runs on *every frame* of the
-    // playback, re-snapshots to the bottom sixty times a second, and the window
-    // is simply impossible to scroll: every wheel tick is yanked straight back.
-    const finished = elapsed >= TIMELINE.cycleMs
+  const finished = elapsed >= TIMELINE.cycleMs
 
-    useEffect(() => {
+  /**
+   * Follow the printed rows with the browser's own smooth scroll rather than a
+   * per-frame animation loop. One scroll target per new row is all the work the
+   * main thread has to do; the browser interpolates the motion off-thread.
+   */
+  useEffect(() => {
     const node = viewport.current
     if (!node) return
 
-    if (finished) {
-      // The last snap, but only if the reader never took the view.
-      if (follow.current) node.scrollTop = node.scrollHeight
+    // The shell cleared the screen: start the fresh view from its top.
+    if (phase.view === "record" && phase.recordPrinted <= 1) {
+      node.scrollTop = 0
       return
     }
 
-    // While it plays: the output only ever grows at the bottom, so following the
-    // newest line is just going to the bottom — read fresh each frame and eased
-    // toward, because output arriving faster than a fixed-duration tween can
-    // finish would leave the view permanently behind it.
-    let raf = 0
-    let resting = 0
+    if (!follow.current) return
+    node.scrollTo({ top: node.scrollHeight, behavior: finished ? "auto" : "smooth" })
+  }, [printed, finished, phase.view, phase.recordPrinted])
 
-    const step = () => {
-      const distance = node.scrollHeight - node.scrollTop - node.clientHeight
+  /**
+   * The wheel belongs to the terminal while the pointer is over it. A native
+   * non-passive listener is needed: React's wheel handler cannot stop the page
+   * behind the window from scrolling.
+   */
+  useEffect(() => {
+    const node = viewport.current
+    if (!node) return
 
-      if (distance < 2) {
-        // The reader is at the bottom again, or the chase has caught up: either
-        // way the view belongs to the playback again.
-        follow.current = true
-        resting += 1
-        // Two settled frames: the row is down and the view is with it.
-        if (resting > 1) return
-      } else {
-        resting = 0
-      }
-
-      if (!follow.current) {
-        // The reader scrolled away. Leave the view where they put it and keep
-        // watching, so scrolling back to the bottom resumes the follow.
-        raf = requestAnimationFrame(step)
-        return
-      }
-
-      node.scrollTop += distance * 0.25
-      raf = requestAnimationFrame(step)
+    const onWheel = (event: WheelEvent) => {
+      event.preventDefault()
+      node.scrollTop += event.deltaY
+      if (event.deltaY < 0) follow.current = false
     }
 
-    raf = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(raf)
-  }, [printed, finished])
-
-  /** The reader's own scrolling takes the view away from the playback. */
-  const onWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    if (event.deltaY < 0) follow.current = false
-  }
+    node.addEventListener("wheel", onWheel, { passive: false })
+    return () => node.removeEventListener("wheel", onWheel)
+  }, [])
 
   const onTouchMove = () => {
     follow.current = false
@@ -707,11 +792,10 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
   return (
     <div
       ref={viewport}
-      className={VIEWPORT}
+      className={`${VIEWPORT} ${finished ? "overflow-y-auto" : "overflow-hidden"}`}
       role="region"
       aria-label="Terminal output"
       tabIndex={0}
-      onWheel={onWheel}
       onTouchMove={onTouchMove}
       onKeyDown={onKeyDown}
     >
@@ -759,16 +843,14 @@ const WINDOW_INSET = "px-[32em]"
  * The top is the tighter of the two: a terminal's margin under its own chrome
  * is a line of breathing room, not a paragraph.
  *
- * The scrollbar is shown, thin and in the terminal's own greys. Hiding it was
- * tidier and useless: a window that holds more than it shows has to say so
- * somehow, and a scrollbar is how a terminal says it. It is the one piece of
- * chrome that answers "is there more?" and answers "drag me" as well.
+ * The viewport clips instead of scrolling: the session is a playback, not a
+ * terminal someone drives, so a scrollbar would only imply an interaction that
+ * is not there.
  */
-const VIEWPORT =
-  `h-[502em] overflow-y-auto pt-[24em] pb-[28em] ${WINDOW_INSET} ` +
-  `[scrollbar-width:thin] [scrollbar-color:#3f4750_transparent] ` +
-  `[&::-webkit-scrollbar]:w-[4em] [&::-webkit-scrollbar-track]:bg-transparent ` +
-  `[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#3f4750]`
+/** The terminal is shorter than the console panel that holds it. */
+const TERMINAL_SCREEN_HEIGHT = "h-[494em] md:h-[466em]"
+
+const VIEWPORT = `h-[464em] md:h-[436em] scroll-smooth pt-[24em] pb-[28em] ${WINDOW_INSET} [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`
 
 /**
  * The screen's title bar. Only the dots sit on it.
@@ -778,15 +860,38 @@ const VIEWPORT =
  * and sit slightly outside the text's own margin, the way a window's controls
  * sit outside the page it is showing.
  */
-const BAR = `flex h-[26em] items-center border-b border-[#21262d] bg-[#111214] px-[24em]`
+const BAR = `flex h-[30em] items-center border-b border-[#21262d] bg-[#111214] px-[24em]`
 
 /** The dots on the bar — the window's only chrome. */
 const DOTS = "flex gap-[8em]"
 const DOT = "h-[11em] w-[11em] rounded-full bg-[#5f6672]"
 
-export function TraceCommandLine() {
-  const session = useOnceTimeline<HTMLDivElement>(TIMELINE.cycleMs)
+export function TraceCommandLine({
+  maxWidthClass,
+  screenWidthClass,
+  replay = false,
+}: Readonly<{ maxWidthClass?: string; screenWidthClass?: string; replay?: boolean }> = {}) {
+  const [started, setStarted] = useState(false)
+  const [inView, setInView] = useState(false)
+  const session = useOnceTimeline<HTMLDivElement>(TIMELINE.cycleMs, started, !inView)
   const isActive = useIsTabActive(TAB_LABEL)
+
+  // The session runs only while the window is on screen. First entry starts it;
+  // leaving pauses it and coming back resumes from the same point.
+  useEffect(() => {
+    const node = session.ref.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setStarted(true)
+        setInView(entry.isIntersecting)
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.01 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [session.ref])
 
   // Selecting the tab starts the session over; leaving it does not stop a run
   // already in progress, but coming back does begin another one.
@@ -794,8 +899,27 @@ export function TraceCommandLine() {
     if (isActive) session.restart()
   }, [isActive, session.restart])
 
+  const replayButton = replay ? (
+    <button
+      type="button"
+      onClick={session.restart}
+      aria-label="Replay trace command line"
+      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-hairline bg-canvas/90 text-muted transition-colors hover:bg-canvas hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:h-10 sm:w-10"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5 sm:h-[18px] sm:w-[18px]" aria-hidden="true">
+        <path d="M12 20.75C10.078 20.7474 8.23546 19.9827 6.8764 18.6236C5.51733 17.2645 4.75265 15.422 4.75 13.5C4.75 13.3011 4.82902 13.1103 4.96967 12.9697C5.11032 12.829 5.30109 12.75 5.5 12.75C5.69891 12.75 5.88968 12.829 6.03033 12.9697C6.17098 13.1103 6.25 13.3011 6.25 13.5C6.25 14.6372 6.58723 15.7489 7.21905 16.6945C7.85087 17.6401 8.74889 18.3771 9.79957 18.8123C10.8502 19.2475 12.0064 19.3614 13.1218 19.1395C14.2372 18.9177 15.2617 18.37 16.0659 17.5659C16.87 16.7617 17.4177 15.7372 17.6395 14.6218C17.8614 13.5064 17.7475 12.3502 17.3123 11.2996C16.8771 10.2489 16.1401 9.35087 15.1945 8.71905C14.2489 8.08723 13.1372 7.75 12 7.75H9.5C9.30109 7.75 9.11032 7.67098 8.96967 7.53033C8.82902 7.38968 8.75 7.19891 8.75 7C8.75 6.80109 8.82902 6.61032 8.96967 6.46967C9.11032 6.32902 9.30109 6.25 9.5 6.25H12C13.9228 6.25 15.7669 7.01384 17.1265 8.37348C18.4862 9.73311 19.25 11.5772 19.25 13.5C19.25 15.4228 18.4862 17.2669 17.1265 18.6265C15.7669 19.9862 13.9228 20.75 12 20.75Z" />
+        <path d="M12 10.75C11.9015 10.7505 11.8038 10.7313 11.7128 10.6935C11.6218 10.6557 11.5392 10.6001 11.47 10.53L8.47 7.53003C8.32955 7.38941 8.25066 7.19878 8.25066 7.00003C8.25066 6.80128 8.32955 6.61066 8.47 6.47003L11.47 3.47003C11.5387 3.39634 11.6215 3.33724 11.7135 3.29625C11.8055 3.25526 11.9048 3.23322 12.0055 3.23144C12.1062 3.22966 12.2062 3.24819 12.2996 3.28591C12.393 3.32363 12.4778 3.37977 12.549 3.45099C12.6203 3.52221 12.6764 3.60705 12.7141 3.70043C12.7518 3.79382 12.7704 3.89385 12.7686 3.99455C12.7668 4.09526 12.7448 4.19457 12.7038 4.28657C12.6628 4.37857 12.6037 4.46137 12.53 4.53003L10.06 7.00003L12.53 9.47003C12.6704 9.61066 12.7493 9.80128 12.7493 10C12.7493 10.1988 12.6704 10.3894 12.53 10.53C12.4608 10.6001 12.3782 10.6557 12.2872 10.6935C12.1962 10.7313 12.0985 10.7505 12 10.75Z" />
+      </svg>
+    </button>
+  ) : null
+
   return (
-    <ConsolePreviewBox ariaLabel="Trace command line listing forensic cases, then opening one case record">
+    <ConsolePreviewBox
+      ariaLabel="Trace command line listing forensic cases, then opening one case record"
+      maxWidthClass={maxWidthClass}
+      frameAspectClass="aspect-[851/700] md:aspect-[851/466] lg:aspect-[851/410]"
+      overlay={replayButton}
+    >
       {/*
        * The terminal is the panel: it fills the frame the console would fill, so
        * switching to this tab swaps one screen for another rather than opening a
@@ -813,7 +937,7 @@ export function TraceCommandLine() {
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           ref={session.ref}
-          className={`console-screen pointer-events-auto relative w-full shrink-0 scale-95 overflow-hidden rounded-[15em] bg-[#0c0c0c] font-mono font-normal text-[#f0f6fc] ${SCREEN_HEIGHT}`}
+          className={`console-screen console-command pointer-events-auto relative shrink-0 scale-100 lg:scale-95 cursor-pointer overflow-hidden rounded-[15em] bg-[#0c0c0c] font-mono font-normal text-[#f0f6fc] ${screenWidthClass ?? "w-full"} ${TERMINAL_SCREEN_HEIGHT}`}
         >
           <div className={BAR}>
             <span aria-hidden="true" className={DOTS}>
@@ -825,7 +949,7 @@ export function TraceCommandLine() {
 
           <Terminal elapsed={session.elapsed} />
         </div>
-      </div>
+        </div>
     </ConsolePreviewBox>
   )
 }

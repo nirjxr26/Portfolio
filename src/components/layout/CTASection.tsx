@@ -16,6 +16,7 @@ interface CTASectionProps {
   }
   installCommands?: InstallCommand[]
   bgClass?: string
+  paddingClass?: string
   ariaLabel?: string
 }
 
@@ -27,6 +28,7 @@ export function CTASection({
   secondaryAction,
   installCommands,
   bgClass = "bg-surface-alt",
+  paddingClass = "pt-17 pb-18 sm:pb-24",
   ariaLabel,
 }: Readonly<CTASectionProps>) {
   const actions: HeroAction[] = [
@@ -50,10 +52,7 @@ export function CTASection({
   ]
 
   return (
-    // `pt-17` (68px) matches the padding a preceding mockup section carries, so the
-    // band change between the two lands in the middle of the gap rather than
-    // hugging the mockup. The bottom keeps the roomier CTA rhythm.
-    <section className={`${bgClass} pt-17 pb-18 sm:pb-24 reveal-on-scroll`}>
+    <section className={`${bgClass} ${paddingClass} reveal-on-scroll`}>
       <Container className="text-center">
         <div className="max-w-2xl mx-auto">
           <h2 className="t-hero text-ink">{headline}</h2>

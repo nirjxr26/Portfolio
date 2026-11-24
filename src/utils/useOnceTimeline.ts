@@ -14,34 +14,38 @@ import { useCallback, useEffect, useRef, useState } from "react"
  * not restart it, because a mockup that replays itself every time it is
  * scrolled past is not a mockup, it is a loop.
  */
-export function useOnceTimeline<T extends HTMLElement>(durationMs: number) {
+export function useOnceTimeline<T extends HTMLElement>(
+  durationMs: number,
+  enabled = true,
+  paused = false,
+) {
   const ref = useRef<T>(null)
   const [elapsed, setElapsed] = useState(0)
   const [run, setRun] = useState(0)
+  const elapsedRef = useRef(0)
 
   const restart = useCallback(() => {
+    elapsedRef.current = 0
     setElapsed(0)
     setRun((previous) => previous + 1)
   }, [])
 
   useEffect(() => {
+    if (!enabled || paused) return
+
     let raf = 0
-    const start = performance.now()
+    const start = performance.now() - elapsedRef.current
 
     const tick = (now: number) => {
-      const t = now - start
-      if (t >= durationMs) {
-        // Publish the end once and stop. Nothing reschedules from here.
-        setElapsed(durationMs)
-        return
-      }
+      const t = Math.min(now - start, durationMs)
+      elapsedRef.current = t
       setElapsed(t)
-      raf = requestAnimationFrame(tick)
+      if (t < durationMs) raf = requestAnimationFrame(tick)
     }
 
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [durationMs, run])
+  }, [durationMs, run, enabled, paused])
 
   return { ref, elapsed, restart, durationMs }
 }

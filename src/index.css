@@ -137,6 +137,14 @@
     font-size: calc(100cqw / 851);
   }
 
+  /* Mobile draws the command line at a larger design unit, so the terminal
+     reads at phone size instead of shrinking to the full console's width. */
+  @media (max-width: 767px) {
+    .console-screen.console-command {
+      font-size: calc(100cqw / 600);
+    }
+  }
+
   /*
    * A block cursor, blinking on CSS rather than from a clock.
    *

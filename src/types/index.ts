@@ -43,15 +43,32 @@ export interface HeroAsset {
   maxWidthClass?: string
 }
 
+/** A tab that swaps the preview foreground to its own SVG. */
+export interface FgSwatch {
+  /** Tab label. */
+  label: string
+  /** Caption text shown while this tab is active. */
+  description: string
+  /** Foreground SVG shown in the preview while this tab is active. */
+  svg: string
+}
+
 export interface LayeredAsset {
-  bgSrc: string
+  bgSrc?: string
+  bgColor?: string
   fgSrc: string
+  fgSwatches?: FgSwatch[]
   bgAlt?: string
   fgAlt?: string
   bgWidth?: number
   bgHeight?: number
   fgWidth?: number
   fgHeight?: number
+  mobileFgSrc?: string
+  mobileFgWidth?: number
+  mobileFgHeight?: number
+  mobileFgClass?: string
+  mobileFrameClass?: string
   maxWidthClass?: string
   /** Caps the console itself, so growing the panel does not grow the artwork. */
   fgMaxWidthClass?: string
@@ -73,6 +90,7 @@ export interface CaseStudyData {
     subhead: string
     installCommands?: InstallCommand[]
     heroAsset?: HeroAsset
+    heroLayeredAsset?: LayeredAsset
   }
   sections: SectionItem[]
   cta: {

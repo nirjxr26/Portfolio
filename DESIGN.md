@@ -121,8 +121,7 @@ and `src/components/layout`.
   band and the tag/title/description stack. `CarouselSection` adds the rail.
 - **Hero** (`PageHero.tsx`): badge, `t-hero` title, `t-lead` subhead, optional
   flush media. Badge uses the display face, uppercase, accent.
-- **Terminal mockups** (`TraceConsole`, `TraceUpdateAnimation`,
-  `LayeredPreview`): colours and spinner frames come from `terminalTokens.ts`;
+- **Terminal mockups** (`TraceConsole`, `LayeredPreview`):
   the `console-frame` and `console-screen` utilities in `index.css` scale a
   fixed design width.
 - **Icons** (`Icons.tsx`): inline SVG through `StrokeIcon`. Icons are

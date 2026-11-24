@@ -5,7 +5,6 @@ import {
   createBreadcrumbs,
   externalProps,
   isStaticAsset,
-  nextTabIndex,
   withAssetHash,
 } from "./helpers"
 
@@ -18,7 +17,7 @@ describe("isStaticAsset", () => {
 
   it("matches the asset mount point", () => {
     expect(isStaticAsset("/assets/nirjar_resume.pdf")).toBe(true)
-    expect(isStaticAsset("/assets/trace/cli_hero.svg")).toBe(true)
+    expect(isStaticAsset("/assets/trace/hero-cli.svg")).toBe(true)
   })
 
   it("leaves internal routes and anchors alone", () => {
@@ -79,8 +78,8 @@ describe("createBreadcrumbs", () => {
 
 describe("withAssetHash", () => {
   it("appends content hash when the file exists in assets", () => {
-    const hashed = withAssetHash("/assets/trace/cli_hero.svg")
-    expect(hashed).toMatch(/^\/assets\/trace\/cli_hero\.svg\?v=[a-f0-9]{8}$/)
+    const hashed = withAssetHash("/assets/trace/hero-cli.svg")
+    expect(hashed).toMatch(/^\/assets\/trace\/hero-cli\.svg\?v=[a-f0-9]{8}$/)
   })
 
   it("leaves external or non-existent paths intact", () => {
@@ -89,27 +88,3 @@ describe("withAssetHash", () => {
   })
 })
 
-describe("nextTabIndex", () => {
-  it("wraps the arrow keys in both directions", () => {
-    expect(nextTabIndex("ArrowRight", 0, 2)).toBe(1)
-    expect(nextTabIndex("ArrowRight", 1, 2)).toBe(0)
-    expect(nextTabIndex("ArrowLeft", 0, 2)).toBe(1)
-    expect(nextTabIndex("ArrowDown", 0, 3)).toBe(1)
-    expect(nextTabIndex("ArrowUp", 0, 3)).toBe(2)
-  })
-
-  it("jumps to the ends on Home and End", () => {
-    expect(nextTabIndex("Home", 2, 3)).toBe(0)
-    expect(nextTabIndex("End", 0, 3)).toBe(2)
-  })
-
-  it("ignores keys that do not move the selection", () => {
-    for (const key of ["Enter", " ", "Tab", "Escape", "a"]) {
-      expect(nextTabIndex(key, 0, 2)).toBeNull()
-    }
-  })
-
-  it("stays put for an empty tablist", () => {
-    expect(nextTabIndex("ArrowRight", 0, 0)).toBeNull()
-  })
-})

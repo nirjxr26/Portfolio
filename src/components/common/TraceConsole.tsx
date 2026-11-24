@@ -2,12 +2,9 @@ import { useLayoutEffect, useRef, useState } from "react"
 import type { ReactNode, Ref } from "react"
 import { useLoopingTimeline } from "@/utils/useLoopingTimeline"
 import { withAssetHash } from "@/utils/helpers"
-import {
-  PREVIEW_FRAME_CLASS,
-  PREVIEW_MOBILE_HEIGHT,
-  PREVIEW_MOBILE_PADDING,
-} from "./LayeredPreview"
 import { fadeLayerClass, SLIDE, TINT } from "./motionStyles"
+
+const COMMAND_BACKDROP = "/assets/trace/cli-bg.png"
 
 /**
  * The Trace console, rebuilt as markup rather than shipped as artwork.
@@ -69,9 +66,6 @@ const CONSOLE_MAX_WIDTH = "max-w-5xl lg:max-w-6xl"
 
 /** How long each view holds before the console steps to the next one. */
 const DWELL_MS = 4000
-
-/** The painting the preview sits on, behind the console in both of its tabs. */
-const OVERVIEW_BACKDROP = "/assets/trace/overview_bg.svg"
 
 /**
  * One run of console type. Floors at one design unit, so the geometry above it
@@ -802,43 +796,38 @@ function ConsoleScreen({ active }: Readonly<{ active: number }>) {
 export function ConsolePreviewBox({
   ariaLabel,
   rootRef,
+  maxWidthClass = CONSOLE_MAX_WIDTH,
+  frameAspectClass = "aspect-[851/528]",
+  mobileHeightClass = "h-auto",
+  overlay,
   children,
-}: Readonly<{ ariaLabel: string; rootRef?: Ref<HTMLDivElement>; children: ReactNode }>) {
+}: Readonly<{ ariaLabel: string; rootRef?: Ref<HTMLDivElement>; maxWidthClass?: string; frameAspectClass?: string; mobileHeightClass?: string; overlay?: ReactNode; children: ReactNode }>) {
   return (
     <div
       ref={rootRef}
-      className={`relative w-full select-none ${CONSOLE_MAX_WIDTH} mx-auto overflow-hidden rounded-[20px] squircle bg-ink/10 ${PREVIEW_MOBILE_HEIGHT}`}
+      className={`relative w-full select-none ${maxWidthClass} mx-auto overflow-hidden rounded-[20px] squircle bg-console-backdrop ${mobileHeightClass}`}
     >
-      {/*
-       * The painting the console sits on. It is the panel's own backdrop, so it
-       * shows in the frame's inset on either side of the screen rather than
-       * behind it, and the mockup reads as a window laid over a landscape
-       * rather than a screenshot on a grey card.
-       *
-       * The `bg-ink/10` above stays: it is what shows for the moment before the
-       * image arrives, and the panel keeps a surface whichever way the section
-       * behind it is painted.
-       */}
       <img
-        src={withAssetHash(OVERVIEW_BACKDROP)}
+        src={withAssetHash(COMMAND_BACKDROP)}
         alt=""
         loading="lazy"
         decoding="async"
         draggable={false}
-        className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-[50%_45%]"
+        className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover object-center"
       />
-
       <div
-        className={`absolute ${PREVIEW_MOBILE_PADDING} pointer-events-none flex w-auto items-center justify-start sm:relative sm:inset-auto sm:block sm:w-full ${PREVIEW_FRAME_CLASS}`}
+        className="relative flex w-full items-center justify-start pointer-events-none p-10 md:justify-end md:py-10 lg:justify-center lg:px-12 lg:py-18"
       >
         <div
           role="img"
           aria-label={ariaLabel}
-          className="console-frame relative aspect-[851/528] h-full w-auto shrink-0 sm:h-auto sm:w-full"
+          className={`console-frame relative ${frameAspectClass} w-[200%] shrink-0 md:w-[94%] lg:w-full`}
         >
           {children}
         </div>
       </div>
+
+      {overlay && <div className="absolute bottom-4 right-4 z-10">{overlay}</div>}
     </div>
   )
 }

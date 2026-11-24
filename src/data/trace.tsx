@@ -8,14 +8,28 @@ export const traceData: CaseStudyData = {
     title: "Trace",
     headline: (
       <>
-        Recorded. <br className="sm:hidden" />Proven. Sealed.
+        Toolkit for the whole{" "}
+        <br className="hidden sm:block" />
+        forensic workflow.
       </>
     ),
     subhead:
-      "Case management, evidence tracking, and tamper-proof records, all in one local-first forensic CLI.",
-    heroAsset: {
-      src: "/assets/trace/cli_hero.svg",
-      alt: "Trace CLI forensic case management terminal interface",
+      "Manage your cases, track every piece of evidence, and keep tamper-proof records, all local-first and all in your terminal.",
+    heroLayeredAsset: {
+      bgSrc: "/assets/trace/hero-bg.jpg",
+      fgSrc: "/assets/trace/hero-tui-desktop.svg",
+      bgAlt: "Mountain landscape behind the Trace interface",
+      fgAlt: "Trace CLI forensic case management terminal interface",
+      bgWidth: 1633,
+      bgHeight: 1276,
+      fgWidth: 1065,
+      fgHeight: 640,
+      frameClass: "p-10",
+      mobilePaddingClass: "inset-0",
+      mobileFrameClass: "absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:relative sm:inset-auto sm:justify-center",
+      mobileFgSrc: "/assets/trace/hero-tui-mobile.svg",
+      mobileFgWidth: 900,
+      mobileFgHeight: 618,
     },
     installCommands: [
       {
@@ -34,8 +48,8 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Open, under review, or closed, every case shows exactly where it stands, with collision-free IDs and JSON export.",
       layeredAsset: {
-        bgSrc: "/assets/trace/tui_intro_bg.svg",
-        fgSrc: "/assets/trace/intro_tui.svg",
+        bgSrc: "/assets/trace/case-bg.png",
+        fgSrc: "/assets/trace/case-tui.svg",
         bgAlt: "Trace TUI environment background",
         fgAlt: "Trace TUI console showing cases, audit trail, and updates",
         fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
@@ -46,8 +60,8 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Records outlive the hardware, every touch asks for consent first, and each write-protection check comes with evidence.",
       layeredAsset: {
-        bgSrc: "/assets/trace/update_bg.svg",
-        fgSrc: "/assets/trace/update_tui.svg",
+        bgSrc: "/assets/trace/drive-bg.png",
+        fgSrc: "/assets/trace/drive-tui.svg",
         bgAlt: "Trace update environment background",
         fgAlt: "Trace TUI update console",
         fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
@@ -58,8 +72,8 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Every action is logged automatically and chained to the last, so edits show. Exports can be encrypted.",
       layeredAsset: {
-        bgSrc: "/assets/trace/audit_intro_bg.svg",
-        fgSrc: "/assets/trace/audit_tui.svg",
+        bgSrc: "/assets/trace/audit-bg.png",
+        fgSrc: "/assets/trace/audit-tui.svg",
         bgAlt: "Trace audit verification environment background",
         fgAlt: "Trace TUI audit verification console",
         fgMaxWidthClass: "sm:max-w-[840px] md:max-w-[880px]",
@@ -72,7 +86,7 @@ export const traceData: CaseStudyData = {
           <span className="dock-stack inline-flex items-center mx-1 sm:mx-1.5 -space-x-[0.28em] -translate-y-[0.06em]">
             <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black dark:bg-white shadow-sm shrink-0 cursor-pointer">
               <img
-                src={withAssetHash("/assets/trace/codex-icon.svg")}
+                src={withAssetHash("/assets/trace/icon-codex.svg")}
                 alt="Codex"
                 width={512}
                 height={512}
@@ -84,7 +98,7 @@ export const traceData: CaseStudyData = {
             </span>
             <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-[#D77655] shadow-sm shrink-0 cursor-pointer">
               <img
-                src={withAssetHash("/assets/trace/claude-ai-icon.svg")}
+                src={withAssetHash("/assets/trace/icon-claude.svg")}
                 alt="Claude"
                 width={512}
                 height={510}
@@ -96,7 +110,7 @@ export const traceData: CaseStudyData = {
             </span>
             <span className="dock-item inline-flex items-center justify-center h-[0.92em] w-[0.92em] rounded-full overflow-hidden ring-[0.06em] ring-canvas bg-black shadow-sm shrink-0 cursor-pointer">
               <img
-                src={withAssetHash("/assets/trace/cursor_icon.png")}
+                src={withAssetHash("/assets/trace/icon-cursor.webp")}
                 alt="Cursor"
                 width={1024}
                 height={1024}
@@ -111,10 +125,30 @@ export const traceData: CaseStudyData = {
         </>
       ),
       titleClassName: "t-hero-headline",
-      desc: "Any agent that can run a command can use Trace, with the same proof a person would leave.",
+      desc: "Available over MCP. Any agent that supports it can use Trace, with the same proof a person would leave.",
       layeredAsset: {
-        bgSrc: "/assets/trace/agents_bg.svg",
-        fgSrc: "/assets/trace/agents_content.svg",
+        bgSrc: "/assets/trace/agents-bg.png",
+        fgSrc: "/assets/trace/agents-tui.svg",
+        fgSwatches: [
+          {
+            label: "Claude",
+            description:
+              "A Claude Code session demonstrating forensic case creation, USB evidence intake, and audit chain verification through Trace MCP.",
+            svg: "/assets/trace/agents-tui.svg",
+          },
+          {
+            label: "OpenCode",
+            description:
+              "An OpenCode session demonstrating insider data exfiltration case creation and transition to review for scope approval through Trace MCP.",
+            svg: "/assets/trace/tui-opencode.svg",
+          },
+          {
+            label: "Codex",
+            description:
+              "A Codex session demonstrating forensic case handoff, linked device retrieval, and audit bundle export through Trace MCP.",
+            svg: "/assets/trace/tui-codex.svg",
+          },
+        ],
         bgAlt: "Trace agent environment background",
         fgAlt: "Trace agent console and output preview",
         bgWidth: 788,
@@ -132,7 +166,7 @@ export const traceData: CaseStudyData = {
         The project&apos;s still in its{" "}
         <span className="underline underline-offset-4 decoration-muted/60">
           development phase
-        </span>, but you can start your first case in under a minute. 
+        </span>, but you can start your first case in under a minute.
       </>
     ),
     action: "View on GitHub",
