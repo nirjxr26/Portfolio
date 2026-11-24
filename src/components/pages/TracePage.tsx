@@ -1,7 +1,7 @@
 import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/data/site"
 import { createBreadcrumbs } from "@/utils/helpers"
-import { HeroAssetPreview, LayeredPreview, Seo } from "../common"
+import { LayeredPreview, Seo, TraceCommandLine } from "../common"
 import { CTASection, PageShell } from "../layout"
 
 interface TracePageProps {
@@ -9,7 +9,6 @@ interface TracePageProps {
 }
 
 const CONTAINER = "w-full max-w-[1100px] mx-auto px-6 sm:px-8 md:px-10"
-const FEATURE_SECTION_SPACING = "py-8 sm:py-10 md:py-12 lg:py-14"
 const INTER_FONT = "font-display"
 const UNIVERS_FONT = "font-univers"
 
@@ -18,6 +17,38 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
   const canonicalUrl = `${SITE_URL}/works/trace`
   const ogImage = `${SITE_URL}/assets/og/trace_og.svg`
   const pageTitle = seoTitle || `${hero.title} | ${typeof hero.headline === "string" ? hero.headline : hero.subhead}`
+  const renderSectionBlock = (
+    section: (typeof sections)[number],
+    key: string | number,
+    className = "",
+  ) => (
+    <div key={key} className={`w-full ${className}`.trim()}>
+      <div className="reveal-on-scroll w-full">
+        <div className="mb-6 sm:mb-8">
+          <h2 className={`text-[30px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left leading-[1.1] tracking-[-0.005em]`}>
+            {section.title}
+          </h2>
+          {section.desc && (
+            <p className={`text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted leading-[1.5] mt-3 sm:mt-4 max-w-lg text-left text-pretty`}>
+              {section.desc}
+            </p>
+          )}
+        </div>
+
+        {section.layeredAsset && (
+          <div className="w-full text-left">
+            <LayeredPreview
+              {...section.layeredAsset}
+              maxWidthClass="w-full max-w-full"
+              frameClass="p-10"
+              mobilePaddingClass="inset-0"
+              mobileFrameClass="absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:relative sm:inset-auto sm:justify-center"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )
 
   return (
     <PageShell
@@ -51,8 +82,8 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
       }
     >
       {/* Hero Section: Centered header, MacBook CLI mockup attached to the bottom */}
-      <section className="pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0 overflow-hidden flex flex-col items-center text-center">
-        <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-center">
+      <section className="py-24 sm:py-28 md:py-32 overflow-hidden flex flex-col items-center text-center">
+        <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-start text-left sm:items-center sm:text-center">
           {hero.title && (
             <span className="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase text-accent mb-4 sm:mb-5 block select-none reveal-on-scroll">
               {hero.title}
@@ -63,70 +94,50 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             {hero.headline}
           </h1>
 
-          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted max-w-2xl mx-auto mb-8 sm:mb-12 leading-[1.5] text-pretty reveal-on-scroll`}>
+          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted mx-0 sm:mx-auto sm:max-w-2xl mb-8 sm:mb-12 leading-[1.5] text-left sm:text-center text-pretty reveal-on-scroll`}>
             {hero.subhead}
           </p>
         </div>
 
-        {/* Hero Visual: MacBook CLI mockup */}
-        {hero.heroAsset && (
-          <div className="w-full max-w-full flex justify-center mt-2 sm:mt-6 px-4 min-[414px]:px-6 sm:px-8 md:px-10 lg:px-12 overflow-hidden">
-            <HeroAssetPreview
-              asset={hero.heroAsset}
-              className="w-full max-w-4xl lg:max-w-5xl"
+        {/* Hero Visual: Trace TUI over landscape artwork */}
+        {hero.heroLayeredAsset && (
+          <div className="w-full max-w-full flex justify-center mt-2 sm:mt-6 px-6 sm:px-8 md:px-10">
+            <LayeredPreview
+              {...hero.heroLayeredAsset}
+              maxWidthClass="max-w-4xl lg:max-w-[1152px]"
+              mobileFrameClass="absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:relative sm:inset-auto sm:justify-center lg:px-[max(40px,calc(50%_-_472px))]"
+              className="animate-device-rise"
             />
           </div>
         )}
       </section>
 
-      {/* Intro Section: Plain-language summary with theme-adaptive alternating surface background */}
+      {/* Section 1: intro and command line */}
       <section className="w-full bg-surface-alt py-16 sm:py-20 md:py-24">
         <div className={CONTAINER}>
-          <div className="reveal-on-scroll w-full text-left">
+          <div className="w-full text-left">
             <h2 className={`text-[24px] min-[375px]:text-[28px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left text-pretty leading-[1.2] sm:leading-[1.1] tracking-[-0.005em]`}>
               A forensic tool that does the paperwork.
             </h2>
-            <p className={`mt-3 sm:mt-4 text-base min-[375px]:text-[17px] sm:text-[19px] md:text-[20px] font-normal ${UNIVERS_FONT} text-muted text-left text-pretty leading-[1.5] max-w-2xl`}>
+            <p className={`mt-3 sm:mt-4 text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted text-left text-pretty leading-[1.5] max-w-2xl`}>
               Trace opens the case, logs every action, and chains each record to the last, so your evidence stays provable without you stopping to write anything down.
             </p>
+          </div>
+
+          <div className="mt-8 sm:mt-10">
+            <TraceCommandLine screenWidthClass="w-full sm:w-[82%]" replay />
           </div>
         </div>
       </section>
 
-      {/* The 4 Feature Sections: Cases -> Drives -> Audit -> AI Agent */}
-      {sections.map((section, idx) => (
-        <section
-          key={typeof section.title === "string" ? section.title : idx}
-          className={`w-full ${FEATURE_SECTION_SPACING}`}
-        >
-          <div className={CONTAINER}>
-            <div className="reveal-on-scroll w-full">
-              {/* Header: title with description stacked below, Inter font with main site font size and weight */}
-              <div className="mb-6 sm:mb-8">
-                <h2 className={`text-[30px] sm:text-[clamp(30px,3.6vw,40px)] font-semibold ${INTER_FONT} text-ink text-left leading-[1.1] tracking-[-0.005em]`}>
-                  {section.title}
-                </h2>
-                {section.desc && (
-                  <p className={`text-sm sm:text-[18px] font-normal ${UNIVERS_FONT} text-muted leading-[1.5] mt-3 sm:mt-4 max-w-lg text-left text-pretty`}>
-                    {section.desc}
-                  </p>
-                )}
-              </div>
-
-              {/* Visual preview: left-aligned, full container width, equal padding on all 4 sides */}
-              {section.layeredAsset && (
-                <div className="w-full text-left">
-                  <LayeredPreview
-                    {...section.layeredAsset}
-                    maxWidthClass="w-full max-w-full"
-                    frameClass="p-6 sm:p-10 md:p-12 lg:p-14"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      ))}
+      {/* Section 2: cases, drives, audit and agents on pure black */}
+      <section className="w-full bg-white dark:bg-black py-20 sm:py-24 md:py-28">
+        <div className={CONTAINER}>
+          {sections.map((section, idx) =>
+            renderSectionBlock(section, typeof section.title === "string" ? section.title : idx, idx === 0 ? "" : "mt-20 sm:mt-28 md:mt-32"),
+          )}
+        </div>
+      </section>
 
       {/* Bottom CTA Section */}
       <CTASection
@@ -137,6 +148,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
         secondaryAction={cta.secondaryAction}
         installCommands={cta.installCommands}
         bgClass="bg-surface-alt"
+        paddingClass="py-16 sm:py-20 md:py-24"
         ariaLabel={`View ${hero.title} on GitHub`}
       />
     </PageShell>

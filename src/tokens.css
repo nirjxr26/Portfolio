@@ -6,6 +6,7 @@
   --ink: #1d1d1f;
   --muted: #6E6E73;
   --hairline: #e0e0e0;
+  --console-backdrop: #e2e4e8;
   --accent: #0066cc;
   --accent-hover: #0071e3;
   --page-gutter: 1rem;
@@ -21,6 +22,7 @@
   --ink: #ffffff;
   --muted: #b8b8bd;
   --hairline: #333336;
+  --console-backdrop: #202226;
   --accent: #2997ff;
   --accent-hover: #4aa8ff;
 }
@@ -50,6 +52,7 @@
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
+  --color-console-backdrop: var(--console-backdrop);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
 }

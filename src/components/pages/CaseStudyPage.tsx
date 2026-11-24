@@ -73,6 +73,8 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           subhead={hero.subhead}
           bottomFlush={Boolean(hero.heroAsset)}
           childrenClassName={hasHeroContent ? "flex flex-col items-center w-full" : undefined}
+          mobileLeftAlign
+          roomyHeader
         >
           <CaseStudyHeroMedia
             installCommands={hero.installCommands}

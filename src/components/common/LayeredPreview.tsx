@@ -1,9 +1,9 @@
-import type { ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import type { LayeredAsset } from "@/types"
 import { withAssetHash } from "@/utils/helpers"
+import { BODY_MUTED_CLASS } from "./textStyles"
 
 export interface LayeredPreviewProps extends Partial<LayeredAsset> {
-  bgSrc: string
   fgSrc: string
   frameClass?: string
   className?: string
@@ -65,6 +65,7 @@ export const PREVIEW_MOBILE_PADDING =
 export function LayeredPreview({
   bgSrc,
   fgSrc,
+  fgSwatches,
   bgAlt = "Interactive environment background",
   fgAlt = "Interface console preview",
   bgWidth = 1039,
@@ -75,42 +76,116 @@ export function LayeredPreview({
   fgMaxWidthClass = "",
   mobileHeightClass = PREVIEW_MOBILE_HEIGHT,
   mobilePaddingClass = PREVIEW_MOBILE_PADDING,
+  mobileFgSrc,
+  mobileFgWidth = 900,
+  mobileFgHeight = 618,
+  mobileFgClass = "h-full w-auto max-w-none",
+  mobileFrameClass,
   frameClass,
   className = "",
   children,
 }: Readonly<LayeredPreviewProps>) {
+  const [activeFgSrc, setActiveFgSrc] = useState(fgSrc)
+  const activeIndex = Math.max(
+    0,
+    fgSwatches?.findIndex((swatch) => swatch.svg === activeFgSrc) ?? 0,
+  )
+  const activeSwatch = fgSwatches?.[activeIndex]
+  const frameWrapperClass = mobileFrameClass
+    ? mobileFrameClass
+    : `absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${frameClass ?? PREVIEW_FRAME_CLASS}`
+  const fgClass = `block ${mobileFgClass} select-none pointer-events-none sm:h-auto sm:w-full ${fgMaxWidthClass}`.trim()
+
   return (
-    <div
-      className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden isolate rounded-[20px] squircle ${mobileHeightClass} border border-white/[0.08] sm:border-0 ${className}`.trim()}
-    >
-      <img
-        src={withAssetHash(bgSrc)}
-        alt={bgAlt}
-        width={bgWidth}
-        height={bgHeight}
-        loading="lazy"
-        fetchPriority="low"
-        decoding="async"
-        draggable={false}
-        className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
-      />
+    <>
       <div
-        className={`absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${frameClass ?? PREVIEW_FRAME_CLASS}`}
+        className={`relative select-none w-full ${maxWidthClass} mx-auto overflow-hidden isolate rounded-[20px] squircle ${mobileHeightClass} border border-white/[0.08] sm:border-0 ${className}`.trim()}
       >
-        <img
-          src={withAssetHash(fgSrc)}
-          alt={fgAlt}
-          width={fgWidth}
-          height={fgHeight}
-          loading="lazy"
-          fetchPriority="low"
-          decoding="async"
-          draggable={false}
-          className={`block h-full w-auto max-w-none select-none pointer-events-none sm:mx-auto sm:h-auto sm:w-full ${fgMaxWidthClass}`.trim()}
-        />
+        {bgSrc ? (
+          <img
+            src={withAssetHash(bgSrc)}
+            alt={bgAlt}
+            width={bgWidth}
+            height={bgHeight}
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+            draggable={false}
+            className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
+          />
+        ) : (
+          <span aria-hidden="true" className="absolute inset-0 bg-console-backdrop select-none pointer-events-none" />
+        )}
+        <div className={frameWrapperClass}>
+          <img
+            src={withAssetHash(activeFgSrc)}
+            alt={fgAlt}
+            width={fgWidth}
+            height={fgHeight}
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+            draggable={false}
+            className={`${fgClass} ${mobileFgSrc ? "hidden sm:block" : ""}`.trim()}
+          />
+          {mobileFgSrc && (
+            <img
+              src={withAssetHash(mobileFgSrc)}
+              alt={fgAlt}
+              width={mobileFgWidth}
+              height={mobileFgHeight}
+              loading="lazy"
+              fetchPriority="low"
+              decoding="async"
+              draggable={false}
+              className={`${fgClass} sm:hidden`.trim()}
+            />
+          )}
+        </div>
+
+        {children}
       </div>
 
-      {children}
-    </div>
+      {fgSwatches && fgSwatches.length > 0 && (
+        <div className="mt-4 sm:mt-6">
+          <div className="flex justify-center" role="group" aria-label="Choose preview agent">
+            <div className="relative inline-flex max-w-full items-center overflow-hidden rounded-full bg-surface-alt p-1">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-1 left-1 rounded-full bg-black transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none dark:bg-white"
+                style={{
+                  width: `calc((100% - 0.5rem) / ${fgSwatches.length})`,
+                  transform: `translateX(${activeIndex * 100}%)`,
+                }}
+              />
+              {fgSwatches.map((swatch) => (
+                <button
+                  key={swatch.svg}
+                  type="button"
+                  aria-pressed={activeFgSrc === swatch.svg}
+                  onClick={() => setActiveFgSrc(swatch.svg)}
+                  className={`relative z-10 w-24 cursor-pointer whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-500 ease-out motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:w-32 ${
+                    activeFgSrc === swatch.svg
+                      ? "text-white dark:text-black"
+                      : "text-muted dark:text-muted"
+                  }`}
+                >
+                  {swatch.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {activeSwatch && (
+            <p
+              key={activeFgSrc}
+              className={`swatch-caption ${BODY_MUTED_CLASS} mx-auto mt-4 max-w-2xl px-4 text-center text-pretty`}
+            >
+              {activeSwatch.description}
+            </p>
+          )}
+        </div>
+      )}
+    </>
   )
 }
