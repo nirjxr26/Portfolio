@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import type { HeroAction, InstallCommand } from "@/types"
 import { Container } from "./Container"
-import { ActionButtons, ActionGroup } from "../common/Button"
-import { InstallSnippet } from "../common/InstallSnippet"
+import { ActionButtons, ActionGroup } from "@/components/ui/Button"
+import { InstallSnippet } from "@/components/ui/InstallSnippet"
 
 interface CTASectionProps {
   headline: ReactNode | string

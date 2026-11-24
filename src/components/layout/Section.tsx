@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { BODY_MUTED_CLASS } from "../common/textStyles"
+import { BODY_MUTED_CLASS } from "@/components/ui/textStyles"
 import { Container } from "./Container"
 
 interface SectionProps {

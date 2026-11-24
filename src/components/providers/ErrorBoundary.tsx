@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react"
-import { ErrorClient } from "../pages/ErrorClient"
+import { ErrorPage } from "@/pages/ErrorPage"
 
 interface Props {
   children: ReactNode
@@ -38,7 +38,7 @@ export class ErrorBoundary extends Component<Readonly<Props>, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <ErrorClient
+        <ErrorPage
           code={this.state.code}
           desc={this.state.desc}
           actionLabel="Go to Home"

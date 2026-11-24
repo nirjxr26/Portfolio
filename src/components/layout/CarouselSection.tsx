@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import type { LayeredAsset } from "@/types"
-import { LayeredPreview } from "../common/LayeredPreview"
-import { CarouselTrack } from "../common/CarouselTrack"
+import { LayeredPreview } from "@/components/ui/LayeredPreview"
+import { CarouselTrack } from "@/components/rails/CarouselTrack"
 import { Container } from "./Container"
 import { Section, SectionHeader } from "./Section"
 

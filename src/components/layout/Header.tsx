@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { NAV_LINKS, WORK_ITEMS, type NavLink } from "@/data/navigation"
-import { AgentButton } from "../common/AgentButton"
-import { ArrowRight, ChevronDown, HomeIcon, SearchIcon } from "../common/Icons"
-import { ThemeToggle } from "../common/ThemeToggle"
+import { NAV_LINKS, WORK_ITEMS, type NavLink } from "@/app/config/navigation"
+import { AgentButton } from "@/components/ui/AgentButton"
+import { ArrowRight, ChevronDown, HomeIcon, SearchIcon } from "@/components/ui/Icons"
+import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import { Container } from "./Container"
 
 const DESKTOP_LINK = "transition-colors hover:text-ink whitespace-nowrap shrink-0"

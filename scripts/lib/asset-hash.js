@@ -5,7 +5,7 @@ import crypto from "node:crypto"
 /**
  * Scans a directory recursively and generates a map of
  * relative file paths -> content hashes (sha256 truncated to 8 chars).
- * e.g. { "/assets/trace/hero-cli.svg": "029dbd43" }
+ * e.g. { "/assets/features/trace/hero-cli.svg": "029dbd43" }
  */
 export function generateAssetHashMap(baseDir, urlPrefix = "") {
   const map = {}

@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useInternalRouter } from "@/utils/useInternalRouter"
+import { useInternalRouter } from "@/app/router/useInternalRouter"
 
 export function ScrollReveal() {
   const pathname = useInternalRouter()

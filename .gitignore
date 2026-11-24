@@ -53,11 +53,6 @@ desktop.ini
 DESIGN-apple.md
 DESIGN-bastion.md
 
-# Local stack tool icon folders
-public/assets/stack/cybersecurity/
-public/assets/stack/devops/
-public/assets/stack/
-
 # Rust build artifacts
 target/
 **/target/
