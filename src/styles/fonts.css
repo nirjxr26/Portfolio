@@ -35,14 +35,6 @@
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("/fonts/f-d400.woff2") format("woff2");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Unifora Standard";
   src: url("/fonts/f-u-vf.woff2") format("woff2-variations"),
        url("/fonts/f-u-vf.woff2") format("woff2");
@@ -53,24 +45,8 @@
 
 @font-face {
   font-family: "Unifora Standard";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/f-u-vf.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Unifora Standard";
   font-style: italic;
   font-weight: 400;
   font-display: swap;
   src: url("/fonts/f-u400i.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Unifora Standard";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/f-u-vf.woff2") format("woff2");
 }

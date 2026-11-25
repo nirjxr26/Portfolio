@@ -48,7 +48,7 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Open, under review, or closed, every case shows exactly where it stands, with collision-free IDs and JSON export.",
       layeredAsset: {
-        bgSrc: "/assets/features/trace/case-bg.png",
+        bgSrc: "/assets/features/trace/case-bg.webp",
         fgSrc: "/assets/features/trace/case-tui.svg",
         bgAlt: "Trace TUI environment background",
         fgAlt: "Trace TUI console showing cases, audit trail, and updates",
@@ -60,7 +60,7 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Records outlive the hardware, every touch asks for consent first, and each write-protection check comes with evidence.",
       layeredAsset: {
-        bgSrc: "/assets/features/trace/drive-bg.png",
+        bgSrc: "/assets/features/trace/drive-bg.webp",
         fgSrc: "/assets/features/trace/drive-tui.svg",
         bgAlt: "Trace update environment background",
         fgAlt: "Trace TUI update console",
@@ -72,7 +72,7 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Every action is logged automatically and chained to the last, so edits show. Exports can be encrypted.",
       layeredAsset: {
-        bgSrc: "/assets/features/trace/audit-bg.png",
+        bgSrc: "/assets/features/trace/audit-bg.webp",
         fgSrc: "/assets/features/trace/audit-tui.svg",
         bgAlt: "Trace audit verification environment background",
         fgAlt: "Trace TUI audit verification console",
@@ -127,7 +127,7 @@ export const traceData: CaseStudyData = {
       titleClassName: "t-hero-headline",
       desc: "Available over MCP. Any agent that supports it can use Trace, with the same proof a person would leave.",
       layeredAsset: {
-        bgSrc: "/assets/features/trace/agents-bg.png",
+        bgSrc: "/assets/features/trace/agents-bg.webp",
         fgSrc: "/assets/features/trace/agents-tui.svg",
         fgSwatches: [
           {

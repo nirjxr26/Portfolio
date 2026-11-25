@@ -1,12 +1,12 @@
 import { ArticlePosterCard } from "@/components"
 import { RouteSeo } from "@/components/ui/SEO"
 import { Container, PageHero, PageShell, Section } from "@/components/layout"
-import { BLOG_ARTICLES } from "@/features/articles/data/blogArticles"
+import { ARTICLE_META } from "@/features/articles/data/articleMeta"
 import { ROUTE_META } from "@/app/router/routes"
 import { createBreadcrumbs } from "@/lib/helpers"
 
 export function ArticlesPage() {
-  const articlesWithPosters = BLOG_ARTICLES.filter((article) => article.poster != null)
+  const articlesWithPosters = ARTICLE_META.filter((article) => article.poster != null)
 
   return (
     <PageShell

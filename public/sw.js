@@ -1,21 +1,10 @@
 // Service Worker for nirjar.me - Offline Reading & Performance
-const CACHE_NAME = "nirjar-portfolio-v1"
+const CACHE_NAME = "nirjar-portfolio-v2"
 
 const PRECACHE_ASSETS = [
   "/",
-  "/works",
-  "/services",
-  "/articles",
-  "/sitemap",
-  "/legal",
-  "/works/trace",
-  "/works/bastion",
-  "/works/kost",
-  "/works/hookdrop",
-  "/manifest.webmanifest",
-  "/favicon.ico",
-  "/icon.svg",
-  "/resume.pdf",
+  "/site.webmanifest",
+  "/assets/brand/favicon.svg",
 ]
 
 self.addEventListener("install", (event) => {

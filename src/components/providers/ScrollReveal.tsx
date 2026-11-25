@@ -43,8 +43,18 @@ export function ScrollReveal() {
 
     let mutationObserver: MutationObserver | null = null
     if (typeof MutationObserver !== "undefined") {
-      mutationObserver = new MutationObserver(() => {
-        attach()
+      mutationObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          for (const node of mutation.addedNodes) {
+            if (
+              node instanceof Element &&
+              (node.classList.contains("reveal-on-scroll") || node.querySelector(".reveal-on-scroll"))
+            ) {
+              attach()
+              return
+            }
+          }
+        }
       })
       mutationObserver.observe(document.body, { childList: true, subtree: true })
     }

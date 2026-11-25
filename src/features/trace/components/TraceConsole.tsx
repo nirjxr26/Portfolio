@@ -4,7 +4,7 @@ import { useLoopingTimeline } from "@/hooks/useLoopingTimeline"
 import { withAssetHash } from "@/lib/helpers"
 import { fadeLayerClass, SLIDE, TINT } from "./motionStyles"
 
-const COMMAND_BACKDROP = "/assets/features/trace/cli-bg.png"
+const COMMAND_BACKDROP = "/assets/features/trace/cli-bg.webp"
 
 /**
  * The Trace console, rebuilt as markup rather than shipped as artwork.

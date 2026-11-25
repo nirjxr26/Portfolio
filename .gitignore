@@ -58,6 +58,9 @@ target/
 **/target/
 
 # Site metadata dumps
+
+# Unused stack assets
+public/assets/content/stack/
 pages-metadata.json
 metadata.json
 
