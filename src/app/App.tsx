@@ -1,19 +1,41 @@
-import {
-  ArticleDetailPage,
-  ArticlesPage,
-  CaseStudyPage,
-  ErrorPage,
-  HomePage,
-  LegalPage,
-  NotFoundPage,
-  ServicesPage,
-  SitemapPage,
-  WorksPage,
-} from "@/pages"
-import { getBlogArticle } from "@/features/articles/data/blogArticles"
-import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
+import { lazy, Suspense } from "react"
+import { HomePage } from "@/pages/HomePage"
 import { cleanPath, resolveRoute } from "@/app/router/routes"
 import { useInternalRouter } from "@/app/router/useInternalRouter"
+
+const WorksPage = lazy(() => import("@/pages/WorksPage").then((m) => ({ default: m.WorksPage })))
+const ServicesPage = lazy(() => import("@/pages/ServicesPage").then((m) => ({ default: m.ServicesPage })))
+const ArticlesPage = lazy(() => import("@/pages/ArticlesPage").then((m) => ({ default: m.ArticlesPage })))
+const SitemapPage = lazy(() => import("@/pages/SitemapPage").then((m) => ({ default: m.SitemapPage })))
+const LegalPage = lazy(() => import("@/pages/LegalPage").then((m) => ({ default: m.LegalPage })))
+const ErrorPage = lazy(() => import("@/pages/ErrorPage").then((m) => ({ default: m.ErrorPage })))
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })))
+
+const ArticleDetailRoute = lazy(async () => {
+  const [{ ArticleDetailPage }, { getBlogArticle }] = await Promise.all([
+    import("@/pages/ArticleDetailPage"),
+    import("@/features/articles/data/blogArticles"),
+  ])
+  return {
+    default: function ArticleRoute({ slug }: Readonly<{ slug: string }>) {
+      const article = getBlogArticle(slug)
+      return article ? <ArticleDetailPage article={article} /> : <NotFoundPage />
+    },
+  }
+})
+
+const CaseStudyRoute = lazy(async () => {
+  const [{ CaseStudyPage }, { CASE_STUDIES }] = await Promise.all([
+    import("@/pages/CaseStudyPage"),
+    import("@/features/case-studies/data/caseStudies"),
+  ])
+  return {
+    default: function CaseRoute({ slug }: Readonly<{ slug: string }>) {
+      const data = CASE_STUDIES[slug]
+      return data ? <CaseStudyPage slug={slug} data={data} /> : <NotFoundPage />
+    },
+  }
+})
 
 export function App() {
   const pathname = useInternalRouter()
@@ -35,20 +57,14 @@ export function App() {
   } else if (route.kind === "error") {
     content = <ErrorPage />
   } else if (route.kind === "article-detail" && route.articleSlug) {
-    const article = getBlogArticle(route.articleSlug)
-    if (article) {
-      content = <ArticleDetailPage article={article} />
-    }
+    content = <ArticleDetailRoute slug={route.articleSlug} />
   } else if (route.kind === "case-study" && route.caseSlug) {
-    const data = CASE_STUDIES[route.caseSlug]
-    if (data) {
-      content = <CaseStudyPage slug={route.caseSlug} data={data} />
-    }
+    content = <CaseStudyRoute slug={route.caseSlug} />
   }
 
   return (
     <div key={cleanPath(pathname)} className="page-transition">
-      {content}
+      <Suspense fallback={null}>{content}</Suspense>
     </div>
   )
 }

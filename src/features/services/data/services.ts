@@ -1,17 +1,9 @@
-export interface StackToolItem {
-  name: string
-  src?: string
-  iconKey?: string
-  invertInDark?: boolean
-}
-
 export interface ServiceSection {
   id: string
   title: string
   tagline: string
   items: readonly string[]
   tools?: readonly string[]
-  stackTools?: readonly StackToolItem[]
   proof?: { name: string; href: string }
 }
 
@@ -36,20 +28,6 @@ export const CORE_SERVICES: readonly ServiceSection[] = [
       "Nmap",
       "Argon2id",
       "Tamper-Proof Audits",
-    ],
-    stackTools: [
-      { name: "Nmap", src: "/assets/content/stack/cybersecurity/nmap.svg" },
-      { name: "Burp Suite", src: "/assets/content/stack/cybersecurity/burp-suite.svg" },
-      { name: "Wireshark", src: "/assets/content/stack/cybersecurity/wireshark.svg" },
-      { name: "Metasploit", src: "/assets/content/stack/cybersecurity/metasploit.svg" },
-      { name: "sqlmap", src: "/assets/content/stack/cybersecurity/sqlmap.svg" },
-      { name: "BloodHound", src: "/assets/content/stack/cybersecurity/bloodhound.svg" },
-      { name: "Hydra", src: "/assets/content/stack/cybersecurity/hydra.svg" },
-      { name: "OpenVAS", src: "/assets/content/stack/cybersecurity/openvas.svg" },
-      { name: "Ghidra", src: "/assets/content/stack/cybersecurity/ghidra.svg" },
-      { name: "John the Ripper", src: "/assets/content/stack/cybersecurity/john-the-ripper.svg" },
-      { name: "Nikto", src: "/assets/content/stack/cybersecurity/nikto.svg" },
-      { name: "Autopsy", src: "/assets/content/stack/cybersecurity/autopsy.svg" },
     ],
     proof: { name: "Bastion", href: "/works/bastion" },
   },
@@ -78,19 +56,6 @@ export const CORE_SERVICES: readonly ServiceSection[] = [
       "Datadog",
       "Falco",
     ],
-    stackTools: [
-      { name: "Docker", src: "/assets/content/stack/devops/docker.svg" },
-      { name: "Kubernetes", src: "/assets/content/stack/devops/kubernetes.svg" },
-      { name: "Terraform", src: "/assets/content/stack/devops/terraform.svg" },
-      { name: "Helm", src: "/assets/content/stack/devops/helm.svg" },
-      { name: "Prometheus", src: "/assets/content/stack/devops/prometheus.svg" },
-      { name: "Grafana", src: "/assets/content/stack/devops/grafana.svg" },
-      { name: "Trivy", src: "/assets/content/stack/devops/trivy.svg" },
-      { name: "Cosign", src: "/assets/content/stack/devops/cosign.svg" },
-      { name: "Kyverno", src: "/assets/content/stack/devops/kyverno.svg" },
-      { name: "Datadog", src: "/assets/content/stack/devops/datadog.svg" },
-      { name: "Falco", src: "/assets/content/stack/devops/falco.svg" },
-    ],
     proof: { name: "Kost", href: "/works/kost" },
   },
   {
@@ -113,14 +78,6 @@ export const CORE_SERVICES: readonly ServiceSection[] = [
       "Security Groups",
       "Cost Optimization",
       "OpenTelemetry",
-    ],
-    stackTools: [
-      { name: "AWS", iconKey: "aws" },
-      { name: "Cloudflare", iconKey: "cloudflare" },
-      { name: "Linux", iconKey: "linux" },
-      { name: "OpenTelemetry", iconKey: "opentelemetry" },
-      { name: "WireGuard", iconKey: "wireguard" },
-      { name: "PostgreSQL", iconKey: "postgresql" },
     ],
     proof: { name: "HookDrop", href: "/works/hookdrop" },
   },

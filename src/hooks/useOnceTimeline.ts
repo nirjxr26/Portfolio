@@ -34,12 +34,16 @@ export function useOnceTimeline<T extends HTMLElement>(
     if (!enabled || paused) return
 
     let raf = 0
+    let lastCommit = 0
     const start = performance.now() - elapsedRef.current
 
     const tick = (now: number) => {
       const t = Math.min(now - start, durationMs)
       elapsedRef.current = t
-      setElapsed(t)
+      if (t === durationMs || now - lastCommit >= 32) {
+        lastCommit = now
+        setElapsed(t)
+      }
       if (t < durationMs) raf = requestAnimationFrame(tick)
     }
 

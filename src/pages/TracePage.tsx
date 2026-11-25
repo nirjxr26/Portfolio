@@ -105,6 +105,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
           <div className="w-full max-w-full flex justify-center mt-2 sm:mt-6 px-6 sm:px-8 md:px-10">
             <LayeredPreview
               {...hero.heroLayeredAsset}
+              priority
               maxWidthClass="max-w-4xl lg:max-w-[1152px]"
               mobileFrameClass="absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:relative sm:inset-auto sm:justify-center lg:px-[max(40px,calc(50%_-_472px))]"
               className="animate-device-rise"

@@ -1,9 +1,11 @@
+import { lazy, Suspense } from "react"
 import type { CaseStudyData } from "@/types"
 import { SITE_URL } from "@/app/seo/site"
 import { alternateSurfaces, createBreadcrumbs } from "@/lib/helpers"
 import { CaseStudyHeroMedia, FeatureCard, Seo } from "@/components"
 import { CarouselSection, CTASection, PageHero, PageShell } from "@/components/layout"
-import { TracePage } from "./TracePage"
+
+const TracePage = lazy(() => import("./TracePage").then((m) => ({ default: m.TracePage })))
 
 interface CaseStudyPageProps {
   slug: string
@@ -15,7 +17,11 @@ const MONO_SURFACES = { section: "bg-canvas", card: "bg-surface-alt" }
 
 export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
   if (slug === "trace") {
-    return <TracePage data={data} />
+    return (
+      <Suspense fallback={null}>
+        <TracePage data={data} />
+      </Suspense>
+    )
   }
 
   const { hero, sections, cta, seoTitle } = data

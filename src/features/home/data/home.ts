@@ -5,8 +5,8 @@ import type {
   ProductionCapability,
   Project,
 } from "@/types"
-import type { BlogArticle } from "@/features/articles/data/blogArticles"
-import { BLOG_ARTICLES } from "@/features/articles/data/blogArticles"
+import type { ArticleMeta } from "@/features/articles/data/articleMeta"
+import { ARTICLE_META } from "@/features/articles/data/articleMeta"
 import { byNewestFirst } from "@/lib/helpers"
 
 export type { Project }
@@ -178,7 +178,7 @@ export const projects: Project[] = [
   },
 ]
 
-export function toCardArticle(a: BlogArticle): Article {
+export function toCardArticle(a: ArticleMeta): Article {
   return {
     title: a.title,
     category: a.category,
@@ -192,7 +192,7 @@ export function toCardArticle(a: BlogArticle): Article {
   }
 }
 
-export const articles: Article[] = BLOG_ARTICLES.map(toCardArticle).sort(byNewestFirst)
+export const articles: Article[] = ARTICLE_META.map(toCardArticle).sort(byNewestFirst)
 
 export const quote =
   "Every project I've built has solved a real problem I've encountered. Each feature exists for a reason and every decision is driven by a real need."

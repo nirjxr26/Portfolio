@@ -5,6 +5,7 @@ import { BODY_MUTED_CLASS } from "./textStyles"
 
 export interface LayeredPreviewProps extends Partial<LayeredAsset> {
   fgSrc: string
+  priority?: boolean
   frameClass?: string
   className?: string
   children?: ReactNode
@@ -81,6 +82,7 @@ export function LayeredPreview({
   mobileFgHeight = 618,
   mobileFgClass = "h-full w-auto max-w-none",
   mobileFrameClass,
+  priority = false,
   frameClass,
   className = "",
   children,
@@ -107,8 +109,8 @@ export function LayeredPreview({
             alt={bgAlt}
             width={bgWidth}
             height={bgHeight}
-            loading="lazy"
-            fetchPriority="low"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "low"}
             decoding="async"
             draggable={false}
             className="absolute inset-0 h-full w-full object-cover object-center select-none pointer-events-none"
@@ -122,8 +124,8 @@ export function LayeredPreview({
             alt={fgAlt}
             width={fgWidth}
             height={fgHeight}
-            loading="lazy"
-            fetchPriority="low"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "low"}
             decoding="async"
             draggable={false}
             className={`${fgClass} ${mobileFgSrc ? "hidden sm:block" : ""}`.trim()}
@@ -134,8 +136,8 @@ export function LayeredPreview({
               alt={fgAlt}
               width={mobileFgWidth}
               height={mobileFgHeight}
-              loading="lazy"
-              fetchPriority="low"
+              loading={priority ? "eager" : "lazy"}
+              fetchPriority={priority ? "high" : "low"}
               decoding="async"
               draggable={false}
               className={`${fgClass} sm:hidden`.trim()}

@@ -7,8 +7,8 @@ import { AppLink } from "@/components/ui/Button"
 import { ChevronDown, ChevronRight, HomeIcon } from "@/components/ui/Icons"
 import { Container } from "./Container"
 import { cleanPath, resolveRoute } from "@/app/router/routes"
-import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
-import { getBlogArticle } from "@/features/articles/data/blogArticles"
+import { CASE_STUDY_META } from "@/features/case-studies/data/caseStudyMeta"
+import { getArticleMeta } from "@/features/articles/data/articleMeta"
 import { useInternalRouter } from "@/app/router/useInternalRouter"
 
 export interface FooterBreadcrumb {
@@ -31,13 +31,13 @@ function getFooterBreadcrumbs(pathname: string): FooterBreadcrumb[] {
   } else if (route.kind === "services") {
     items.push({ name: "Services" })
   } else if (route.kind === "case-study" && route.caseSlug) {
-    const cs = CASE_STUDIES[route.caseSlug]
+    const cs = CASE_STUDY_META[route.caseSlug]
     items.push({ name: "Works", href: "/works" })
-    items.push({ name: cs?.hero.title ?? route.caseSlug })
+    items.push({ name: cs?.title ?? route.caseSlug })
   } else if (route.kind === "articles") {
     items.push({ name: "Articles" })
   } else if (route.kind === "article-detail" && route.articleSlug) {
-    const article = getBlogArticle(route.articleSlug)
+    const article = getArticleMeta(route.articleSlug)
     items.push({ name: "Articles", href: "/articles" })
     items.push({ name: article?.title ?? route.articleSlug })
   } else if (route.kind === "sitemap") {

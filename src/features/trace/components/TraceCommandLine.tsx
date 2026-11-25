@@ -848,9 +848,9 @@ const WINDOW_INSET = "px-[32em]"
  * is not there.
  */
 /** The terminal is shorter than the console panel that holds it. */
-const TERMINAL_SCREEN_HEIGHT = "h-[669em] md:h-[466em]"
+const TERMINAL_SCREEN_HEIGHT = "h-[480em] md:h-[466em]"
 
-const VIEWPORT = `h-[639em] md:h-[436em] scroll-smooth overscroll-contain [touch-action:pan-y] pt-[24em] pb-[28em] ${WINDOW_INSET} [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`
+const VIEWPORT = `h-[450em] md:h-[436em] scroll-smooth overscroll-contain [touch-action:pan-y] pt-[24em] pb-[28em] ${WINDOW_INSET} [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`
 
 /**
  * The screen's title bar. Only the dots sit on it.
@@ -917,7 +917,7 @@ export function TraceCommandLine({
     <ConsolePreviewBox
       ariaLabel="Trace command line listing forensic cases, then opening one case record"
       maxWidthClass={maxWidthClass}
-      frameAspectClass="aspect-[851/750] md:aspect-[851/466] lg:aspect-[851/410]"
+      frameAspectClass="aspect-[851/520] md:aspect-[851/466] lg:aspect-[851/410]"
       overlay={replayButton}
     >
       {/*

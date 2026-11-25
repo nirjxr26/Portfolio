@@ -1,5 +1,5 @@
-import { BLOG_ARTICLES } from "@/features/articles/data/blogArticles"
-import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
+import { ARTICLE_META } from "@/features/articles/data/articleMeta"
+import { CASE_STUDY_META } from "@/features/case-studies/data/caseStudyMeta"
 import {
   SITE_DEFAULT_DESC,
   SITE_DEFAULT_TITLE,
@@ -101,7 +101,7 @@ export function resolveRoute(pathname: string): ResolvedRoute {
     const slug = clean.startsWith("/articles/")
       ? clean.slice("/articles/".length)
       : clean.slice("/article/".length)
-    if (BLOG_ARTICLES.some((a) => a.slug === slug)) {
+    if (ARTICLE_META.some((a) => a.slug === slug)) {
       return { kind: "article-detail", articleSlug: slug }
     }
     return { kind: "not-found" }
@@ -109,14 +109,14 @@ export function resolveRoute(pathname: string): ResolvedRoute {
 
   if (clean.startsWith("/works/")) {
     const slug = clean.slice("/works/".length)
-    if (slug && CASE_STUDIES[slug]) {
+    if (slug && CASE_STUDY_META[slug]) {
       return { kind: "case-study", caseSlug: slug }
     }
     return { kind: "not-found" }
   }
 
     const legacy = clean.slice(1)
-  if (legacy && CASE_STUDIES[legacy]) {
+  if (legacy && CASE_STUDY_META[legacy]) {
     return { kind: "case-study", caseSlug: legacy }
   }
 

@@ -1,10 +1,13 @@
-import type { ReactNode } from "react"
+import { lazy, Suspense, useEffect, useState, type ReactNode } from "react"
 import { Footer, type FooterBreadcrumb } from "./Footer"
 import { Header } from "./Header"
-import { CommandPalette } from "@/components/ui/CommandPalette"
 import { NotificationToast } from "@/components/ui/NotificationToast"
 import { ScrollReveal } from "@/components/providers/ScrollReveal"
 import { useNotchTint } from "@/hooks/useNotchTint"
+
+const CommandPalette = lazy(() =>
+  import("@/components/ui/CommandPalette").then((m) => ({ default: m.CommandPalette })),
+)
 
 interface PageShellProps {
   children: ReactNode
@@ -35,6 +38,35 @@ export function PageShell({
   hideFooter = false,
 }: Readonly<PageShellProps>) {
   useNotchTint()
+  const [paletteReady, setPaletteReady] = useState(false)
+
+  useEffect(() => {
+    if (paletteReady) return
+    const load = () => setPaletteReady(true)
+    const onOpen = () => {
+      load()
+      requestAnimationFrame(() => {
+        window.dispatchEvent(new CustomEvent("open-command-palette"))
+      })
+    }
+    window.addEventListener("open-command-palette", onOpen, { once: true })
+    window.addEventListener("keydown", load, { once: true, passive: true })
+
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+    const idleId = w.requestIdleCallback
+      ? w.requestIdleCallback(load, { timeout: 1500 })
+      : window.setTimeout(load, 1200)
+
+    return () => {
+      window.removeEventListener("open-command-palette", onOpen)
+      window.removeEventListener("keydown", load)
+      if (w.cancelIdleCallback) w.cancelIdleCallback(idleId)
+      else window.clearTimeout(idleId)
+    }
+  }, [paletteReady])
 
   return (
     <div className={outerClassName}>
@@ -51,7 +83,11 @@ export function PageShell({
         {children}
       </main>
       {!hideFooter && <Footer bgClass={footerBgClass} breadcrumbs={footerBreadcrumbs} />}
-      <CommandPalette />
+      {paletteReady && (
+        <Suspense fallback={null}>
+          <CommandPalette />
+        </Suspense>
+      )}
       <NotificationToast />
       <div aria-hidden="true" className="notch-blur" />
     </div>

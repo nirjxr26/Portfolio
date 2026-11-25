@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
-import { BLOG_ARTICLES } from "@/features/articles/data/blogArticles"
-import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
+import { ARTICLE_META } from "@/features/articles/data/articleMeta"
+import { CASE_STUDY_META } from "@/features/case-studies/data/caseStudyMeta"
 import { useCopy } from "@/hooks/useCopy"
 import { CheckIcon, SearchIcon } from "@/components/ui/Icons"
 import { notifySite } from "./NotificationToast"
@@ -152,12 +152,12 @@ export function CommandPalette() {
   // Works / Case studies items
   const projectItems: PaletteItem[] = useMemo(
     () =>
-      Object.entries(CASE_STUDIES).map(([slug, data]) => ({
+      Object.entries(CASE_STUDY_META).map(([slug, data]) => ({
         id: `project-${slug}`,
-        title: data.hero.title,
+        title: data.title,
         category: "Projects",
         href: `/works/${slug}`,
-        keywords: `${slug} case study ${data.softwareSchema?.programmingLanguage ?? ""}`,
+        keywords: `${slug} case study ${data.programmingLanguage ?? ""}`,
       })),
     [],
   )
@@ -165,7 +165,7 @@ export function CommandPalette() {
   // Articles items
   const articleItems: PaletteItem[] = useMemo(
     () =>
-      BLOG_ARTICLES.map((article) => ({
+      ARTICLE_META.map((article) => ({
         id: `article-${article.slug}`,
         title: article.title,
         category: "Articles",

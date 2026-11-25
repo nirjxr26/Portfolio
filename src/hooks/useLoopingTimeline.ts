@@ -29,6 +29,7 @@ export function useLoopingTimeline<T extends HTMLElement>(cycleMs: number) {
     let raf = 0
     let visible = false
     let cycleStart = performance.now()
+    let lastCommit = 0
 
     const tick = (now: number) => {
       raf = requestAnimationFrame(tick)
@@ -36,10 +37,14 @@ export function useLoopingTimeline<T extends HTMLElement>(cycleMs: number) {
 
       if (now - cycleStart >= cycleMs) {
         cycleStart = now
+        lastCommit = now
         setElapsed(0)
         return
       }
-      setElapsed(now - cycleStart)
+      if (now - lastCommit >= 32) {
+        lastCommit = now
+        setElapsed(now - cycleStart)
+      }
     }
 
     raf = requestAnimationFrame(tick)
