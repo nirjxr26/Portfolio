@@ -41,9 +41,9 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             <LayeredPreview
               {...section.layeredAsset}
               maxWidthClass="w-full max-w-full"
-              frameClass="p-10"
+              frameClass="p-10 sm:p-16 md:p-20"
               mobilePaddingClass="inset-0"
-              mobileFrameClass="absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:relative sm:inset-auto sm:justify-center"
+              mobileFrameClass="absolute inset-0 flex w-full items-center justify-start pointer-events-none p-10 sm:p-16 md:p-20 sm:relative sm:inset-auto sm:justify-center"
             />
           </div>
         )}
@@ -127,7 +127,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
           </div>
 
           <div className="mt-8 sm:mt-10">
-            <TraceCommandLine screenWidthClass="w-full sm:w-[82%]" replay />
+            <TraceCommandLine screenWidthClass="w-full sm:w-[70%]" replay />
           </div>
         </div>
       </section>
