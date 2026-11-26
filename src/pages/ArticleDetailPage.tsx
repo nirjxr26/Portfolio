@@ -128,6 +128,29 @@ export function ArticleDetailPage({
                 {renderInline(article.subhead, "article-subhead")}
               </p>
             ) : null}
+            {article.projectCallout ? (
+              <aside
+                aria-label={article.projectCallout.name}
+                className="mt-5 sm:mt-6 rounded-xl bg-surface-alt px-5 py-4 sm:px-6 sm:py-5 text-left"
+              >
+                {article.projectCallout.label ? (
+                  <p className="text-[13px] font-medium text-muted">
+                    {article.projectCallout.label}
+                  </p>
+                ) : null}
+                <a
+                  href={article.projectCallout.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-block text-[18px] sm:text-[19px] font-semibold text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                >
+                  {article.projectCallout.name}
+                </a>
+                <p className="mt-2 text-[15px] sm:text-[16px] leading-relaxed text-ink">
+                  {article.projectCallout.description}
+                </p>
+              </aside>
+            ) : null}
             {!article.leadImage ? <hr className="mt-5 border-hairline sm:mt-6" /> : null}
           </header>
 

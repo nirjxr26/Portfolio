@@ -700,13 +700,6 @@ export function CommandPalette() {
               </span>
               <span className="text-[13px] sm:text-[14px] font-medium text-muted/90">select</span>
             </span>
-
-            <span className="flex items-center gap-2">
-              <span className="flex items-center justify-center font-mono text-[12px] h-[24px] px-1.5 text-ink/90 dark:text-ink/90 bg-canvas/80 dark:bg-white/[0.08] rounded-[6px] select-none leading-none">
-                esc
-              </span>
-              <span className="text-[13px] sm:text-[14px] font-medium text-muted/90">close</span>
-            </span>
           </div>
 
           <span className="text-[13px] sm:text-[14px] font-medium text-muted/90 whitespace-nowrap shrink-0">

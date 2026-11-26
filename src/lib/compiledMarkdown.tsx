@@ -13,8 +13,11 @@ export type CompiledCodeTokenKind =
   | "comment"
   | "string"
   | "keyword"
+  | "control"
   | "type"
+  | "function"
   | "macro"
+  | "ident"
   | "number"
   | "pass"
   | "fail"
@@ -46,12 +49,15 @@ export interface CompiledArticle {
 
 const TOKEN_CLASSES: Record<CompiledCodeTokenKind, string | undefined> = {
   plain: undefined,
-  comment: "text-muted/80 italic",
-  string: "text-[#057a55] dark:text-[#31c48d]",
-  keyword: "font-semibold text-[#a03d00] dark:text-[#ff8f5a]",
-  type: "font-medium text-[#0284c7] dark:text-[#38bdf8]",
-  macro: "text-[#9333ea] dark:text-[#c084fc]",
-  number: "text-[#b45309] dark:text-[#fbbf24]",
+  comment: "text-[#008000] dark:text-[#6a9955] italic",
+  string: "text-[#a31515] dark:text-[#ce9178]",
+  keyword: "text-[#b83b1d] dark:text-[#ff7b72]",
+  control: "text-[#b83b1d] dark:text-[#ff7b72]",
+  type: "text-[#267f99] dark:text-[#4ec9b0]",
+  function: "text-[#795e26] dark:text-[#dcdcaa]",
+  macro: "text-[#795e26] dark:text-[#dcdcaa]",
+  ident: "text-[#001080] dark:text-[#9cdcfe]",
+  number: "text-[#098658] dark:text-[#b5cea8]",
   pass: "text-[#16a34a] dark:text-[#4ade80] font-medium",
   fail: "text-[#e02424] dark:text-[#f87171] font-medium",
   rule: "text-muted/50",
