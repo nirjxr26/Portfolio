@@ -17,7 +17,7 @@ export function WorksPage() {
     >
       <PageHero
         title="Works."
-        subhead="A record of what I've actually designed, built and shipped."
+        subhead="A record of the projects I've actually designed, built, and shipped."
         compact
       />
 

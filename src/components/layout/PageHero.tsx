@@ -47,8 +47,8 @@ export function PageHero({
             {badge}
           </p>
         )}
-        <h1 className={`t-hero text-[38px] sm:text-[clamp(34px,5.2vw,56px)] text-ink ${roomyHeader ? "mt-0 sm:mt-0" : "mt-2 sm:mt-3"} ${animate ? "animate-hero-1" : ""}`.trim()}>{title}</h1>
-        <p className={`t-lead text-[17px] sm:text-[24px] font-medium font-univers leading-[1.5] ${mobileLeftAlign ? "mx-0 sm:mx-auto text-left sm:text-center" : "mx-auto"} ${roomyHeader ? "mt-8 sm:mt-10" : "mt-4 sm:mt-6"} max-w-2xl text-muted ${animate ? "animate-hero-2" : ""} ${subheadClassName}`.trim()}>{subhead}</p>
+        <h1 className={`t-hero text-ink ${roomyHeader ? "mt-0 sm:mt-0" : "mt-2 sm:mt-3"} ${animate ? "animate-hero-1" : ""}`.trim()}>{title}</h1>
+        <p className={`t-lead text-[17px] sm:text-[24px] font-medium font-univers leading-[1.5] ${mobileLeftAlign ? "mx-0 sm:mx-auto text-left sm:text-center" : "mx-auto"} ${roomyHeader ? "mt-8 sm:mt-10" : "mt-4 sm:mt-6"} max-w-2xl sm:max-w-xl text-muted ${animate ? "animate-hero-2" : ""} ${subheadClassName}`.trim()}>{subhead}</p>
         {children && (
           <div className={`mt-8 sm:mt-10 ${!animate || bottomFlush ? "" : "animate-hero-3"} flex justify-center w-full ${bottomFlush ? "mb-0" : ""} ${childrenClassName}`.trim()}>
             {children}

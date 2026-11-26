@@ -91,11 +91,11 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             </span>
           )}
 
-          <h1 className="text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold font-inter-variable text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-normal reveal-on-scroll">
+          <h1 className="text-[clamp(34px,5.2vw,56px)] font-semibold font-inter-variable text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-normal reveal-on-scroll">
             {hero.headline}
           </h1>
 
-          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted mx-auto sm:max-w-2xl mb-8 sm:mb-12 leading-[1.5] text-center text-pretty reveal-on-scroll`}>
+          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted mx-auto sm:max-w-xl mb-8 sm:mb-12 leading-[1.5] text-center text-pretty reveal-on-scroll`}>
             {hero.subhead}
           </p>
         </div>

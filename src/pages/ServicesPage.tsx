@@ -66,7 +66,7 @@ export function ServicesPage() {
     >
       <PageHero
         title="Services."
-        subhead="The areas I work in, with the skills behind them."
+        subhead="The areas I work in, the skills I bring to each, and the problems I solve."
         compact
       />
 
