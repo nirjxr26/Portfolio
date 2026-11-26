@@ -2,6 +2,7 @@ import { lazy, Suspense, useDeferredValue } from "react"
 import { HomePage } from "@/pages/HomePage"
 import { cleanPath, resolveRoute } from "@/app/router/routes"
 import { useInternalRouter } from "@/app/router/useInternalRouter"
+import { getArticleMeta } from "@/features/articles/data/articleMeta"
 
 const WorksPage = lazy(() => import("@/pages/WorksPage").then((m) => ({ default: m.WorksPage })))
 const ServicesPage = lazy(() => import("@/pages/ServicesPage").then((m) => ({ default: m.ServicesPage })))
@@ -22,9 +23,8 @@ function getArticleRoute(slug: string) {
   if (!cached) {
     cached = lazy(async () => {
       const loader = compiledArticleLoaders[`../features/articles/data/compiled/${slug}.json`]
-      const [{ ArticleDetailPage }, { getArticleMeta }, compiledMod] = await Promise.all([
+      const [{ ArticleDetailPage }, compiledMod] = await Promise.all([
         import("@/pages/ArticleDetailPage"),
-        import("@/features/articles/data/articleMeta"),
         loader ? loader() : Promise.resolve(null),
       ])
       const article = getArticleMeta(slug)

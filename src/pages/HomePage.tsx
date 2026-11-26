@@ -1,18 +1,23 @@
-import { articles, frames, hero, productionCapabilities, quote } from "@/features/home/data/home"
-import { HOW_I_WORK_CARDS } from "@/features/services/data/services"
+import { articles, frames, hero, quote } from "@/features/home/data/home"
 import {
   ActionButtons,
   ActionGroup,
   AgentMarkdownView,
   ArticlePosterCard,
-  CarouselTrack,
   FeatureCard,
   LightButton,
   ProjectsRail,
   Seo,
+  ThinkingAndWorkingSection,
 } from "@/components"
-import { CarouselSection, Container, PageShell, Section, SectionHeader } from "@/components/layout"
+import { CarouselSection, Container, PageShell, Section } from "@/components/layout"
 import { useAgentMode } from "@/hooks/useAgentMode"
+
+const SERVICE_FRAME_CARDS = frames.map((frame) => ({
+  headline: frame.title,
+  body: frame.desc,
+  tag: frame.tag,
+}))
 
 export function HomePage() {
   const { isAgentMode } = useAgentMode()
@@ -50,66 +55,20 @@ export function HomePage() {
             bgClass="bg-surface-alt"
             afterCards={
               <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
-                <LightButton href="/services" arrow className="bg-card">
+                <LightButton href="/services" arrow>
                   View all services
                 </LightButton>
               </div>
             }
           >
-            {frames.map((frame) => (
-              <FeatureCard
-                key={frame.tag}
-                card={{
-                  headline: frame.title,
-                  body: frame.desc,
-                  tag: frame.tag,
-                }}
-                cardBgClass="bg-card"
-              />
+            {SERVICE_FRAME_CARDS.map((card) => (
+              <FeatureCard key={card.tag} card={card} cardBgClass="bg-card" />
             ))}
           </CarouselSection>
 
           <ProjectsRail id="work" bgClass="bg-canvas" cardBgClass="bg-surface-alt" />
 
-          <Section id="how-i-think" bgClass="bg-surface-alt">
-            <SectionHeader title="How I think." />
-
-            <div className="reveal-on-scroll">
-              <CarouselTrack>
-                {productionCapabilities.map((cap) => (
-                  <FeatureCard
-                    key={cap.title}
-                    card={{
-                      headline: cap.tagline,
-                      body: cap.desc,
-                      tag: cap.title,
-                    }}
-                    cardBgClass="bg-card"
-                  />
-                ))}
-              </CarouselTrack>
-            </div>
-
-            <div id="how-i-work" className="mt-12 sm:mt-16 scroll-mt-12">
-              <SectionHeader title="How I work." />
-
-              <div className="reveal-on-scroll">
-                <CarouselTrack>
-                  {HOW_I_WORK_CARDS.map((card) => (
-                    <FeatureCard
-                      key={card.tag}
-                      card={{
-                        headline: card.title,
-                        body: card.desc,
-                        tag: card.tag,
-                      }}
-                      cardBgClass="bg-card"
-                    />
-                  ))}
-                </CarouselTrack>
-              </div>
-            </div>
-          </Section>
+          <ThinkingAndWorkingSection id="how-i-think" bgClass="bg-surface-alt" cardBgClass="bg-card" />
 
           <CarouselSection
             id="articles"
@@ -119,7 +78,7 @@ export function HomePage() {
             trackWrapperClassName="mt-6 sm:mt-10"
             afterCards={
               <div className="reveal-on-scroll mt-8 sm:mt-10 flex justify-center px-4">
-                <LightButton href="/articles" arrow className="bg-surface-alt">
+                <LightButton href="/articles" arrow>
                   View other articles
                 </LightButton>
               </div>
