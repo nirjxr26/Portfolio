@@ -6,7 +6,7 @@ import { createBreadcrumbs } from "@/lib/helpers"
 
 const P_CLASS = "t-body text-[15px] sm:text-[17px] leading-relaxed tracking-normal text-ink text-left"
 const H2_CLASS = "t-section-title tracking-normal text-ink text-left"
-const H3_CLASS = "text-[16px] sm:text-[18px] font-semibold tracking-normal text-ink text-left"
+const H3_CLASS = "text-[16px] sm:text-[17.5px] font-semibold tracking-normal text-ink text-left"
 const LINK_CLASS = "text-accent hover:text-accent/80 transition-colors"
 
 function DashList({ items }: Readonly<{ items: readonly ReactNode[] }>) {
