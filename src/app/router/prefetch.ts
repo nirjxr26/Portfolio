@@ -24,28 +24,10 @@ export function prefetchRoute(href: string) {
 
   const route = resolveRoute(path)
   switch (route.kind) {
-    case "works":
-      void import("@/pages/WorksPage")
-      break
-    case "services":
-      void import("@/pages/ServicesPage")
-      break
-    case "articles":
-      void import("@/pages/ArticlesPage")
-      break
-    case "sitemap":
-      void import("@/pages/SitemapPage")
-      break
-    case "legal":
-      void import("@/pages/LegalPage")
-      break
     case "article-detail":
       void import("@/pages/ArticleDetailPage")
-      void import("@/features/articles/data/blogArticles")
       break
     case "case-study":
-      void import("@/pages/CaseStudyPage")
-      void import("@/features/case-studies/data/caseStudies")
       if (route.caseSlug === "trace") {
         void import("@/pages/TracePage")
         preloadImage("/assets/features/trace/hero-bg.jpg")

@@ -84,7 +84,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
     >
       {/* Hero Section: Centered header, MacBook CLI mockup attached to the bottom */}
       <section className="py-24 sm:py-28 md:py-32 overflow-hidden flex flex-col items-center text-center">
-        <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-start text-left sm:items-center sm:text-center">
+        <div className="px-6 sm:px-12 max-w-3xl mx-auto flex flex-col items-center text-center">
           {hero.title && (
             <span className="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase text-accent mb-4 sm:mb-5 block select-none reveal-on-scroll">
               {hero.title}
@@ -95,7 +95,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             {hero.headline}
           </h1>
 
-          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted mx-0 sm:mx-auto sm:max-w-2xl mb-8 sm:mb-12 leading-[1.5] text-left sm:text-center text-pretty reveal-on-scroll`}>
+          <p className={`text-[17px] sm:text-[24px] font-medium ${UNIVERS_FONT} text-muted mx-auto sm:max-w-2xl mb-8 sm:mb-12 leading-[1.5] text-center text-pretty reveal-on-scroll`}>
             {hero.subhead}
           </p>
         </div>

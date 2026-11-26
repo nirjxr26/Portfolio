@@ -31,8 +31,14 @@ export function CarouselTrack({ children, centered = false }: Readonly<{ childre
     const track = trackRef.current
     if (!track) return
     const max = track.scrollWidth - track.clientWidth
+    const lastCard = track.lastElementChild as HTMLElement | null
+    const goesOutOfView =
+      track.scrollLeft > 1 ||
+      (lastCard
+        ? lastCard.getBoundingClientRect().right > window.innerWidth + 1
+        : max > 1)
 
-    setOverflows(max > 1)
+    setOverflows(max > 1 && goesOutOfView)
     setCanScrollPrev(track.scrollLeft > 1)
     setCanScrollNext(track.scrollLeft < max - 1)
   }, [])

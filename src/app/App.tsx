@@ -1,16 +1,32 @@
-import { lazy, Suspense, useDeferredValue } from "react"
+import { lazy, Suspense, type ComponentType } from "react"
 import { HomePage } from "@/pages/HomePage"
+import { WorksPage } from "@/pages/WorksPage"
+import { ServicesPage } from "@/pages/ServicesPage"
+import { ArticlesPage } from "@/pages/ArticlesPage"
+import { SitemapPage } from "@/pages/SitemapPage"
+import { LegalPage } from "@/pages/LegalPage"
+import { ErrorPage } from "@/pages/ErrorPage"
+import { NotFoundPage } from "@/pages/NotFoundPage"
+import { CaseStudyPage } from "@/pages/CaseStudyPage"
+import { CASE_STUDIES } from "@/features/case-studies/data/caseStudies"
 import { cleanPath, resolveRoute } from "@/app/router/routes"
 import { useInternalRouter } from "@/app/router/useInternalRouter"
 import { getArticleMeta } from "@/features/articles/data/articleMeta"
 
-const WorksPage = lazy(() => import("@/pages/WorksPage").then((m) => ({ default: m.WorksPage })))
-const ServicesPage = lazy(() => import("@/pages/ServicesPage").then((m) => ({ default: m.ServicesPage })))
-const ArticlesPage = lazy(() => import("@/pages/ArticlesPage").then((m) => ({ default: m.ArticlesPage })))
-const SitemapPage = lazy(() => import("@/pages/SitemapPage").then((m) => ({ default: m.SitemapPage })))
-const LegalPage = lazy(() => import("@/pages/LegalPage").then((m) => ({ default: m.LegalPage })))
-const ErrorPage = lazy(() => import("@/pages/ErrorPage").then((m) => ({ default: m.ErrorPage })))
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })))
+function lazyWithRetry<T extends ComponentType<any>>(
+  factory: () => Promise<{ default: T }>,
+) {
+  return lazy(async () => {
+    try {
+      return await factory()
+    } catch {
+      if (typeof window !== "undefined") {
+        window.location.reload()
+      }
+      return { default: (() => null) as unknown as T }
+    }
+  })
+}
 
 const compiledArticleLoaders = import.meta.glob<{ default: import("@/lib/compiledMarkdown").CompiledArticle }>(
   "../features/articles/data/compiled/*.json",
@@ -21,7 +37,7 @@ const articleRouteCache = new Map<string, ReturnType<typeof lazy>>()
 function getArticleRoute(slug: string) {
   let cached = articleRouteCache.get(slug)
   if (!cached) {
-    cached = lazy(async () => {
+    cached = lazyWithRetry(async () => {
       const loader = compiledArticleLoaders[`../features/articles/data/compiled/${slug}.json`]
       const [{ ArticleDetailPage }, compiledMod] = await Promise.all([
         import("@/pages/ArticleDetailPage"),
@@ -49,23 +65,14 @@ function ArticleDetailRoute({ slug }: Readonly<{ slug: string }>) {
   return <RouteComponent />
 }
 
-const CaseStudyRoute = lazy(async () => {
-  const [{ CaseStudyPage }, { CASE_STUDIES }] = await Promise.all([
-    import("@/pages/CaseStudyPage"),
-    import("@/features/case-studies/data/caseStudies"),
-  ])
-  return {
-    default: function CaseRoute({ slug }: Readonly<{ slug: string }>) {
-      const data = CASE_STUDIES[slug]
-      return data ? <CaseStudyPage slug={slug} data={data} /> : <NotFoundPage />
-    },
-  }
-})
+function CaseStudyRoute({ slug }: Readonly<{ slug: string }>) {
+  const data = CASE_STUDIES[slug]
+  return data ? <CaseStudyPage slug={slug} data={data} /> : <NotFoundPage />
+}
 
 export function App() {
   const pathname = useInternalRouter()
-  const activePath = useDeferredValue(pathname)
-  const route = resolveRoute(activePath)
+  const route = resolveRoute(pathname)
 
   let content = <NotFoundPage />
   if (route.kind === "home") {
@@ -90,7 +97,7 @@ export function App() {
 
   return (
     <Suspense fallback={null}>
-      <div key={cleanPath(activePath)}>{content}</div>
+      <div key={cleanPath(pathname)}>{content}</div>
     </Suspense>
   )
 }

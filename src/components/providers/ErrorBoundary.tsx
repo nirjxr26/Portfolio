@@ -1,8 +1,5 @@
-import { Component, ErrorInfo, lazy, ReactNode, Suspense } from "react"
-
-const ErrorPage = lazy(() =>
-  import("@/pages/ErrorPage").then((m) => ({ default: m.ErrorPage })),
-)
+import { Component, ErrorInfo, ReactNode } from "react"
+import { ErrorPage } from "@/pages/ErrorPage"
 
 interface Props {
   children: ReactNode
@@ -41,17 +38,15 @@ export class ErrorBoundary extends Component<Readonly<Props>, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <Suspense fallback={null}>
-          <ErrorPage
-            code={this.state.code}
-            desc={this.state.desc}
-            actionLabel="Go to Home"
-            actionHref="/"
-            onAction={() => {
-              this.setState({ hasError: false })
-            }}
-          />
-        </Suspense>
+        <ErrorPage
+          code={this.state.code}
+          desc={this.state.desc}
+          actionLabel="Go to Home"
+          actionHref="/"
+          onAction={() => {
+            this.setState({ hasError: false })
+          }}
+        />
       )
     }
 
