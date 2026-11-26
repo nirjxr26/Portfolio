@@ -17,7 +17,6 @@ export type MarkdownAstNode =
   | { kind: "table"; head: string[]; rows: string[][] }
   | { kind: "list"; ordered: boolean; items: MarkdownListItem<MarkdownAstNode>[] }
 
-const INLINE = /(\[[^\]]+\]\([^)\s]+\)|`[^`]+`|\*\*(?:[^*]|\*(?!\*))+\*\*|\*[^*\n]+\*)/g
 const QUOTE_SOURCE = /\[[^\]]+\]\([^)\s]+\)/
 
 export function InlineCode({ children }: Readonly<{ children: string }>) {
@@ -32,49 +31,95 @@ export function slugify(text: string) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
 }
 
+function matchLinkAt(text: string, start: number): { label: string; url: string; next: number } | null {
+  if (text[start] !== "[") return null
+  const closeBracket = text.indexOf("]", start + 1)
+  if (closeBracket <= start + 1 || text[closeBracket + 1] !== "(") return null
+  const urlStart = closeBracket + 2
+  let urlEnd = urlStart
+  while (urlEnd < text.length && text[urlEnd] !== ")" && !/\s/.test(text[urlEnd])) {
+    urlEnd += 1
+  }
+  if (urlEnd === urlStart || text[urlEnd] !== ")") return null
+  return {
+    label: text.slice(start + 1, closeBracket),
+    url: text.slice(urlStart, urlEnd),
+    next: urlEnd + 1,
+  }
+}
+
 export function renderInline(text: string, key: string): ReactNode[] {
   const nodes: ReactNode[] = []
+  let cursor = 0
+  let plainStart = 0
+  let tokenIdx = 0
 
-  text.split(INLINE).forEach((part, idx) => {
-    if (!part) return
-    const partKey = `${key}-${idx}`
+  const flushPlain = (end: number) => {
+    if (end > plainStart) {
+      nodes.push(<span key={`${key}-${tokenIdx++}`}>{text.slice(plainStart, end)}</span>)
+    }
+  }
 
-    const link = /^\[([^\]]+)\]\(([^)\s]+)\)$/.exec(part)
-    if (link) {
-      nodes.push(
-        <a
-          key={partKey}
-          href={link[2]}
-          className="text-ink underline decoration-ink/50 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-        >
-          {renderInline(link[1], `${partKey}-label`)}
-        </a>,
-      )
-      return
+  while (cursor < text.length) {
+    const ch = text[cursor]
+
+    if (ch === "[") {
+      const link = matchLinkAt(text, cursor)
+      if (link) {
+        flushPlain(cursor)
+        const partKey = `${key}-${tokenIdx++}`
+        nodes.push(
+          <a
+            key={partKey}
+            href={link.url}
+            className="text-ink underline decoration-ink/50 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+          >
+            {renderInline(link.label, `${partKey}-label`)}
+          </a>,
+        )
+        cursor = link.next
+        plainStart = cursor
+        continue
+      }
+    } else if (ch === "`") {
+      const close = text.indexOf("`", cursor + 1)
+      if (close > cursor + 1) {
+        flushPlain(cursor)
+        nodes.push(<InlineCode key={`${key}-${tokenIdx++}`}>{text.slice(cursor + 1, close)}</InlineCode>)
+        cursor = close + 1
+        plainStart = cursor
+        continue
+      }
+    } else if (ch === "*" && text[cursor + 1] === "*") {
+      const close = text.indexOf("**", cursor + 2)
+      if (close > cursor + 2) {
+        flushPlain(cursor)
+        const partKey = `${key}-${tokenIdx++}`
+        nodes.push(
+          <strong key={partKey} className="font-semibold text-ink">
+            {renderInline(text.slice(cursor + 2, close), partKey)}
+          </strong>,
+        )
+        cursor = close + 2
+        plainStart = cursor
+        continue
+      }
+    } else if (ch === "*") {
+      const close = text.indexOf("*", cursor + 1)
+      const newline = text.indexOf("\n", cursor + 1)
+      if (close > cursor + 1 && (newline === -1 || close < newline)) {
+        flushPlain(cursor)
+        nodes.push(<em key={`${key}-${tokenIdx++}`}>{text.slice(cursor + 1, close)}</em>)
+        cursor = close + 1
+        plainStart = cursor
+        continue
+      }
     }
 
-    if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
-      nodes.push(<InlineCode key={partKey}>{part.slice(1, -1)}</InlineCode>)
-      return
-    }
+    cursor += 1
+  }
 
-    if (part.length > 4 && part.startsWith("**") && part.endsWith("**")) {
-      nodes.push(
-        <strong key={partKey} className="font-semibold text-ink">
-          {renderInline(part.slice(2, -2), partKey)}
-        </strong>,
-      )
-      return
-    }
-
-    if (part.length > 2 && part.startsWith("*") && part.endsWith("*")) {
-      nodes.push(<em key={partKey}>{part.slice(1, -1)}</em>)
-      return
-    }
-
-    nodes.push(<span key={partKey}>{part}</span>)
-  })
-
+  flushPlain(text.length)
   return nodes
 }
 
