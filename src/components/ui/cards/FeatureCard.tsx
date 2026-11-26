@@ -18,6 +18,7 @@ export function FeatureCard({
   return (
     <BaseCard
       as="article"
+      tabIndex={0}
       className={`${sizeClass} ${CARD_PADDING} md:p-9 ${heightClass} ${cardBgClass}`}
     >
       <div className={isCentered ? "text-center flex flex-col items-center w-full" : ""}>

@@ -162,29 +162,25 @@
   }
 
   .apple-card-hover:focus-visible {
-    outline: 2px solid var(--accent-hover);
-    outline-offset: 3px;
+    outline: 1.5px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 12%, transparent);
   }
 
   @keyframes pageFadeIn {
     from {
       opacity: 0;
-      transform: translateY(6px);
+      transform: translate3d(0, 16px, 0);
     }
 
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 
-  /*
-   * No `will-change` here: it makes this wrapper a containing block, which
-   * breaks `position: fixed` on the Header and the notch scrim inside it.
-   * The fade is already disabled where view transitions are supported.
-   */
   .page-transition {
-    animation: pageFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: pageFadeIn 1.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) backwards;
   }
 
   .swatch-caption {
@@ -192,16 +188,13 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .page-transition,
     .swatch-caption {
       animation: none !important;
     }
   }
 
   @supports (view-transition-name: root) {
-    .page-transition {
-      animation: none !important;
-    }
-
     ::view-transition-old(root),
     ::view-transition-new(root) {
       animation-duration: 0.24s;

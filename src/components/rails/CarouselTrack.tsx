@@ -65,11 +65,33 @@ export function CarouselTrack({ children, centered = false }: Readonly<{ childre
     track.scrollBy({ left: direction * distance, behavior: reduceMotion ? "auto" : "smooth" })
   }
 
+  const handleFocusCapture = (e: React.FocusEvent<HTMLDivElement>) => {
+    const track = trackRef.current
+    if (!track || track.scrollWidth <= track.clientWidth) return
+    const target = e.target as HTMLElement | null
+    if (!target || target === track) return
+
+    // Find the direct child card of the track that contains or is the focused element
+    let card: HTMLElement | null = target
+    while (card && card.parentElement !== track) {
+      card = card.parentElement
+    }
+    if (!card) return
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    card.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "nearest",
+      inline: "nearest",
+    })
+  }
+
   return (
     <div className="w-full">
       <div
         id={trackId}
         ref={trackRef}
+        onFocusCapture={handleFocusCapture}
         className={`${TRACK_CLASS} ${centered ? "carousel-track-centered" : ""}`.trim()}
       >
         {children}

@@ -19,7 +19,8 @@ function ServiceCard({ section }: Readonly<ServiceCardProps>) {
   return (
     <div
       id={section.id}
-      className="rounded-2xl sm:rounded-3xl bg-card p-7 sm:p-9 md:p-10 transition-colors reveal-on-scroll"
+      tabIndex={0}
+      className="rounded-2xl sm:rounded-3xl bg-card p-7 sm:p-9 md:p-10 transition-[colors,box-shadow] reveal-on-scroll focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-alt"
     >
       <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-10 lg:gap-12 items-start">
         {/* Left column: 40% (2 of 5) */}
