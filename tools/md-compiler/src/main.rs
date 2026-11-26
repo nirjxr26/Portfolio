@@ -8,8 +8,11 @@ enum TokenKind {
     Comment,
     String,
     Keyword,
+    Control,
     Type,
+    Function,
     Macro,
+    Ident,
     Number,
     Pass,
     Fail,
@@ -24,8 +27,11 @@ impl TokenKind {
             TokenKind::Comment => "comment",
             TokenKind::String => "string",
             TokenKind::Keyword => "keyword",
+            TokenKind::Control => "control",
             TokenKind::Type => "type",
+            TokenKind::Function => "function",
             TokenKind::Macro => "macro",
+            TokenKind::Ident => "ident",
             TokenKind::Number => "number",
             TokenKind::Pass => "pass",
             TokenKind::Fail => "fail",
@@ -74,22 +80,28 @@ fn push_token(tokens: &mut Vec<CodeToken>, kind: TokenKind, text: &str) {
     });
 }
 
+fn is_control_keyword(word: &str) -> bool {
+    matches!(
+        word,
+        "for" | "in" | "if" | "else" | "return" | "match" | "while" | "loop" | "break"
+            | "continue" | "await" | "try" | "catch" | "throw" | "where" | "as"
+    )
+}
+
 fn is_keyword(word: &str) -> bool {
     matches!(
         word,
         // Rust
-        "fn" | "let" | "mut" | "for" | "in" | "if" | "else" | "return" | "struct" | "impl"
-            | "pub" | "match" | "const" | "type" | "as" | "where" | "use" | "mod" | "crate"
-            | "enum" | "trait" | "while" | "loop" | "break" | "continue" | "async" | "await"
+        "fn" | "let" | "mut" | "struct" | "impl"
+            | "pub" | "const" | "type" | "use" | "mod" | "crate"
+            | "enum" | "trait" | "async"
             // TS / JS
             | "import" | "export" | "from" | "default" | "function" | "interface" | "extends"
-            | "true" | "false" | "null" | "undefined" | "try" | "catch" | "throw" | "new"
+            | "true" | "false" | "null" | "undefined" | "new"
             // SQL
             | "SELECT" | "FROM" | "WHERE" | "INSERT" | "INTO" | "UPDATE" | "DELETE" | "CREATE"
             | "ROLE" | "DATABASE" | "OWNER" | "LOGIN" | "SHOW" | "SET" | "WITH" | "GRANT"
             | "REVOKE" | "ALTER" | "DROP" | "ON" | "TO" | "AND" | "OR" | "NOT"
-            // HTTP / CSP
-            | "Content-Security-Policy" | "default-src" | "script-src" | "style-src" | "img-src"
     )
 }
 
@@ -100,6 +112,8 @@ fn is_type_ident(word: &str) -> bool {
             | "Option" | "Some" | "None" | "Result" | "Ok" | "Err" | "bool" | "usize" | "u8"
             | "u16" | "u32" | "u64" | "i32" | "i64" | "str" | "Self" | "VerificationReport"
             | "Promise" | "Record" | "Readonly" | "ReactNode" | "Uint8Array"
+            // HTTP / CSP
+            | "Content-Security-Policy" | "default-src" | "script-src" | "style-src" | "img-src"
     )
 }
 
@@ -240,12 +254,18 @@ pub fn tokenize_code(code: &str, lang: &str) -> Vec<CodeToken> {
             let word = &code[start..i];
             if i < n && bytes[i] == b'!' && is_macro_ident(word) {
                 push_token(&mut tokens, TokenKind::Macro, word);
+            } else if is_control_keyword(word) {
+                push_token(&mut tokens, TokenKind::Control, word);
             } else if is_keyword(word) {
                 push_token(&mut tokens, TokenKind::Keyword, word);
-            } else if is_type_ident(word) {
+            } else if is_type_ident(word)
+                || (i + 1 < n && bytes[i] == b':' && bytes[i + 1] == b':')
+            {
                 push_token(&mut tokens, TokenKind::Type, word);
+            } else if i < n && bytes[i] == b'(' {
+                push_token(&mut tokens, TokenKind::Function, word);
             } else {
-                push_token(&mut tokens, TokenKind::Plain, word);
+                push_token(&mut tokens, TokenKind::Ident, word);
             }
             continue;
         }

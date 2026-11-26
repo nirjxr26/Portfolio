@@ -91,7 +91,7 @@ export function TracePage({ data }: Readonly<TracePageProps>) {
             </span>
           )}
 
-          <h1 className={`text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold ${UNIVERS_FONT} text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-normal reveal-on-scroll`}>
+          <h1 className="text-[30px] sm:text-[clamp(34px,5.2vw,56px)] font-semibold font-inter-variable text-ink leading-[1.12] mb-4 sm:mb-6 whitespace-normal sm:whitespace-nowrap tracking-normal reveal-on-scroll">
             {hero.headline}
           </h1>
 

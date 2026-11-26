@@ -3,6 +3,13 @@ export interface ArticlePoster {
   dark: string
 }
 
+export interface ArticleProjectCallout {
+  label?: string
+  name: string
+  description: string
+  href: string
+}
+
 export interface ArticleMeta {
   slug: string
   title: string
@@ -18,6 +25,7 @@ export interface ArticleMeta {
   hideFromHome?: boolean
   keywords: string
   leadImage?: { src: string; alt: string; width: number; height: number }
+  projectCallout?: ArticleProjectCallout
   disclaimer?: string
   poster?: ArticlePoster
   ogImage?: string
@@ -68,6 +76,13 @@ export const ARTICLE_META: ArticleMeta[] = [
       dark: "/assets/content/articles/rust_black.svg",
     },
     ogImage: "/assets/og/rust_og.svg",
+    projectCallout: {
+      label: "Open Source",
+      name: "Parapet",
+      description:
+        "A 100ms Rust static-site verifier for dead anchors, sitemap URLs, and CSP hashes.",
+      href: "https://github.com/nirjxr26/parapet",
+    },
   },
   {
     slug: "coding-is-taught-wrong-and-ai-exposed-it",
@@ -135,6 +150,13 @@ export const ARTICLE_META: ArticleMeta[] = [
       dark: "/assets/content/articles/sonarqube_black.svg",
     },
     ogImage: "/assets/og/sonarqube_og.svg",
+    projectCallout: {
+      label: "Open Source",
+      name: "Bastion",
+      description:
+        "A self-hosted, deny-first IAM platform with auth, MFA, sessions, and audit logs.",
+      href: "https://github.com/nirjxr26/Bastion",
+    },
   },
   {
     slug: "rethinking-my-git-workflow",
@@ -172,6 +194,13 @@ export const ARTICLE_META: ArticleMeta[] = [
     cardReadTime: "2 min read",
     keywords:
       "VaultLock, logo, brand, favicon, Clearbit, Google, DuckDuckGo, caching, validation, QML, Qt, backend, input normalization, offline password manager",
+    projectCallout: {
+      label: "Open Source",
+      name: "VaultLock",
+      description:
+        "An offline, AES-256 encrypted desktop password manager with zero cloud sync.",
+      href: "https://github.com/nirjxr26/VaultLock-Password-Manager",
+    },
   },
 ]
 
