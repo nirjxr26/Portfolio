@@ -211,14 +211,14 @@ export function Footer({ bgClass = "bg-surface-alt", breadcrumbs: customBreadcru
         {crumbs.length > 0 && (
           <nav
             aria-label="Breadcrumbs"
-            className={`flex items-center gap-2 text-xs sm:text-[13px] text-muted-soft mb-8 pb-5 sm:mb-10 sm:pb-6 border-b ${borderClass} overflow-x-auto no-scrollbar`}
+            className={`flex items-center gap-2 text-xs sm:text-[13px] leading-none text-muted-soft mb-8 pb-5 sm:mb-10 sm:pb-6 border-b ${borderClass} overflow-x-auto no-scrollbar`}
           >
             <AppLink
               href="/"
               aria-label="Home"
-              className="text-muted hover:text-ink transition-colors flex items-center shrink-0"
+              className="text-muted hover:text-ink transition-colors inline-flex items-center justify-center shrink-0"
             >
-              <HomeIcon width={14} height={14} />
+              <HomeIcon width={14} height={14} className="block -translate-y-[1px]" />
             </AppLink>
 
             {crumbs.map((crumb, idx) => {
