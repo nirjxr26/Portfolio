@@ -5,7 +5,7 @@ const TRACK_CLASS =
   "carousel-track-container no-scrollbar flex snap-x snap-mandatory overflow-x-auto py-3 gap-4 min-[414px]:gap-5 sm:gap-6"
 
 const CONTROL_CLASS =
-  "btn-icon h-9 w-9 cursor-pointer bg-ink/[0.06] text-ink/60 transition-[color,background-color,transform] duration-150 hover:bg-ink/10 hover:text-ink disabled:pointer-events-none disabled:text-ink/25"
+  "btn-icon h-9 w-9 cursor-pointer bg-btn-surface text-ink/60 transition-[color,background-color,transform] duration-150 hover:bg-btn-surface-hover hover:text-ink disabled:pointer-events-none disabled:bg-btn-surface/40 disabled:text-ink/25"
 
 const CONTROLS = [
   { label: "Scroll carousel left", direction: -1, icon: ChevronLeft },

@@ -9,6 +9,8 @@
   --console-backdrop: #e2e4e8;
   --accent: #0066cc;
   --accent-hover: #0071e3;
+  --btn-surface: #e8e8ed;
+  --btn-surface-hover: #dcdce2;
   --page-gutter: 1rem;
   --header-h: 2.75rem;
 }
@@ -25,6 +27,8 @@
   --console-backdrop: #202226;
   --accent: #2997ff;
   --accent-hover: #4aa8ff;
+  --btn-surface: #1d1d1f;
+  --btn-surface-hover: #2a2a2d;
 }
 
 @media (min-width: 414px) {
@@ -55,6 +59,8 @@
   --color-console-backdrop: var(--console-backdrop);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-btn-surface: var(--btn-surface);
+  --color-btn-surface-hover: var(--btn-surface-hover);
 }
 
 @theme {

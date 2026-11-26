@@ -1,12 +1,10 @@
-import { CarouselTrack, CheckIcon, FeatureCard } from "@/components"
+import { CheckIcon, ThinkingAndWorkingSection } from "@/components"
 import { RouteSeo } from "@/components/ui/SEO"
-import { Container, PageHero, PageShell, Section, SectionHeader } from "@/components/layout"
-import { productionCapabilities } from "@/features/home/data/home"
+import { Container, PageHero, PageShell, Section } from "@/components/layout"
 import { ROUTE_META } from "@/app/router/routes"
 import { createBreadcrumbs } from "@/lib/helpers"
 import {
   CORE_SERVICES,
-  HOW_I_WORK_CARDS,
   WORKING_KNOWLEDGE_SERVICES,
   type ServiceSection,
 } from "@/features/services/data/services"
@@ -98,46 +96,12 @@ export function ServicesPage() {
         </Container>
       </Section>
 
-      {/* How I think & How I work — matching main website */}
-      <Section id="how-i-think" bgClass="bg-canvas" padClass="py-16 sm:py-20">
-        <SectionHeader title="How I think." />
-
-        <div className="reveal-on-scroll">
-          <CarouselTrack>
-            {productionCapabilities.map((cap) => (
-              <FeatureCard
-                key={cap.title}
-                card={{
-                  headline: cap.tagline,
-                  body: cap.desc,
-                  tag: cap.title,
-                }}
-                cardBgClass="bg-surface-alt"
-              />
-            ))}
-          </CarouselTrack>
-        </div>
-
-        <div id="how-i-work" className="mt-12 sm:mt-16 scroll-mt-12">
-          <SectionHeader title="How I work." />
-
-          <div className="reveal-on-scroll">
-            <CarouselTrack>
-              {HOW_I_WORK_CARDS.map((card) => (
-                <FeatureCard
-                  key={card.tag}
-                  card={{
-                    headline: card.title,
-                    body: card.desc,
-                    tag: card.tag,
-                  }}
-                  cardBgClass="bg-surface-alt"
-                />
-              ))}
-            </CarouselTrack>
-          </div>
-        </div>
-      </Section>
+      <ThinkingAndWorkingSection
+        id="how-i-think"
+        bgClass="bg-canvas"
+        cardBgClass="bg-surface-alt"
+        padClass="py-16 sm:py-20"
+      />
     </PageShell>
   )
 }

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { ARTICLE_META } from "@/features/articles/data/articleMeta"
 import { CASE_STUDY_META } from "@/features/case-studies/data/caseStudyMeta"
-import { useCopy } from "@/hooks/useCopy"
+import { copyWithFallback, useCopy } from "@/hooks/useCopy"
 import { CheckIcon, SearchIcon } from "@/components/ui/Icons"
 import { notifySite } from "./NotificationToast"
 
@@ -131,20 +131,7 @@ export function CommandPalette() {
     }
 
     // 2. Also copy email to clipboard so user always has it ready
-    try {
-      if (navigator.clipboard?.writeText) {
-        void navigator.clipboard.writeText(email)
-      } else {
-        const ta = document.createElement("textarea")
-        ta.value = email
-        ta.style.position = "fixed"
-        ta.style.opacity = "0"
-        document.body.appendChild(ta)
-        ta.select()
-        document.execCommand("copy")
-        document.body.removeChild(ta)
-      }
-    } catch {}
+    void copyWithFallback(email)
 
     notifySite("Contact opened", "Email copied & mail client opened.")
   }, [])
