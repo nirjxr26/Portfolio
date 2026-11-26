@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react"
 import { isInternalRoute } from "@/app/router/routes"
+import { prefetchRoute } from "@/app/router/prefetch"
 import { isStaticAsset } from "@/lib/helpers"
 
 let currentPath = typeof window !== "undefined" ? window.location.pathname : "/"
@@ -21,30 +22,9 @@ function notify() {
 }
 
 function performNavigation(to: string) {
-  const performUpdate = () => {
-    window.history.pushState({}, "", to)
-    notify()
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
-  }
-
-  const cleanTo = to.split("#")[0].replace(/\/$/, "") || "/"
-  const isTransitionToLegal = cleanTo === "/legal"
-
-  const reduceMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-  if (
-    isTransitionToLegal &&
-    !reduceMotion &&
-    typeof document !== "undefined" &&
-    "startViewTransition" in document &&
-    typeof document.startViewTransition === "function"
-  ) {
-    document.startViewTransition(performUpdate)
-  } else {
-    performUpdate()
-  }
+  window.history.pushState({}, "", to)
+  notify()
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" })
 }
 
 export function navigate(to: string) {
@@ -56,23 +36,8 @@ export function navigate(to: string) {
 
 if (typeof window !== "undefined") {
   window.addEventListener("popstate", () => {
-    const performUpdate = () => {
-      notify()
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" })
-    }
-    const cleanCurrent = window.location.pathname.replace(/\/$/, "") || "/"
-    const isTransitionToLegal = cleanCurrent === "/legal"
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (
-      isTransitionToLegal &&
-      !reduceMotion &&
-      "startViewTransition" in document &&
-      typeof document.startViewTransition === "function"
-    ) {
-      document.startViewTransition(performUpdate)
-    } else {
-      performUpdate()
-    }
+    notify()
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
   })
 
   const scrollToHash = (hash: string) => {
@@ -137,6 +102,19 @@ if (typeof window !== "undefined") {
     e.preventDefault()
     performNavigation(href)
   })
+
+  const prefetchTarget = (e: Event) => {
+    const el = e.target
+    if (!(el instanceof Element)) return
+    const anchor = el.closest("a")
+    if (!anchor) return
+    const href = anchor.getAttribute("href")
+    if (href) prefetchRoute(href)
+  }
+
+  document.addEventListener("pointerover", prefetchTarget, { passive: true })
+  document.addEventListener("focusin", prefetchTarget, { passive: true })
+  document.addEventListener("touchstart", prefetchTarget, { passive: true })
 }
 
 function subscribe(callback: () => void) {

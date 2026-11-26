@@ -32,6 +32,7 @@ export function NotificationToast() {
 
   const timerRef = useRef<number | null>(null)
   const lastTriggerRef = useRef<{ msg: string; time: number }>({ msg: "", time: 0 })
+  const wasOfflineRef = useRef(typeof navigator !== "undefined" ? !navigator.onLine : false)
 
   useEffect(() => {
     const handleNotification = (e: Event) => {
@@ -73,9 +74,29 @@ export function NotificationToast() {
       }
     }
 
+    const handleOffline = () => {
+      wasOfflineRef.current = true
+      notifySite("You're offline", "Cached pages remain available.")
+    }
+
+    const handleOnline = () => {
+      if (!wasOfflineRef.current) return
+      wasOfflineRef.current = false
+      notifySite("Back online", "Connection restored.")
+    }
+
     window.addEventListener("site-notification", handleNotification)
+    window.addEventListener("offline", handleOffline)
+    window.addEventListener("online", handleOnline)
+
+    if (typeof navigator !== "undefined" && !navigator.onLine) {
+      handleOffline()
+    }
+
     return () => {
       window.removeEventListener("site-notification", handleNotification)
+      window.removeEventListener("offline", handleOffline)
+      window.removeEventListener("online", handleOnline)
       if (timerRef.current) {
         window.clearTimeout(timerRef.current)
       }

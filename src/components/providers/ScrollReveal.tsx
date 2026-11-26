@@ -31,8 +31,13 @@ export function ScrollReveal() {
           })
         }
 
+        const vh = window.innerHeight || 900
         revealElements.forEach((el) => {
-          if (!el.classList.contains("is-visible")) {
+          if (el.classList.contains("is-visible")) return
+          const rect = el.getBoundingClientRect()
+          if (rect.top < vh * 0.96 && rect.bottom > 0) {
+            el.classList.add("is-visible")
+          } else {
             observer?.observe(el)
           }
         })

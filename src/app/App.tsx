@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react"
+import { lazy, Suspense, useDeferredValue } from "react"
 import { HomePage } from "@/pages/HomePage"
 import { cleanPath, resolveRoute } from "@/app/router/routes"
 import { useInternalRouter } from "@/app/router/useInternalRouter"
@@ -39,7 +39,8 @@ const CaseStudyRoute = lazy(async () => {
 
 export function App() {
   const pathname = useInternalRouter()
-  const route = resolveRoute(pathname)
+  const activePath = useDeferredValue(pathname)
+  const route = resolveRoute(activePath)
 
   let content = <NotFoundPage />
   if (route.kind === "home") {
@@ -63,8 +64,8 @@ export function App() {
   }
 
   return (
-    <div key={cleanPath(pathname)} className="page-transition">
-      <Suspense fallback={null}>{content}</Suspense>
-    </div>
+    <Suspense fallback={null}>
+      <div key={cleanPath(activePath)}>{content}</div>
+    </Suspense>
   )
 }

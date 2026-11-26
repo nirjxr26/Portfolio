@@ -79,7 +79,7 @@ export function PageShell({
       {seo}
       <ScrollReveal />
       {!hideHeader && <Header activePath={headerPath} />}
-      <main id="main-content" className={mainClassName}>
+      <main id="main-content" className={`page-transition ${mainClassName ?? ""}`.trim()}>
         {children}
       </main>
       {!hideFooter && <Footer bgClass={footerBgClass} breadcrumbs={footerBreadcrumbs} />}
