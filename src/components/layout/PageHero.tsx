@@ -14,6 +14,7 @@ interface PageHeroProps {
   animate?: boolean
   mobileLeftAlign?: boolean
   roomyHeader?: boolean
+  padClassName?: string
 }
 
 export function PageHero({
@@ -29,11 +30,14 @@ export function PageHero({
   animate = true,
   mobileLeftAlign = false,
   roomyHeader = false,
+  padClassName,
 }: Readonly<PageHeroProps>) {
-  const sectionPadding = bottomFlush
+  const sectionPadding = padClassName
+    ? padClassName
+    : bottomFlush
     ? "pt-32 min-[480px]:pt-36 sm:pt-40 md:pt-44 pb-0"
     : compact
-      ? "pt-20 pb-6 min-[480px]:pt-24 min-[480px]:pb-6 sm:pt-28 sm:pb-8 md:pt-32 md:pb-8"
+      ? "pt-28 pb-16 sm:pt-32 sm:pb-16"
       : "pt-32 pb-16 min-[480px]:pt-36 min-[480px]:pb-20 sm:pt-40 sm:pb-24 md:pt-44 md:pb-28"
   return (
     <section className={`bg-canvas ${sectionPadding}`}>

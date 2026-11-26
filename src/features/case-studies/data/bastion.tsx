@@ -6,10 +6,10 @@ export const bastionData: CaseStudyData = {
     title: "Bastion",
     headline: (
       <>
-        Access control.<br className="sm:hidden" /> Fully yours.
+        Control who<br className="sm:hidden" /> has access.
       </>
     ),
-    subhead: "Auth, MFA, sessions, and audit logs — self-hosted, with zero third-party access to your data.",
+    subhead: "Auth, MFA, sessions, and audit logs — self-hosted, with no third-party data access.",
   },
   sections: [
     {

@@ -5,7 +5,17 @@ import { alternateSurfaces, createBreadcrumbs } from "@/lib/helpers"
 import { CaseStudyHeroMedia, FeatureCard, Seo } from "@/components"
 import { CarouselSection, CTASection, PageHero, PageShell } from "@/components/layout"
 
-const TracePage = lazy(() => import("./TracePage").then((m) => ({ default: m.TracePage })))
+const TracePage = lazy(async () => {
+  try {
+    const m = await import("./TracePage")
+    return { default: m.TracePage }
+  } catch {
+    if (typeof window !== "undefined") {
+      window.location.reload()
+    }
+    return { default: (() => null) as unknown as typeof import("./TracePage").TracePage }
+  }
+})
 
 interface CaseStudyPageProps {
   slug: string
@@ -77,10 +87,16 @@ export function CaseStudyPage({ slug, data }: Readonly<CaseStudyPageProps>) {
           badgeClassName="font-inter-variable font-extrabold text-base sm:text-lg tracking-normal uppercase"
           title={hero.headline}
           subhead={hero.subhead}
+          subheadClassName={!hasHeroContent ? "max-w-xl" : undefined}
+          compact={!hasHeroContent}
+          padClassName={
+            !hasHeroContent
+              ? "pt-24 pb-10 min-[480px]:pt-28 min-[480px]:pb-12 sm:pt-32 sm:pb-14 md:pt-36 md:pb-16"
+              : undefined
+          }
           bottomFlush={Boolean(hero.heroAsset)}
           childrenClassName={hasHeroContent ? "flex flex-col items-center w-full" : undefined}
-          mobileLeftAlign
-          roomyHeader
+          roomyHeader={hasHeroContent}
         >
           <CaseStudyHeroMedia
             installCommands={hero.installCommands}
