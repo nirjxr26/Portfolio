@@ -11,18 +11,43 @@ const LegalPage = lazy(() => import("@/pages/LegalPage").then((m) => ({ default:
 const ErrorPage = lazy(() => import("@/pages/ErrorPage").then((m) => ({ default: m.ErrorPage })))
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })))
 
-const ArticleDetailRoute = lazy(async () => {
-  const [{ ArticleDetailPage }, { getBlogArticle }] = await Promise.all([
-    import("@/pages/ArticleDetailPage"),
-    import("@/features/articles/data/blogArticles"),
-  ])
-  return {
-    default: function ArticleRoute({ slug }: Readonly<{ slug: string }>) {
-      const article = getBlogArticle(slug)
-      return article ? <ArticleDetailPage article={article} /> : <NotFoundPage />
-    },
+const compiledArticleLoaders = import.meta.glob<{ default: import("@/lib/compiledMarkdown").CompiledArticle }>(
+  "../features/articles/data/compiled/*.json",
+)
+
+const articleRouteCache = new Map<string, ReturnType<typeof lazy>>()
+
+function getArticleRoute(slug: string) {
+  let cached = articleRouteCache.get(slug)
+  if (!cached) {
+    cached = lazy(async () => {
+      const loader = compiledArticleLoaders[`../features/articles/data/compiled/${slug}.json`]
+      const [{ ArticleDetailPage }, { getArticleMeta }, compiledMod] = await Promise.all([
+        import("@/pages/ArticleDetailPage"),
+        import("@/features/articles/data/articleMeta"),
+        loader ? loader() : Promise.resolve(null),
+      ])
+      const article = getArticleMeta(slug)
+      const compiled = compiledMod?.default
+      return {
+        default: function ArticleRoute() {
+          return article && compiled ? (
+            <ArticleDetailPage article={article} compiledSections={compiled.sections} />
+          ) : (
+            <NotFoundPage />
+          )
+        },
+      }
+    })
+    articleRouteCache.set(slug, cached)
   }
-})
+  return cached
+}
+
+function ArticleDetailRoute({ slug }: Readonly<{ slug: string }>) {
+  const RouteComponent = getArticleRoute(slug)
+  return <RouteComponent />
+}
 
 const CaseStudyRoute = lazy(async () => {
   const [{ CaseStudyPage }, { CASE_STUDIES }] = await Promise.all([

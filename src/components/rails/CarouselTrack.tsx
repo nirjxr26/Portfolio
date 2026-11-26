@@ -5,7 +5,7 @@ const TRACK_CLASS =
   "carousel-track-container no-scrollbar flex snap-x snap-mandatory overflow-x-auto py-3 gap-4 min-[414px]:gap-5 sm:gap-6"
 
 const CONTROL_CLASS =
-  "btn-icon h-11 w-11 cursor-pointer bg-ink/[0.06] text-ink/60 transition-[color,background-color,transform] duration-150 hover:bg-ink/10 hover:text-ink disabled:pointer-events-none disabled:text-ink/25"
+  "btn-icon h-9 w-9 cursor-pointer bg-ink/[0.06] text-ink/60 transition-[color,background-color,transform] duration-150 hover:bg-ink/10 hover:text-ink disabled:pointer-events-none disabled:text-ink/25"
 
 const CONTROLS = [
   { label: "Scroll carousel left", direction: -1, icon: ChevronLeft },
@@ -109,7 +109,7 @@ export function CarouselTrack({ children, centered = false }: Readonly<{ childre
               aria-label={label}
               aria-controls={trackId}
             >
-              <Icon width={18} height={18} strokeWidth={2.25} />
+              <Icon width={17} height={17} strokeWidth={2.25} />
             </button>
           ))}
         </div>

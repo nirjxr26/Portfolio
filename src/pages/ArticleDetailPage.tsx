@@ -3,13 +3,19 @@ import { ArticleMoreCard, Seo, AppleShareSheet } from "@/components"
 import { CopySwapIcon, ShareIcon } from "@/components/ui/Icons"
 import { CarouselSection, PageShell } from "@/components/layout"
 import { useCopy } from "@/hooks/useCopy"
-import { renderContent, renderInline, slugify } from "@/lib/markdown"
+import {
+  extractCompiledSectionText,
+  renderCompiledNode,
+  renderInline,
+  slugify,
+  type CompiledSection,
+} from "@/lib/compiledMarkdown"
 import { absoluteUrl, buildTechArticleSchema, estimateWordCount, toISODate } from "@/app/seo/seo"
-import { getAdjacentArticles, type BlogArticle } from "@/features/articles/data/blogArticles"
+import { getAdjacentArticleMeta, type ArticleMeta } from "@/features/articles/data/articleMeta"
 import { SITE_OG_IMAGE, SITE_URL } from "@/app/seo/site"
 import { createBreadcrumbs, withAssetHash } from "@/lib/helpers"
 
-function renderArticleTitle(article: BlogArticle) {
+function renderArticleTitle(article: ArticleMeta) {
   const raw = article.displayTitle ?? article.title
   if (!/<br\s*\/?>/i.test(raw)) {
     return raw
@@ -36,7 +42,10 @@ function renderArticleTitle(article: BlogArticle) {
   )
 }
 
-export function ArticleDetailPage({ article }: Readonly<{ article: BlogArticle }>) {
+export function ArticleDetailPage({
+  article,
+  compiledSections,
+}: Readonly<{ article: ArticleMeta; compiledSections: CompiledSection[] }>) {
   const [isShareSheetOpen, setIsShareSheetOpen] = useState(false)
   const { copied: copiedText, copy: copyText } = useCopy()
   const canonical = `${SITE_URL}/articles/${article.slug}`
@@ -52,8 +61,12 @@ export function ArticleDetailPage({ article }: Readonly<{ article: BlogArticle }
     ? absoluteUrl(article.leadImage.src)
     : undefined
 
+  const plainSectionsText = useMemo(
+    () => compiledSections.map(extractCompiledSectionText).join("\n\n"),
+    [compiledSections],
+  )
+
   const articleSchema = useMemo(() => {
-    const bodyText = article.sections.map((s) => `${s.subtitle} ${s.content}`).join(" ")
     return buildTechArticleSchema({
       title: article.title,
       description: article.description,
@@ -62,23 +75,22 @@ export function ArticleDetailPage({ article }: Readonly<{ article: BlogArticle }
       keywords: article.keywords,
       datePublished: isoDate,
       dateModified: isoDate,
-      wordCount: estimateWordCount(`${bodyText} ${article.description}`),
+      wordCount: estimateWordCount(`${plainSectionsText} ${article.description}`),
       readTime: article.readTime,
       image: articleImage,
     })
-  }, [article, articleImage, canonical, isoDate])
+  }, [article, articleImage, canonical, isoDate, plainSectionsText])
 
   const neighbors = useMemo(() => {
-    const { previous, next } = getAdjacentArticles(article.slug)
-    const list: BlogArticle[] = []
+    const { previous, next } = getAdjacentArticleMeta(article.slug)
+    const list: ArticleMeta[] = []
     if (previous) list.push(previous)
     if (next) list.push(next)
     return list
   }, [article.slug])
 
   const handleCopyText = () => {
-    const sectionsText = article.sections.map((section) => section.subtitle + "\n" + section.content).join("\n\n")
-    const fullText = [article.title, article.description, sectionsText].join("\n\n")
+    const fullText = [article.title, article.description, plainSectionsText].join("\n\n")
     void copyText(fullText)
   }
 
@@ -137,9 +149,9 @@ export function ArticleDetailPage({ article }: Readonly<{ article: BlogArticle }
           ) : null}
           <div className="mx-auto w-full max-w-[720px] px-4 min-[414px]:px-6 sm:px-6 xl:max-w-[760px]">
             <div className={`${article.leadImage ? "mt-8 sm:mt-10" : "mt-6 sm:mt-8"} space-y-10 sm:space-y-12`}>
-              {article.sections.map((section, idx) => {
+              {compiledSections.map((section, idx) => {
                 const id = slugify(section.subtitle) || `section-${idx + 1}`
-                const isLast = idx === article.sections.length - 1
+                const isLast = idx === compiledSections.length - 1
                 return (
                   <div key={id}>
                     <section id={id} className="scroll-mt-28">
@@ -156,7 +168,9 @@ export function ArticleDetailPage({ article }: Readonly<{ article: BlogArticle }
                         </h2>
                       ) : null}
                       <div className={`${section.subtitle ? "mt-6" : ""} space-y-4 t-body text-[15px] sm:text-[17px] leading-relaxed text-ink`}>
-                        {renderContent(section.content)}
+                        {section.blocks.map((node, nodeIdx) =>
+                          renderCompiledNode(node, `${id}-n${nodeIdx}`),
+                        )}
                       </div>
                     </section>
                     {!isLast && <hr className="mt-10 border-hairline sm:mt-12" />}

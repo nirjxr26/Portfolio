@@ -445,7 +445,6 @@ export function CommandPalette() {
       }
 
       if (item.href) {
-        notifySite("Page navigation", `Navigating to ${item.title}.`)
         closePalette()
         setTimeout(() => {
           window.location.href = item.href!
@@ -593,8 +592,8 @@ export function CommandPalette() {
                         onMouseEnter={() => setActiveIndex(globalIdx)}
                         className={`flex items-center justify-between py-1.5 sm:py-2 text-left transition-colors cursor-pointer select-none bg-transparent tracking-normal [letter-spacing:normal] ${
                           isSelected
-                            ? "text-ink font-semibold"
-                            : "text-muted hover:text-ink font-normal"
+                            ? "text-accent font-semibold"
+                            : "text-muted hover:text-accent font-normal"
                         }`}
                         role="option"
                         aria-selected={isSelected}
@@ -613,7 +612,7 @@ export function CommandPalette() {
                             <kbd
                               className={`hidden sm:inline-flex items-center justify-center h-[20px] px-2 text-[11px] font-mono font-medium rounded-[5px] select-none leading-none shrink-0 ml-3 transition-colors ${
                                 isSelected
-                                  ? "bg-canvas dark:bg-white/[0.12] text-ink"
+                                  ? "bg-accent/12 text-accent"
                                   : "bg-surface-alt/80 dark:bg-white/[0.06] text-muted/80"
                               }`}
                             >
@@ -723,7 +722,7 @@ export function CommandPalette() {
             </span>
           </div>
 
-          <span className="text-[13px] sm:text-[14px] font-medium text-muted/90">
+          <span className="text-[13px] sm:text-[14px] font-medium text-muted/90 whitespace-nowrap shrink-0">
             {displayedItems.length} {displayedItems.length === 1 ? "result" : "results"}
           </span>
         </div>

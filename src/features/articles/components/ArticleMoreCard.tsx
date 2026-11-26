@@ -1,11 +1,11 @@
-import type { BlogArticle } from "@/features/articles/data/blogArticles"
+import type { ArticleMeta } from "@/features/articles/data/articleMeta"
 import { ArticlePosterCard } from "@/features/articles/components/ArticlePosterCard"
 
 export function ArticleMoreCard({
   article,
   eyebrow,
   className = "",
-}: Readonly<{ article: BlogArticle; eyebrow?: string; className?: string }>) {
+}: Readonly<{ article: ArticleMeta; eyebrow?: string; className?: string }>) {
   return (
     <ArticlePosterCard
       article={article}
