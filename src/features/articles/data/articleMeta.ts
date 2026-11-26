@@ -178,3 +178,15 @@ export const ARTICLE_META: ArticleMeta[] = [
 export function getArticleMeta(slug: string) {
   return ARTICLE_META.find((a) => a.slug === slug)
 }
+
+export function getAdjacentArticleMeta(slug: string): {
+  previous: ArticleMeta | null
+  next: ArticleMeta | null
+} {
+  const idx = ARTICLE_META.findIndex((a) => a.slug === slug)
+  if (idx === -1) return { previous: null, next: null }
+  return {
+    previous: idx > 0 ? ARTICLE_META[idx - 1] : null,
+    next: idx + 1 < ARTICLE_META.length ? ARTICLE_META[idx + 1] : null,
+  }
+}

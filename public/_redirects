@@ -20,10 +20,10 @@ http://nirjar.me/* https://nirjar.me/:splat 301!
 /hookdrop_og.svg /assets/og/hookdrop_og.svg 301
 /kost_og.svg /assets/og/kost_og.svg 301
 /trace_og.svg /assets/og/trace_og.svg 301
-/favicon-16x16.svg /assets/favicons/favicon-16x16.svg 301
-/favicon-32x32.svg /assets/favicons/favicon-32x32.svg 301
-/favicon-192x192.svg /assets/favicons/favicon-192x192.svg 301
-/favicon-512x512.svg /assets/favicons/favicon-512x512.svg 301
+/favicon-16x16.svg /assets/brand/favicons/favicon-16x16.svg 301
+/favicon-32x32.svg /assets/brand/favicons/favicon-32x32.svg 301
+/favicon-192x192.svg /assets/brand/favicons/favicon-192x192.svg 301
+/favicon-512x512.svg /assets/brand/favicons/favicon-512x512.svg 301
 
 # SPA Routing & Real 404 Fallback
 # Static prerendered pages (/works, /works/bastion, /works/kost, /works/hookdrop) are served directly by the static host.
