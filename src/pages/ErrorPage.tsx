@@ -18,7 +18,7 @@ export function ErrorPage({
   actionHref = "/",
   onAction,
 }: Readonly<ErrorPageProps>) {
-  const meta = ROUTE_META["/500"] ?? {
+  const meta = ROUTE_META[`/${code}`] ?? ROUTE_META["/500"] ?? {
     title: `${code} - Internal Server Error | Nirjar Goswami`,
     description: desc,
   }

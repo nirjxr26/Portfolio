@@ -68,9 +68,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: "500 - Internal Server Error | Nirjar Goswami",
     description: "An unexpected error occurred.",
   },
+  "/503": {
+    title: "503 - Website Under Maintenance | Nirjar Goswami",
+    description: "Website is under maintenance.",
+  },
 }
 
-export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found" | "error"
+export type RouteKind = "home" | "works" | "services" | "articles" | "sitemap" | "legal" | "article-detail" | "case-study" | "not-found" | "error" | "maintenance"
 
 export interface ResolvedRoute {
   kind: RouteKind
@@ -96,6 +100,7 @@ export function resolveRoute(pathname: string): ResolvedRoute {
   if (clean === "/sitemap") return { kind: "sitemap" }
   if (clean === "/legal") return { kind: "legal" }
   if (clean === "/500" || clean === "/error") return { kind: "error" }
+  if (clean === "/503" || clean === "/maintenance") return { kind: "maintenance" }
 
   if (clean.startsWith("/articles/") || clean.startsWith("/article/")) {
     const slug = clean.startsWith("/articles/")

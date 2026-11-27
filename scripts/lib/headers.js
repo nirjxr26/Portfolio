@@ -1,5 +1,9 @@
 const INLINE_SCRIPT_HASH = "sha256-PN9ASHoTfz3oCqEKzg0rY4Zv6vmu/3hacZ93Zln0s+c="
 
+// The 503 page must render with no external CSS or JS, so its styles are inline
+// and allowlisted here. verify-csp keeps this hash in sync with the HTML.
+const MAINTENANCE_STYLE_HASH = "sha256-lHiMLmjfuO9j9OKjcc+DwKvV1QppXsBXyX4nTINLoCg="
+
 // Umami Cloud serves the tracker from one origin and ingests events on another,
 // so both directives need their own host — not one shared one.
 const ANALYTICS_SCRIPT_ORIGIN = "https://cloud.umami.is"
@@ -13,7 +17,7 @@ export const cspProd = [
   "manifest-src 'self'",
   "object-src 'none'",
   `script-src 'self' '${INLINE_SCRIPT_HASH}' ${ANALYTICS_SCRIPT_ORIGIN}`,
-  "style-src 'self'",
+  `style-src 'self' '${MAINTENANCE_STYLE_HASH}'`,
   "font-src 'self'",
   "img-src 'self' data:",
   "media-src 'self'",
@@ -42,6 +46,7 @@ export const cspDev = [
 ].join("; ")
 
 export const inlineScriptHash = INLINE_SCRIPT_HASH
+export const maintenanceStyleHash = MAINTENANCE_STYLE_HASH
 
 export function baseHeaders(csp) {
   return {
@@ -63,6 +68,7 @@ export function baseHeaders(csp) {
 
 export const REVALIDATE_CACHE = "public, max-age=0, must-revalidate"
 export const IMMUTABLE_CACHE = "public, max-age=31536000, immutable"
+export const NO_STORE_CACHE = "no-store"
 
 const immutable = IMMUTABLE_CACHE
 const revalidate = REVALIDATE_CACHE
@@ -79,6 +85,18 @@ export const CACHE_RULES = [
   { path: "/works/:slug", vercelPath: "/works/:slug", cacheControl: revalidate },
   { path: "/articles/:slug", vercelPath: "/articles/:slug", cacheControl: revalidate },
   { path: "/404.html", vercelPath: "/404.html", cacheControl: revalidate },
+  {
+    path: "/maintenance",
+    vercelPath: "/maintenance",
+    cacheControl: NO_STORE_CACHE,
+    headers: { "X-Robots-Tag": "noindex, nofollow" },
+  },
+  {
+    path: "/maintenance.html",
+    vercelPath: "/maintenance.html",
+    cacheControl: NO_STORE_CACHE,
+    headers: { "X-Robots-Tag": "noindex, nofollow" },
+  },
   { path: "/fonts/*", vercelPath: "/fonts/(.*)", cacheControl: immutable },
   {
     path: "/.well-known/security.txt",
