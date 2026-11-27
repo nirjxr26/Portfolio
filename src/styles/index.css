@@ -137,6 +137,18 @@
     font-size: calc(100cqw / 851);
   }
 
+  /* LayeredPreview swaps artwork with <picture>; keep each source's intrinsic
+     ratio so the swap costs no layout shift. */
+  .layered-fg {
+    aspect-ratio: var(--layered-fg-ratio);
+  }
+
+  @media (min-width: 640px) {
+    .layered-fg {
+      aspect-ratio: var(--layered-desktop-ratio);
+    }
+  }
+
   /* Mobile draws the command line at a larger design unit, so the terminal
      reads at phone size instead of shrinking to the full console's width. */
   @media (max-width: 767px) {
