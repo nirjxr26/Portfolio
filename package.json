@@ -14,6 +14,9 @@
     "sync:headers": "node scripts/build/sync-headers.js",
     "test": "vitest run",
     "verify:site": "node scripts/verify/site.js",
+    "maintenance:on": "node scripts/maintenance.js on",
+    "maintenance:off": "node scripts/maintenance.js off",
+    "maintenance:status": "node scripts/maintenance.js status",
     "preview": "vite preview"
   },
   "dependencies": {

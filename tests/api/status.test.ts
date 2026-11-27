@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
-import statusHandler, { buildStatus } from "./status"
-import projectsHandler, { PORTFOLIO_PROJECTS } from "./projects"
+import statusHandler, { buildStatus } from "../../api/status"
+import projectsHandler, { PORTFOLIO_PROJECTS } from "../../api/projects"
 
 describe("Edge status API (/api/status)", () => {
   it("returns clean status without leaking commit, version, or CORS wildcard", async () => {

@@ -2,7 +2,7 @@ import crypto from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { cspProd, inlineScriptHash } from "../lib/headers.js"
+import { cspProd, inlineScriptHash, maintenanceStyleHash } from "../lib/headers.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -38,6 +38,16 @@ export function hashInlineScript(source) {
   return `sha256-${crypto.createHash("sha256").update(source, "utf8").digest("base64")}`
 }
 
+export function inlineStyles(html) {
+  const out = []
+  const re = /<style\b[^>]*>([\s\S]*?)<\/style\b[^>]*>/gi
+  let m
+  while ((m = re.exec(html)) !== null) {
+    if (m[1] && m[1].trim()) out.push(m[1])
+  }
+  return out
+}
+
 export function verifyCsp() {
   const html = fs.readFileSync(path.resolve(projectRoot, "index.html"), "utf-8")
   const scripts = executableInlineScripts(html)
@@ -47,12 +57,23 @@ export function verifyCsp() {
     process.exit(1)
   }
 
-  const expected = scripts.map(hashInlineScript)
+  const maintenanceHtml = fs.readFileSync(
+    path.resolve(projectRoot, "public/maintenance.html"),
+    "utf-8",
+  )
+  const styles = inlineStyles(maintenanceHtml)
+
+  if (styles.length === 0) {
+    console.error("verify-csp: no inline <style> found in public/maintenance.html")
+    process.exit(1)
+  }
+
+  const expected = [...scripts.map(hashInlineScript), ...styles.map(hashInlineScript)]
 
   const missingFromSource = expected.filter((want) => !cspProd.includes(want))
   if (missingFromSource.length > 0) {
     console.error(
-      `verify-csp: scripts/lib/headers.js is missing ${missingFromSource.join(", ")} (currently ${inlineScriptHash}). index.html inline script changed without updating the CSP.`,
+      `verify-csp: scripts/lib/headers.js is missing ${missingFromSource.join(", ")} (currently ${inlineScriptHash}, ${maintenanceStyleHash}). Inline source changed without updating the CSP.`,
     )
     process.exit(1)
   }
