@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react"
+import { useState, type CSSProperties, type ReactNode } from "react"
 import type { LayeredAsset } from "@/types"
 import { withAssetHash } from "@/lib/helpers"
 import { BODY_MUTED_CLASS } from "./textStyles"
@@ -97,6 +97,20 @@ export function LayeredPreview({
     ? mobileFrameClass
     : `absolute ${mobilePaddingClass} flex items-center justify-start w-auto pointer-events-none sm:relative sm:inset-auto sm:block sm:w-full ${frameClass ?? PREVIEW_FRAME_CLASS}`
   const fgClass = `block ${mobileFgClass} select-none pointer-events-none sm:h-auto sm:w-full ${fgMaxWidthClass}`.trim()
+  const fgImageProps = {
+    alt: fgAlt,
+    width: fgWidth,
+    height: fgHeight,
+    loading: priority ? ("eager" as const) : ("lazy" as const),
+    fetchPriority: priority ? ("high" as const) : ("low" as const),
+    decoding: "async" as const,
+    draggable: false,
+    className: `layered-fg ${fgClass}`.trim(),
+    style: {
+      "--layered-fg-ratio": `${mobileFgWidth} / ${mobileFgHeight}`,
+      "--layered-desktop-ratio": `${fgWidth} / ${fgHeight}`,
+    } as CSSProperties,
+  }
 
   return (
     <>
@@ -119,29 +133,20 @@ export function LayeredPreview({
           <span aria-hidden="true" className="absolute inset-0 bg-console-backdrop select-none pointer-events-none" />
         )}
         <div className={frameWrapperClass}>
-          <img
-            src={withAssetHash(activeFgSrc)}
-            alt={fgAlt}
-            width={fgWidth}
-            height={fgHeight}
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : "low"}
-            decoding="async"
-            draggable={false}
-            className={`${fgClass} ${mobileFgSrc ? "hidden sm:block" : ""}`.trim()}
-          />
-          {mobileFgSrc && (
-            <img
-              src={withAssetHash(mobileFgSrc)}
-              alt={fgAlt}
-              width={mobileFgWidth}
-              height={mobileFgHeight}
-              loading={priority ? "eager" : "lazy"}
-              fetchPriority={priority ? "high" : "low"}
-              decoding="async"
-              draggable={false}
-              className={`${fgClass} sm:hidden`.trim()}
-            />
+          {mobileFgSrc ? (
+            // One request per device: both media branches are explicit so the
+            // browser never falls back to a second artwork. The tiny data URI
+            // is only a placeholder; CSS keeps each source's own ratio.
+            <picture className="contents">
+              <source media="(max-width: 639px)" srcSet={withAssetHash(mobileFgSrc)} />
+              <source media="(min-width: 640px)" srcSet={withAssetHash(activeFgSrc)} />
+              <img
+                {...fgImageProps}
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              />
+            </picture>
+          ) : (
+            <img {...fgImageProps} src={withAssetHash(activeFgSrc)} />
           )}
         </div>
 

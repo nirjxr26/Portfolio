@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { THEME_DARK_CLASS, THEME_STORAGE_KEY } from "@/lib/helpers"
+import { THEME_DARK_CLASS, toggleTheme } from "@/lib/helpers"
 
 export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ className?: string; iconSize?: number }>) {
   const [dark, setDark] = useState(() =>
@@ -30,14 +30,7 @@ export function ThemeToggle({ className = "", iconSize = 17 }: Readonly<{ classN
   const defaultClasses = "flex h-8 w-8 items-center justify-center rounded-full text-muted transition-all hover:text-ink focus-visible:outline-2 focus-visible:outline-accent active:scale-95 hit-area cursor-pointer"
 
   const handleToggle = () => {
-    const root = document.documentElement
-    const nextDark = !root.classList.contains(THEME_DARK_CLASS)
-    root.classList.toggle(THEME_DARK_CLASS, nextDark)
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, nextDark ? THEME_DARK_CLASS : "light")
-    } catch {}
-    setDark(nextDark)
-    window.dispatchEvent(new Event("theme-change"))
+    setDark(toggleTheme())
   }
 
   return (

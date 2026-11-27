@@ -41,7 +41,7 @@ export default defineConfig(({ command }) => ({
     },
   },
   server: {
-    host: true,
+    // Bind to localhost by default; opt into LAN exposure with `vite --host`.
     headers: command === "serve" ? devHeaders : prodHeaders,
   },
   preview: {

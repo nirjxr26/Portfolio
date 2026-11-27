@@ -1,6 +1,6 @@
 import { useRef, type ReactNode } from "react"
 import { CopySwapIcon } from "@/components/ui/Icons"
-import { withAssetHash } from "@/lib/helpers"
+import { safeHref, withAssetHash } from "@/lib/helpers"
 import { useCopy } from "@/hooks/useCopy"
 
 export interface MarkdownListItem<TNode> {
@@ -68,15 +68,21 @@ export function renderInline(text: string, key: string): ReactNode[] {
       if (link) {
         flushPlain(cursor)
         const partKey = `${key}-${tokenIdx++}`
-        nodes.push(
-          <a
-            key={partKey}
-            href={link.url}
-            className="text-ink underline decoration-ink/50 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-          >
-            {renderInline(link.label, `${partKey}-label`)}
-          </a>,
-        )
+        const href = safeHref(link.url)
+        if (href) {
+          nodes.push(
+            <a
+              key={partKey}
+              href={href}
+              {...(href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="text-ink underline decoration-ink/50 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+            >
+              {renderInline(link.label, `${partKey}-label`)}
+            </a>,
+          )
+        } else {
+          nodes.push(<span key={partKey}>{link.label}</span>)
+        }
         cursor = link.next
         plainStart = cursor
         continue

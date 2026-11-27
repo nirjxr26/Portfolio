@@ -5,6 +5,7 @@ import { ThemeToggle } from "./ThemeToggle"
 import { HOME_PAGE_MARKDOWN } from "@/features/home/data/homeMarkdown"
 import { useAgentMode } from "@/hooks/useAgentMode"
 import { useCopy } from "@/hooks/useCopy"
+import { safeHref } from "@/lib/helpers"
 
 const REGULAR_MONO = {
   fontFamily: '"Berkeley Mono Variable"',
@@ -117,13 +118,21 @@ function renderInlineMarkdown(text: string): ReactNode {
     const linkMatch = /^\[(.*?)\]\((.*?)\)$/.exec(part)
     if (linkMatch) {
       const [, label, url] = linkMatch
-      const isExternal = url.startsWith("http")
+      const href = safeHref(url)
+      if (!href) {
+        return (
+          <span key={idx} style={REGULAR_MONO}>
+            [{label}]({url})
+          </span>
+        )
+      }
+      const isExternal = href.startsWith("http")
       return (
         <a
           key={idx}
-          href={url}
+          href={href}
           target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noreferrer" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
           className="text-accent hover:opacity-80 transition-opacity break-all"
         >
           [{label}]({url})

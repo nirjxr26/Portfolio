@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { createPortal } from "react-dom"
 import { withAssetHash } from "@/lib/helpers"
 import { CheckIcon } from "@/components/ui/Icons"
+import { copyWithFallback } from "@/hooks/useCopy"
 
 export interface AppleShareSheetProps {
   isOpen: boolean
@@ -41,6 +42,7 @@ export function AppleShareSheet({
 
   const copyTimeoutRef = useRef<number | null>(null)
   const mdTimeoutRef = useRef<number | null>(null)
+  const closeTimeoutRef = useRef<number | null>(null)
   const sheetRef = useRef<HTMLDivElement>(null)
 
   // Smooth close with exit slide
@@ -51,11 +53,13 @@ export function AppleShareSheet({
     if (mdTimeoutRef.current) clearTimeout(mdTimeoutRef.current)
     setCopiedLink(false)
     setCopiedMd(false)
-    setTimeout(() => {
+    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+    closeTimeoutRef.current = window.setTimeout(() => {
       setIsClosing(false)
       setDragOffset(0)
       setCopiedLink(false)
       setCopiedMd(false)
+      closeTimeoutRef.current = null
       onClose()
     }, 420)
   }, [onClose])
@@ -90,29 +94,6 @@ export function AppleShareSheet({
       document.body.style.overflow = "hidden"
     }
 
-    // Tint top status bar (notch) and bottom Safari address bar with primary color according to active theme
-    const root = document.documentElement
-    const body = document.body
-    const isDark = root.classList.contains("dark")
-    const primaryTint = isDark ? "#000000" : "#ffffff"
-
-    const originalRootBg = root.style.backgroundColor
-    const originalBodyBg = body.style.backgroundColor
-    root.style.backgroundColor = primaryTint
-    body.style.backgroundColor = primaryTint
-
-    const metas = document.querySelectorAll('meta[name="theme-color"]')
-    const previousMetaState: Array<{ el: Element; content: string | null; media: string | null }> = []
-    metas.forEach((meta) => {
-      previousMetaState.push({
-        el: meta,
-        content: meta.getAttribute("content"),
-        media: meta.getAttribute("media"),
-      })
-      meta.removeAttribute("media")
-      meta.setAttribute("content", primaryTint)
-    })
-
     window.addEventListener("keydown", handleKeyDown)
 
     return () => {
@@ -120,31 +101,10 @@ export function AppleShareSheet({
       if (!isIOS) {
         document.body.style.overflow = originalOverflow
       }
-      if (originalRootBg) {
-        root.style.backgroundColor = originalRootBg
-      } else {
-        root.style.removeProperty("background-color")
-      }
-      if (originalBodyBg) {
-        body.style.backgroundColor = originalBodyBg
-      } else {
-        body.style.removeProperty("background-color")
-      }
-      previousMetaState.forEach(({ el, content, media }) => {
-        if (content !== null) {
-          el.setAttribute("content", content)
-        } else {
-          el.removeAttribute("content")
-        }
-        if (media !== null) {
-          el.setAttribute("media", media)
-        } else {
-          el.removeAttribute("media")
-        }
-      })
       window.removeEventListener("keydown", handleKeyDown)
-      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
-      if (mdTimeoutRef.current) clearTimeout(mdTimeoutRef.current)
+      if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current)
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current)
+      if (mdTimeoutRef.current) window.clearTimeout(mdTimeoutRef.current)
     }
   }, [isOpen, handleClose])
 
@@ -154,46 +114,18 @@ export function AppleShareSheet({
   const displayWebsite = "https://www.nirjar.me"
 
   // Actions
-  const copyTextToClipboard = async (text: string) => {
-    try {
-      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text)
-        return true
-      }
-    } catch {
-      // fallback
-    }
-
-    try {
-      if (typeof document !== "undefined") {
-        const ta = document.createElement("textarea")
-        ta.value = text
-        ta.style.position = "fixed"
-        ta.style.opacity = "0"
-        document.body.appendChild(ta)
-        ta.select()
-        const ok = document.execCommand("copy")
-        document.body.removeChild(ta)
-        return ok
-      }
-    } catch {
-      return false
-    }
-    return false
-  }
-
   const handleCopyLink = async () => {
-    await copyTextToClipboard(url)
+    if (!(await copyWithFallback(url))) return
     setCopiedLink(true)
-    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current)
+    if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current)
     copyTimeoutRef.current = window.setTimeout(() => setCopiedLink(false), 2000)
   }
 
   const handleCopyMd = async () => {
     const mdSnippet = `[${title}](${url})`
-    await copyTextToClipboard(mdSnippet)
+    if (!(await copyWithFallback(mdSnippet))) return
     setCopiedMd(true)
-    if (mdTimeoutRef.current) clearTimeout(mdTimeoutRef.current)
+    if (mdTimeoutRef.current) window.clearTimeout(mdTimeoutRef.current)
     mdTimeoutRef.current = window.setTimeout(() => setCopiedMd(false), 2000)
   }
 

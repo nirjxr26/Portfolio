@@ -59,12 +59,22 @@ export function verifyCsp() {
   const stale = []
   for (const rel of GENERATED_MANIFESTS) {
     const content = fs.readFileSync(path.resolve(projectRoot, rel), "utf-8")
-    if (!content.includes(inlineScriptHash)) stale.push(rel)
+    let published = null
+    if (rel.endsWith(".json")) {
+      const manifest = JSON.parse(content)
+      const header = (manifest.headers ?? [])
+        .flatMap((entry) => entry.headers ?? [])
+        .find((item) => item.key?.toLowerCase() === "content-security-policy")
+      published = header?.value ?? null
+    } else {
+      published = content.match(/^\s*Content-Security-Policy:\s*(.+)$/im)?.[1]?.trim() ?? null
+    }
+    if (published !== cspProd) stale.push(rel)
   }
 
   if (stale.length > 0) {
     console.error(
-      `verify-csp: ${stale.join(", ")} do not carry ${inlineScriptHash}. Run \`npm run sync:headers\`.`,
+      `verify-csp: ${stale.join(", ")} do not carry the exact production CSP. Run \`npm run sync:headers\`.`,
     )
     process.exit(1)
   }

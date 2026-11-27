@@ -5,6 +5,17 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.nirjar.me"
+        }
+      ],
+      "destination": "https://nirjar.me/:path*",
+      "permanent": true
+    },
+    {
       "source": "/security.txt",
       "destination": "/.well-known/security.txt",
       "permanent": true

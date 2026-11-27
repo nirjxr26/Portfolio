@@ -5,8 +5,23 @@ import {
   createBreadcrumbs,
   externalProps,
   isStaticAsset,
+  safeHref,
   withAssetHash,
 } from "@/lib/helpers"
+
+describe("safeHref", () => {
+  it("allows internal, anchor, mail, and https links", () => {
+    for (const href of ["/works/trace", "#top", "mailto:a@b.com", "https://example.com", "./a.md"]) {
+      expect(safeHref(href)).toBe(href)
+    }
+  })
+
+  it("rejects script, data, protocol-relative, and control-character URLs", () => {
+    for (const href of ["javascript:alert(1)", "data:text/html,x", "//evil.com", "/a\u0000b", " vbscript:x"]) {
+      expect(safeHref(href)).toBe("")
+    }
+  })
+})
 
 describe("isStaticAsset", () => {
   it("matches downloadable file extensions anywhere in the path", () => {
