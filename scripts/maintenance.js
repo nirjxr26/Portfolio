@@ -4,10 +4,10 @@ import { fileURLToPath } from "node:url"
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const configPath = path.resolve(projectRoot, "vercel.json")
-const DESTINATION = "/maintenance"
+const DESTINATION = "/503"
 const REWRITE = {
   // The 503 page is standalone, so every other path can be pointed at it.
-  source: "/((?!maintenance$|maintenance\\.html$).*)",
+  source: "/((?!503$|503\\.html$).*)",
   destination: DESTINATION,
 }
 
@@ -33,7 +33,7 @@ config.rewrites = next
 fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf-8")
 
 if (mode === "on") {
-  console.log("maintenance mode: on (all routes rewrite to /maintenance)")
+  console.log("maintenance mode: on (all routes rewrite to /503)")
   console.log("Next: npm run build && git add vercel.json && git commit -m \"ops: enable maintenance page\" && git push")
 } else {
   console.log("maintenance mode: off")

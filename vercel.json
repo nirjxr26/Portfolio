@@ -204,7 +204,7 @@
       ]
     },
     {
-      "source": "/maintenance",
+      "source": "/503",
       "headers": [
         {
           "key": "Cache-Control",
@@ -217,7 +217,7 @@
       ]
     },
     {
-      "source": "/maintenance.html",
+      "source": "/503.html",
       "headers": [
         {
           "key": "Cache-Control",

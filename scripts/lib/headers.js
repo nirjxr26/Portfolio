@@ -86,14 +86,14 @@ export const CACHE_RULES = [
   { path: "/articles/:slug", vercelPath: "/articles/:slug", cacheControl: revalidate },
   { path: "/404.html", vercelPath: "/404.html", cacheControl: revalidate },
   {
-    path: "/maintenance",
-    vercelPath: "/maintenance",
+    path: "/503",
+    vercelPath: "/503",
     cacheControl: NO_STORE_CACHE,
     headers: { "X-Robots-Tag": "noindex, nofollow" },
   },
   {
-    path: "/maintenance.html",
-    vercelPath: "/maintenance.html",
+    path: "/503.html",
+    vercelPath: "/503.html",
     cacheControl: NO_STORE_CACHE,
     headers: { "X-Robots-Tag": "noindex, nofollow" },
   },
