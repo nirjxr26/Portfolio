@@ -12,7 +12,7 @@ const STATIC_FILE_PATTERN = /\.(pdf|png|jpg|jpeg|svg|webp|xml|txt|json|zip)$/i
  * This guarantees permanent cache-busting when SVGs or assets change without manual edits.
  */
 export function withAssetHash(src: string): string {
-  if (!src) return src
+  if (!safeHref(src)) return ""
   const [cleanPath, query] = src.split("?")
   const hash = assetHashes[cleanPath]
   if (!hash) return src
@@ -25,8 +25,44 @@ export function withAssetHash(src: string): string {
   return `${cleanPath}?v=${hash}`
 }
 
+/** Allowlist links before they reach an `href`; rejects script/data/protocol-relative URLs. */
+export function safeHref(href: string): string {
+  const value = href.trim()
+  if (!value || /[\u0000-\u001f\u007f]/.test(value)) return ""
+  if (value.startsWith("//")) return ""
+  if (/^(https?:|mailto:|tel:)/i.test(value)) return value
+  if (/^\.\.?\//.test(value)) return value
+  if (value.startsWith("/") || value.startsWith("#")) return value
+  return ""
+}
+
 export function isStaticAsset(href: string) {
   return STATIC_FILE_PATTERN.test(href) || href.startsWith("/assets/")
+}
+
+/** Single owner of theme state for the toggle button, palette, and shortcuts. */
+export function toggleTheme(): boolean {
+  const root = document.documentElement
+  const dark = !root.classList.contains(THEME_DARK_CLASS)
+  root.classList.toggle(THEME_DARK_CLASS, dark)
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, dark ? THEME_DARK_CLASS : "light")
+  } catch {}
+  window.dispatchEvent(new Event("theme-change"))
+  return dark
+}
+
+export function isMacUserAgent() {
+  return typeof navigator !== "undefined" && /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent)
+}
+
+export function isTouchOnlyDevice() {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(pointer: coarse)").matches &&
+    !window.matchMedia("(pointer: fine)").matches
+  )
 }
 
 export function externalProps(url: string) {

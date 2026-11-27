@@ -13,7 +13,6 @@ export interface StatusChecks {
 export interface StatusResponse {
   status: HealthState
   service: string
-  commit: string
   region: string
   environment: "production" | "preview" | "development"
   timestamp: string
@@ -24,15 +23,9 @@ export function buildStatus(
   region = "edge",
   env: "production" | "preview" | "development" = "production",
 ): StatusResponse {
-  const commitSha =
-    process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
-    process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
-    "unknown"
-
   return {
     status: "ok",
     service: "nirjar.me",
-    commit: commitSha,
     region,
     environment: env,
     timestamp: new Date().toISOString(),
@@ -51,7 +44,6 @@ export default function handler(req?: Request): Response {
   if (req?.headers) {
     const vercelId = req.headers.get("x-vercel-id")
     const country = req.headers.get("x-vercel-ip-country")
-    const city = req.headers.get("x-vercel-ip-city")
     const vercelEnv = process.env.VERCEL_ENV
 
     if (vercelEnv === "production" || vercelEnv === "preview") {
@@ -60,9 +52,7 @@ export default function handler(req?: Request): Response {
       env = "production"
     }
 
-    if (city && country) {
-      region = `${city.toLowerCase()}-${country.toLowerCase()}`
-    } else if (country) {
+    if (country) {
       region = country.toLowerCase()
     } else if (vercelId) {
       // e.g. "iad1::..." -> "iad1"
@@ -79,8 +69,6 @@ export default function handler(req?: Request): Response {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
       "X-Content-Type-Options": "nosniff",
     },
   })

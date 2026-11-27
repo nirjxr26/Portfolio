@@ -126,8 +126,6 @@ export default function handler(): Response {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
         "X-Content-Type-Options": "nosniff",
       },
     },

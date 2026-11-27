@@ -27,8 +27,10 @@ export class ErrorBoundary extends Component<Readonly<Props>, State> {
     return { hasError: true }
   }
 
-  public componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
-    // Silent in production — no console output
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (import.meta.env.DEV) {
+      console.error("ErrorBoundary caught", error, errorInfo.componentStack)
+    }
   }
 
   public componentDidMount() {

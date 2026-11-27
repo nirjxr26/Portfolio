@@ -3,7 +3,7 @@ import statusHandler, { buildStatus } from "./status"
 import projectsHandler, { PORTFOLIO_PROJECTS } from "./projects"
 
 describe("Edge status API (/api/status)", () => {
-  it("returns clean status with true checks and commit without version", async () => {
+  it("returns clean status without leaking commit, version, or CORS wildcard", async () => {
     const fakeReq = new Request("https://nirjar.me/api/status", {
       headers: {
         "x-vercel-id": "iad1::12345",
@@ -16,7 +16,7 @@ describe("Edge status API (/api/status)", () => {
     expect(res.headers.get("Cache-Control")).toBe(
       "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
     )
-    expect(res.headers.get("Access-Control-Allow-Origin")).toBe("*")
+    expect(res.headers.get("Access-Control-Allow-Origin")).toBeNull()
 
     const body = await res.json()
     expect(body.status).toBe("ok")
@@ -26,7 +26,7 @@ describe("Edge status API (/api/status)", () => {
     expect(body.checks.edge_routing).toBe("ok")
     expect(body.checks.security_headers).toBe("enforced")
     expect(body.checks.static_assets).toBe("ok")
-    expect(body.commit).toBeTruthy()
+    expect(body.commit).toBeUndefined()
     expect(body.timestamp).toMatch(/^\d{4}-\d{2}-\d{2}T/)
     expect(body.version).toBeUndefined()
   })

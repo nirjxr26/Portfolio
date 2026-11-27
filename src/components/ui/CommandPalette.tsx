@@ -3,6 +3,10 @@ import { ARTICLE_META } from "@/features/articles/data/articleMeta"
 import { CASE_STUDY_META } from "@/features/case-studies/data/caseStudyMeta"
 import { copyWithFallback, useCopy } from "@/hooks/useCopy"
 import { CheckIcon, SearchIcon } from "@/components/ui/Icons"
+import { isInternalRoute } from "@/app/router/routes"
+import { SITE_URL } from "@/app/seo/site"
+import { navigate } from "@/app/router/useInternalRouter"
+import { isMacUserAgent, toggleTheme } from "@/lib/helpers"
 import { notifySite } from "./NotificationToast"
 
 export interface PaletteItem {
@@ -74,19 +78,11 @@ export function CommandPalette() {
   const listRef = useRef<HTMLDivElement>(null)
   const searchInputId = useId()
   const { copied, copy } = useCopy(1800)
-  const [isMac, setIsMac] = useState(false)
+  const isMac = isMacUserAgent()
+  const navigationTimeout = useRef<number | null>(null)
 
-  useEffect(() => {
-    setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent))
-  }, [])
-
-  const toggleTheme = useCallback(() => {
-    const root = document.documentElement
-    const isDark = root.classList.toggle("dark")
-    try {
-      localStorage.setItem("theme", isDark ? "dark" : "light")
-    } catch {}
-    window.dispatchEvent(new Event("theme-change"))
+  const runThemeToggle = useCallback(() => {
+    const isDark = toggleTheme()
     notifySite("Theme updated", isDark ? "Switched to dark mode." : "Switched to light mode.")
   }, [])
 
@@ -107,7 +103,7 @@ export function CommandPalette() {
   }, [])
 
   const copyUrl = useCallback(async () => {
-    const url = typeof window !== "undefined" ? window.location.href : "https://nirjargoswami.me"
+    const url = typeof window !== "undefined" ? window.location.href : SITE_URL
     if (await copy(url)) {
       notifySite("Link copied", "Page URL copied to clipboard.")
     }
@@ -171,7 +167,7 @@ export function CommandPalette() {
         category: "Actions",
         keywords: "theme dark light mode color switch",
         shortcut: isMac ? "⌥ + T" : "Alt + T",
-        onSelect: toggleTheme,
+        onSelect: runThemeToggle,
       },
       {
         id: "action-resume",
@@ -200,7 +196,7 @@ export function CommandPalette() {
         onSelect: openContact,
       },
     ],
-    [copyUrl, downloadResume, isMac, openContact, toggleTheme],
+    [copyUrl, downloadResume, isMac, openContact, runThemeToggle],
   )
 
   // Build the complete searchable catalog
@@ -333,7 +329,7 @@ export function CommandPalette() {
       // Alt+T (or Option+T): Toggle theme
       if (e.altKey && isT) {
         e.preventDefault()
-        toggleTheme()
+        runThemeToggle()
         return
       }
 
@@ -365,7 +361,7 @@ export function CommandPalette() {
         // T -> Toggle theme
         if (isT) {
           e.preventDefault()
-          toggleTheme()
+          runThemeToggle()
           return
         }
 
@@ -404,7 +400,11 @@ export function CommandPalette() {
       window.removeEventListener("keydown", handleKeyDown)
       window.removeEventListener("open-command-palette", handleCustomOpen)
     }
-  }, [closePalette, copyUrl, downloadResume, isOpen, openContact, openPalette, toggleTheme])
+  }, [closePalette, copyUrl, downloadResume, isOpen, openContact, openPalette, runThemeToggle])
+
+  useEffect(() => () => {
+    if (navigationTimeout.current) window.clearTimeout(navigationTimeout.current)
+  }, [])
 
   // Lock scroll & auto-focus input when opened
   useEffect(() => {
@@ -432,9 +432,16 @@ export function CommandPalette() {
       }
 
       if (item.href) {
+        const href = item.href
         closePalette()
-        setTimeout(() => {
-          window.location.href = item.href!
+        if (navigationTimeout.current) window.clearTimeout(navigationTimeout.current)
+        navigationTimeout.current = window.setTimeout(() => {
+          if (isInternalRoute(href)) {
+            navigate(href)
+          } else if (/^(https?:|mailto:|tel:)/i.test(href)) {
+            window.location.href = href
+          }
+          navigationTimeout.current = null
         }, 120)
       }
     },
@@ -481,6 +488,12 @@ export function CommandPalette() {
       role="dialog"
       aria-modal="true"
       aria-label="Command Palette"
+      onKeyDown={(e) => {
+        if (e.key === "Tab") {
+          e.preventDefault()
+          inputRef.current?.focus()
+        }
+      }}
       className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh] sm:pt-[15vh] px-4 overscroll-none"
     >
       {/* Backdrop with smooth fade in/out */}
@@ -566,7 +579,11 @@ export function CommandPalette() {
                 </div>
 
                 {/* Items container with vertical indicator rail */}
-                <div className="ml-6 sm:ml-8 pl-3.5 sm:pl-4 pr-6 sm:pr-8 border-l border-hairline space-y-0.5 my-1">
+                <div
+                  role="listbox"
+                  aria-label={`${group.category} results`}
+                  className="ml-6 sm:ml-8 pl-3.5 sm:pl-4 pr-6 sm:pr-8 border-l border-hairline space-y-0.5 my-1"
+                >
                   {group.items.map((item) => {
                     const globalIdx = displayedItems.findIndex((it) => it.id === item.id)
                     const isSelected = globalIdx === activeIndex

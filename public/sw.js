@@ -1,5 +1,5 @@
 // Service Worker for nirjar.me - Offline Reading & Performance
-const CACHE_NAME = "nirjar-portfolio-v2"
+const CACHE_NAME = "nirjar-portfolio-v3"
 
 const PRECACHE_ASSETS = [
   "/",
@@ -40,8 +40,8 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url)
 
-  // Skip external analytics, APIs, and non-same-origin calls
-  if (url.origin !== self.location.origin) return
+  // Skip external analytics, edge APIs, and non-same-origin calls
+  if (url.origin !== self.location.origin || url.pathname.startsWith("/api/")) return
 
   // Cache-First for static hashed assets, fonts, and images
   if (
@@ -53,7 +53,8 @@ self.addEventListener("fetch", (event) => {
       caches.match(request).then((cached) => {
         if (cached) return cached
         return fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
+          const noStore = (networkResponse?.headers.get("cache-control") || "").includes("no-store")
+          if (networkResponse?.status === 200 && networkResponse.type === "basic" && !noStore) {
             const clone = networkResponse.clone()
             caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
           }
@@ -69,7 +70,14 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
+          const contentType = networkResponse?.headers.get("content-type") || ""
+          const noStore = (networkResponse?.headers.get("cache-control") || "").includes("no-store")
+          if (
+            networkResponse?.status === 200 &&
+            networkResponse.type === "basic" &&
+            contentType.includes("text/html") &&
+            !noStore
+          ) {
             const clone = networkResponse.clone()
             caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
           }
@@ -86,7 +94,8 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(request)
       .then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
+        const noStore = (networkResponse?.headers.get("cache-control") || "").includes("no-store")
+        if (networkResponse?.status === 200 && networkResponse.type === "basic" && !noStore) {
           const clone = networkResponse.clone()
           caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
         }

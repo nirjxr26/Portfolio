@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { useEffect, useRef, useState } from "react"
-import { CASES, ConsolePreviewBox, Text } from "./TraceConsole"
+import { CASES, ConsolePreviewBox, TRACE_VERSION, Text } from "./TraceConsole"
 import { useIsTabActive } from "./SegmentedTabs"
 import { typedCount } from "@/lib/typewriter"
 import { useOnceTimeline } from "@/hooks/useOnceTimeline"
@@ -604,7 +604,7 @@ function Splash({ elapsed }: Readonly<{ elapsed: number }>) {
       <Slot />
       <Slot>
         <Text sizeClass={LINE} className={MUTED}>
-          {"Forensic Data Imaging & Retrieval Tool · v0.5.0"}
+          {`Forensic Data Imaging & Retrieval Tool · v${TRACE_VERSION}`}
         </Text>
       </Slot>
       <Slot />
@@ -735,8 +735,11 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
     if (!node) return
 
     const onWheel = (event: WheelEvent) => {
-      event.preventDefault()
+      const before = node.scrollTop
       node.scrollTop += event.deltaY
+      // Only consume the wheel while the terminal can actually move; at a
+      // boundary the page keeps its own scroll.
+      if (node.scrollTop !== before) event.preventDefault()
       if (event.deltaY < 0) follow.current = false
     }
 
@@ -746,6 +749,13 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
 
   const onTouchMove = () => {
     follow.current = false
+  }
+
+  /** Scrollbar drags and touch flings do not fire the wheel handler. */
+  const onScroll = () => {
+    const node = viewport.current
+    if (!node) return
+    follow.current = node.scrollTop + node.clientHeight >= node.scrollHeight - 2
   }
 
   /**
@@ -797,6 +807,7 @@ function Terminal({ elapsed }: Readonly<{ elapsed: number }>) {
       aria-label="Terminal output"
       tabIndex={0}
       onTouchMove={onTouchMove}
+      onScroll={onScroll}
       onKeyDown={onKeyDown}
     >
       <Splash elapsed={elapsed} />

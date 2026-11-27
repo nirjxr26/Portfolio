@@ -15,15 +15,24 @@ import { getArticleMeta } from "@/features/articles/data/articleMeta"
 
 function lazyWithRetry<T extends ComponentType<any>>(
   factory: () => Promise<{ default: T }>,
+  key: string,
 ) {
   return lazy(async () => {
+    const store = typeof window !== "undefined" ? sessionStorage : null
+    const retryKey = `chunk-retry:${key}`
     try {
-      return await factory()
+      const module = await factory()
+      store?.removeItem(retryKey)
+      return module
     } catch {
-      if (typeof window !== "undefined") {
+      // One reload can fix a stale chunk reference; a second means the chunk is
+      // genuinely missing, so render the error page instead of looping forever.
+      const attempts = Number(store?.getItem(retryKey) || 0) + 1
+      store?.setItem(retryKey, String(attempts))
+      if (attempts === 1 && typeof window !== "undefined") {
         window.location.reload()
       }
-      return { default: (() => null) as unknown as T }
+      return { default: ErrorPage as unknown as T }
     }
   })
 }
@@ -54,7 +63,7 @@ function getArticleRoute(slug: string) {
           )
         },
       }
-    })
+    }, `article:${slug}`)
     articleRouteCache.set(slug, cached)
   }
   return cached

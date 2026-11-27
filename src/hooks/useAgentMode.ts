@@ -1,36 +1,23 @@
-import { navigate, useInternalRouter } from "@/app/router/useInternalRouter"
+import { navigate, useInternalUrl } from "@/app/router/useInternalRouter"
 
 function isAgentPath(path: string): boolean {
   const clean = path.toLowerCase().replace(/\/$/, "")
   return clean === "/index.md" || clean === "/agent.md"
 }
 
-function hasAgentQuery(): boolean {
-  if (typeof window === "undefined") return false
-  const params = new URLSearchParams(window.location.search)
-  return params.get("agent") === "1" || params.get("mode") === "agent"
-}
-
 export function useAgentMode() {
-  const pathname = useInternalRouter()
-  const isAgentMode = isAgentPath(pathname) || hasAgentQuery()
+  const url = useInternalUrl()
+  const [path, query = ""] = url.split("?")
+  const params = new URLSearchParams(query)
+  const isAgentMode = isAgentPath(path) || params.get("agent") === "1" || params.get("mode") === "agent"
 
   const toggleAgentMode = () => {
-    if (isAgentMode) {
-      navigate("/")
-    } else {
-      navigate("/index.md")
-    }
+    navigate(isAgentMode ? "/" : "/index.md")
   }
 
   const setAgentMode = (active: boolean) => {
-    if (active) {
-      navigate("/index.md")
-    } else {
-      navigate("/")
-    }
+    navigate(active ? "/index.md" : "/")
   }
 
   return { isAgentMode, toggleAgentMode, setAgentMode }
 }
-

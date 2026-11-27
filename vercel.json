@@ -3,7 +3,19 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
+  "nodeVersion": "24.x",
   "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.nirjar.me"
+        }
+      ],
+      "destination": "https://nirjar.me/:path*",
+      "permanent": true
+    },
     {
       "source": "/security.txt",
       "destination": "/.well-known/security.txt",

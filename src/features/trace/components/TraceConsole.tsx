@@ -281,6 +281,10 @@ export const CASES = [
   { id: "2026-CR-0091", title: "Archive Verification", examiner: "Kavya Iyer", status: "ARCHIVED", statusClass: DIM },
 ]
 
+/** Shared by the console panel and the CLI banner: one version, one case title. */
+export const TRACE_VERSION = "0.5.0"
+export const PRIMARY_CASE_TITLE = CASES[0].title
+
 /** A drive on the bench, and what it holds. */
 const DEVICES = [
   { name: "Samsung 980 PRO", size: "931.5 GB", selected: true },
@@ -354,7 +358,7 @@ function CasesView() {
               <Text className={BLUE}>2026-CR-0142</Text>
             </div>
             <div className="flex h-[22em] items-center">
-              <Text className={WHITE}>Exfiltration Staging Host</Text>
+              <Text className={WHITE}>{PRIMARY_CASE_TITLE}</Text>
             </div>
             <div className="flex h-[22em] items-center">
               <Text className={GREEN}>● OPEN</Text>
@@ -448,7 +452,7 @@ function SettingsView() {
           </div>
 
           <Block height="h-[130em]">
-            <MetaRow label="Trace" value="0.3.4" />
+            <MetaRow label="Trace" value={TRACE_VERSION} />
             <MetaRow label="Channel" value="stable" />
             <MetaRow label="Build" value="029dbd43" />
           </Block>

@@ -10,10 +10,9 @@ import { useEffect, useRef, useState } from "react"
  *     motion lands on whatever the display actually refreshes at.
  *   - Elapsed is rebased to 0 on every loop *and* on every re-entry, so a
  *     visitor scrolling back in sees the beginning rather than a half-played
- *     pass. The `rAF` chain itself never stops, so a stray observer
- *     notification can never kill it.
- *   - While off-screen the clock holds and no re-render is scheduled, so a
- *     scrolled-past animation costs nothing.
+ *     pass.
+ *   - While off-screen the clock holds and the rAF chain stops entirely, so a
+ *     scrolled-past animation costs no frames. The observer restarts it.
  *
  * The consumer decides what a given elapsed value looks like; this only
  * supplies time.
@@ -32,8 +31,11 @@ export function useLoopingTimeline<T extends HTMLElement>(cycleMs: number) {
     let lastCommit = 0
 
     const tick = (now: number) => {
+      if (!visible) {
+        raf = 0
+        return
+      }
       raf = requestAnimationFrame(tick)
-      if (!visible) return
 
       if (now - cycleStart >= cycleMs) {
         cycleStart = now
@@ -54,10 +56,15 @@ export function useLoopingTimeline<T extends HTMLElement>(cycleMs: number) {
         const isVisible = Boolean(entry?.isIntersecting)
         if (isVisible === visible) return
         visible = isVisible
-        if (!visible) return
+        if (!visible) {
+          if (raf) cancelAnimationFrame(raf)
+          raf = 0
+          return
+        }
 
         cycleStart = performance.now()
         setElapsed(0)
+        if (!raf) raf = requestAnimationFrame(tick)
       },
       { threshold: 0 },
     )
