@@ -57,14 +57,11 @@ export function verifyCsp() {
     process.exit(1)
   }
 
-  const maintenanceHtml = fs.readFileSync(
-    path.resolve(projectRoot, "public/maintenance.html"),
-    "utf-8",
-  )
-  const styles = inlineStyles(maintenanceHtml)
+  const statusHtml = fs.readFileSync(path.resolve(projectRoot, "public/503.html"), "utf-8")
+  const styles = inlineStyles(statusHtml)
 
   if (styles.length === 0) {
-    console.error("verify-csp: no inline <style> found in public/maintenance.html")
+    console.error("verify-csp: no inline <style> found in public/503.html")
     process.exit(1)
   }
 

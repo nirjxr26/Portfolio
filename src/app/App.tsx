@@ -98,15 +98,6 @@ export function App() {
     content = <LegalPage />
   } else if (route.kind === "error") {
     content = <ErrorPage />
-  } else if (route.kind === "maintenance") {
-    content = (
-      <ErrorPage
-        code={503}
-        desc="Website is under maintenance."
-        actionLabel="Try again"
-        actionHref=""
-      />
-    )
   } else if (route.kind === "article-detail" && route.articleSlug) {
     content = <ArticleDetailRoute slug={route.articleSlug} />
   } else if (route.kind === "case-study" && route.caseSlug) {

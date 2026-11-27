@@ -21,8 +21,6 @@ describe("resolveRoute", () => {
     expect(resolveRoute("/article")).toEqual({ kind: "articles" })
     expect(resolveRoute("/sitemap")).toEqual({ kind: "sitemap" })
     expect(resolveRoute("/legal")).toEqual({ kind: "legal" })
-    expect(resolveRoute("/503")).toEqual({ kind: "maintenance" })
-    expect(resolveRoute("/maintenance")).toEqual({ kind: "maintenance" })
   })
 
   it("ignores trailing slashes and hashes", () => {

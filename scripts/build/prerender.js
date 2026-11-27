@@ -227,15 +227,6 @@ const notFoundHtml = template
   )
 fs.writeFileSync(path.resolve(distDir, "404.html"), notFoundHtml, "utf-8")
 
-const maintenanceHtml = template
-  .replace(/<title>.*?<\/title>/, `<title>${escXml(ROUTE_META["/503"].title)}</title>`)
-  .replace(
-    /<meta\s+name="robots"\s+content=".*?"\s*\/?>/,
-    '<meta name="robots" content="noindex, nofollow" />',
-  )
-fs.mkdirSync(path.resolve(distDir, "503"), { recursive: true })
-fs.writeFileSync(path.resolve(distDir, "503/index.html"), maintenanceHtml, "utf-8")
-
 const seenCanonical = new Set()
 const sitemapRoutes = routes.filter((route) => {
   if (seenCanonical.has(route.canonical)) return false
