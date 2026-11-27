@@ -3,7 +3,6 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
-  "nodeVersion": "24.x",
   "redirects": [
     {
       "source": "/:path*",
