@@ -97,6 +97,7 @@ Nirjar Goswami is a systems and security engineer working across Cloud Architect
 - Languages: Go, Rust, Python, Bash
 
 ## Technical Articles & Writing
+- "All-in-One VCRedist Installer": Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers. (Markdown: https://nirjar.me/articles/all-in-one-vcredist-installer.md, HTML: https://nirjar.me/articles/all-in-one-vcredist-installer).
 - "Why I Switched to Zed IDE": Four years of muscle memory, extensions and workspace config didn't break. The editor just got quieter, faster, and out of the way. (Markdown: https://nirjar.me/articles/why-i-switched-to-zed.md, HTML: https://nirjar.me/articles/why-i-switched-to-zed).
 - "Parapet: A 100ms Rust Site Checker": Static builds hide broken anchors and CSP drift. A 100ms Rust binary catches both before code ever ships. (Markdown: https://nirjar.me/articles/a-100ms-rust-site-verifier.md, HTML: https://nirjar.me/articles/a-100ms-rust-site-verifier).
 - "Coding Is Taught Wrong, and AI Exposed It": The exam tested loops. The job tests judgement - and AI made the difference impossible to ignore. (Markdown: https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it.md, HTML: https://nirjar.me/articles/coding-is-taught-wrong-and-ai-exposed-it).

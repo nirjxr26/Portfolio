@@ -25,6 +25,63 @@ export type BlogArticle = {
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {
+    slug: "all-in-one-vcredist-installer",
+    title: "All-in-One VCRedist Installer",
+    subhead:
+      "One folder and one batch script to install Visual C++ 2005–2022, DirectX, OpenAL, XNA, and .NET runtimes on Windows.",
+    description:
+      "Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers.",
+    updated: "November 28, 2026",
+    readTime: "2 min",
+    category: "Practice",
+    cardDate: "Nov 28, 2026",
+    cardDesc:
+      "Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers.",
+    cardReadTime: "2 min read",
+    keywords:
+      "VCRedist, Visual C++, DirectX, OpenAL, XNA, .NET, MSVCP140.dll, d3dx9_43.dll, VCRUNTIME140.dll, Windows, PC gaming, install-all.bat, batch script, redistributables",
+    poster: {
+      light: "/assets/content/articles/vcredist_white.svg",
+      dark: "/assets/content/articles/vcredist_black.svg",
+    },
+    disclaimer:
+      "Provided as-is, without warranty. The script makes system changes with administrator rights, so use it at your own risk and consider creating a restore point first. All bundled installers are original, unmodified redistributables from Microsoft and OpenAL, and all trademarks belong to their owners. Antivirus tools may flag batch scripts as suspicious; it's plain text, so you can read it in Notepad before running.",
+    sections: [
+      {
+        subtitle: "",
+        content: `Installed an older PC game on a fresh Windows and got *"MSVCP140.dll was not found"*, *"d3dx9_43.dll is missing"*, or *"VCRUNTIME140.dll not found"*? Every one of these means a runtime is missing. The usual fix is to find the right download, install it, relaunch the game, and then repeat for the next missing file.
+
+I bundled everything into one folder so you only do this once.`,
+      },
+      {
+        subtitle: "What's inside",
+        content: `16 installers, plus an optional Windows feature step, all handled by \`install-all.bat\`:
+
+- **Visual C++ Redistributables (2005–2022):** both \`x86\` and \`x64\`, because 32-bit games still need the \`x86\` runtimes on 64-bit Windows.
+- **DirectX End-User Runtime (June 2010) and OpenAL:** the legacy graphics and audio libraries older titles still expect.
+- **Microsoft XNA Framework 4.0 and .NET Desktop Runtime 8.0:** needed by indie and modern .NET-based games.
+- **.NET Framework 3.5 (optional Windows feature):** enabled directly via \`dism\` (no separate installer file) for 2006–2012 era games.`,
+      },
+      {
+        subtitle: "How to use it",
+        content: `1. Download the \`.RAR\` above (or get the folder from [GitHub](https://github.com/nirjxr26/vcredist-all-in-one-setup)) and extract it.
+2. Double-click \`install-all.bat\`. It asks for administrator rights on its own.
+3. Wait for the summary, then launch your game.`,
+      },
+      {
+        subtitle: "What the script does",
+        content: `- **Installs silently, one by one:** no popup wizards and no mid-script reboots.
+- **Handles real-world messiness:** already-installed versions count as a pass, missing files are skipped, and if Windows Installer is busy (\`1618\`) it waits 5 seconds and retries once.
+- **Works mostly offline:** only the DirectX web setup and the optional .NET Framework 3.5 step need internet.
+- **Gives you a clear result:** a final summary of succeeded, skipped, failed, and reboot-needed items, plus a full log at \`%TEMP%\\vcredist-install-log.txt\`.
+
+If the summary says a reboot is recommended, restart once before launching your game.
+
+The script is plain batch, so you can open \`install-all.bat\` in Notepad and read exactly what it runs before you trust it. All bundled setups are official Microsoft and OpenAL redistributables.`,
+      },
+    ],
+  },
+  {
     slug: "why-i-switched-to-zed",
     title: "Why I Switched to Zed IDE",
     displayTitle: "Why I Switched to <br>Zed IDE",

@@ -78,7 +78,8 @@ describe("cross-file agreements", () => {
     expect(md).not.toContain("format:")
 
     // Articles section format check (no extra gap between heading and first bullet)
-    expect(md).toContain("## Articles.\n\n### Why I Switched to Zed IDE\n- **Read Time**: 4 min read\n- **Date**: Nov 17, 2026\n- **Category**: Practice")
+    expect(md).toContain("## Articles.\n\n### All-in-One VCRedist Installer\n- **Read Time**: 2 min read\n- **Date**: Nov 28, 2026\n- **Category**: Practice")
+    expect(md).toContain("### Why I Switched to Zed IDE\n- **Read Time**: 4 min read\n- **Date**: Nov 17, 2026\n- **Category**: Practice")
     expect(md).toContain("### Parapet: A 100ms Rust Site Checker\n- **Read Time**: 5 min read\n- **Date**: Nov 12, 2026\n- **Category**: Security")
     expect(md).toContain("### Coding Is Taught Wrong, and AI Exposed It\n- **Read Time**: 9 min read\n- **Date**: Oct 31, 2026\n- **Category**: Artificial Intelligence")
     expect(md).toContain("[View other articles](https://nirjar.me/articles)")

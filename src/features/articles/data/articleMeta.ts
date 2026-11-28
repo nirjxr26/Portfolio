@@ -8,6 +8,9 @@ export interface ArticleProjectCallout {
   name: string
   description: string
   href: string
+  icon?: string
+  downloadHref?: string
+  downloadLabel?: string
 }
 
 export interface ArticleMeta {
@@ -32,6 +35,40 @@ export interface ArticleMeta {
 }
 
 export const ARTICLE_META: ArticleMeta[] = [
+  {
+    slug: "all-in-one-vcredist-installer",
+    title: "All-in-One VCRedist Installer",
+    subhead:
+      "One folder and one batch script to install Visual C++ 2005–2022, DirectX, OpenAL, XNA, and .NET runtimes on Windows.",
+    description:
+      "Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers.",
+    updated: "November 28, 2026",
+    readTime: "2 min",
+    category: "Practice",
+    cardDate: "Nov 28, 2026",
+    cardDesc:
+      "Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers.",
+    cardReadTime: "2 min read",
+    keywords:
+      "VCRedist, Visual C++, DirectX, OpenAL, XNA, .NET, MSVCP140.dll, d3dx9_43.dll, VCRUNTIME140.dll, Windows, PC gaming, install-all.bat, batch script, redistributables",
+    poster: {
+      light: "/assets/content/articles/vcredist_white.svg",
+      dark: "/assets/content/articles/vcredist_black.svg",
+    },
+    disclaimer:
+      "Provided as-is, without warranty. The script makes system changes with administrator rights, so use it at your own risk and consider creating a restore point first. All bundled installers are original, unmodified redistributables from Microsoft and OpenAL, and all trademarks belong to their owners. Antivirus tools may flag batch scripts as suspicious; it's plain text, so you can read it in Notepad before running.",
+    projectCallout: {
+      label: "Open Source",
+      name: "All-in-One VCRedist Setup",
+      description:
+        "16 runtime installers (Visual C++ 2005–2022, DirectX, OpenAL, XNA, .NET 8) plus .NET 3.5 in one batch script.",
+      href: "https://github.com/nirjxr26/vcredist-all-in-one-setup",
+      icon: "/assets/content/articles/vcredist_icon.png",
+      downloadHref:
+        "https://github.com/nirjxr26/vcredist-all-in-one-setup/releases/download/v1.0.0/Game-Redistributables.rar",
+      downloadLabel: "Download .RAR (284 MB)",
+    },
+  },
   {
     slug: "why-i-switched-to-zed",
     title: "Why I Switched to Zed IDE",
