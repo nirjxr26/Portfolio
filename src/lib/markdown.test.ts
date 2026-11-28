@@ -134,7 +134,8 @@ describe("generateHomeMarkdown", () => {
     expect(footerSection).not.toContain("github.com/nirjxr26/")
 
     // Articles section format check
-    expect(md).toContain("## Articles.\n\n### Why I Switched to Zed IDE")
+    expect(md).toContain("## Articles.\n\n### All-in-One VCRedist Installer")
+    expect(md).toContain("### Why I Switched to Zed IDE")
     expect(md).toContain("- **Read Time**: 4 min read\n- **Date**: Nov 17, 2026\n- **Category**: Practice")
     expect(md).toContain("### Parapet: A 100ms Rust Site Checker")
     expect(md).toContain("- **Read Time**: 5 min read\n- **Date**: Nov 12, 2026\n- **Category**: Security")

@@ -133,25 +133,68 @@ export function ArticleDetailPage({
                 aria-label={article.projectCallout.name}
                 className="mt-5 sm:mt-6 rounded-xl bg-surface-alt px-5 py-4 sm:px-6 sm:py-5 text-left"
               >
-                {article.projectCallout.label ? (
-                  <p className="text-[13px] font-medium text-muted">
-                    {article.projectCallout.label}
-                  </p>
-                ) : null}
-                <a
-                  href={article.projectCallout.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-block text-[18px] sm:text-[19px] font-semibold text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
-                >
-                  {article.projectCallout.name}
-                </a>
-                <p className="mt-2 text-[15px] sm:text-[16px] leading-relaxed text-ink">
-                  {article.projectCallout.description}
-                </p>
+                <div className="flex items-center gap-4">
+                  {article.projectCallout.icon ? (
+                    <img
+                      src={withAssetHash(article.projectCallout.icon)}
+                      alt=""
+                      width={48}
+                      height={48}
+                      loading="eager"
+                      decoding="async"
+                      draggable={false}
+                      className="h-12 w-12 shrink-0 rounded-xl object-contain select-none"
+                    />
+                  ) : null}
+                  <div className="min-w-0 flex-1">
+                    {article.projectCallout.label ? (
+                      <p className="text-[13px] font-medium text-muted">
+                        {article.projectCallout.label}
+                      </p>
+                    ) : null}
+                    <a
+                      href={article.projectCallout.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-block text-[18px] sm:text-[19px] font-semibold text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent transition-colors"
+                    >
+                      {article.projectCallout.name}
+                    </a>
+                    <p className="mt-2 text-[15px] sm:text-[16px] leading-relaxed text-ink">
+                      {article.projectCallout.description}
+                    </p>
+                    {article.projectCallout.downloadHref ? (
+                      <div className="mt-3.5 flex flex-wrap items-center gap-3">
+                        <a
+                          href={article.projectCallout.downloadHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-sm bg-ink text-canvas hover:opacity-90 transition-opacity no-underline"
+                        >
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M8 2v8.5m0 0L4.5 7M8 10.5L11.5 7M2.5 13.5h11"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <span>{article.projectCallout.downloadLabel ?? "Download"}</span>
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
               </aside>
             ) : null}
-            {!article.leadImage ? <hr className="mt-5 border-hairline sm:mt-6" /> : null}
+            {!article.leadImage ? <hr className="mt-6 border-hairline sm:mt-8" /> : null}
           </header>
 
           {article.leadImage ? (

@@ -13,6 +13,17 @@
   ],
   "items": [
     {
+      "id": "https://nirjar.me/articles/all-in-one-vcredist-installer",
+      "url": "https://nirjar.me/articles/all-in-one-vcredist-installer",
+      "title": "All-in-One VCRedist Installer",
+      "summary": "Fix missing MSVCP140.dll, d3dx9_43.dll, and VCRUNTIME140.dll errors in one run with 16 Windows gaming runtime installers.",
+      "date_published": "2026-11-28T12:00:00.000Z",
+      "date_modified": "2026-11-28T12:00:00.000Z",
+      "tags": [
+        "Practice"
+      ]
+    },
+    {
       "id": "https://nirjar.me/articles/why-i-switched-to-zed",
       "url": "https://nirjar.me/articles/why-i-switched-to-zed",
       "title": "Why I Switched to Zed IDE",
