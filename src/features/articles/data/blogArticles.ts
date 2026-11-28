@@ -64,9 +64,12 @@ I bundled everything into one folder so you only do this once.`,
       },
       {
         subtitle: "How to use it",
-        content: `1. Download the \`.RAR\` above (or get the folder from [GitHub](https://github.com/nirjxr26/vcredist-all-in-one-setup)) and extract it.
-2. Double-click \`install-all.bat\`. It asks for administrator rights on its own.
-3. Wait for the summary, then launch your game.`,
+        content: `1. **Download** — Download the \`.RAR\` archive above or get the folder directly from [GitHub](https://github.com/nirjxr26/vcredist-all-in-one-setup).
+2. **Extract** — Extract the entire archive to a folder on your PC.
+3. **Run the installer** — Open the extracted folder and double-click \`install-all.bat\`.
+4. **Grant permission** — Click Yes when Windows asks for administrator access.
+5. **Wait for installation** — The script automatically installs the included runtimes. Do not close the window while installation is in progress.
+6. **Launch your game** — Once the installation summary appears, close the installer and launch your game.`,
       },
       {
         subtitle: "What the script does",
